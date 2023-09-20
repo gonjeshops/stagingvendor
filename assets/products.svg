@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="56px" height="57px" viewBox="0 0 56 57" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+    <title>Group 13</title>
+    <desc>Created with Sketch.</desc>
+    <g id="final" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Dashboard-Vendor" transform="translate(-1136.000000, -328.000000)">
+            <g id="Group-13" transform="translate(1136.243263, 328.816250)">
+                <circle id="Oval" fill="#FFECEE" cx="27.75" cy="27.75" r="27.75"></circle>
+                <g id="feather:box" transform="translate(18.750000, 17.750000)" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.96">
+                    <g id="Group">
+                        <path d="M17.64,13.72 L17.64,5.88 C17.6392825,5.18047758 17.2658047,4.53436103 16.66,4.1846 L9.8,0.2646 C9.19357389,-0.0855202781 8.44642611,-0.0855202781 7.84,0.2646 L0.98,4.1846 C0.374195282,4.53436103 0.000717505766,5.18047758 4.35207426e-16,5.88 L4.35207426e-16,13.72 C0.000717505766,14.4195224 0.374195282,15.065639 0.98,15.4154 L7.84,19.3354 C8.44642611,19.6855203 9.19357389,19.6855203 9.8,19.3354 L16.66,15.4154 C17.2658047,15.065639 17.6392825,14.4195224 17.64,13.72 Z" id="Path"></path>
+                        <polyline id="Path" points="0.2646 4.8608 8.82 9.8098 17.3754 4.8608"></polyline>
+                        <line x1="8.82" y1="19.6784" x2="8.82" y2="9.8" id="Path"></line>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

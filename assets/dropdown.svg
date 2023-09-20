@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="6px" height="11px" viewBox="0 0 6 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+    <title>ic:round-keyboard-arrow-down</title>
+    <desc>Created with Sketch.</desc>
+    <g id="final" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Dashboard-Vendor" transform="translate(-206.000000, -415.000000)">
+            <g id="ic:round-keyboard-arrow-down" transform="translate(209.000000, 419.914375) rotate(-90.000000) translate(-209.000000, -419.914375) translate(198.000000, 408.914375)">
+                <rect id="ViewBox" x="0" y="0" width="21.6" height="21.6"></rect>
+                <path d="M7.308,8.361 L10.8,11.853 L14.292,8.361 C14.518685,8.13431498 14.8490856,8.0457844 15.1587431,8.12875687 C15.4684006,8.21172934 15.7102707,8.45359938 15.7932431,8.76325688 C15.8762156,9.07291437 15.787685,9.40331498 15.561,9.63 L11.43,13.761 C11.2618399,13.9295053 11.0335585,14.0241996 10.7955,14.0241996 C10.5574415,14.0241996 10.3291601,13.9295053 10.161,13.761 L6.03,9.63 C5.86149472,9.46183986 5.76680037,9.23355852 5.76680037,8.9955 C5.76680037,8.75744148 5.86149472,8.52916014 6.03,8.361 C6.381,8.019 6.957,8.01 7.308,8.361 Z" id="Path" fill="#000000" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

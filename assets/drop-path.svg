@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="88px" height="87px" viewBox="0 0 88 87" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+    <title>Path</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M1047.24544,217.354126 L1065.24544,217.354126 C1065.61684,217.352961 1065.95712,217.146467 1066.12964,216.817572 C1066.30216,216.488677 1066.27861,216.091337 1066.06844,215.785125 L1057.06844,202.785125 C1056.69544,202.246125 1055.79744,202.246125 1055.42344,202.785125 L1046.42344,215.785125 C1046.2111,216.090755 1046.18625,216.48908 1046.35896,216.818732 C1046.53166,217.148385 1046.87329,217.354711 1047.24544,217.354126 Z" id="path-1"></path>
+        <filter x="-285.0%" y="-360.6%" width="730.0%" height="941.5%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="6" dy="9" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="19.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.505882353   0 0 0 0 0.592156863   0 0 0 0 0.615686275  0 0 0 0.324874344 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="final" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Inventory" transform="translate(-1018.000000, -177.000000)">
+            <g id="Path">
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="86px" height="86px" viewBox="0 0 86 86" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 22</title>
+    <defs>
+        <circle id="path-1" cx="27.473944" cy="27.473944" r="27.473944"></circle>
+        <filter x="-41.9%" y="-40.0%" width="183.7%" height="183.7%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="7.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.178786058 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <filter id="filter-3">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.574360 0 0 0 0 0.574360 0 0 0 0 0.574360 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Dashboard-products" transform="translate(-249.000000, -1327.000000)">
+            <g id="Group-22" transform="translate(264.302112, 1341.852192)">
+                <g id="Oval">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                </g>
+                <g filter="url(#filter-3)" id="dashicons:arrow-right-alt2">
+                    <g transform="translate(23.473944, 27.473944) scale(-1, 1) translate(-23.473944, -27.473944) translate(18.473944, 18.973944)">
+                        <polygon id="Path" fill="#000000" fill-rule="nonzero" points="0 14.4 6 8.4 0 2.4 1.2 0 9.6 8.4 1.2 16.8"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

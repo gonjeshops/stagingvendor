@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="45px" height="45px" viewBox="0 0 45 45" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+    <title>Group 4</title>
+    <desc>Created with Sketch.</desc>
+    <g id="final" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Dashboard-Vendor" transform="translate(-1204.000000, -23.000000)">
+            <g id="Group-4" transform="translate(1204.086538, 23.500000)">
+                <rect id="Rectangle" fill="#F5F5F5" x="0" y="0" width="44" height="44" rx="8"></rect>
+                <g id="clarity:bell-solid-badged" transform="translate(11.000000, 11.000000)">
+                    <rect id="ViewBox" x="0" y="0" width="21.6" height="21.6"></rect>
+                    <path d="M10.8,20.568 C11.5803708,20.5500299 12.2341899,19.9722362 12.348,19.2 L9.192,19.2 C9.30924387,19.9946415 9.99683977,20.5796111 10.8,20.568 Z" id="Path" fill="#C0C0C0" fill-rule="nonzero"></path>
+                    <path d="M19.71,16.878 L19.506,16.698 C18.9272589,16.1823599 18.4206945,15.5910316 18,14.94 C17.5405335,14.0415286 17.265147,13.0603366 17.19,12.054 L17.19,9.09 C17.1875629,8.72997043 17.1554542,8.37075429 17.094,8.016 C14.9986766,7.58532614 13.4961277,5.73912248 13.5,3.6 L13.5,3.222 C12.873554,2.91371329 12.2005004,2.71098631 11.508,2.622 L11.508,1.866 C11.508,1.42361992 11.1493801,1.065 10.707,1.065 C10.2646199,1.065 9.906,1.42361992 9.906,1.866 L9.906,2.652 C6.6997349,3.10429355 4.31821869,5.85199988 4.326,9.09 L4.326,12.054 C4.25085304,13.0603366 3.97546651,14.0415286 3.516,14.94 C3.1025292,15.5894094 2.60411675,16.1806436 2.034,16.698 L1.83,16.878 L1.83,18.57 L19.71,18.57 L19.71,16.878 Z" id="Path" fill="#C0C0C0" fill-rule="nonzero"></path>
+                    <circle id="Oval" fill="#FF0000" fill-rule="nonzero" cx="18" cy="3.6" r="3"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

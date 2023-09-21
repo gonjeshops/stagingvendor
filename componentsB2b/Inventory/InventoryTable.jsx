@@ -29,8 +29,8 @@ return (
       <table className="min-w-full table-auto lg:w-full">
         <thead>
           <tr className='border-b border-light300'>
-            <th className=" py-4 text-start ">
-            <label>
+            <th className=" py-4 text-start pl-2">
+   
                 <input
                     type="radio"
                     name="product"
@@ -40,7 +40,7 @@ return (
                     onClick={handleRadioBtn}
                     className="w-4 h-4 border rounded-md border-zinc-400"
                 />
-                </label>
+      
             </th>
 
            {
@@ -60,7 +60,7 @@ return (
         <tbody>
           {data?.map(({ id, productName,  published, price, productImg, category, tags, qty, liked }) => (
             <tr key={id} className='border-b   border-light300 bg-hover300  duration-300' >
-              <td className=" py-4 text-start w-10">
+              <td className="pl-2 py-4 text-start w-10">
                 <label>
                 <input
                     type="radio"

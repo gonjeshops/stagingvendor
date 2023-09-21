@@ -6,12 +6,15 @@ const OrderStatus = ({orderStatusId}) => {
 
 
   return (
+    <div className="bg-light100 w-full">
+
+
     <div className="m-auto max-w-7xl py-12">
         <div className="flex justify-between items-end gap-3 pb-3">
             <DashboardHeading>Order {orderStatusId} Status</DashboardHeading>
-            <Link className="px-6 py-3 rounded-md border border-blue-600 hover:scale-105"  href={`/workspace/orders`}>Back to orders</Link>
+            <Link className="px-6 py-3 rounded-md border border-blue-600 hover:scale-105"  href={`/vendorb2b/workspace/orders`}>Back to orders</Link>
         </div>
-        <Link href={`/workspace/orders/${orderStatusId}`} className="flex gap-2 items-center text-lg">
+        <Link href={`/vendorb2b/workspace/orders/${orderStatusId}`} className="flex gap-2 items-center text-lg">
             <p>View</p> <p className="text-blue hover:scale-105 duration-300">order details</p> <p>, Nov 12, 2022, 8:54.</p>
         </Link>
 
@@ -57,6 +60,7 @@ const OrderStatus = ({orderStatusId}) => {
             </div>
 
         </div>
+    </div>
     </div>
   )
 }

@@ -53,6 +53,8 @@ a {
   @apply max-w-[1400px] md:px-4 m-auto ;
 }
 
+
+
 /* : flex-end */
 button {
   text-transform: uppercase !important;

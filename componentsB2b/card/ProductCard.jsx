@@ -47,7 +47,7 @@ const ProductCard = ({item}) => {
               <div className=" text-sm flex gap-3 justify-between items-center">
                  <button onClick={()=>addToCart(item)} className="px-4 py-1 rounded mr-2 hover-blue">Add</button>
                   <button onClick={()=>reduceItemQuantity(item.slug)} className="px-4 py-1 rounded hover-red">Remove</button>
-                  <Link href={`/products/${slug}`}  className='hover-blue px-4 before:rounded  py-1'>View</Link>
+                  <Link href={`/vendorb2b/products/${slug}`}  className='hover-blue px-4 before:rounded  py-1'>View</Link>
               </div>
             </div>
         </div>

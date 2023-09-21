@@ -39,7 +39,7 @@ const RequestQuotes = () => {
 <>
 
     <RequestQuoteForm  closeModal={()=>setShow('')} isModalOpen={show} />
-    <div className="space-y-6">
+    <div className="space-y-10">
         <div className="space-y-6 ">
           
             <div className="grid mb-2 sm:mb-0 sm:flex justify-between gap-3 items-center w-full ">
@@ -77,7 +77,7 @@ const RequestQuotes = () => {
             {
                 [1,2,3,4,5,6,7,8,9,0].map((item, i)=>{
                     return (
-                        <div key={i} onClick={()=>router.push(`/workspace/request-quotes/${`quote`+item}`)}
+                        <div key={i} onClick={()=>router.push(`/vendorb2b/workspace/request-quotes/${`quote`+item}`)}
                         className="w-full shadow hover:shadow-lg duration-300 rounded-md border border-light300 p-8 space-y-8">
                             <div className="">
                                 <div className="flex gap-6 items-center pb-3">

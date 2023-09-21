@@ -15,7 +15,7 @@ const ManageQuotes = () => {
     <div className="">
         <ManageQuoteForm closeModal={()=>setShow('')} isModalOpen={show}  />
 
-        <div className="  space-y-6 ">
+        <div className=" pb-10 space-y-6 ">
 
             <div className="grid mb-2 sm:mb-0 sm:flex justify-between items-center w-full ">
                 <DashboardHeading>Manage Quotes</DashboardHeading>
@@ -24,7 +24,7 @@ const ManageQuotes = () => {
                 </div>
             </div>
 
-            <div className="grid px-4  sm:flex justify-between items-center">
+            <div className="grid  sm:flex justify-between items-center">
                 <div className="">
                     <div className="flex gap-4 items-center  font-medium">
                         <div onClick={()=>setShow('dashboard')} className="bg-blue-600 cursor-pointer mb-2 sm:mb-0 px-4 py-2 rounded hover:bg-blue-700 duration-300 text-white">{`+ Create Request`}</div>

@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }) {
     if (route.asPath == "/") {
       route.push("/vendorb2b");
     }
-  }, []);
+  }, [route.asPath]);
 
   return (
     <Provider store={store}>
@@ -31,7 +31,9 @@ function MyApp({ Component, pageProps }) {
       !(route.asPath === "/payment") &&
       !(route.asPath === "/") &&
       !(route.asPath === "/login") && 
-      !(route.asPath.split('/').includes('vendorb2b')) ? (
+      !(route.asPath.split('/').includes('vendorb2b')) && 
+      !(route.asPath.split('/').includes('signup')) && 
+      !(route.asPath.split('/').includes('signin'))? (
         <Layout>
           <Component {...pageProps} />
         </Layout>

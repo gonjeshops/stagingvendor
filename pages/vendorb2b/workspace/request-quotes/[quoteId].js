@@ -1,7 +1,6 @@
 
-import ProductDetails from '@/components/Products/ProductDetails'
-import QuoteRequestDetails from '@/components/Workspace/QuoteRequestDetails';
-import Workspace from '@/components/Workspace/Workspace';
+import QuoteRequestDetails from '@/componentsB2b/Workspace/QuoteRequestDetails';
+import Workspace from '@/componentsB2b/Workspace/Workspace';
 import { useRouter } from 'next/router';
 import { FaAddressBook,FaMapMarkerAlt,FaGift, FaComment,FaBox, FaCalendarAlt, FaEnvelope,FaPhone, FaUser } from 'react-icons/fa';
 
@@ -81,11 +80,11 @@ const QuoteRequestDetailsPage = ({ quoteId }) => {
 //   }
 
   return (
-    <div className="section-padding">
+
         <Workspace>
             <QuoteRequestDetails content={quoteDetails}/>
         </Workspace>
-    </div>
+
 
 
   )

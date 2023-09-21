@@ -16,7 +16,7 @@ const Order = ({orders}) => {
             Orders
         </DashboardHeading>
 
-        <div className="py-8 space-y-6 ">
+        <div className="pb-8 space-y-6 ">
             <div className=" flex w-full items-center gap-4 xl:gap-12 flex-wrap">
                {category?.map(({title, value}, i)=>(
                 <div key={i} className='flex gap-2 items-center'>

@@ -23,9 +23,9 @@ const ProductDetails = ({product}) => {
 
     
   return (
-    <div className=' '>
+    <div className=' max-w-[1000px] '>
 
-        <Link href={'/products'} className=" text-blue-600 hover:font-semibold duration-300">{`<   Back to products`}</Link>
+        <Link href={'/vendorb2b/products'} className=" text-blue-600 hover:font-semibold duration-300">{`<   Back to products`}</Link>
       
        <div className="flex flex-col-reverse md:grid grid-cols-2 gap-8 lg:gap-16 mt-8">
             <div className="">

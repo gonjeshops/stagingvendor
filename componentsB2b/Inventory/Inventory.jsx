@@ -59,7 +59,7 @@ const Inventory = ({inventories}) => {
             </div>
         </div>
 
-        <div className="orders bg-light100 pb-10 pl-4">
+        <div className="orders bg-light100 pb-10 ">
             <InventoryTable data={inventoryData} tableHeader={tableHeader}/>
         </div>
     </>

@@ -29,7 +29,7 @@ const InvoiceTable = ({data, tableHeader}) => {
       <table className="min-w-full table-auto lg:w-full">
         <thead>
           <tr className='border-b border-light300'>
-            <th className=" py-4 text-start ">
+            <th className="pl-2 py-4 text-start ">
             <label>
                 <input
                     type="radio"
@@ -60,8 +60,8 @@ const InvoiceTable = ({data, tableHeader}) => {
         <tbody>
           {data?.map(({ id, transactionId,  date, amount, buyerImgUrl, buyerName, paymentStatus, paymentMethod, orderId, invoiceId }) => (
             <tr key={id} className='border-b   border-light300 bg-hover300  duration-300' 
-            onClick={()=>router.push(`/workspace/invoices/${id}`)}            >
-              <td className=" py-4 text-start w-10">
+            onClick={()=>router.push(`/vendorb2b/workspace/invoices/${id}`)}            >
+              <td className="pl-2 py-4 text-start w-10">
                 <label>
                 <input
                     type="radio"

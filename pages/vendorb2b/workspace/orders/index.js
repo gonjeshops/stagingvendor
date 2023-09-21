@@ -31,11 +31,11 @@ const Orders = () => {
   }
 
   return (
-    <div className="section-padding">
+
         <Workspace>
             <Order orders={orders}/>
         </Workspace>
-    </div>
+
   )    
 }
 

@@ -3,7 +3,7 @@ import Workspace from "@/componentsB2b/Workspace/Workspace"
 
 const dashboard = () => {
   return (
-    <div className="md:section-padding">
+    <div className="section-padding">
       <Workspace>
           <ProductsCatalogue/>
       </Workspace>

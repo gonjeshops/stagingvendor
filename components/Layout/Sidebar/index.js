@@ -54,7 +54,7 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
         {Object.keys(sideTabs).map((item) => {
           const Tab = sideTabs[item];
           return (
-            <>
+
             <li className="nav-item" key={`key_${Tab.name}`}>
               {Tab.isCollapsable ? (
                 <>
@@ -140,12 +140,11 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                 </Link>
               )}
             </li>
-        <Link className="d-flex togg justify-content-between nav-link text-whitee " style={{"background": 'white'}} href={'/vendorb2b'}>B2B Dashboard</Link>
-        </>
-
+        
+   
           );
         })}
-
+<Link className="d-flex togg justify-content-between nav-link text-whitee " style={{"background": 'white'}} href={'/vendorb2b'}>B2B Dashboard</Link>
       </ul>
 
 

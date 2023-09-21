@@ -14,15 +14,15 @@ const OrderDetails = ({order, fakeData}) => {
             Orders <span>#{order}</span>
         </DashboardHeading>
 
-        <div className='pt-4 pb-20 space-y-8'>
+        <div className=' pb-20 space-y-8'>
             <div className="grid gap-3 md:flex justify-between items-center ">
         
             <p className='text-lg'>Customer ID: <span className='text-blue-600 font-medium'>{fakeData.customerId}</span></p>
             
             <p className='text-lg'>Status: <span className='text-blue-600 font-medium'>Pending</span></p>
 
-            <Link href={`/workspace/orders/${order}/${fakeData.customerId}`}
-            className='px-4 py-2 hover-blue'>View Order status </Link>
+            <Link href={`/vendorb2b/workspace/orders/${order}/${fakeData.customerId}`}
+            className='px-4 py-2 rounded hover-blue'>View Order status </Link>
 
 
             
@@ -59,7 +59,7 @@ const OrderDetails = ({order, fakeData}) => {
                     fakeData.product.map(({details, imageUrl, price, quantity}, i)=>(
                         <div key={i} className="py-6  border-b border-light300 grid grid-cols-6 gap-3 items-center text-[10px] sm:text-sm md:text-md ">
                         <div className="flex flex-col col-span-4 gap-3 sm:flex-row items- ">
-                            <div className="bg-light100 flex-shrink-0 w-12 h-12 flex justify-center items-center">
+                            <div className="bg-light200 flex-shrink-0 w-12 h-12 flex justify-center items-center">
                                 {/* <img src="" alt="" /> */}
                                 4
                         </div>
@@ -83,7 +83,7 @@ const OrderDetails = ({order, fakeData}) => {
 
             </div>
 
-            <div className="lg:col-span-1 bg-light100 px-6 py-8 rounded-lg shadow">
+            <div className="lg:col-span-1 bg-light200 px-6 py-8 rounded-lg shadow">
                 <h4 className="font-medium text-lg pb-6">Summary</h4>
                 <div className="grid gap-4 py-4 border-y">
                     {
@@ -161,7 +161,7 @@ const OrderDetails = ({order, fakeData}) => {
 
 
             <div className="">
-            <div className='bg-light100 rounded-lg col-span-1 px-6 py-8'>
+            <div className='bg-light200 rounded-lg col-span-1 px-6 py-8'>
                 <h4 className='font-medium text-lg pb-6'>Request Status</h4>
                 <p className="text-sm pb-2">Status</p>
                 <div className="p-4 border rounded-md flex justify-between">

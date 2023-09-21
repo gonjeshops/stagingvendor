@@ -26,11 +26,9 @@ const InventoryPage = () => { // Rename the function to InventoryPage (it should
   };
 
   return (
-    <div className="section-padding">
       <Workspace >
         <Inventory inventories={inventories} />
       </Workspace>
-    </div>
   );
 };
 

@@ -1,17 +1,22 @@
 import Workspace from "@/componentsB2b/Workspace/Workspace";
 import Dashboard from "@/componentsB2b/Workspace/Dashboard";
-import { useGlobalState } from '@/context/GlobalStateContext';
-import { vendorWorkspaceLinks } from '@/data/workspaceData';
+import { useRouter } from "next/router";
 import { useEffect } from "react";
+import GifLoader from "@/components/common/GifLoader";
 
 const DashboardPage = () => {
+const router = useRouter()
+useEffect(() => {
+    router.push('/vendorb2b/workspace')
+}, [])
 
   return (
-    <div className="section-padding">
-        <Workspace>
-            <Dashboard />
-        </Workspace>
-    </div>
+    <GifLoader/>
+    
+        // <Workspace>
+        //     <Dashboard />
+        // </Workspace>
+ 
   )    
 }
 

@@ -28,8 +28,8 @@ const OrderTbale = ({data}) => {
       <table className="min-w-full table-auto lg:w-full">
         <thead>
           <tr className='border-b border-light300'>
-            <th className=" py-4 text-start ">
-            <label>
+            <th className="pl-2 py-4 text-start ">
+  
                 <input
                     type="radio"
                     name="product"
@@ -38,7 +38,7 @@ const OrderTbale = ({data}) => {
                     onClick={handleRadioBtn}
                     className="w-4 h-4 border rounded-md border-zinc-400"
                 />
-                </label>
+              
             </th>
 
            {
@@ -58,8 +58,8 @@ const OrderTbale = ({data}) => {
         <tbody>
           {data?.map(({id, orderId, date, total, customerImgUrl, customerName, paymentStatus, fulfillmentStatus, deliveryType}) => (
             <tr key={id} className='border-b   border-light300 bg-hover300  duration-300' 
-            onClick={()=>router.push(`/workspace/orders/${id}`)}            >
-              <td className=" py-4 text-start w-10">
+            onClick={()=>router.push(`/vendorb2b/workspace/orders/${id}`)}            >
+              <td className="pl-2 py-4 text-start w-10">
                 <label>
                 <input
                     type="radio"

@@ -8,12 +8,12 @@ const Workspace = ({children, navLinks}) => {
 
   return (
 
-    <section className=" h-screen overflow-auto  ">
-        <div className="flex ">
+    <section className=" workspace-padding ">
+        <div className="">
         {/* desktop view */}
-            <div className="absolute min-h-screen border- pr-4  hidden md:block " >
+            <aside className="absolute min-h-screen hidden md:block " >
                 <Sidebar navLinks={navLinks} heading={'WORKSPACE'} list={workspaceLinks} />
-            </div>
+            </aside>
 
         {/* on Mobile view */}
            {

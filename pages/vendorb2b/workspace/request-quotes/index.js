@@ -5,11 +5,11 @@ import Workspace from "@/componentsB2b/Workspace/Workspace"
 const ReQuestQuotes = () => {
 
   return (
-    <div className="section-padding">
+
         <Workspace>
             <RequestQuotes/>
         </Workspace>
-    </div>
+
   )    
 }
 

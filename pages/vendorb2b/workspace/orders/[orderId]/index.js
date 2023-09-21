@@ -90,12 +90,12 @@ const OrderDetailsPage = ({ orderId }) => {
     }
 
   return (
-    <div className="section-padding">
+
 
     <Workspace>
         <OrderDetails order={orderId} fakeData={quoteDetails}/>
     </Workspace>
-    </div>
+
   );
 };
 

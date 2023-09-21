@@ -21,11 +21,11 @@ const QuoteRequestDetailsPage = ({ quoteId }) => {
 //   }
 
   return (
-    <div className="section-padding">
+   
         <Workspace>
             <ManageQuoteDetails content={quoteDetails}/>
         </Workspace>
-    </div>
+
 
 
   )

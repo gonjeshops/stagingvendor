@@ -39,7 +39,7 @@ const Sidebar = ({heading, onclick, list}) => {
               }
             </div>
             
-            <div className="text-lg "> Supplier Category</div>
+            <div className="text-base "> Supplier Category</div>
         </div> }
 
         <h3 className=" text-base pb-2">
@@ -52,7 +52,7 @@ const Sidebar = ({heading, onclick, list}) => {
                     
                     return(
 
-                    <div key={item.title}  className="">
+                    <div key={item.title}  className=" rounded-l-full hover:bg-light100 duration-300">
                         { item.submenu ?
 
                         // navlink that has a sublink
@@ -105,11 +105,11 @@ const Sidebar = ({heading, onclick, list}) => {
                             >
                             <Link href={link} 
                             onClick={()=>setShowSidebar(false)}
-                            className={`py-2 px-4 rounded bg-hover300  ${active=== path ? 'bg-light300 text-dark300' : null} `}>
-                                <div className="flex gap-4 items-center">
+                            className={`py-2 pl-2 rounded bg-hover300  ${active=== path ? 'bg-light300 text-dark300' : null} `}>
+                                <div className="flex gap-2 items-center">
                                     <p className='w-full'>{title} </p>
-                                    {notification && <div className="bg-blue-200 text-zinc-700 text-sm rounded px-1 ">
-                                        New
+                                    {notification && <div className="bg-blue-200 text-[8px] flex-shrink text-zinc-700 text-sm rounded-full px-1">New
+                                        
                                     </div>}
                                 </div>
                             </Link>

@@ -7,11 +7,11 @@ const ManageQuotesPage = () => {
 
   
   return (
-    <div className="section-padding">
+  
         <Workspace>
             <ManageQuotes/>
         </Workspace>
-    </div>
+
   )    
 }
 

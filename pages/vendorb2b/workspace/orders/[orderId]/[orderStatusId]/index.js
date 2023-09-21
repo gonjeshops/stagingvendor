@@ -23,10 +23,9 @@ export async function getServerSideProps({ params }) {
 const OrderDetailsPage = ({ orderStatusId }) => {
 
   return (
-    <div className="section-padding">
+   
         <OrderStatus orderStatusId={orderStatusId} />
-    </div>
-  );
+  )
 };
 
 export default OrderDetailsPage;

@@ -16,7 +16,7 @@ const Dashboard = () => {
         </div>
 
                 
-                <div className="px-4 bg-light200 w-full grid grid-cols-2 md:grid-cols-3">
+                <div className="px-4 rounded-xl bg-light200 w-full grid grid-cols-2 md:grid-cols-3">
                     <Card data={workspaceData.quotes} 
                         iconColor={`text-blue-600`}
                         titleColor={`text-blue-600`}

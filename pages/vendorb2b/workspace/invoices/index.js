@@ -30,11 +30,9 @@ const Invoice = () => {
   }
 
   return (
-    <div className="section-padding">
         <Workspace>
             <Invoices invoices={invoice}/>
         </Workspace>
-    </div>
   )    
 }
 

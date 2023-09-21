@@ -1,5 +1,6 @@
 
 import ProductDetails from '@/componentsB2b/Products/ProductDetails'
+import Workspace from '@/componentsB2b/Workspace/Workspace';
 
 const CourseLMSPage = ({ course }) => {
     
@@ -26,9 +27,11 @@ const CourseLMSPage = ({ course }) => {
 //   }
 
   return (
-    <Workspace>
-        <ProductDetails product={product}/>
-    </Workspace>
+    <div className="section-padding">    
+        <Workspace>
+            <ProductDetails product={product}/>
+        </Workspace>
+    </div>
   )
 };
 

@@ -27,7 +27,7 @@
     "react-dropzone": "^11.5.1",
     "react-google-maps": "^9.4.5",
     "react-js-pagination": "^3.0.3",
-    "react-pdf": "^5.7.2",
+    "react-pdf": "^7.3.3",
     "react-phone-number-input": "^3.3.6",
     "react-redux": "^7.2.9",
     "react-responsive-modal": "^6.4.2",

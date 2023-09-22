@@ -130,10 +130,10 @@ const Sidebar = ({heading, onclick, list}) => {
         {module.moduleType === 'vendor' && <OtherWorkspaceLinks active={active} handleClick={handleClick} moduleType={module.moduleType}  fetchUser={fetchUser} setShowSidebar={setShowSidebar}/>}
         
         <div className='pr-4 grid'>
-             <button href={'/dashboard'} className='hover-blue py-3 text-center  rounded '
+             <Link href={'/dashboard'} className='hover-blue py-3 text-center  rounded '
               >
                     B2C Dashboard             
-                </button>
+                </Link>
         </div>
         
         

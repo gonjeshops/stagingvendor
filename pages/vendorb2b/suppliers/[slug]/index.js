@@ -15,7 +15,6 @@ const SupplierDetailsPage = ({ supplier }) => {
 //   }
 
   return (
-    <div className="section-padding">
       <Workspace>
     <div className="font-bold text-4xl text-center h-[600px] flex justify-center items-center">
         <div className="">
@@ -25,7 +24,6 @@ const SupplierDetailsPage = ({ supplier }) => {
         </div>
     </div>
     </Workspace>
-    </div>
   )
 
     

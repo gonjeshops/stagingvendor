@@ -27,11 +27,9 @@ const CourseLMSPage = ({ course }) => {
 //   }
 
   return (
-    <div className="section-padding">    
         <Workspace>
             <ProductDetails product={product}/>
         </Workspace>
-    </div>
   )
 };
 

@@ -5,11 +5,9 @@ import { notificationList } from "@/data/notificationList";
 const NotificationsPage = () => {
 
  return (
-    <div className="section-padding">
         <Workspace>
             <Notifications notificationList={notificationList}/>
         </Workspace>
-    </div>
   )    
 }
 

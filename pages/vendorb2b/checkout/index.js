@@ -26,12 +26,10 @@ const CheckoutPage = () => {
 
   }
   return (
-    <div className="workspace-padding">
 
     <Workspace>
         <Checkout content={data}/>
     </Workspace>
-    </div>
 
     
   )

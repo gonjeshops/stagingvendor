@@ -13,19 +13,21 @@
     "@stripe/stripe-js": "^1.54.2",
     "axios": "^0.24.0",
     "babel-loader": "^8.3.0",
-    "chart.js": "^3.9.1",
+    "chart.js": "^4.3.3",
+    "chartjs": "^0.3.24",
     "formik": "^2.4.5",
     "moment": "^2.29.4",
-    "next": "^13.2.4",
+    "next": "^13.4.12",
     "next-redux-wrapper": "^7.0.5",
     "pspdfkit": "^2021.6.2",
     "rc-time-picker": "^3.7.3",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-countdown": "^2.3.5",
     "react-datepicker": "^4.18.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^11.5.1",
-   
+    "react-icons": "^4.11.0",
     "react-js-pagination": "^3.0.3",
     "react-pdf": "^7.3.3",
     "react-phone-number-input": "^3.3.6",
@@ -41,6 +43,9 @@
     "signature_pad": "^4.1.6"
   },
   "devDependencies": {
-    "html-loader": "^3.1.2"
+    "autoprefixer": "^10.4.16",
+    "html-loader": "^3.1.2",
+    "postcss": "^8.4.30",
+    "tailwindcss": "^3.3.3"
   }
 }

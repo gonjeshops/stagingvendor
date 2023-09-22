@@ -95,7 +95,7 @@ const AddOrEditEmployee = ({
     if (error) {
       toast.error(error);
     } else {
-      const data = { ...employeeDetails };
+      let data = { ...employeeDetails };
       data = {
         ...data,
         shop_id: localStorage.getItem("shop_id"),

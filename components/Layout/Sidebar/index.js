@@ -29,7 +29,6 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
       }`}
       style={{ width: "235px" }}
     >
-      
       <a
         onClick={() => route.back()}
         className="d-flex align-items-center mx-auto mb-3 mb-md-0  text-white text-decoration-none"
@@ -42,19 +41,14 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
           width={140}
         />
       </a>
-
       <hr className="mt-2" />
-
       <ul className="nav nav-pills flex-column mb-auto">
-
         <a onClick={toggleSidebar} className="closebtn">
           &times;
         </a>
-
         {Object.keys(sideTabs).map((item) => {
           const Tab = sideTabs[item];
           return (
-
             <li className="nav-item" key={`key_${Tab.name}`}>
               {Tab.isCollapsable ? (
                 <>
@@ -81,7 +75,6 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                       width={10}
                     />
                   </a>
-
                   <div
                     id="collapseExample1"
                     className={`panel-collapse collapse ${
@@ -93,16 +86,16 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                         {(Tab?.innerTabs || []).map((innerTab) => {
                           return innerTab.url !== "/timesheet" && isVendor ? (
                             <li key={`key_${innerTab.name}`}>
-                              <Link href={innerTab.url}
-                          
+                              <Link href={innerTab.url}>
+                                <a
                                   className={`nav-link  ${
                                     route.asPath.includes(innerTab.url)
                                       ? "active"
                                       : "text-whitee"
-                                  }`}>
-                                
+                                  }`}
+                                >
                                   {innerTab.name}
-                           
+                                </a>
                               </Link>
                             </li>
                           ) : route.asPath.includes(innerTab.url) ||
@@ -125,8 +118,8 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                   </div>
                 </>
               ) : (
-                <Link href={Tab.url}
-              
+                <Link href={Tab.url}>
+                  <a
                     className={`d-flex nav-link ${
                       route.asPath.includes(Tab.url) ? "active" : "text-whitee"
                     }`}
@@ -136,19 +129,13 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                       <Image src={Tab.image} alt="" height={20} width={20} />
                     </div>
                     <span className="ms-2">{Tab.name}</span>
-               
+                  </a>
                 </Link>
               )}
             </li>
-        
-   
           );
         })}
-<Link className="d-flex togg justify-content-between nav-link text-whitee " style={{"background": 'white'}} href={'/vendorb2b'}>B2B Dashboard</Link>
       </ul>
-
-
-
     </div>
   );
 };

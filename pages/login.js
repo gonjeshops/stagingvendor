@@ -2,12 +2,9 @@ import Image from "next/image";
 import React from "react";
 import { SignUpLogo } from "../assets";
 import LoginForm from "../components/Login";
-import HeadB2c from "@/components/HeadB2c";
 
 const Login = () => {
   return (
-    <>
-    <HeadB2c/>
     <section className="vendor-signup">
       <div className="inner-wrap row">
         <div className="col-lg-6 signup-img">
@@ -26,8 +23,6 @@ const Login = () => {
         </div>
       </div>
     </section>
-    </>
-
   );
 };
 

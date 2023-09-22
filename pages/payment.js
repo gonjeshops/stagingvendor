@@ -2,12 +2,9 @@ import React from "react";
 import Image from "next/image";
 import { SignUpLogo } from "../assets";
 import PaymentModule from "../components/PaymentModule";
-import HeadB2c from "@/components/HeadB2c";
 
 const PaymentMethos = () => {
   return (
-    <>
-    <HeadB2c/>
     <section className="vendor-signup vendor-bankdetail">
       <div className="inner-wrap row">
         <div className="col-lg-6 banking-bg">
@@ -30,8 +27,6 @@ const PaymentMethos = () => {
         </div>
       </div>
     </section>
-    </>
-
   );
 };
 

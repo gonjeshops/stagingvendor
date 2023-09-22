@@ -2,12 +2,9 @@ import React from "react";
 import { SignUpLogo } from "../assets";
 import Image from "next/image";
 import Contract from "../components/Contract";
-import HeadB2c from "@/components/HeadB2c";
 
 const ContractPolicy = () => {
   return (
-    <>
-    <HeadB2c/>
     <section className="vendor-signup vendor-bankdetail contract_policy">
       <div className="inner-wrap row">
         <div className="col-xl-12 banking-bg ">
@@ -30,8 +27,6 @@ const ContractPolicy = () => {
         </div>
       </div>
     </section>
-    </>
-
   );
 };
 

@@ -1,8 +1,7 @@
 import React from "react";
-import GifLoader from "../components/common/GifLoader";
 
 const RootPage = () => {
-  return <GifLoader/>
+  return <>Emma Testing</>;
 };
 
 export default RootPage;

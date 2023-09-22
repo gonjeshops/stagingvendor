@@ -129,7 +129,8 @@ const LoginForm = (props) => {
           </button>
           <p className="text-center mt-3">
             Not a Member{" "}
-            <Link href="/vendor" style={{ color: "#76A713" }}>Sign Up
+            <Link href="/vendor">
+              <a style={{ color: "#76A713" }}>Sign Up</a>
             </Link>
           </p>
         </form>

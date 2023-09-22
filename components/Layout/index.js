@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 import TopBar from "./Topbar";
-import HeadB2c from "../HeadB2c";
 
 const Layout = ({ children }) => {
   const [isShowSideBar, setShowSideBar] = useState(false);
@@ -12,7 +11,6 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <HeadB2c/>
       <Sidebar isShowSideBar={isShowSideBar} toggleSidebar={toggleSidebar} />
       <div className="side-body vender-side">
       {  isShowSideBar && <div className="main_overlay" onClick={toggleSidebar}/>}

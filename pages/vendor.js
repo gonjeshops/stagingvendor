@@ -1,17 +1,14 @@
 import SignUp from "../components/SignUp";
 import { SignUpLogo } from "../assets";
 import Image from "next/image";
-import HeadB2c from "@/components/HeadB2c";
 
 export default function Home() {
   return (
-    <>
-    <HeadB2c/>
     <section className="vendor-signup">
       <div className="inner-wrap row">
         <div className="col-lg-6 signupp signup-img">
           <div className="logo text-center">
-            <Image src={SignUpLogo} alt="gonje" />
+            <Image src={SignUpLogo} alt="" />
           </div>
           <div className="logo-text text-center">
             <h3>
@@ -25,7 +22,5 @@ export default function Home() {
         </div>
       </div>
     </section>
-    </>
-
   );
 }

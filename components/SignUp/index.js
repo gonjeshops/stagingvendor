@@ -130,7 +130,8 @@ const SignUp = (props) => {
           </button>
           <p className="text-center mt-3">
             Already a Member{" "}
-            <Link href="/login" style={{ color: "#76A713" }}>Sign In
+            <Link href="/login">
+              <a style={{ color: "#76A713" }}>Sign In</a>
             </Link>
           </p>
         </form>

@@ -21,10 +21,6 @@ const VendorStage1 = ({ formData, setFormData, setisForm1Valid }) => {
     setErrors({ ...errors, [name]: "" });
   };
 
-  const togglePasswordVisibility = (value) => {
-    setShowPassword(value);
-  };
-
   const validateForm = () => {
     let valid = true;
 

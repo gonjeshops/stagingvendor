@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-// import { login } from '../Api/Api'; 
+import { login } from '../Api/Api'; 
 
 // import FacebookLoginComp from '../FacebookLoginComp';
 // import GoogleLoginComp from "../GoogleLoginComp";
@@ -55,20 +55,21 @@ const CustomerLoginForm = () => {
     try {
       console.log('formData==', formData)
 
-    //   const json = await login(formData); 
-    //   if (json.status === 1) {
-		// // Successful login
-    //     setLoading(false);
-    //     // set success message
+      const json = await login(formData); 
+      if (json.status === 1) {
+		// Successful login
+        setLoading(false);
+        // set success message
 
-    //     localStorage.setItem("user_detail", JSON.stringify(json));
-    //     router.push('/dashboard'); 
-    //   } else {
+        localStorage.setItem("user_detail", JSON.stringify(json));
+        console.log('API DATA==',json)
+        // router.push('/dashboard'); 
+      } else {
 
-    //     setError(json.message);
-    //     setLoading(false);
-		// console.log('login error= ', json.message)
-    //   }
+        setError(json.message);
+        setLoading(false);
+		console.log('login error= ', json.message)
+      }
     } catch (error) {
       setError('Something went wrong');
 	  console.log('catch error', error)

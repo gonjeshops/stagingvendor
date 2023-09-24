@@ -34,7 +34,7 @@ const VendorSignupForm = ({ path }) => {
       email: "",
       password: "",
       cpassword: "",
-      selectedservice: '',
+      selectedservice: ['customer', path==='supplier'&&'supplier'],
       acceptedTerms: false,
       businessname: '',
       businesslogo: '',
@@ -122,7 +122,7 @@ const VendorSignupForm = ({ path }) => {
     // Submit the formData
     console.log('Form data submitted:', formData,  isForm1Valid, isForm2Valid);
 
-setLoading(true)
+    setLoading(true)
 
     if(!isForm1Valid || !isForm2Valid) {
       setFinalError('Some details are missing in the form.')
@@ -133,25 +133,26 @@ setLoading(true)
       try {
       
         const response = await register({
-          first_name: formData.fname,
+          name: formData.fname,
           last_name: formData.lname,
           email: formData.email,
           password: formData.password,
-          cpassword: formData.cpassword,
-          selected_service: formData.selectedservice,
-          business_email: formData.businessemail,
-          zip: formData.zipcode,
-          brand_logo: formData.businesslogo,
+          // cpassword: formData.cpassword,
+          // selected_service: formData.selectedservice,
+          // business_email: formData.businessemail,
+          // zip: formData.zipcode,
+          // brand_logo: formData.businesslogo,
           business_number: formData.phonenumber,
           contact_details: formData.address,
           business_name: formData.businessname ,
-          accept_terms: formData.acceptedTerms,
+          // accept_terms: formData.acceptedTerms,
+          permission: formData.selectedservice,
         });
     
-        if (response.ok) {
+        if (response) {
           // Request was successful (status code 200)
-          const responseData = await response.json();
-          console.log('Response data:', responseData);
+          // const responseData = await response.json();
+          console.log('Api Response data:', response);
           setSuccessMessage('Signup successful')
           // Handle the response data as needed
   
@@ -173,7 +174,7 @@ setLoading(true)
     setLoading(false)
     
 
-  router.push('/signin/vendor-select')
+  // router.push('/signin/vendor-select')
   };
   
 
@@ -241,6 +242,7 @@ setLoading(true)
           handlePrevious={handlePrevious}
           setisForm2Valid={setisForm2Valid}
           handleSubmit={handleSubmit}
+          path={path}
 
         />
       )}

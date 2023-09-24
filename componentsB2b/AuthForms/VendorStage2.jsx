@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { FaUpload, FaImage } from 'react-icons/fa';
 import Select from 'react-select';
 
-const options = [
-  { label: "Vendor Seller", value: "b2c" },
-  { label: "Vendor Buyer", value: "b2b" },
-];
 
-const VendorStage2 = ({ formData, setFormData, setisForm2Valid }) => {
-  const [selected, setSelected] = useState([
-    { label: "Vendor Seller", value: "b2c" },
-  ]);
+
+const VendorStage2 = ({ formData, setFormData, setisForm2Valid, path }) => {
+
+  const options = [
+    { label: "Vendor Seller", value: "store_owner" },
+    { label: "Vendor Buyer", value: "vendor_b2b" },
+   
+  ];
+
+  const [selected, setSelected] = useState([ ]);
 
   const [selectedFile, setSelectedFile] = useState(null);
-  const [filePreview, setFilePreview] = useState('/favicon.ico');
+  const [filePreview, setFilePreview] = useState('');
   const [errors, setErrors] = useState({
     businessname: '',
     businesslogo: '',
@@ -66,6 +67,12 @@ const VendorStage2 = ({ formData, setFormData, setisForm2Valid }) => {
 
   const selectService = (selected) => {
     setSelected(selected);
+    setFormData(prev=> {
+      return {
+        ...prev,
+        selectedservice: selected.map((item)=>item.value),  
+      }
+    })
   };
 
   const validateForm = () => {
@@ -92,7 +99,7 @@ const VendorStage2 = ({ formData, setFormData, setisForm2Valid }) => {
       isValid = false;
     }
 
-    if (!formData.acceptedTerms==='') {
+    if (formData.acceptedTerms===false) {
       newErrors.acceptedTerms = 'Accept the terms and policy.';
       isValid = false;
     }
@@ -116,12 +123,14 @@ const VendorStage2 = ({ formData, setFormData, setisForm2Valid }) => {
     <form className="flex flex-col space-y-4 pt-4 px-3" style={{ width: '100%' }}>
       <div className="space-y-3">
         <div className="flex gap-3 w-full items-center">
-          <div className="w-[150px] h-[120px] rounded-full overflow-hidden">
-            <img src={filePreview} className='w-full h-full object-cover' alt="Business Logo" />
+          <div className="w-[120px] h-[120px] rounded-full overflow-hidden flex justify-center items-center text-zinc-500 bg-light300">
+            { filePreview ? <img src={filePreview} className='w-full h-full object-cover' alt="Business Logo" /> : <FaImage size={60}/>}
           </div>
 
-          <div className="relative w-[60&] h-28 rounded-md border-dashed border-2 border-gray-400">
-            <div className="flex justify-center items-center h-full w-full px-8 text-center">
+          <div className='relative '>
+          
+         
+          <div className="absolute inset-0 pt-6 flex justify-center items-center h-full w-full px-8 text-center">
               <div className="">
                 <div className="flex items-center justify-center space-x-2">
                   <FaUpload />
@@ -135,11 +144,13 @@ const VendorStage2 = ({ formData, setFormData, setisForm2Valid }) => {
                 {errors.businesslogo && <p style={{ color: 'red' }}>{errors.businesslogo}</p>}
               </div>
             </div>
-            <input onChange={handleFileChange} type='file' accept=".jpg, .gif, jpeg, .webp, .svg, .png" name='businesslogo' value={selectedFile} placeholder='insert' className="absolute text-center top-0 left-0 bottom-0 right-0 flex justify-center items-center" />
-          </div>
+            <input onChange={handleFileChange} type='file' accept=".jpg, .gif, jpeg, .webp, .svg, .png" name='businesslogo' value={selectedFile} placeholder='' 
+          className="text-center relative w-[60&] h-28 rounded-md border-dashed border-2 border-gray-400  flex justify-center items-center " />
+
+          </div> 
         </div>
 
-        <div>
+        {!path==='supplier' ? <div>
           <h1>Select Gonje Service</h1>
           <Select
             value={selected}
@@ -148,37 +159,40 @@ const VendorStage2 = ({ formData, setFormData, setisForm2Valid }) => {
             className="min-w-96 bg-light100 text-light100 focus:outline-none focus:ring focus:border-green-400"
             placeholder="Select Gonje Service"
             isMulti
-          />
+          /> 
           
-        </div>
+        </div> : null}
 
         <div className="">
           <label htmlFor="businessname" className="block text-sm">Business Name</label>
-          <input type="text" required name="businessname" id="businessname" placeholder="John" className="w-full px-3 py-2 border rounded-md border-gray-400 focus:border-green-400" onChange={handleChange} />
+          <input type="text" required name="businessname" id="businessname" value={formData.businessname} placeholder="John" className="w-full px-3 py-2 border rounded-md border-gray-400 focus:border-green-400" onChange={handleChange} />
           {errors.businessname && <p style={{ color: 'red' }}>{errors.businessname}</p>}
         </div>
 
         <div className="">
           <label htmlFor="businessemail" className="block text-sm">Business Email</label>
-          <input type="email" required name="businessemail" id="businessemail" placeholder="businessemail" className="w-full px-3 py-2 border rounded-md border-gray-400 focus:border-green-400" onChange={handleChange} />
+          <input type="email" required name="businessemail" id="businessemail" 
+          value={formData.businessemail} placeholder="businessemail" className="w-full px-3 py-2 border rounded-md border-gray-400 focus:border-green-400" onChange={handleChange} />
           {errors.businessemail && <p style={{ color: 'red' }}>{errors.businessemail}</p>}
         </div>
 
         <div className="">
           <label htmlFor="phonenumber" required className="block text-sm">Phonenumber</label>
-          <input type="tel" name="phonenumber" id="phonenumber" placeholder="0000000" className="w-full px-3 py-2 border rounded-md border-gray-400 focus:border-green-400" onChange={handleChange} />
+          <input type="tel" name="phonenumber" id="phonenumber"
+          value={formData.phonenumber} placeholder="0000000" className="w-full px-3 py-2 border rounded-md border-gray-400 focus:border-green-400" onChange={handleChange} />
           {errors.phonenumber && <p style={{ color: 'red' }}>{errors.phonenumber}</p>}
         </div>
 
         <div className="form-group">
           <label htmlFor="address" required className="block text-sm">Business Address</label>
-          <textarea type="text" name="address" id="address" placeholder="My address" className="w-full h-16 px-3 py-2 border rounded-md border-gray-400 focus:border-green-400" onChange={handleChange} />
+          <textarea type="text" name="address" id="address"
+          value={formData.address} placeholder="My address" className="w-full h-16 px-3 py-2 border rounded-md border-gray-400 focus:border-green-400" onChange={handleChange} />
           {errors.address && <p style={{ color: 'red' }}>{errors.address}</p>}
         </div>
 
         <div className="">
           <label htmlFor="zipcode" required className="block text-sm">ZIP</label>
-          <input type="number" name="zipcode" id="zipcode" placeholder="0000000" className="w-full px-3 py-2 border rounded-md border-gray-400 focus:border-green-400" onChange={handleChange} />
+          <input type="number" name="zipcode" id="zipcode" placeholder="0000000" value={formData.zipcode}  className="w-full px-3 py-2 border rounded-md border-gray-400 focus:border-green-400" onChange={handleChange} />
           {errors.zipcode && <p style={{ color: 'red' }}>{errors.zipcode}</p>}
         </div>
       </div>

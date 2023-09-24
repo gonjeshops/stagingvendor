@@ -26,11 +26,11 @@ const AuthForm = ({type, typeLabel, typeText, activeForm, route}) => {
             />
         </div>
 
-        <div className="px-2 md:pt-8 z-20">
+        <div className=" md:pt-8 z-20">
             
 
         {/* container */}
-            <div className="shadow-lg sm:w-[520px] pb-4 p-2 bg-white rounded-xl ">
+            <div className="shadow sm:w-[520px] p-4   bg-white rounded-xl ">
                 <div className="grid justify-center gap- pb-6 text-center">
                     {/* <h1 className="font-bold text-3xl">{type}</h1>0 */}
                     <div className=" flex justify-center w-full pb-3">
@@ -38,7 +38,7 @@ const AuthForm = ({type, typeLabel, typeText, activeForm, route}) => {
                     <Image src={`/logo.png`} width={90} height={64} alt="logo"/>
                 </Link>
             </div>
-                    <p className="font-semibold text-2xl">{typeLabel}</p>
+                    <p className="font-semibold text-xl">{typeLabel}</p>
                 </div>
 
                 {/* nav */}

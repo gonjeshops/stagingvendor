@@ -99,13 +99,14 @@ const CustomerSignupForm = () => {
 		} else {
 			try {
 				const submitData = {
-					first_name: formData.first_name,
+					name: formData.first_name,
 					last_name: formData.last_name,
 					email: formData.email,
 					password: formData.password,
+					permission: ['customer']
 				}
-				console.log('SIGNUPDATA', submitData)
-				setSuccessMessage('Signup successful')
+				console.log('FORMDATA', submitData)
+				// setSuccessMessage('Signup successful')
 
 				// API call, 
 				const json = await register(submitData);
@@ -113,13 +114,13 @@ const CustomerSignupForm = () => {
 					setError({ message: json?.message,  });
 					console.log('error=', json?.message, ' json.status=', json?.status)
 				}  else {
-					setSuccessMessage('Signup successful!',  json.message, );
+					// setSuccessMessage('Signup successful!',  json.message, );
 					setSuccessMessage('Signup successful')
 					// apiSetmsgs({
 					// msg: json.message,
 					// });
 					localStorage.setItem("user_detail", JSON.stringify(json));
-					console.log('SIGNUPDATA', submitData)
+					console.log('APIDATA', json)
 					setFormData({
 						first_name: '',
 						last_name: '',
@@ -130,7 +131,7 @@ const CustomerSignupForm = () => {
 					  });
 				}
 			  } catch (error) {
-			console.log('catch errrrrr',  error,)
+			console.log('catch error',  error,)
 
 				setError({ message: 'Something went wrong' });
 			  }

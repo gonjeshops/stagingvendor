@@ -9,33 +9,33 @@
   },
   "dependencies": {
     "@pdftron/webviewer": "^8.12.1",
-
-
+    "@react-google-maps/api": "^2.19.2",
+    "@stripe/react-stripe-js": "^1.16.5",
+    "@stripe/stripe-js": "^1.54.2",
     "axios": "^0.24.0",
 
     "chart.js": "^4.3.3",
     "chartjs": "^0.3.24",
-
-
+    "formik": "^2.4.5",
+    "moment": "^2.29.4",
     "next": "^13.4.12",
     "next-redux-wrapper": "^7.0.5",
     "pspdfkit": "^2021.6.2",
-
+    "rc-time-picker": "^3.7.3",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
-
-
+    "react-countdown": "^2.3.5",
+    "react-datepicker": "^4.18.0",
     "react-dom": "^18.2.0",
-
-
+    "react-dropzone": "^11.5.1",
 
 
     "react-icons": "^4.11.0",
-
+    "react-js-pagination": "^3.0.3",
     "react-pdf": "^7.3.3",
-
+    "react-phone-number-input": "^3.3.6",
     "react-redux": "^7.2.9",
-
+    "react-responsive-modal": "^6.4.2",
     "react-select": "^5.7.5",
     "react-toastify": "^8.2.0",
     "recharts": "^2.8.0",

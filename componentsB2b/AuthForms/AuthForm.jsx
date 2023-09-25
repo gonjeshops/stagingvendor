@@ -17,7 +17,7 @@ const AuthForm = ({type, typeLabel, typeText, activeForm, route}) => {
     const [active, setActive] = useState(activeForm)
 
   return (
-    <div className="relative w-screen h-screen overflow-y-auto flex justify-center py-10 ">
+    <div className="relative w-screen h-screen overflow-y-auto flex justify-center items-center py-10 ">
         <div className="hidden sm:block fixed top-0 left-0 w-full h-full   ">
             <img
                 src="/bg.png" // replace with backgroud image
@@ -26,27 +26,26 @@ const AuthForm = ({type, typeLabel, typeText, activeForm, route}) => {
             />
         </div>
 
-        <div className=" md:pt-8 z-20">
-            
-
+        <div className=" md:pt-40 z-20">
         {/* container */}
             <div className="shadow sm:w-[520px] p-4   bg-white rounded-xl ">
                 <div className="grid justify-center gap- pb-6 text-center">
                     {/* <h1 className="font-bold text-3xl">{type}</h1>0 */}
                     <div className=" flex justify-center w-full pb-3">
-                <Link href={'/'} >
-                    <Image src={`/logo.png`} width={90} height={64} alt="logo"/>
-                </Link>
-            </div>
+                        <Link href={'/'} >
+                            <Image src={`/logo.png`} width={90} height={64} alt="logo"/>
+                        </Link>
+                    </div>
+                    
                     <p className="font-semibold text-xl">{typeLabel}</p>
                 </div>
 
                 {/* nav */}
                 <div className="w-full flex flex-nowrap  justify-between pb-6 space-x-3 ">
                    { 
-                    FormNavlinks?.map(({label, id})=> (
+                    FormNavlinks?.map(({label,url, id})=> (
                         <div key={id} 
-                        onClick={() => router.push(`/${route}/${label}`)}
+                        onClick={() => router.push(`${url}/${route}/${label}`)}
                         className={`py-1 text-center ${active === label ? 'border-b-2 border-blue-700' : null} cursor-pointer hover:font-bold duration-300 text-sm`} >
                             <p>{typeText} {label}</p>
                         </div>

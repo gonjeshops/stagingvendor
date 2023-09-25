@@ -149,18 +149,18 @@ const VendorSignupForm = ({ path }) => {
           permission: formData.selectedservice,
         });
     
-        if (response) {
+        if (response.status===1) {
           // Request was successful (status code 200)
           // const responseData = await response.json();
           console.log('Api Response data:', response);
           setSuccessMessage('Signup successful')
           // Handle the response data as needed
+          localStorage.setItem("user_detail", JSON.stringify(json));
+          router.push('/vendor-select')
   
         } else {
-          // Request failed (status code is not 200)
-          console.error('Request failed with status:', response.status);
-          
-          // You can handle error responses here, e.g., display an error message to the user
+          setFinalError(response.message)
+          console.log('Api Request failed with response:', response);
         }
       } catch (error) {
         // An error occurred during the request
@@ -172,9 +172,6 @@ const VendorSignupForm = ({ path }) => {
     }
   
     setLoading(false)
-    
-
-  // router.push('/signin/vendor-select')
   };
   
 
@@ -255,6 +252,7 @@ const VendorSignupForm = ({ path }) => {
           handleNext={handleNext}
           handlePrevious={handlePrevious}
           finalError={finalError}
+          successMessage={successMessage}
           handleSubmit={handleSubmit}
         />
       )}
@@ -268,6 +266,11 @@ const VendorSignupForm = ({ path }) => {
               {'< Previous'}
             </button>
           )}
+          {currentStage === 1 &&
+            <p className="text-sm text- text-gray-600">
+            <Link href="/signin/vendor" className="focus:underline hover:underline">Sign in to an existing account</Link>
+          </p>
+          }
         </div>
 
         {/* Next Button */}

@@ -2,7 +2,7 @@ import React from 'react'
 import Router from "next/router";
 
 
-const VendorStage3 = ({handleSubmit, finalError}) => {
+const VendorStage3 = ({handleSubmit,successMessage, finalError}) => {
 
 
   return (
@@ -12,7 +12,7 @@ const VendorStage3 = ({handleSubmit, finalError}) => {
         You are all set. 
         </h4>
       <p>
-        Now you can access your account from anywhere anytime.
+        Submit your form to get started.
       </p>
       <button className='py-2 px-8  text-white rounded-md bg-blue-600 hover:bg-blue-500 duration-300'
       // onClick={handleSubmit}
@@ -20,6 +20,7 @@ const VendorStage3 = ({handleSubmit, finalError}) => {
 
       >Submit</button>
       {finalError && (<p className='text-red text-sm'>{finalError}</p>)}
+      {successMessage && (<p className='text-green-600 text-sm'>{successMessage}</p>)}
       </div>
       
     </div>

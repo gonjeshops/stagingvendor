@@ -11,13 +11,12 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
 import Link from "next/link"
 
-const AuthForm = ({type, typeLabel, typeText, activeForm, route}) => {
+const AuthForm = ({ typeLabel, typeText, activeForm, route}) => {
     const router = useRouter()
-   
-    const [active, setActive] = useState(activeForm)
+ 
 
   return (
-    <div className="relative w-screen h-screen overflow-y-auto flex justify-center items-center py-10 ">
+    <div className=''>
         <div className="hidden sm:block fixed top-0 left-0 w-full h-full   ">
             <img
                 src="/bg.png" // replace with backgroud image
@@ -26,7 +25,7 @@ const AuthForm = ({type, typeLabel, typeText, activeForm, route}) => {
             />
         </div>
 
-        <div className=" md:pt-40 z-20">
+        <div className={`${route==='signin' && "h-screen items-center"} absolute py-14 top-0 left-0 w-screen  flex justify-center   z-20`}>
         {/* container */}
             <div className="shadow sm:w-[520px] p-4   bg-white rounded-xl ">
                 <div className="grid justify-center gap- pb-6 text-center">
@@ -46,42 +45,14 @@ const AuthForm = ({type, typeLabel, typeText, activeForm, route}) => {
                     FormNavlinks?.map(({label,url, id})=> (
                         <div key={id} 
                         onClick={() => router.push(`${url}/${route}/${label}`)}
-                        className={`py-1 text-center ${active === label ? 'border-b-2 border-blue-700' : null} cursor-pointer hover:font-bold duration-300 text-sm`} >
+                        className={`py-1 text-center ${activeForm === label ? 'border-b-2 border-blue-700' : null} cursor-pointer hover:font-bold duration-300 text-sm`} >
                             <p>{typeText} {label}</p>
                         </div>
                     ))
                    }
                 </div>
 
-                {route === 'signin' ? 
-                <div className="login">
-                    <div className="">{
-                        (active === 'customer') && <CustomerLoginForm/>
-                    }
-                    </div>
-                    <div className="">
-                        {(active === 'vendor') && <VendorLoginForm/>}
-                    </div>
-                    <div className="">
-                        {(active === 'supplier') && <SuplierLoginForm/>}
-                    </div>
-                </div>
-                :
-                <div className="signup">
-                    <div className="">{
-                        (active === 'customer') && <CustormerSignupForm/>
-                    }
-                    </div>
-                    <div className="">
-                        {(active === 'vendor') && <VendorSignupForm/>}
-                    </div>
-                    <div className="">
-                        {(active === 'supplier') && <SuplierSignupForm/>}
-                    </div>
-
-                </div>
-                }
-
+                {route === 'signin' ?  <VendorLoginForm/> : <VendorSignupForm/> }
 
             </div>
         </div>

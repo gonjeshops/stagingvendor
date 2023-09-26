@@ -2,7 +2,8 @@ import React from 'react'
 import Router from "next/router";
 
 
-const VendorStage3 = ({handleSubmit,successMessage, finalError}) => {
+const VendorStage3 = ({handleSubmit,successMessage, finalError, loading}) => {
+
 
 
   return (
@@ -18,7 +19,7 @@ const VendorStage3 = ({handleSubmit,successMessage, finalError}) => {
       // onClick={handleSubmit}
       onClick={handleSubmit}
 
-      >Submit</button>
+      >{loading ? 'Loading...' : 'Submit'}</button>
       {finalError && (<p className='text-red text-sm'>{finalError}</p>)}
       {successMessage && (<p className='text-green-600 text-sm'>{successMessage}</p>)}
       </div>

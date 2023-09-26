@@ -69,15 +69,6 @@ const VendorSignupForm = ({ path }) => {
   }, [router.query.stage, path]);
 
   const handleNext = () => {
-    if (path === 'supplier') {
-      if (currentStage === 1 && isForm1Valid) {
-        setCurrentStage(2);
-        router.push(`/signup/supplier?stage=2`);
-      } else if (currentStage === 2 && isForm2Valid) {
-        setCurrentStage(3);
-        router.push(`/signup/supplier?stage=3`);
-      }
-    } else {
       if (currentStage === 1 && isForm1Valid) {
         setCurrentStage(2);
         router.push(`/signup/vendor?stage=2`);
@@ -85,20 +76,13 @@ const VendorSignupForm = ({ path }) => {
         setCurrentStage(3);
         router.push(`/signup/vendor?stage=3`);
       }
-    }
+    
   };
 
   const handlePrevious = () => {
     setFinalError('')
-    if (path === 'supplier') {
-      if (currentStage === 2) {
-        setCurrentStage(1);
-        router.push(`/signup/supplier?stage=1`);
-      } else if (currentStage === 3) {
-        setCurrentStage(2);
-        router.push(`/signup/supplier?stage=2`);
-      }
-    } else {
+    setSuccessMessage('')
+    
       if (currentStage === 2) {
         setCurrentStage(1);
         router.push(`/signup/vendor?stage=1`);
@@ -106,7 +90,7 @@ const VendorSignupForm = ({ path }) => {
         setCurrentStage(2);
         router.push(`/signup/vendor?stage=2`);
       }
-    }
+    
   };
 
   const isFormValid = () => {
@@ -150,13 +134,11 @@ const VendorSignupForm = ({ path }) => {
         });
     
         if (response.status===1) {
-          // Request was successful (status code 200)
-          // const responseData = await response.json();
           console.log('Api Response data:', response);
-          setSuccessMessage('Signup successful')
-          // Handle the response data as needed
-          localStorage.setItem("user_detail", JSON.stringify(json));
-          router.push('/vendor-select')
+          setSuccessMessage(response.message)
+
+          localStorage.setItem("user_detail", JSON.stringify(response));
+          router.push('/signin/vendor-select')
   
         } else {
           setFinalError(response.message)
@@ -254,6 +236,8 @@ const VendorSignupForm = ({ path }) => {
           finalError={finalError}
           successMessage={successMessage}
           handleSubmit={handleSubmit}
+   
+          loading={loading}
         />
       )}
 

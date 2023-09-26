@@ -5,10 +5,10 @@ import { useEffect } from "react";
 
 
 const DashboardPage = () => {
-const router = useRouter()
-useEffect(() => {
-    router.push('/vendorb2b/workspace')
-}, [])
+// const router = useRouter()
+// useEffect(() => {
+//     router.push('/vendorb2b/workspace')
+// }, [])
 
   return (
     

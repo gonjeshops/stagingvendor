@@ -12,31 +12,55 @@ import GlobalStateProvider from "@/context/GlobalStateProvider";
 
 function MyApp({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState);
-  const route = useRouter();
+  const router = useRouter();
 
-  useEffect(() => {
-    if (route.asPath == "/") {
-      route.push("/vendorb2b");
+  // protect page
+  const publicPaths = [
+    '/',
+    '/contractPolicy', 
+    "/vendor",
+    "/payment",
+    "/login",
+    "/sigin",
+    "/signup",
+    "/howItworks",
+    "/aboutUs",
+    "/contactUs",
+    "/faq",
+    "/vendors",
+    "/suppliers",
+    "/privacy_policies",
+  ]
+  
+
+  useEffect( () => {
+    const user_detail = JSON.parse(localStorage.getItem("user_detail"));
+    const isPublic = publicPaths.includes(router.asPath) ||  router.asPath.startsWith("/signup") || router.asPath.startsWith("/signin");
+  
+    if (!isPublic && !user_detail) {
+      router.push("/signup");
     }
-  }, []);
 
+  }, [router.asPath]);
+
+ 
   return (
     <Provider store={store}>
     <GlobalStateProvider>
 
-      {!(route.asPath === "/contractPolicy") &&
-      !(route.asPath === "/vendor") &&
-      !(route.asPath === "/payment") &&
-      !(route.asPath === "/") &&
-      !(route.asPath === "/login") && 
-      !(route.asPath.split('/').includes('vendorb2b')) && 
-      !(route.asPath.split('/').includes('signup')) && 
-      !(route.asPath.split('/').includes('signin'))? (
+      {!(router.asPath === "/contractPolicy") &&
+      !(router.asPath === "/vendor") &&
+      !(router.asPath === "/payment") &&
+      !(router.asPath === "/") &&
+      !(router.asPath === "/login") && 
+      !(router.asPath.split('/').includes('vendorb2b')) && 
+      !(router.asPath.split('/').includes('signup')) && 
+      !(router.asPath.split('/').includes('signin'))? (
         <Layout>
           <Component {...pageProps} />
         </Layout>
       ) : 
-      (route.asPath.split('/').includes('vendorb2b'))  ? (
+      (router.asPath.split('/').includes('vendorb2b'))  ? (
         <LayoutB2b>
           <Component {...pageProps} />
         </LayoutB2b>

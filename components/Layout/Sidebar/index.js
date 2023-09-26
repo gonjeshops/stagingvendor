@@ -20,7 +20,7 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
     }
   }, []);
 
-  console.log("isVendor", isVendor);
+  // console.log("isVendor", isVendor);
 
   return (
     <div
@@ -41,11 +41,14 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
           width={140}
         />
       </a>
+
       <hr className="mt-2" />
+
       <ul className="nav nav-pills flex-column mb-auto">
         <a onClick={toggleSidebar} className="closebtn">
           &times;
         </a>
+
         {Object.keys(sideTabs).map((item) => {
           const Tab = sideTabs[item];
           return (
@@ -63,10 +66,11 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                   >
                     <div className="d-flex">
                       <div className="icon text-center">
-                        <Image src={Tab.image} alt="" height={20} width={20} />
+                        <Image src={Tab.image} alt="xsxcc" height={20} width={20} />
                       </div>
                       <span className="ms-2">{Tab.name}</span>
                     </div>
+
                     <Image
                       className="down"
                       src={DropdownSvg}
@@ -75,6 +79,7 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                       width={10}
                     />
                   </a>
+
                   <div
                     id="collapseExample1"
                     className={`panel-collapse collapse ${
@@ -133,9 +138,15 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                 </Link>
               )}
             </li>
+
+            
           );
         })}
+        <Link href={'/vendorb2b'} className="nav-link rounded-l-full" style={{color: 'black', background: 'white'}}>
+        Switch to VendorB2B
+      </Link>
       </ul>
+      
     </div>
   );
 };

@@ -29,6 +29,11 @@ const GlobalStateProvider = ({ children }) => {
     })
   }
 
+  // logout
+  const logout = () => {
+    localStorage.setItem("user_detail", null)
+    router.push('/')
+  }
 
 
   const openModal = (modalType) => {
@@ -40,6 +45,7 @@ const GlobalStateProvider = ({ children }) => {
   };
 
   const globalState = {
+    logout,
     module,setModule,
     fetchUser,
     showSidebar,

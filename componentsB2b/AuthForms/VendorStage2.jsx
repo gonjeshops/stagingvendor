@@ -10,7 +10,7 @@ const VendorStage2 = ({ formData, setFormData, setisForm2Valid, path }) => {
   ];
 
   const [selected, setSelected] = useState([]);
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState('');
   const [filePreview, setFilePreview] = useState('');
   const [errors, setErrors] = useState({
     businessname: '',
@@ -40,14 +40,14 @@ const VendorStage2 = ({ formData, setFormData, setisForm2Valid, path }) => {
     const maxSize = 1024 * 1024; // 1MB
     if (file.size > maxSize) {
       setErrors({ ...errors, businesslogo: 'File size exceeds the limit (1MB)' });
-      setSelectedFile(null);
+      setSelectedFile('');
       return;
     }
 
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/svg', 'image/gif', 'image/jpg', /* Add other allowed types if needed */];
     if (!allowedTypes.includes(file.type)) {
       setErrors({ ...errors, businesslogo: 'Only certain image formats (JPEG, SVG, WEBP, PNG, GIF) are allowed' });
-      setSelectedFile(null);
+      setSelectedFile('');
       return;
     }
 
@@ -82,7 +82,8 @@ const VendorStage2 = ({ formData, setFormData, setisForm2Valid, path }) => {
       newErrors.businessname = '';
     }
 
-    if (!formData.businessemail.trim()) {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailPattern.test(formData.businessemail))  {
       newErrors.businessemail = 'Business Email is required';
       isValid = false;
     } else {
@@ -133,7 +134,7 @@ const VendorStage2 = ({ formData, setFormData, setisForm2Valid, path }) => {
     setFormData({ ...formData, acceptedTerms: !formData.acceptedTerms });
   };
 
-  console.log(path);
+  
   return (
     <form className="flex flex-col space-y-4 pt-4 px-3" style={{ width: '100%' }}>
       <div className="space-y-3">
@@ -164,12 +165,12 @@ const VendorStage2 = ({ formData, setFormData, setisForm2Valid, path }) => {
               name="businesslogo"
               value={selectedFile}
               placeholder=""
-              className="text-center relative w-[60%] h-28 rounded-md border-dashed border-2 border-gray-400 flex justify-center items-center"
+              className="text-center relative w-full h-28 rounded-md border-dashed border-1 border-gray-400 flex justify-center items-center"
             />
           </div>
         </div>
 
-        {path === 'supplier' ? null : (
+      
           <div>
             <h1>
               Select Gonje Service{errors.services && <span className="text-red-500">*</span>}
@@ -183,11 +184,11 @@ const VendorStage2 = ({ formData, setFormData, setisForm2Valid, path }) => {
               isMulti
             />
           </div>
-        )}
+       
 
         <div className="">
           <label htmlFor="businessname" className="block text-sm">
-            Business Name<span className="text-red-500">*</span>
+            Business Name {errors.businessname && <span className="text-red-500">*</span>}
           </label>
           <input
             type="text"
@@ -199,12 +200,12 @@ const VendorStage2 = ({ formData, setFormData, setisForm2Valid, path }) => {
             className="w-full px-3 py-2 border rounded-md border-gray-400 focus:border-green-400"
             onChange={handleChange}
           />
-          {errors.businessname && <p className="text-sm text-red-600">{errors.businessname}</p>}
+          {/* {errors.businessname && <p className="text-sm text-red-600">{errors.businessname}</p>} */}
         </div>
 
         <div className="">
           <label htmlFor="businessemail" className="block text-sm">
-            Business Email<span className="text-red-500">*</span>
+            Business Email  {errors.businessemail &&<span className="text-red-500">*</span>}
           </label>
           <input
             type="email"
@@ -216,12 +217,12 @@ const VendorStage2 = ({ formData, setFormData, setisForm2Valid, path }) => {
             className="w-full px-3 py-2 border rounded-md border-gray-400 focus:border-green-400"
             onChange={handleChange}
           />
-          {errors.businessemail && <p className="text-sm text-red-600">{errors.businessemail}</p>}
+          {/* {errors.businessemail && <p className="text-sm text-red-600">{errors.businessemail}</p>} */}
         </div>
 
         <div className="">
           <label htmlFor="phonenumber" required className="block text-sm">
-            Phone Number<span className="text-red-500">*</span>
+            Phone Number     {errors.phonenumber &&<span className="text-red-500">*</span>}
           </label>
           <input
             type="tel"
@@ -232,12 +233,12 @@ const VendorStage2 = ({ formData, setFormData, setisForm2Valid, path }) => {
             className="w-full px-3 py-2 border rounded-md border-gray-400 focus:border-green-400"
             onChange={handleChange}
           />
-          {errors.phonenumber && <p className="text-sm text-red-600">{errors.phonenumber}</p>}
+          {/* {errors.phonenumber && <p className="text-sm text-red-600">{errors.phonenumber}</p>} */}
         </div>
 
         <div className="form-group">
           <label htmlFor="address" required className="block text-sm">
-            Business Address<span className="text-red-500">*</span>
+            Business Address   {errors.address &&<span className="text-red-500">*</span>}
           </label>
           <textarea
             type="text"
@@ -248,12 +249,12 @@ const VendorStage2 = ({ formData, setFormData, setisForm2Valid, path }) => {
             className="w-full h-16 px-3 py-2 border rounded-md border-gray-400 focus:border-green-400"
             onChange={handleChange}
           />
-          {errors.address && <p className="text-sm text-red-600">{errors.address}</p>}
+          {/* {errors.address && <p className="text-sm text-red-600">{errors.address}</p>} */}
         </div>
 
         <div className="">
           <label htmlFor="zipcode" required className="block text-sm">
-            ZIP<span className="text-red-500">*</span>
+            ZIP  {errors.zipcode &&<span className="text-red-500">*</span>}
           </label>
           <input
             type="number"
@@ -264,7 +265,7 @@ const VendorStage2 = ({ formData, setFormData, setisForm2Valid, path }) => {
             className="w-full px-3 py-2 border rounded-md border-gray-400 focus:border-green-400"
             onChange={handleChange}
           />
-          {errors.zipcode && <p className="text-sm text-red-600">{errors.zipcode}</p>}
+          {/* {errors.zipcode && <p className="text-sm text-red-600">{errors.zipcode}</p>} */}
         </div>
       </div>
 
@@ -280,10 +281,10 @@ const VendorStage2 = ({ formData, setFormData, setisForm2Valid, path }) => {
           <p href="#" className="flex gap-1">
             I accept the <Link href={'#'} className="text-blue-700 focus:underline hover:underline">terms</Link> and{' '}
             <Link href={'#'} className="text-blue-700 focus:underline hover:underline">privacy policy</Link>{' '}
-            <span className="text-red-500">*</span>
+            {errors.acceptedTerms &&  <span className="text-red-500">*</span>}
           </p>
         </div>
-        {errors.acceptedTerms && <p className="text-sm text-red-600">{errors.acceptedTerms}</p>}
+        {/* {errors.acceptedTerms && <p className="text-sm text-red-600">{errors.acceptedTerms}</p>} */}
       </div>
     </form>
   );

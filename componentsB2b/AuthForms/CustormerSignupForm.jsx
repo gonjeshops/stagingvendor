@@ -57,13 +57,13 @@ const CustomerSignupForm = () => {
 		if (!data.password.trim()) {
 			errors.password = 'Password is required';
 		  } else if (!isStrongPassword(data.password.trim())) {
-			errors.password = 'Password must be at least 8 characters long, containing at least one uppercase letter, one lowercase letter, and one number';
+			errors.password = 'Password must be at least 6 characters long, containing at least one uppercase letter, one lowercase letter, and one number';
 		  }
 	
 		if (!data.cpassword.trim()) {
 		  errors.cpassword = 'Confirm Password is required';
 		} else if (data.password.trim() !== data.cpassword.trim()) {
-		  errors.cpassword = 'Passwords do not match';
+		  errors.cpassword = 'Passwords does not match';
 		}
 	
 		if (!data.acceptTerms) {
@@ -81,7 +81,7 @@ const CustomerSignupForm = () => {
 
 	  const isStrongPassword = (password) => {
 		// For example, at least 8 characters, containing at least one uppercase letter, one lowercase letter, and one number
-		const strongPasswordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+		const strongPasswordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
 		return strongPasswordPattern.test(password);
 	  };
 	

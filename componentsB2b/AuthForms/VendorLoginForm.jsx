@@ -21,6 +21,7 @@ const VendorLoginForm = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('')
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -62,9 +63,9 @@ const VendorLoginForm = () => {
 		// Successful login
         setLoading(false);
         // set success message
-
+        setSuccessMessage(json.message)
         localStorage.setItem("user_detail", JSON.stringify(json));
-        router.push('/dashboard'); 
+        router.push('/signin/vendor-select') 
       } else {
 
         setError(json.message);
@@ -88,7 +89,8 @@ const VendorLoginForm = () => {
         <hr className="w-full dark:text-gray-400" />
       </div>
 
-	  {error && <p className="text-red-500">{error}</p>}
+	  {error && <p className="text-red-600">{error}</p>}
+	  {successMessage && <p className="text-green-600">{successMessage}</p>}
 
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div className="space-y-2">
@@ -141,8 +143,8 @@ const VendorLoginForm = () => {
             loading ? 'opacity-50 pointer-events-none' : ''
           }`}
         >
-          {loading ? <span className="animate-spin mr-2">&#9696;</span> : null}
-          Sign in
+          {/* {loading ? <span className="animate-spin mr-2">&#9696;</span> : null} */}
+          {loading ? 'Loading...' : 'Sign in'}
         </button>
       </form>
       <p className="text-sm text-center text-gray-400">

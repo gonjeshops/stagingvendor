@@ -5,7 +5,7 @@ import { MdHelpOutline } from 'react-icons/md';
 
 const ModalProfileDropdown = ({ stopPropagation }) => {
 
-  const {modalType, closeModal} = useGlobalState()
+  const {modalType, logout, closeModal} = useGlobalState()
 
   return (
     <div onClick={closeModal} className={`${modalType==='profileDropdown' ? 'opacity-100 scale-y-100' : 'opacity-50 scale-y-0' } transition-transform transform duration-500 absolute inset-0  z-50`}
@@ -21,7 +21,7 @@ const ModalProfileDropdown = ({ stopPropagation }) => {
               <a href="#" className="block px-4 py-2 text-sm text-gray-00 bg-hover300">
                   Settings
               </a>
-              <a href="#" className="block px-4 py-2 text-sm text-gray-00  bg-hover300">
+              <a href="/" onClick={logout} className="block px-4 py-2 text-sm text-gray-00  bg-hover300">
                   Logout
               </a>
 

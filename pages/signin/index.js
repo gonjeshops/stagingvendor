@@ -4,7 +4,7 @@ import { useEffect } from "react"
 const Login = () => {
   const router = useRouter()
   useEffect(() => {
-    router.push('/signin/customer')
+    router.push('/signin/vendor')
       
     }, [])
 

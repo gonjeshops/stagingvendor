@@ -57,7 +57,7 @@ a {
 
 /* : flex-end */
 button {
-  text-transform: uppercase !important;
+  /* text-transform: uppercase !important; */
   font-size: 13px;
   border-radius: 3px !important;
 }
@@ -138,7 +138,9 @@ button {
   @apply bg-red-600 hover:bg-red-700 duration-300 text-white
 }
 
-
+.hover-green{
+  @apply bg-green-600 hover:bg-green-800 duration-300 text-white
+}
 /* .bg-gonje-gradient {
   background: rgb(2,0,36);
   background: linear-gradient(163deg, rgba(2,0,36,1) 0%, rgba(9,121,86,1) 0%, rgba(7,123,83,1) 0%, rgba(4,154,163,1) 51%, rgba(0,47,107,1) 100%);

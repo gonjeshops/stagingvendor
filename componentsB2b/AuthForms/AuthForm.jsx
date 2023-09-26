@@ -16,7 +16,7 @@ const AuthForm = ({ typeLabel, typeText, activeForm, route}) => {
  
 
   return (
-    <div className=''>
+    <div className='text-zinc-800'>
         <div className="hidden sm:block fixed top-0 left-0 w-full h-full   ">
             <img
                 src="/bg.png" // replace with backgroud image

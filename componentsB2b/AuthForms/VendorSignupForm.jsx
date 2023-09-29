@@ -119,7 +119,7 @@ const VendorSignupForm = ({ path }) => {
         const response = await register({
           name: formData.fname,
           last_name: formData.lname,
-          user_email: formData.email,
+          email: formData.email,
           password: formData.password,
           // cpassword: formData.cpassword,
           // selected_service: formData.selectedservice,

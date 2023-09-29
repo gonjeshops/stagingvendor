@@ -12,12 +12,12 @@ const SupplierCard = ({ label, item, details }) => {
     return text;
   }
 
-  const truncatedDetails = truncateText(details, 150);
+  const truncatedDetails = truncateText(details, 120);
 
   return (
-    <div className='w-full h-[335px] pb-4 border-b flex flex-col gap-1 justify-between'>
+    <div className='w-full h-[335px] pb-2 border-b flex flex-col gap-1 justify-between'>
       <div className="space-y-2">
-        <div className="shadow-sm border border-zinc-300 p-4 h-40 rounded-lg">
+        <div className=" border border-zinc-300 p-4 h-40 rounded-lg">
           { item?.cover_image?.thumbnail ? <div className="bg-yellow-500 h-full overflow-hidden rounded-md ">
             <img src={item?.cover_image?.thumbnail} className='object-cover w-full h-full' />
           </div> : 
@@ -27,7 +27,7 @@ const SupplierCard = ({ label, item, details }) => {
           }
         </div>
 
-        <p className='text-lg font-medium'>{label}</p>
+        <p className='text-base font-medium'>{label}</p>
         <div className="flex gap-2">
           <div className='text-orange-600 text-xl flex gap-0 items-center'>
             <FaStar />

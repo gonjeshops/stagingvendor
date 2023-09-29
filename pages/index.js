@@ -13,7 +13,7 @@ const RootPage = () => {
       <GifLoader>
           <div className="grid justify-center gap-4 text-center">
 
-          <h3 className="font-bold text-black text-5xl">Superlanding</h3>
+          <h3 className="font-bold text-5xl">Superlanding</h3>
           <Link href={'/signin'} className="hover-green rounded-full px-8 py-3 text-lg font-medium">Login</Link>
           </div>
 

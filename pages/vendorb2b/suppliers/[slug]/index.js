@@ -20,7 +20,7 @@ const SupplierDetailsPage = ({ supplier }) => {
         <div className="">
             <p>{supplier}</p>
             <p className='text-base pb-20'>No ui for supplier store details page</p>
-            <Link className="text-base text-blue-800"  href={'/suppliers'}>{`<     Back to stores`}</Link>
+            <Link className="text-base text-blue-800"  href={'/vendorb2b/suppliers'}>{`<     Back to stores`}</Link>
         </div>
     </div>
     </Workspace>

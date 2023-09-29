@@ -21,7 +21,7 @@ export const verifyPostCode = (values) => {
     });
 };
 export const register = (values) => {
-  console.log('API VALUES', values)
+  // console.log('API VALUES', values)
   return axios({
     method: "post",
     headers: authHeader(),
@@ -30,7 +30,10 @@ export const register = (values) => {
       ...values
     },
   })
-    .then((response) => response.data)
+    .then((response) => {
+      console.log('API SUCCESSFUL, RESPONSE: ', response)
+      return response.data
+    })
     .catch((error) => {
       console.log("error in api", error);
       return error.response.data;

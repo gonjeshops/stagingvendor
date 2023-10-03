@@ -1,19 +1,35 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import Pagination from '../Pagination';
 import SuppliersSearchBar from '../SuppliersSearchBar';
 import SupplierCard from '../card/SupplierCard';
 import DashboardHeading from '../Workspace/DashboardHeading';
+import { useRouter } from 'next/router';
+import axios from 'axios';
 
-const SuppliersCatalogue = ({suppliers}) => {
-    console.log('PROP=', suppliers)
+
+
+
+const SuppliersCatalogue = ({suppliersData, totalPages}) => {
+
+    const router = useRouter()
+    const [loading, setLoading] = useState(false)
+
     // paginaation
-    const [currentPage, setCurrentPage] = useState(1);
-    const totalPages = 50; // Replace this with the total number of pages in your data
+    const [page, setPage] = useState(1);
 
     const handlePageChange = (page) => {
-        setCurrentPage(page);
-        // Fetch data from the server here based on the selected page.
+      setLoading(true)
+        setPage(page);
+        router.push(`/vendorb2b/suppliers?page=${page} `)
     };
+
+    useEffect(() => {
+      setLoading(false)
+    }, [suppliersData])
+     
+      if(loading) {
+        return <div className='flex w-full justify-center items-center'>Loading...</div>
+      }
 
   return (
     <main className='space-y-10  '>
@@ -32,7 +48,7 @@ const SuppliersCatalogue = ({suppliers}) => {
             <section className='space-y-6'>
                 <div className=" grid gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-6 ">
                     {
-                        suppliers?.map((item) => (
+                        suppliersData?.map((item) => (
                             <div key={item.id} className="">
                                 <SupplierCard label={item.name} details={item.description} item={item}/>
                             </div>
@@ -41,7 +57,7 @@ const SuppliersCatalogue = ({suppliers}) => {
                 </div>
             </section>
 
-            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+            <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />
         </main >
   )
 }

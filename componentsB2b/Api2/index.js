@@ -19,13 +19,32 @@ export const fetchSuppliers = () => {
     });
 };
 
+// GET suppliers by pagination.  usage - /suppliers
+export const fetchSuppliersByPagination = (page, limit) => {
+  return axios({
+    method: "get",
+    headers: authHeader(),
+    url: url + "suppliers/shops",
+    data: {
+      page: page,
+      limit: limit
+    }
+  })
+    .then((response) => response.data)
+    .catch((error) => {
+      console.log("Error in fetchSuppliers api", error);
+    });
+};
+
+
 
 // View a supplier shop's products.  usage - /suppliers/[supplierId]
 export const viewSupplierShopProducts = (userId, shopId) => {
+
     return axios({
       method: "get",
       headers: authHeader(),
-      url: url + `suppliers/${userId}shop/${shopId}/products`,
+      url: url + `suppliers/${userId}/shop/${shopId}/products`,
     })
       .then((response) => response)
       .catch((error) => {
@@ -33,6 +52,7 @@ export const viewSupplierShopProducts = (userId, shopId) => {
       });
   };
 
+  
 // View supplier products
 export const viewSupplierProducts = (userId) => {
     return axios({

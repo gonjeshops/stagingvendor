@@ -142,9 +142,9 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
             
           );
         })}
-        <Link href={'/vendorb2b'} className="nav-link rounded-l-full" style={{color: 'black', background: 'white'}}>
+        {user?.permissions?.includes('vendor_b2b') &&<Link href={'/vendorb2b'} className="nav-link rounded-l-full" style={{color: 'black', background: 'white'}}>
         Switch to VendorB2B
-      </Link>
+      </Link>}
       </ul>
       
     </div>

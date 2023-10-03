@@ -14,6 +14,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 
     return pageNumbers;
   };
+  console.log('Totalpages', totalPages)
 
   return (
     <div className="flex items-center justify-center space-x-4 mt-8">

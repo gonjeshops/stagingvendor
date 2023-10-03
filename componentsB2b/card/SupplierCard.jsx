@@ -4,9 +4,11 @@ import React from 'react'
 import { FaImage, FaStar } from 'react-icons/fa'
 
 const SupplierCard = ({ label, item, details }) => {
+
+
   // Function to truncate text to a maximum of 50 characters
   const truncateText = (text, maxLength) => {
-    if (text.length > maxLength) {
+    if (text?.length > maxLength) {
       return text.slice(0, maxLength) + '...'; // Add ellipsis for truncation
     }
     return text;
@@ -44,7 +46,7 @@ const SupplierCard = ({ label, item, details }) => {
       </div>
 
       <div className="">
-        <Link href={`/vendorb2b/suppliers/${item.id}`} className='text-blue-500 hover:text-blue-700 duration-300'>
+        <Link href={`/vendorb2b/suppliers/${item?.slug}?userId=${item?.owner_id}&shopId=${item?.id}`} className='text-blue-500 hover:text-blue-700 duration-300'>
           {`Visit Store >`}
         </Link>
       </div>

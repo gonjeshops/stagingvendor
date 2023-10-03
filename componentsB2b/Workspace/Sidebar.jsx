@@ -12,7 +12,7 @@ const Sidebar = ({heading, onclick, list}) => {
     const router = useRouter()
     const [active, setActive] = useState(router.pathname.split('/')[2])
     const [notification, setNotification] = useState(true)
-    const { module, fetchUser, modalType, openModal, setShowSidebar, setOpenNavSubmenu, openNavSubmenu} = useGlobalState()
+    const { user, module, fetchUser, modalType, openModal, setShowSidebar, setOpenNavSubmenu, openNavSubmenu} = useGlobalState()
    
     const handleClick = (title, link) => {
         setActive(title)
@@ -129,13 +129,13 @@ const Sidebar = ({heading, onclick, list}) => {
 
         {module.moduleType === 'vendor' && <OtherWorkspaceLinks active={active} handleClick={handleClick} moduleType={module.moduleType}  fetchUser={fetchUser} setShowSidebar={setShowSidebar}/>}
         
-        <div className='pr-4 grid'>
+      {user?.permissions?.includes('store_owner') &&  <div className='pr-4 grid'>
              <Link href={'/dashboard'} className='hover-blue py-3 text-center  rounded '
               >
                     B2C Dashboard             
                 </Link>
         </div>
-        
+        }
         
         
         

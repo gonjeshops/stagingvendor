@@ -12,6 +12,38 @@ const GlobalStateProvider = ({ children }) => {
   const [openNavSubmenu, setOpenNavSubmenu] = useState('');
   const [cartItem, setCartItem] = useState([]);
   const [module, setModule] = useState({ moduleType: 'vendor', navLink: [] });
+  const [user, setUser] = useState('')
+
+  // Function to retrieve "user-details" from local storage
+useEffect(() => {
+  function getUserDetailsFromLocalStorage() {
+    try {
+      // Retrieve the stored user details as a JSON string
+      const userDetailsJSON = localStorage.getItem('user_detail');
+  
+      // Parse the JSON string into a JavaScript object
+      const userDetails = JSON.parse(userDetailsJSON);
+  
+      // Check if the parsing was successful
+      if (userDetails && typeof userDetails === 'object') {
+        setUser(userDetails);
+        console.log('User details retrieved:', userDetails);
+
+      } else {
+        // If the stored data is not valid JSON or an object, return null
+        return setUser(null);
+      }
+    } catch (error) {
+      // Handle any errors that may occur during retrieval
+      console.error('Error retrieving user details from local storage:', error);
+      return null;
+    }
+  }
+  getUserDetailsFromLocalStorage()
+
+  
+}, [])
+
 
 
   // Use useEffect for initial setup when the component mounts
@@ -45,6 +77,7 @@ const GlobalStateProvider = ({ children }) => {
   };
 
   const globalState = {
+    user,
     logout,
     module,setModule,
     fetchUser,

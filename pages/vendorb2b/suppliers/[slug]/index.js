@@ -1,10 +1,35 @@
 import Workspace from "@/componentsB2b/Workspace/Workspace";
 import Link from "next/link";
-
-
+import { useEffect, useState } from "react";
+import axios from 'axios';
+import SuppliersDetails from "@/componentsB2b/Suppliers/SuppliersDetails";
+import { viewSupplierShopProducts } from "@/componentsB2b/Api2";
 
 const SupplierDetailsPage = ({ supplier }) => {
+  // const [supplierData, setSupplierData] = useState(null);
+  // const [error, setError] = useState(null);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios({
+  //         method: 'get',
+  //         url: '/api/test/supplier-details',
+  //         params: { supplierId: supplier },
+  //       });
+
+  //       if (response.status === 200) {
+  //         setSupplierData(response.data.data);
+  //       }
+  //     } catch (error) {
+  //       setError(error.message); // Handle error and set the error state
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [supplier]);
     
+
 
 //   if (router.isFallback) {
 //     return <div>Loading...</div>;
@@ -13,50 +38,44 @@ const SupplierDetailsPage = ({ supplier }) => {
 //   if (!course || undefined) {
 //     return <div>Course not found</div>;
 //   }
-
+console.log(supplier)
   return (
-      <Workspace>
-    <div className="font-bold text-4xl text-center h-[600px] flex justify-center items-center">
-        <div className="">
-            <p>{supplier}</p>
-            <p className='text-base pb-20'>No ui for supplier store details page</p>
-            <Link className="text-base text-blue-800"  href={'/vendorb2b/suppliers'}>{`<     Back to stores`}</Link>
-        </div>
-    </div>
-    </Workspace>
+    <Workspace>
+    
+      <div>
+        {supplier ? (
+          <SuppliersDetails supplierData={supplier?.data}/>
+        ) : (
+          <div>Loading...</div>
+        )}
+      </div>
+    
+  </Workspace>
   )
 
     
 };
 
-export async function getServerSideProps({ params, req }) {
-//   const session = await getSession({ req });
-
-//   if (!session) {
-//     return {
-//       redirect: {
-//         destination: '/auth/signin', // Redirect to login page if not authenticated
-//         permanent: false,
-//       },
-//     };
-//   }
+export async function getServerSideProps({ query, params, req }) {
+  
 
   try {
     // Fetch course data by slug
-    // const course = await getCoursesBySlug(params.slug); // Implement your API fetch method
+    const slug = params.slug
+    const {userId, shopId} = query
+    const supplierData = await viewSupplierShopProducts(userId, shopId)
 
-    const supplier = params.slug
+console.log('supplierData', supplierData, 'slug', slug, 'userId', userId, 'shopId', shopId)
 
+    if (!supplierData?.data) {
+      return {
+        notFound: true, // Return a 404 response if course is not found
+      };
+    }
 
-    // if (!course) {
-    //   return {
-    //     notFound: true, // Return a 404 response if course is not found
-    //   };
-    // }
-
-    return { props: { supplier } };
+    return { props: { supplier: supplierData?.data } };
   } catch (error) {
-    // console.error(error);
+    console.error(error);
     return { props: { supplier: null } };
   }
 }

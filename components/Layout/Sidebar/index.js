@@ -4,8 +4,11 @@ import Link from "next/link";
 import { Logo, UpgradePro, Inventory, DropdownSvg } from "../../../assets";
 import { SideTabs } from "./SideTabs";
 import { useRouter } from "next/router";
+import GlobalStateProvider from "@/context/GlobalStateProvider";
 
 const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
+  const {user} = GlobalStateProvider()
+
   const route = useRouter();
   const activePath = route.asPath;
   const [toggleHrm, setHRMToggle] = useState(false);

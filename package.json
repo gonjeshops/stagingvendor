@@ -28,7 +28,6 @@
     "react-datepicker": "^4.18.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^11.5.1",
-    "react-facebook-login": "^4.1.1",
     "react-google-autocomplete-address-fields": "^1.0.9",
     "react-google-login": "^5.2.2",
     "react-google-places-autocomplete": "^4.0.1",

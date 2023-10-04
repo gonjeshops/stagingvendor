@@ -1,8 +1,38 @@
 
+import { viewSupplierShopProductDetails } from '@/componentsB2b/Api2';
 import ProductDetails from '@/componentsB2b/Products/ProductDetails'
 import Workspace from '@/componentsB2b/Workspace/Workspace';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
-const CourseLMSPage = ({ course }) => {
+const ProductDetailsPage = ({  userId, shopId, productId,  error}) => {
+
+  const router = useRouter();
+
+  const [productData, setProductData] = useState(null);
+  const [apiError, setApiError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await viewSupplierShopProductDetails(userId, productId, shopId);
+
+        if (response?.status === 200) {
+          console.log("API response:", response);
+          setProductData(response?.data);
+        } else {
+          setApiError("Something went wrong. Try again or consult a developer.");
+        }
+      } catch (error) {
+        console.error("Catch error:", error);
+        setApiError("Server is not available. Try again or consult a developer.");
+      } finally{
+      }
+    };
+
+    fetchData();
+  }, [userId, productId, shopId]);
+
     
     const product = [
         {
@@ -18,48 +48,55 @@ const CourseLMSPage = ({ course }) => {
         },
     ]
 
-//   if (router.isFallback) {
-//     return <div>Loading...</div>;
-//   }
+    if (error) {
+      return (
+        <Workspace>
+          <div className="absolute inset-0 flex items-center justify-center">
+            Error: There's an error feedback from the server. Try again or consult a developer.
+          </div>
+        </Workspace>
+      );
+    }
+  
+    if (apiError) {
 
-//   if (!course || undefined) {
-//     return <div>Course not found</div>;
-//   }
+      return (
+        <Workspace>
+          <div className="absolute inset-0 flex items-center justify-center">{apiError}</div>
+        </Workspace>
+      );
+    }
+  
+    if (!userId || isNaN(userId) || !shopId || isNaN(shopId) || !productId || isNaN(productId)) {
+      return (
+        <Workspace>
+          <div className="absolute inset-0 flex items-center justify-center">
+            Error: The URL should contain a valid shop Id and a valid user Id.
+          </div>
+        </Workspace>
+      );
+    }
 
   return (
         <Workspace>
-            <ProductDetails product={product}/>
+            {productData ? <ProductDetails product={productData} p={product}/> : <div>Loading...</div>}
         </Workspace>
   )
 };
 
-// export async function getServerSideProps({ params, req }) {
-  // const session = await getSession({ req });
+export async function getServerSideProps({ query }) {
+  try {
+    const { userId, shopId, productId } = query;
 
-  // if (!session) {
-  //   return {
-  //     redirect: {
-  //       destination: '/auth/signin', // Redirect to login page if not authenticated
-  //       permanent: false,
-  //     },
-  //   };
-  // }
+    if (!userId || isNaN(userId) || !shopId || isNaN(shopId) || !productId || isNaN(productId)) {
+      throw new Error("Invalid userId or shopId in the query parameters.");
+    }
 
-//   try {
-//     // Fetch course data by slug
-//     const course = await getCoursesBySlug(params.slug); // Implement your API fetch method
+    return { props: { userId: parseInt(userId), shopId: parseInt(shopId), productId: parseInt(productId) } };
+  } catch (error) {
+    console.error("getServerSideProps error:", error);
+    return { props: { userId: null, shopId: null,  productId: null, error: error } };
+  }
+}
 
-//     if (!course) {
-//       return {
-//         notFound: true, // Return a 404 response if course is not found
-//       };
-//     }
-
-//     return { props: { course } };
-//   } catch (error) {
-//     // console.error(error);
-//     return { props: { course: null } };
-//   }
-// }
-
-export default CourseLMSPage;
+export default ProductDetailsPage;

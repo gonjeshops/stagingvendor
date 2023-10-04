@@ -41,8 +41,6 @@ export const register = (values) => {
 };
 
 export const login = (values) => {
-  console.log("@LOGIN ==== authHeader", authHeader());
-  console.log("url ====", url);
   // debugger
   return axios({
     method: "post",
@@ -139,7 +137,7 @@ export const verifyOtp = (values) => {
   data.append("otp_id", opt_verify_obj.id);
   data.append("phone_number", opt_verify_obj.phone_number);
   data.append("code", code);
-  console.log("dd");
+  console.log("data to verify=", data);
 
   if (!user_detail_obj) {
     return fetch(url + "otp-login/", {

@@ -42,7 +42,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 
       <button
         className={`h-8 w-8 flex justify-center items-center rounded-full ${
-          currentPage === totalPages ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700 text-white'
+          currentPage === totalPages ? 'bg-light300 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700 text-white'
         }`}
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}

@@ -1,82 +1,82 @@
+import React, { useEffect, useState } from "react";
 import Workspace from "@/componentsB2b/Workspace/Workspace";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import axios from 'axios';
 import SuppliersDetails from "@/componentsB2b/Suppliers/SuppliersDetails";
 import { viewSupplierShopProducts } from "@/componentsB2b/Api2";
+import { useRouter } from "next/router";
 
-const SupplierDetailsPage = ({ supplier }) => {
-  // const [supplierData, setSupplierData] = useState(null);
-  // const [error, setError] = useState(null);
+const SupplierDetailsPage = ({ userId, shopId, error }) => {
+  const router = useRouter();
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios({
-  //         method: 'get',
-  //         url: '/api/test/supplier-details',
-  //         params: { supplierId: supplier },
-  //       });
+  const [supplierData, setSupplierData] = useState(null);
+  const [apiError, setApiError] = useState(null);
 
-  //       if (response.status === 200) {
-  //         setSupplierData(response.data.data);
-  //       }
-  //     } catch (error) {
-  //       setError(error.message); // Handle error and set the error state
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await viewSupplierShopProducts(userId, shopId);
 
-  //   fetchData();
-  // }, [supplier]);
-    
+        if (response.status === 200) {
+          console.log("API response:", response);
+          setSupplierData(response?.data?.data);
+        } else {
+          setApiError("Something went wrong. Try again or consult a developer.");
+        }
+      } catch (error) {
+        console.error("Catch error:", error);
+        setApiError("Server is not available. Try again or consult a developer.");
+      }
+    };
 
+    fetchData();
+  }, [userId, shopId]);
 
-//   if (router.isFallback) {
-//     return <div>Loading...</div>;
-//   }
+  if (error) {
+    return (
+      <Workspace>
+        <div className="absolute inset-0 flex items-center justify-center">
+          Error: There's an error feedback from the server. Try again or consult a developer.
+        </div>
+      </Workspace>
+    );
+  }
 
-//   if (!course || undefined) {
-//     return <div>Course not found</div>;
-//   }
-console.log(supplier)
+  if (apiError) {
+    return (
+      <Workspace>
+        <div className="absolute inset-0 flex items-center justify-center">{apiError}</div>
+      </Workspace>
+    );
+  }
+
+  if (!userId || isNaN(userId) || !shopId || isNaN(shopId)) {
+    return (
+      <Workspace>
+        <div className="absolute inset-0 flex items-center justify-center">
+          Error: The URL should contain a valid shop Id and a valid user Id.
+        </div>
+      </Workspace>
+    );
+  }
+
   return (
     <Workspace>
-    
-      <div>
-        {supplier ? (
-          <SuppliersDetails supplierData={supplier?.data}/>
-        ) : (
-          <div>Loading...</div>
-        )}
-      </div>
-    
-  </Workspace>
-  )
-
-    
+      {supplierData ? <SuppliersDetails supplierData={supplierData} userId={userId} shopId={shopId}/> : <div className="absolute inset-0 flex items-center justify-center">Loading...</div>}
+    </Workspace>
+  );
 };
 
-export async function getServerSideProps({ query, params, req }) {
-  
-
+export async function getServerSideProps({ query }) {
   try {
-    // Fetch course data by slug
-    const slug = params.slug
-    const {userId, shopId} = query
-    const supplierData = await viewSupplierShopProducts(userId, shopId)
+    const { userId, shopId } = query;
 
-console.log('supplierData', supplierData, 'slug', slug, 'userId', userId, 'shopId', shopId)
-
-    if (!supplierData?.data) {
-      return {
-        notFound: true, // Return a 404 response if course is not found
-      };
+    if (!userId || isNaN(userId) || !shopId || isNaN(shopId)) {
+      throw new Error("Invalid userId or shopId in the query parameters.");
     }
 
-    return { props: { supplier: supplierData?.data } };
+    return { props: { userId: parseInt(userId), shopId: parseInt(shopId) } };
   } catch (error) {
-    console.error(error);
-    return { props: { supplier: null } };
+    console.error("getServerSideProps error:", error);
+    return { props: { userId: null, shopId: null, error: error } };
   }
 }
 

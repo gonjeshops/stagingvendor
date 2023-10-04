@@ -1,41 +1,70 @@
+import Image from "next/image"
 import Link from "next/link"
-import { FaCartPlus, FaStar } from "react-icons/fa"
+import { FaCartPlus, FaStar, FaHeart } from "react-icons/fa"
 
-const ProductCard2 = ({product}) => {
-const {description, image, gallery, price, slug, shop_id, id, } = product
+const ProductCard2 = ({product, userId, shopId, }) => {
+const {description, image, gallery, name, discount, price, slug, shop_id, id, } = product
 
-    return (
 
-<div class="w-full max-w-sm bg-light200 overflow-hidden rounded-lg ">
 
-  <div className="overflow-hidden h-60 w-full pb-2">
-    <img class="w-full h-full object-cover" src={image?.thumbnail} alt="product image" />
-  </div>
-  
-    <div class="px-4 pb-4">
-      
-        <h5 class="text-xl capitalize font-semibold tracking-tight">
-           {slug}
-        </h5>
-        <p>{description}</p>
-      
-        <div class="flex items-center mt-2.5 mb-5">
-            <FaStar  className="text-yellow-500 "/>
-            <FaStar  className="text-yellow-500 "/>
-            <FaStar  className="text-yellow-500 "/>
-            <FaStar  className="text-yellow-500 "/>
-            <FaStar  className="text-yellow-500 "/>
-           
-            <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded ml-3">5.0</span>
-        </div>
-        <div class="flex items-center justify-between">
-            <span class="text-3xl font-bold ">${price}</span>
-            <Link href="#" class="text-xl hover:scale-105 duration-300">
-                <FaCartPlus/>
-            </Link>
+  // Function to truncate text to a maximum of 50 characters
+  const truncateText = (text, maxLength) => {
+    if (text?.length > maxLength) {
+      return text.slice(0, maxLength) + '...'; // Add ellipsis for truncation
+    }
+    return text;
+  }
+
+
+return (
+
+    <div  className="w-full max-w-sm bg-light200 overflow-hidden rounded-lg ">
+
+    <div className="overflow-hidden h-60 w-full pb-2">
+        <Image width={100} height={100} className="w-full h-full object-cover" src={image?.thumbnail} alt="product image" />
+    </div>
+    
+        <div className="px-4 pb-4 space-y-3">
+        
+            <div className="">
+                <h3 className="text-xl capitalize font-semibold tracking-tight">
+                {name ? name : slug}
+                </h3>
+                <h5 className="font-medium text-zinc-500">
+                    Supplier-name
+                </h5>
+            </div>
+
+            <p>{truncateText(description, 120)}</p>
+        
+            <div className="flex items-center justify-between">
+                <div className="flex gap-1 items-center ">
+                    <FaStar  className="text-yellow-500 " size={16}/>
+                    <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-1 pt-1 rounded ">5.0</span>
+                </div>
+
+            <div className="text-xl flex gap-2 items-center">
+                    <button className="text-xl hover:scale-105 duration-300">
+                        <FaHeart/>
+                    </button>
+                </div>
+           </div>
+
+
+            <div className="flex items-center justify-between">
+            
+                <div className=" flex gap-2 items-center">
+                    <div className="text-xl font-bold line-through text-zinc-500 ">${discount}</div>
+                    <div className="text-3xl font-bold ">${price}</div>
+            </div>
+
+                <Link href={`/vendorb2b/products/${slug}?shopId=${shopId}&userId=${userId}&productId=${id}`} className="rounded hover-blue py-1  px-2">
+                    View
+                </Link>
+                
+            </div>
         </div>
     </div>
-</div>
 
     )
 }

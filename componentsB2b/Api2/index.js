@@ -1,38 +1,24 @@
-import authHeader from "../Api/auth-header";
 import axios from "axios";
+import authHeader from "../Api/auth-header";
 
-let url = "https://backendapi.gonje.com/"
+let url = "https://backendapi.gonje.com/";
 
-
-// ================ Suppliers Api ============
-
-// GET all suppliers.  usage - /suppliers
-export const fetchSuppliers = () => {
-  return axios({
-    method: "get",
-    headers: authHeader(),
-    url: url + "suppliers/shops",
-  })
-    .then((response) => response.data)
-    .catch((error) => {
-      console.log("Error in fetchSuppliers api", error);
-    });
-};
-
-// GET suppliers by pagination.  usage - /suppliers
+// Function to fetch suppliers with authentication headers
 export const fetchSuppliersByPagination = (page, limit) => {
   return axios({
     method: "get",
     headers: authHeader(),
     url: url + "suppliers/shops",
     data: {
-      page: page,
-      limit: limit
-    }
+      page: 2,
+      limit: 4,
+    },
   })
-    .then((response) => response.data)
+    .then((response) =>{ 
+      console.log('API SHOPS====', response)
+      return response})
     .catch((error) => {
-      console.log("Error in fetchSuppliers api", error);
+      console.log("Error in fetchSuppliersByPagination api", error);
     });
 };
 
@@ -46,11 +32,30 @@ export const viewSupplierShopProducts = (userId, shopId) => {
       headers: authHeader(),
       url: url + `suppliers/${userId}/shop/${shopId}/products`,
     })
-      .then((response) => response)
+      .then((response) => { 
+        console.log('API SHOP DETAILS====', response)
+        return response})
       .catch((error) => {
         console.log("Error in viewSupplierShopProducts api", error);
       });
   };
+
+
+// View Supplier Product Details
+export const viewSupplierShopProductDetails = (userId, productId, shopId) => {
+  return axios({
+    method: "get",
+    headers: authHeader(),
+    url: url + `suppliers/${userId}/${shopId}/product/${productId}`,
+  })
+    .then((response) => { 
+      console.log('API PRODUCT DETAILS===', response,  'id=====', userId, shopId, productId)
+      return response})
+    .catch((error) => {
+      console.log("Error in viewSupplierShopProducts api", error, 'id=====', userId, productId, shopId);
+    });
+};
+
 
   
 // View supplier products
@@ -136,17 +141,15 @@ export const createQuoteRequest = (values) => {
       headers: authHeader(),
       url: url + `create/quote/request`,
       data: {
-        quote_number: values.quote_number,
-        product_id: values.product_id,
-        quote_name: values.quote_name,
+        product_id: values.productId,
+        quote_name: values.name,
         unit: values.unit,
         quantity: values.quantity,
-        user_id: values.user_id,
       },
     })
       .then((response) => response)
       .catch((error) => {
-        console.log("Error in createQuoteRequest api", error);
+        console.log("Error in createQuoteRequest api", error, values);
       });
   };
 

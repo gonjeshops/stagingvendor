@@ -30,10 +30,13 @@ const Workspace = ({children, navLinks}) => {
            }
 
         {/* content */}
-        <div className="md:pl-60">
-            <div className="w-full rounded-xl h-screen overflow-auto  bg-light100  py-12 px-4">
-                {children}
+        <div className="md:pl-60 ">
+            <div className="relative w-full rounded-xl overflow-hidden h-screen bg-light100">
+                <div className=" w-full h-full overflow-auto py-12 px-4">
+                    {children}
+                </div>
             </div>
+           
 
             </div>
 

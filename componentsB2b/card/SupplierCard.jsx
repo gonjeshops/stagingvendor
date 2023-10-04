@@ -33,10 +33,6 @@ const SupplierCard = ({ label, item, details }) => {
         <div className="flex gap-2">
           <div className='text-orange-600 text-xl flex gap-0 items-center'>
             <FaStar />
-            <FaStar />
-            <FaStar />
-            <FaStar />
-            <FaStar />
           </div>
           <p className='text-zinc-400'>rated</p>
         </div>

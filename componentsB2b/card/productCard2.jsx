@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { FaCartPlus, FaStar, FaHeart } from "react-icons/fa"
+import { FaCartPlus, FaStar, FaHeart, FaImage } from "react-icons/fa"
 
 const ProductCard2 = ({product, userId, shopId, }) => {
 const {description, image, gallery, name, discount, price, slug, shop_id, id, } = product
@@ -20,8 +20,10 @@ return (
 
     <div  className="w-full max-w-sm bg-light200 overflow-hidden rounded-lg ">
 
-    <div className="overflow-hidden h-60 w-full pb-2">
-        <Image width={100} height={100} className="w-full h-full object-cover" src={image?.thumbnail} alt="product image" />
+    <div className="relative bg-light300 overflow-hidden h-60 w-full pb-2">
+       {image?.thumbnail ? <Image width={100} height={100} className="w-full h-full object-cover" src={image?.thumbnail} alt="product image" /> : <div className="centralize text-6xl text-zinc-600">
+                <FaImage />
+                </div>}
     </div>
     
         <div className="px-4 pb-4 space-y-3">

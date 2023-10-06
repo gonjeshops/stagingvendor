@@ -6,6 +6,7 @@ import ModalSupplierCategory from './ModalSupplierCategory';
 import ModalSearchBox from './ModalSearchBox';
 import ModalCart from './ModalCart';
 import ModalMobilwNavbar from './ModalMobilwNavbar';
+import ModalWishlist from './ModalWishlist';
 
 const ModalLayout = () => {
     
@@ -23,6 +24,7 @@ const ModalLayout = () => {
         <ModalSupplierCategory  stopPropagation={stopPropagation}/>
         <ModalMobilwNavbar stopPropagation={stopPropagation}/>
         <ModalSearchBox  stopPropagation={stopPropagation} />
+        <ModalWishlist  stopPropagation={stopPropagation} />
 
         
     </>

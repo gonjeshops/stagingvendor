@@ -37,7 +37,7 @@ const router = useRouter
                 <div className="h-96 bg-light100 flex justify-center items-center w-full relative overflow-hidden rounded-lg shadow-md transition-transform duration-300 transform ">
                     <Image
                         width={100} height={100}
-                        src={gallery[activeImageIndex].thumbnail ? gallery[activeImageIndex].thumbnail : image?.thumbnail}
+                        src={gallery[activeImageIndex]?.thumbnail ? gallery[activeImageIndex]?.thumbnail : image?.thumbnail}
                         alt={name}
                         className='w-full h-full object-cover'
                     />

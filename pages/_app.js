@@ -7,6 +7,8 @@ import Layout from "../components/Layout";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
+
 import LayoutB2b from "../componentsB2b/LayoutB2b/LayoutB2b";
 import GlobalStateProvider from "@/context/GlobalStateProvider";
 
@@ -47,6 +49,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
     <GlobalStateProvider>
+      
 
       {!(router.asPath === "/contractPolicy") &&
       !(router.asPath === "/vendor") &&

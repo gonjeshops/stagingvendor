@@ -11,8 +11,16 @@ const ProductDetailsPage = ({  userId, shopId, productId,  error}) => {
 
   const [productData, setProductData] = useState(null);
   const [apiError, setApiError] = useState(null);
+  const [loadingTimeout, setLoadingTimeout] = useState(false);
+
 
   useEffect(() => {
+
+    // Set a loading timeout of 8 seconds (8000 milliseconds)
+    const timeoutId = setTimeout(() => {
+      setLoadingTimeout(true);
+    }, 80000);
+
     const fetchData = async () => {
       try {
         const response = await viewSupplierShopProductDetails(userId, productId, shopId);
@@ -23,14 +31,23 @@ const ProductDetailsPage = ({  userId, shopId, productId,  error}) => {
         } else {
           setApiError("Something went wrong. Try again or consult a developer.");
         }
+        clearTimeout(timeoutId); // Clear the loading timeout
+
       } catch (error) {
         console.error("Catch error:", error);
         setApiError("Server is not available. Try again or consult a developer.");
+        clearTimeout(timeoutId); // Clear the loading timeout
+
       } finally{
+        clearTimeout(timeoutId); // Clear the loading timeout
+
       }
     };
 
     fetchData();
+
+    // Cleanup the timeout when the component unmounts
+    return () => clearTimeout(timeoutId);
   }, [userId, productId, shopId]);
 
     
@@ -48,6 +65,26 @@ const ProductDetailsPage = ({  userId, shopId, productId,  error}) => {
         },
     ]
 
+
+
+    if (loadingTimeout) {
+      return (
+        <Workspace>
+          <div className='absolute inset-0 flex flex-col gap-4 items-center justify-center text-center'>
+            { console.log('loadingTimeout==', loadingTimeout)}
+              <p className="text-lg font-semibold">
+              Server is not responding. Please choose an action:
+              </p>
+              <div className="flex items-center gap-4">
+                <button className='hover-blue rounded py-2 px-4' onClick={() => router.back()}>Go Back</button>
+                <button className='hover-blue rounded py-2 px-4' onClick={() => window.location.reload()}>Reload</button>
+              </div>
+          </div>
+        
+        </Workspace>
+      );
+    }
+    
     if (error) {
       return (
         <Workspace>
@@ -79,7 +116,7 @@ const ProductDetailsPage = ({  userId, shopId, productId,  error}) => {
 
   return (
         <Workspace>
-            {productData ? <ProductDetails product={productData} p={product}/> : <div>Loading...</div>}
+            {productData ? <ProductDetails product={productData} p={product}/> : <div className="absolute inset-0 flex items-center justify-center">Loading...</div>}
         </Workspace>
   )
 };

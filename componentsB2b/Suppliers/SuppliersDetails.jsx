@@ -2,17 +2,20 @@ import React from 'react'
 import ImgCard from '../card/ImgCard'
 import ProductCard2 from '../card/productCard2'
 import Image from 'next/image'
+import { FaImage } from 'react-icons/fa'
 
 const SuppliersDetails = ({supplierData, userId, shopId, }) => {
     const {products=[]} = supplierData
   
-  console.log('DDD=', supplierData)
+  console.log('supplierData=', supplierData)
   
     return (
     <div className='space-y-4'>
         <div className="w-full relative rounded-xl h-60 bg-light300">
         <div className="absolute top-[55%] right-[10%] overflow-hidden rounded-full w-40 h-40  bg-yellow-600">
-                <Image width={100} height={100} src={supplierData?.logo} alt={'logo'} className='object-cover'/>
+                {supplierData?.logo ? <Image width={100} height={100} src={supplierData?.logo} alt={'logo'} className='object-cover'/> : <div className="centralize text-6xl text-yellow-700">
+                <FaImage />
+                </div> }
             </div>
         </div>
         

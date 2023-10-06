@@ -91,14 +91,12 @@ export const fetchQuoteNames = () => {
       });
   };
 
-
 // Get Vendor quote requets with "PENDING" status. Only vendors can view
 export const fetchQuotesWithPendingStatus = () => {
     return axios({
       method: "get",
       headers: authHeader(),
       url: url + "vendor/quotes",
-
     })
       .then((response) => response)
       .catch((error) => {
@@ -145,6 +143,7 @@ export const createQuoteRequest = (values) => {
         quote_name: values.name,
         unit: values.unit,
         quantity: values.quantity,
+        user_id: values.userId
       },
     })
       .then((response) => response)

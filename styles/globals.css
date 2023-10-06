@@ -16,6 +16,15 @@
  --dark100: hsl(0, 0%, calc(120% - var(--bg-lightness))); /* Lightest background shade */
  --dark200: hsl(0, 0%, calc(110% - var(--bg-lightness))); /* Lighter background shade (same as --bg-lightness) */
  --dark300: hsl(0, 0%, calc(100% - var(--bg-lightness))); /* Light background shade */
+
+/* toastify styles */
+--toastify-color-light: #0000;
+--toastify-color-dark: #121212;
+--toastify-color-info: #3498db;
+--toastify-color-success: #07bc0c;
+--toastify-color-warning: #f1c40f;
+--toastify-color-error: #e74c3c;
+
 }
 
 *,
@@ -41,8 +50,12 @@ body {
 }
 
 a {
-  /* color: inherit; */
+  color: inherit;
   text-decoration: none;
+}
+
+Link {
+  text-decoration: none
 }
 
 .section-padding {
@@ -53,6 +66,9 @@ a {
   @apply max-w-[1400px] md:px-4 m-auto ;
 }
 
+.centralize {
+  @apply absolute inset-0 flex items-center justify-center
+}
 
 
 /* : flex-end */
@@ -259,6 +275,8 @@ a {
   font-size: 14px;
   border-radius: 7px !important;
 } */
+
+
 
 .search input::placeholder {
   color: #b8b8b8;

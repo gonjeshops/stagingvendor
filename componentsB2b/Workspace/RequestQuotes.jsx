@@ -7,11 +7,14 @@ import Pagination from "../Pagination"
 import { useRouter } from "next/router"
 import RequestQuoteForm from "../forms/RequestQuoteForm"
 import DashboardHeading from './DashboardHeading'
+import { fetchQuotesWithPendingStatus } from "../Api2"
 
 
 
-const RequestQuotes = () => {
+const RequestQuotes = ({quotes}) => {
     const router = useRouter()
+
+    console.log('QUOTES DATA=', quotes)
 
 
     const [show, setShow] = useState('')
@@ -34,11 +37,13 @@ const RequestQuotes = () => {
 
     const handleChange = () => []
 
-  return (
+return (
 
 <>
 
     <RequestQuoteForm  closeModal={()=>setShow('')} isModalOpen={show} />
+
+
     <div className="space-y-10">
         <div className="space-y-6 ">
           
@@ -75,6 +80,7 @@ const RequestQuotes = () => {
         {/* cards */}
         <div className=" pb-2 grid md:grid-cols-2 gap-6  ">
             {
+                // fetched data
                 [1,2,3,4,5,6,7,8,9,0].map((item, i)=>{
                     return (
                         <div key={i} onClick={()=>router.push(`/vendorb2b/workspace/request-quotes/${`quote`+item}`)}

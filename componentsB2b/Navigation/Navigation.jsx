@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { FiBell, FiSearch, FiShoppingCart, FiUser, FiX } from 'react-icons/fi';
+import { FiBell, FiHeart, FiSearch, FiShoppingCart, FiUser, FiX } from 'react-icons/fi';
 import DesktopNav from './DesktopNav';
 import SearchBar from './SearchBar';
 import MobileNav from './MobileNav';
@@ -45,9 +45,11 @@ const Navigation = ({themeBtn}) => {
 
                 {themeBtn}
 
-               {module.moduleType==='vendor' && <button className='relative' onClick={ () => openModal('cart')} >
-                  <FiShoppingCart   className={modalType==='cart' && ' text-green-600 scale-110  '}/>
-                  <div className="rounded-full h-5 w-5 text-white bg-green-600 flex items-center justify-center absolute top-[-10px] right-[-8px] text-[10px] ">0</div>
+               {module.moduleType==='vendor' && 
+               
+               <button className='relative' onClick={ () => openModal('wishlist')} >
+                  <FiHeart   className={modalType==='wishlist' && ' text-green-600 scale-110  '}/>
+                  <div className="rounded-full h-5 w-5 text-white bg-green-600 flex items-center justify-center absolute top-[-10px] right-[-8px] text-[10px] ">2</div>
                 </button>}
 
                 <button className='relative' onClick={ () => openModal('cart')} >

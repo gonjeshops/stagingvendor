@@ -5,6 +5,7 @@ import VendorStage3 from './VendorStage3';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { register } from '../Api/Api';
+import { determineRouteBasedOnPermissions } from './selectRoute';
 
 
 
@@ -138,8 +139,9 @@ const VendorSignupForm = ({ path }) => {
           setSuccessMessage(response.message)
 
           localStorage.setItem("user_detail", JSON.stringify(response));
-          router.push('/signin/vendor-select')
-  
+          // router.push('/signin/vendor-select')
+          router.push(determineRouteBasedOnPermissions(response.permissions))
+ 
         } else {
           setFinalError(response.message)
           console.log('Api Request failed with response:', response);

@@ -6,6 +6,7 @@ import { login } from '../Api/Api';
 // import FacebookLoginComp from '../FacebookLoginComp';
 // import GoogleLoginComp from "../GoogleLoginComp";
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { determineRouteBasedOnPermissions } from './selectRoute';
 
 
 
@@ -59,18 +60,21 @@ const VendorLoginForm = () => {
       console.log('formData==', formData)
 
       const json = await login(formData); 
-      if (json.status === 1) {
+      if (json?.status === 1) {
 		// Successful login
         setLoading(false);
         // set success message
-        setSuccessMessage(json.message)
+        setSuccessMessage(json?.message)
         localStorage.setItem("user_detail", JSON.stringify(json));
-        router.push('/signin/vendor-select') 
+        // router.push('/signin/vendor-select') 
+       router.push(determineRouteBasedOnPermissions(json?.permissions))
+
       } else {
 
-        setError(json.message);
+        setError(json?.message);
+
         setLoading(false);
-		console.log('login error= ', json.message)
+		console.log('login error= ', json?.message)
       }
     } catch (error) {
       setError('Something went wrong');

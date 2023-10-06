@@ -83,7 +83,6 @@ export const fetchQuoteNames = () => {
       method: "get",
       headers: authHeader(),
       url: url + "quotnames/list",
-
     })
       .then((response) => response)
       .catch((error) => {

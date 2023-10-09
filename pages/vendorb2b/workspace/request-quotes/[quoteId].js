@@ -1,13 +1,87 @@
 
+import { fetchQuoteDetails } from '@/componentsB2b/Api2';
 import QuoteRequestDetails from '@/componentsB2b/Workspace/QuoteRequestDetails';
 import Workspace from '@/componentsB2b/Workspace/Workspace';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { FaAddressBook,FaMapMarkerAlt,FaGift, FaComment,FaBox, FaCalendarAlt, FaEnvelope,FaPhone, FaUser } from 'react-icons/fa';
 
 
-const QuoteRequestDetailsPage = ({ quoteId }) => {
+const QuoteRequestDetailsPage = ({ quoteId , error }) => {
 
-    const router = useRouter()
+
+console.log(error)
+    const router = useRouter();
+
+    const [quoteData, setQuoteData] = useState(null);
+    const [apiError, setApiError] = useState(null);
+    const [loadingTimeout, setLoadingTimeout] = useState(false);
+  
+  
+    useEffect(() => {
+      // Set a loading timeout of 8 seconds (8000 milliseconds)
+      const timeoutId = setTimeout(() => {
+        setLoadingTimeout(true);
+      }, 8000);
+  
+      const fetchData = async () => {
+        try {
+          const response = await fetchQuoteDetails(quoteId);
+  
+          if (response.status === 200) {
+            console.log("API response:", response);
+            setQuoteData(response?.data);
+          } else {
+            setApiError("Something went wrong. Try again or consult a developer.");
+          }
+          clearTimeout(timeoutId); // Clear the loading timeout
+  
+        } catch (error) {
+          console.error("Catch error:", error);
+          setApiError("Server is not available. Try again or consult a developer.");
+          clearTimeout(timeoutId); // Clear the loading timeout
+        }
+      };
+  
+      fetchData();
+  
+      // Cleanup the timeout when the component unmounts
+      return () => clearTimeout(timeoutId);
+    }, [quoteId]);
+
+
+    if (!quoteId) {
+        return (
+          <Workspace>
+            <div className="absolute inset-0 flex items-center justify-center">
+              Error: There's an error feedback from the server. Refresh the page or consult the developer.
+            </div>
+          </Workspace>
+        );
+      }
+    
+      if (apiError) {
+        return (
+          <Workspace>
+            <div className="absolute inset-0 flex items-center justify-center">{apiError}</div>
+          </Workspace>
+        );
+      }
+    
+      if (!quoteId || isNaN(quoteId)) {
+        return (
+          <Workspace>
+            <div className="absolute inset-0 flex items-center justify-center">
+              Error: The URL should contain a valid shop Id and a valid user Id.
+            </div>
+          </Workspace>
+        );
+      }
+
+
+    // =================================
+
+
     const quoteDetails = 
         {
             quoteId: quoteId,
@@ -82,7 +156,7 @@ const QuoteRequestDetailsPage = ({ quoteId }) => {
   return (
 
         <Workspace>
-            <QuoteRequestDetails content={quoteDetails}/>
+            <QuoteRequestDetails content={quoteDetails} quoteData={quoteData}/>
         </Workspace>
 
 
@@ -90,36 +164,22 @@ const QuoteRequestDetailsPage = ({ quoteId }) => {
   )
 };
 
-export async function getServerSideProps({ params, req }) {
-    const quoteId = params.quoteId
-    return { props: {quoteId} };
+export async function getServerSideProps({params}) {
+    try {
+      const { quoteId} = params;
+      console.log(params)
+  
+    //   if (!quoteId || isNaN(quoteId) ) {
+    //     throw new Error("Invalid quoteId.");
+    //   }
+  
+      return { props: { quoteId: parseInt(quoteId) } };
+    } catch (error) {
+      console.error("getServerSideProps error: ", error);
+      return { props: { quoteId: null, } };
+    }
+  }
 
-  // const session = await getSession({ req });
 
-  // if (!session) {
-  //   return {
-  //     redirect: {
-  //       destination: '/auth/signin', // Redirect to login page if not authenticated
-  //       permanent: false,
-  //     },
-  //   };
-  // }
-
-//   try {
-//     // Fetch quote request data by slug
-//     const quote = await getQuoteById(params.quoteId); // Implement your API fetch method
-
-//     if (!quote) {
-//       return {
-//         notFound: true, // Return a 404 response if course is not found
-//       };
-//     }
-
-    // return { props: { quote } };
-//   } catch (error) {
-//     // console.error(error);
-//     return { props: { course: null } };
-//   }
-}
 
 export default QuoteRequestDetailsPage;

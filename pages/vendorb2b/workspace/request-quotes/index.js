@@ -1,17 +1,29 @@
 import { fetchQuotesWithPendingStatus } from "@/componentsB2b/Api2"
+import LoadingTimeout from "@/componentsB2b/Loader/LoadingTimeout"
+import Pagination from "@/componentsB2b/Pagination"
 import RequestQuotes from "@/componentsB2b/Workspace/RequestQuotes"
 import Workspace from "@/componentsB2b/Workspace/Workspace"
+import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
+
 
 import { toast } from 'react-toastify'
 
 
 const ReQuestQuotes = () => {
+  const router = useRouter();
+  const limit = 4;
+  const page = parseInt(router.query.page) || 1;
 
-  const [quotes, setQuotes] = useState('')
+  const [quotes, setQuotes] = useState([])
+  const [totalPages, setTotalPages] = useState(0);
   const [error, setError] = useState('')
   const [loading, setLoading] = useState('')
   const [loadingTimeout, setLoadingTimeout] = useState(false);
+
+  const handlePageChange = (newPage) => {
+    router.push(`/vendorb2b/request-quotes?page=${newPage}`);
+  };
   
   useEffect(() => {
   
@@ -22,10 +34,12 @@ const ReQuestQuotes = () => {
   
       const fetchData = async () => {
         try {
-          const response = await fetchQuotesWithPendingStatus();
+          const response = await fetchQuotesWithPendingStatus(page, limit);
   
           if (response.status === 200) {
               setQuotes(response?.data?.data?.quotes);
+              setTotalPages(response?.data?.data?.total_pages);
+
               // toast('Updated quote requests')
         console.log('Fetch all quotes-request response=== ',response)
   
@@ -53,16 +67,7 @@ const ReQuestQuotes = () => {
     if (loadingTimeout) {
       return (
         <Workspace>
-              <div className='absolute inset-0 flex flex-col gap-4 items-center justify-center text-center'>
-                { console.log('loadingTimeout==', loadingTimeout)}
-                  <p className="text-lg font-semibold">
-                  Server is not responding. Please choose an action:
-                  </p>
-                  <div className="flex items-center gap-4">
-                    <button className='hover-blue rounded py-2 px-4' onClick={() => router.back()}>Go Back</button>
-                    <button className='hover-blue rounded py-2 px-4' onClick={() => window.location.reload()}>Reload</button>
-                  </div>
-              </div>
+             <LoadingTimeout/>
         </Workspace>
       );
     }
@@ -86,7 +91,13 @@ const ReQuestQuotes = () => {
   return (
 
         <Workspace>
-            <RequestQuotes quotes={quotes}/>
+            <div className="pb-28">
+                <RequestQuotes quotes={quotes}/>
+            </div>
+
+        <div className="absolute bottom-0 bg-light100 pb-4  left-0 w-full">
+          <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />
+        </div>
         </Workspace>
 
   )    

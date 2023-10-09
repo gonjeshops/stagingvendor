@@ -66,8 +66,8 @@ const VendorLoginForm = () => {
         // set success message
         setSuccessMessage(json?.message)
         localStorage.setItem("user_detail", JSON.stringify(json));
-        // router.push('/signin/vendor-select') 
-       router.push(determineRouteBasedOnPermissions(json?.permissions))
+        router.push('/signin/vendor-select') 
+      //  router.push(determineRouteBasedOnPermissions(json?.permissions))
 
       } else {
 

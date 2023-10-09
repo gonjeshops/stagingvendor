@@ -83,6 +83,7 @@ export const fetchQuoteNames = () => {
       method: "get",
       headers: authHeader(),
       url: url + "quotnames/list",
+
     })
       .then((response) => response)
       .catch((error) => {
@@ -91,11 +92,15 @@ export const fetchQuoteNames = () => {
   };
 
 // Get Vendor quote requets with "PENDING" status. Only vendors can view
-export const fetchQuotesWithPendingStatus = () => {
+export const fetchQuotesWithPendingStatus = (page, limit) => {
     return axios({
       method: "get",
       headers: authHeader(),
       url: url + "vendor/quotes",
+      data: {
+        page: page,
+        limit: limit
+      }
     })
       .then((response) => response)
       .catch((error) => {
@@ -109,7 +114,7 @@ export const fetchQuoteDetails = (quoteId) => {
       method: "get",
       headers: authHeader(),
       url: url + `vendor/quote/${quoteId}`,
-
+     
     })
       .then((response) => response)
       .catch((error) => {

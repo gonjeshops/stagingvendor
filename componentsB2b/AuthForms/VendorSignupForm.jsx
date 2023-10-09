@@ -139,8 +139,8 @@ const VendorSignupForm = ({ path }) => {
           setSuccessMessage(response.message)
 
           localStorage.setItem("user_detail", JSON.stringify(response));
-          // router.push('/signin/vendor-select')
-          router.push(determineRouteBasedOnPermissions(response.permissions))
+          router.push('/signin/vendor-select')
+          // router.push(determineRouteBasedOnPermissions(response.permissions))
  
         } else {
           setFinalError(response.message)

@@ -3,8 +3,7 @@ import { vendorUrl, supplierUrl, customerUrl, superadminUrl } from './url';
 import { toast } from 'react-toastify';
 
 // Possible permissions
-const permissions = [
-  ["super_admin", "customer", "store_owner", "admin_staff", "vendor_b2b", "supplier"]];
+//   ["super_admin", "customer", "store_owner", "admin_staff", "vendor_b2b", "supplier"]];
 
 export const determineRouteBasedOnPermissions = (userPermissions) => {
   if(!userPermissions) {

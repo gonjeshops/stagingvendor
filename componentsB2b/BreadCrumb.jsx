@@ -26,10 +26,10 @@ const Breadcrumb = () => {
   }, [router.pathname]);
 
   return (
-    <div className="flex items-center  ">
+    <div className="flex items-center flex-wrap ">
       {breadcrumb.map((item, index) => (
         <div key={item.id} className=" ">
-          {index !== 0 && <span className="mx-3">{`>`}</span>}
+          {index !== 0 && <span className="mx-2">{`>`}</span>}
           <span className='capitalize'>{item.label}</span>
         </div>
       ))}

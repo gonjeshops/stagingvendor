@@ -10,6 +10,8 @@ const Checkout = ({content}) => {
 
     const [selectedOption, setSelectedOption] = useState('');
 
+    
+
       
   return (
     <div className='w-full'>

@@ -156,7 +156,7 @@ console.log(error)
   return (
 
         <Workspace>
-            <QuoteRequestDetails content={quoteDetails} quoteData={quoteData}/>
+            <QuoteRequestDetails content={quoteDetails} data={quoteData}/>
         </Workspace>
 
 

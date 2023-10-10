@@ -156,27 +156,30 @@ export const createQuoteRequest = (values) => {
       });
   };
 
-// Update quote request
+  // Update quote request
 export const updateQuoteRequest = (values, quoteId) => {
-    return axios({
-      method: "put",
-      headers: authHeader(),
-      url: url + `update/quote/request/${quoteId}`,
-      data: {
-        status: values?.status,
-        quantity: values?.quantity,
-        reason: values?.reason,
+  // Validate inputs
+  if (!values || !quoteId) {
+    return Promise.reject(new Error("Invalid input data."));
+  }
 
-        // quote_number: values?.quote_number,
-        // product_id: values?.product_id,
-        // quote_name: values?.quote_name,
-        // unit: values?.unit,
-        // quantity: values?.quantity,
-        // user_id: values?.user_id,
-      },
+  return axios({
+    method: "put",
+    headers: authHeader(),
+    url: url + `update/quote/request/${quoteId}`,
+    data: {
+      status: values.status,
+      quantity: values.quantity,
+      reason: values.reason,
+    },
+  })
+    .then((response) => {
+      console.log("UpdateQuoteRequest API successful:", response);
+      return response
     })
-      .then((response) => response)
-      .catch((error) => {
-        console.log("Error in updateQuoteRequest api", error);
-      });
-  };
+    .catch((error) => {
+      console.error("Error in UpdateQuoteRequest API:", error);
+      return Promise.reject(error); // Propagate the error.
+    });
+};
+

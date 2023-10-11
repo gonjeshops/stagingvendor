@@ -3,6 +3,9 @@ import RadioBtn from '../btn/RadioBtn';
 import SelectInput from '../btn/SelectInput';
 import CheckoutForm from './CheckoutForm';
 import { FaUser, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
+import DashboardHeading from '../Workspace/DashboardHeading';
+import StripeCheckout from './StripeCheckout';
+import PayPal from './PayPalButton';
 
 const Checkout = ({content}) => {
 
@@ -15,9 +18,7 @@ const Checkout = ({content}) => {
       
   return (
     <div className='w-full'>
-        <h4 className="text-3xl pb-8 font-medium">
-            Checkout
-        </h4>
+       <DashboardHeading>Checkout</DashboardHeading>
 
         <div className="flex flex-col-reverse sm:flex-row gap-8 justify-between pb-6">
             <div className="grid gap-6">
@@ -119,6 +120,9 @@ const Checkout = ({content}) => {
 
         <div className="space-y-6 font-medium w-full lg:max-w-3xl">
             <h3 className='text-2xl text-semibold'>Payment Method</h3>
+            <StripeCheckout/>
+            {/* <PayPal/> */}
+
             <CheckoutForm cardData={cardtypes}/>
         </div>
         

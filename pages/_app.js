@@ -7,6 +7,7 @@ import Layout from "../components/Layout";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import '@stripe/stripe-js'
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 
 
@@ -48,7 +49,8 @@ function MyApp({ Component, pageProps }) {
 
  
   return (
-    <Provider store={store}>
+    <PayPalScriptProvider options={{"client_id": process.env.NEXT_PUBLIC_PAYPAL_ID}} >
+      <Provider store={store}>
     <GlobalStateProvider>
       
 
@@ -77,6 +79,9 @@ function MyApp({ Component, pageProps }) {
       <ToastContainer />
       </GlobalStateProvider>
     </Provider>
+
+    </PayPalScriptProvider>
+    
   );
 }
 

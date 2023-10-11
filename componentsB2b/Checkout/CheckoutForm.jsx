@@ -4,6 +4,7 @@ import DateInput from '../forms/DateInput';
 import InputField from '../forms/InputField';
 import RadioInput from '../forms/RadioInput';
 import RadioBtn from '../btn/RadioBtn';
+import StripeCheckout from './StripeCheckout';
 
 function CheckoutForm({cardData}) {
   const [selectedOption, setSelectedOption] = useState('');
@@ -176,7 +177,9 @@ function CheckoutForm({cardData}) {
             />           
         </div>
 
+
         <div className="sm:flex grid w-full gap-6">
+
             <button onClick={handleSubmit}
             type="submit"
             className= "sm:w-2/3 bg-blue-500 hover:bg-blue-600 text-white w-full font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

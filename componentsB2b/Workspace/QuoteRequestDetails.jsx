@@ -3,17 +3,24 @@ import { FaPrint,FaAngleDown,FaRedo, FaEllipsisV } from 'react-icons/fa'
 import Select  from 'react-select';
 import DashboardHeading from './DashboardHeading'
 import { updateQuoteRequest } from '../Api2';
+import {  useRouter } from 'next/router';
+import { useGlobalState } from '@/context/GlobalStateContext';
 
 
-export const DisabledBtn = ({control}) => {
-    console.log('===========', control)
+export const DisabledBtn = ({control, route, quoteData}) => {
+    const router = useRouter()
+    const {checkoutData, setCheckoutData}=useGlobalState()
     return (
         <button
             className={` rounded text-white py-2 px-8 ${
                 control ? 'bg-blue-300 cursor-not-allowed'
                 : 'hover-blue '
             }`}
-            disabled={control}
+            disabled={false}
+            onClick={()=>{
+                setCheckoutData(quoteData)
+                router.push(route)
+            }}
             >
             Checkout
         </button>
@@ -163,7 +170,7 @@ const QuoteRequestDetails = ({content, data}) => {
             </div>
 
             <div className="flex justify-between border-t pt-3  items-center gap-6 flex-wrap">
-                <DisabledBtn control={quoteData?.quote?.status!=='FINALIZE'}/>
+                <DisabledBtn control={quoteData?.quote?.status!=='FINALIZE'}  route={'/vendorb2b/checkout'} quoteData={quoteData}/>
 
                 <div className="flex gap-6 items-center justify-end">
                     <div className="flex gap-3 items-center">
@@ -319,7 +326,7 @@ const QuoteRequestDetails = ({content, data}) => {
                 
               />
 
-                <DisabledBtn control={quoteData?.quote?.status!=='FINALIZE'}/>
+                <DisabledBtn control={quoteData?.quote?.status!=='FINALIZE'}  route={'/vendorb2b/checkout'} quoteData={quoteData}/>
 
             </div>
             </div>

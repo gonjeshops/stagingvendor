@@ -181,23 +181,6 @@ const GetQuotes = ({ isOpen, closeModal, productId }) => {
         {reqError && <p className="text-red-500 text-sm mt-1">{reqError}</p>}
         {success && <p className="text-green-600 text-sm mt-1">{success}</p>}
 
-          {/* <div className="mb-4 h-20">
-            <label htmlFor="name" className="block font-semibold mb-1">
-              NAME YOUR QUOTE
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className={`w-full p-3 border bg-transparent ${
-                errors.name ? 'border-red-500' : 'border-gray-300'
-              } rounded focus:outline-none focus:border-blue-500`}
-            />
-            {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
-          </div> */}
-
 
           <div className="mb-4 h-20">
             <label htmlFor="name" className="block font-semibold mb-1">
@@ -246,11 +229,11 @@ const GetQuotes = ({ isOpen, closeModal, productId }) => {
                 onChange={handleSelect}
                 options={unitOptions}
                 className="bg-light100 w-full text-zinc-600 focus:outline-none focus:ring focus:border-blue-300"
-                placeholder="Select a unit of measurement"
+                placeholder="Select..."
               styles={customStyles} 
                 
               />
-              {errors.unit && <p className="text-red-500 text-sm mt-1">{errors.unit}</p>}
+              {errors.unit && <p className="text-red-500 text-sm mt-1">{errors?.unit}</p>}
             </div>
           </div>
 

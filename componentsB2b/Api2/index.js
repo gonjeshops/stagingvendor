@@ -93,6 +93,10 @@ export const fetchQuoteNames = () => {
 
 // Get Vendor quote requets with "PENDING" status. Only vendors can view
 export const fetchQuotesWithPendingStatus = (page, limit) => {
+  console.log('=====', page, limit)
+  if (!page || !limit) {
+    return Promise.reject(new Error("Invalid input data."));
+  }
     return axios({
       method: "get",
       headers: authHeader(),

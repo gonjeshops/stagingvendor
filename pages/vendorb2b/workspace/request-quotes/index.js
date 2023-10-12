@@ -12,7 +12,7 @@ import { toast } from 'react-toastify'
 
 const ReQuestQuotes = () => {
   const router = useRouter();
-  const limit = 4;
+  const limit = 20;
   const page = parseInt(router.query.page) || 1;
 
   const [quotes, setQuotes] = useState([])
@@ -22,13 +22,11 @@ const ReQuestQuotes = () => {
   const [loadingTimeout, setLoadingTimeout] = useState(false);
 
   const handlePageChange = (newPage) => {
-    router.push(`/vendorb2b/request-quotes?page=${newPage}`);
+    router.push(`/vendorb2b/workspace/request-quotes?page=${newPage}`);
   };
   
   useEffect(() => {
-  
-      // Set a loading timeout of 8 seconds (8000 milliseconds)
-      const timeoutId = setTimeout(() => {
+        const timeoutId = setTimeout(() => {
         setLoadingTimeout(true);
       }, 8000);
   
@@ -40,7 +38,7 @@ const ReQuestQuotes = () => {
               setQuotes(response?.data?.data?.quotes);
               setTotalPages(response?.data?.data?.total_pages);
 
-              // toast('Updated quote requests')
+              // toast.success('Updated quote requests')
         console.log('Fetch all quotes-request response=== ',response)
   
           } else {
@@ -59,7 +57,6 @@ const ReQuestQuotes = () => {
   
       fetchData();
   
-      // Cleanup the timeout when the component unmounts
       return () => clearTimeout(timeoutId);
     }, []);
 

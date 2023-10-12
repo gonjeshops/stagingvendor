@@ -102,7 +102,10 @@ export const fetchQuotesWithPendingStatus = (page, limit) => {
         limit: limit
       }
     })
-      .then((response) => response)
+      .then((response) => {
+        console.log('======================', page, limit)
+        return response
+      })
       .catch((error) => {
         console.log("Error in fetchQuotesWithPendingStatus api", error);
       });

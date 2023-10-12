@@ -17,6 +17,7 @@ const GetQuotes = ({ isOpen, closeModal, productId }) => {
   const [reqError, setReqError] = useState('')
 
   const [darkmode, setDarkmode] = useState('')
+  
 
   useEffect(() => {
 
@@ -49,6 +50,8 @@ const GetQuotes = ({ isOpen, closeModal, productId }) => {
     { value: 'lb', label: 'lb' },
     { value: 'g', label: 'g' },
     { value: 'oz', label: 'oz' },
+    { value: 'item', label: 'items' },
+    { value: 'stock', label: 'stocks' },
     // Add more units as needed
   ];
 

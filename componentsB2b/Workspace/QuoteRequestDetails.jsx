@@ -32,7 +32,8 @@ const QuoteRequestDetails = ({content, data}) => {
     console.log('FETCHED QUOTE DATA=', data)
 
     const [quoteData, setQuoteData] = useState(data)
-    // const [quoteData2, setQuoteData2] = useState(data)
+    let [subtotal, setSubtotal] = useState(0)
+
     const [selected, setSelected] = useState(quoteData?.quote?.status)
 
 
@@ -41,11 +42,15 @@ const QuoteRequestDetails = ({content, data}) => {
         { value: 'SENT', label: 'SENT' },
       ]);
 
-      
+    //   let subtotal = 0
       useEffect(() => {
-        // Update status options based on quoteData
         if (data) {
           setQuoteData(data);
+          for (const product of data?.products) {
+            if (product.product && product.product.price) {
+                setSubtotal(subtotal += product.product.price)
+            }
+          }
       
           // Check if 'FINALIZE' is not in statusOptions and quoteData.status is 'SENT'
           if (data.quote.status === 'SENT' && !statusOptions.some((option) => option.value === 'FINALIZE')) {
@@ -97,10 +102,12 @@ const QuoteRequestDetails = ({content, data}) => {
             }
         ]
     )
-    
 
+
+    
     useEffect(() => {
         setDarkmode(parseInt(localStorage.getItem('bgLightness')));
+
         setSummary([
             {
                 title: `Items Subtotal:`,
@@ -196,8 +203,8 @@ const QuoteRequestDetails = ({content, data}) => {
 
             </div>
 
-            <div className="flex justify-between border-t pt-3  items-center gap-6 flex-wrap">
-                <DisabledBtn control={quoteData?.quote?.status!=='FINALIZE'}  route={'/vendorb2b/checkout'} quoteData={data}/>
+            <div className="flex justify-end border-t pt-3  items-center gap-6 flex-wrap">
+                {/* <DisabledBtn control={quoteData?.quote?.status!=='FINALIZE'}  route={'/vendorb2b/checkout'} quoteData={{subtotal, quoteName: data?.quote?.quote_name, quoteNumber: data?.quote?.quote_number, }}/> */}
 
                 <div className="flex gap-6 items-center justify-end">
                     <div className="flex gap-3 items-center">
@@ -236,48 +243,64 @@ const QuoteRequestDetails = ({content, data}) => {
                 </div>
 
                 {
-                    <div className="py-6  border-b border-light300 grid grid-cols-6 gap-3 items-center text-[10px] sm:text-sm md:text-md ">
+                   data?.products?.map((item)=> 
+                   <>
+                        <div key={item?.id} className="py-6  border-b border-light300 grid grid-cols-6 gap-3 items-center text-[10px] sm:text-sm md:text-md ">
                             <div className="flex flex-col col-span-4 gap-3 sm:flex-row items- ">
                                 <div className="border-2 overflow-hidden bg-light200 flex-shrink-0 w-12 h-12 ">
-                                    <img src={data?.products?.image?.thumbnail} alt="product" 
+                                    <img src={item?.product?.image?.thumbnail} alt="product" 
                                     className='w-full h-full object-cover'/>
                                 </div>
-                                <p  className='text-[12px] text-blue-600'><span className='pr-2 font-semibold'>{data?.products?.name}:</span>{data?.products?.description}</p>
+                                <p  className='text-[12px] text-blue-600'><span className='pr-2 font-semibold'>{item?.product?.name}:</span>{item?.product?.description}</p>
                             </div>
-                            <p className="col-span-1 text-end">${data?.products?.price}</p>
+                            <p className="col-span-1 text-end">${item?.product?.price}</p>
                             <p className="col-span-1 text-end">{data?.quote?.quantity}{data?.quote?.unit}</p>
-                        </div>                 
+                        </div>       
+                           
+                     </>
+                   )      
                 }
+                  <div className="py-6 border-b flex justify-between items-center">
+                         <p className="">Items Subtotal:</p>
+                         <p className="">${subtotal}</p>
+                     </div> 
 
-
-                <div className="py-6 border-b flex justify-between items-center">
-                    <p className="">Items Subtotal:</p>
-                    <p className="">${summary[0]?.value}</p>
-
-                </div>
 
 
             </div>
 
-            <div className="lg:col-span-1 bg-light200 px-6 py-8 rounded-lg shadow">
+            <div className="lg:col-span-1">
+            <div className="w-full bg-light200 px-6 py-8 rounded-lg shadow">
                 <h4 className="font-medium text-lg pb-6">Summary</h4>
+
                 <div className="grid gap-4 py-4 border-y">
-                    {
-                        summary?.map(({title, value}, i)=>(
-                            <div key={i} className="flex justify-between gap-6 items-center g">
-                                <p>{title}</p>
-                                <p>{value}</p>
-                            
-                        </div>
-                        ))
-                    }
+                    
+                    <div  className="flex justify-between gap-6 items-center g">
+                        <p>Items Sutotal:</p> <p>{subtotal}</p>
+                    </div>
+                    <div  className="flex justify-between gap-6 items-center g">
+                        <p>Discount:</p> <p>{''}</p>
+                    </div>
+                    <div  className="flex justify-between gap-6 items-center g">
+                        <p>Tax:</p> <p>{}</p>
+                    </div>
+                    <div  className="flex justify-between gap-6 items-center g">
+                        <p>Subtotal:</p> <p>{''}</p>
+                    </div>
+                    <div  className="flex justify-between gap-6 items-center g">
+                        <p>Shipping Costs:</p> <p>{''}</p>
+                    </div>
                 </div>
                 <div className="pt-4 text-lg font-medium flex justify-between">
                     <p>Total:</p>
-                    <p>${summary[5]?.value}</p>
+                    <p>${subtotal}</p>
                 </div>
 
             </div>
+
+            </div>
+
+           
         </div>
 
         <div className="flex flex-col-reverse md:grid grid-cols-2 lg:grid-cols-3 gap-8">
@@ -353,7 +376,7 @@ const QuoteRequestDetails = ({content, data}) => {
                 
               />
 
-                <DisabledBtn control={quoteData?.quote?.status!=='FINALIZE'}  route={'/vendorb2b/checkout'} quoteData={data}/>
+                <DisabledBtn control={quoteData?.quote?.status!=='FINALIZE'}  route={'/vendorb2b/checkout'} quoteData={{subtotal, quoteName: data?.quote?.quote_name, quoteNumber: data?.quote?.quote_number, }}/>
 
             </div>
             </div>

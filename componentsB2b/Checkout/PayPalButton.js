@@ -74,10 +74,10 @@ export default function PayPal({}) {
                             purchase_units: [
                                 {
                                     // description: 'rrrrrrrrrrrrrrrrrr',
-                                    description: checkoutData?.quote?.quote_name,
+                                    description: checkoutData?.quoteName,
                                     amount: {
                                         // value: 4,                
-                                        value: checkoutData?.poducts?.price,   
+                                        value:  checkoutData?.subtotal || 0,
                                         // currency_code: currency             
                                     },
                                    

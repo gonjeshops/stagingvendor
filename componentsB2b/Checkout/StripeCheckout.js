@@ -8,16 +8,12 @@ const StripeCheckout = () => {
   console.log('STRIPECHECKOUT==', checkoutData)
   const items = [
     {
-      price: checkoutData?.products?.price,
-      quantity: checkoutData?.products?.quantity,
+      price: checkoutData?.subtotal || 0, // Provide a default value if the properties are missing
+      quantity: 1,
       name: 'Total Amount',
     },
-    // {
-    //   price: 3,
-    //   quantity: 1,
-    //   name: 'Delivery Fee',
-    // },
   ];
+  
 
   const [stripeError, setStripeError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -54,7 +50,6 @@ const StripeCheckout = () => {
       }
 
       localStorage.setItem('Stripe_Results', JSON.stringify(session));
-      // localStorage.setItem('user', JSON.stringify({ a: 'emmma', s: 'udejo' }));
     } catch (error) {
       console.error('Stripe Checkout Error:', error);
       displayError('An error occurred during checkout');

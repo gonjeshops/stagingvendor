@@ -1,4 +1,4 @@
-// import { Stripe } from '@stripe/stripe-js';
+
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -36,8 +36,8 @@ export default async function handler(req, res) {
         { shipping_rate: 'shr_1NTtXGCQ7rc17Weigz5iCMyC' },
       ],
       line_items: lineItems,
-      success_url: `${req.headers.origin}/vendorb2b/checkout`,
-      cancel_url: `${req.headers.origin}/vendorb2b/checkout`,
+      success_url: `${req.headers.origin}/vendorb2b/checkout?stripe_status=success`,
+      cancel_url: `${req.headers.origin}/vendorb2b/checkout?stripe_status=cancelled`,      
     };
 
     const session = await stripe.checkout.sessions.create(params);

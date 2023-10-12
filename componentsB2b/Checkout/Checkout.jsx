@@ -6,6 +6,9 @@ import { FaUser, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
 import DashboardHeading from '../Workspace/DashboardHeading';
 import StripeCheckout from './StripeCheckout';
 import PayPal from './PayPalButton';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+
 
 const Checkout = ({content}) => {
 
@@ -13,6 +16,13 @@ const Checkout = ({content}) => {
 
     const [selectedOption, setSelectedOption] = useState('');
 
+    const { query } = useRouter();
+
+    if (query === 'success') {
+      toast.success('Stripe payment was successful');
+    } else if (query === 'cancelled') {
+      toast.success('Stripe payment was cancelled');
+    }
     
 
       
@@ -72,8 +82,7 @@ const Checkout = ({content}) => {
                 <div className="bg-light200  rounded-lg py-10 px-4 sm:px-10 md:max-w-[420px] min-w-[330px] flex-shrink-0 ">
                     <div className="flex justify-between items-center pb-6">
                         <h5 className='font-medium text-2xl'>Summary</h5>
-                        <button className="text-blue-600"
-                        onClick={(()=>{})}>
+                        <button className="text-blue-600">
                             Edit cart
                         </button>
                     </div>
@@ -83,7 +92,7 @@ const Checkout = ({content}) => {
                             summary.map((item, index)=>(
                                 <div className="flex justify-between items-center gap-2 sm:gap-4">
                             <div className="img h-8 w-8 rounded-full bg-light300 flex-shrink-0">
-                                <img src="" alt="" />
+                                <img src="" alt="a" />
                             </div>
                             <p>{item} Lorem ipsum dolor sit amet {index}</p>
                             <p>{'x1'}</p>
@@ -121,7 +130,7 @@ const Checkout = ({content}) => {
         <div className="space-y-6 font-medium w-full lg:max-w-3xl">
             <h3 className='text-2xl text-semibold'>Payment Method</h3>
             <StripeCheckout/>
-            {/* <PayPal/> */}
+            <PayPal/>
 
             <CheckoutForm cardData={cardtypes}/>
         </div>

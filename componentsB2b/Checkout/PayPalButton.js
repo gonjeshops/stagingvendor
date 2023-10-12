@@ -5,96 +5,104 @@ import {
     usePayPalScriptReducer,
     BraintreePayPalButtons
 } from "@paypal/react-paypal-js";
+import { useGlobalState } from "@/context/GlobalStateContext";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 
-// Custom component to wrap the PayPalButtons and handle currency changes
-
-// const ButtonWrapper = ({  }) => {
-//     // let amount = 45, deliveryFee = 3
-//     //     console.log('=====c', amount, deliveryFee)
-//     // // const amount = amount
-//     // // const currency = currency;
-//     // const style = {"layout":"horizontal"};
-
-
-//     // // usePayPalScriptReducer can be use only inside children of PayPalScriptProviders
-//     // // This is the main reason to wrap the PayPalButtons in a new component
-//     // const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
-
-//     // useEffect(() => {
-//     //     dispatch({
-//     //         type: "resetOptions",
-//     //         value: {
-//     //             ...options,
-//     //             currency: 'aud',
-//     //         },
-//     //     });
-//     // }, []);
-
-
-//     return (<>
-            
-//             <PayPalButtons
-//                 style={style}
-//                 // disabled={false}
-//                 // forceReRender={[amount, style]}
-//                 // fundingSource={undefined}
-//                 // createOrder={(data, actions) => {
-//                 //     return actions.order
-//                 //         .create({
-//                 //             purchase_units: [
-//                 //                 {
-//                 //                     amount: {
-//                 //                         currency_code: currency,
-//                 //                         value: amount,
-//                 //                     },
-//                 //                 },
-//                 //             ],
-//                 //         })
-//                 //         .then((orderId) => {
-//                 //             // Your code here after create the order
-//                 //             return orderId;
-//                 //         });
-//                 // }}
-//                 // onApprove={function (data, actions) {
-//                 //     return actions.order.capture().then(function () {
-//                 //         // Your code here after capture the order
-//                 //     });
-//                 // }}
-//             />
-//         </>
-//     );
-// }
 
 export default function PayPal({}) {
+    const router = useRouter()
+    const {checkoutData} = useGlobalState()
+    const [paidFor, setPaidFor] = useState(false)
+    const [error, setError] = useState(false)
+    const [currency, setCurrency] = useState('AUD')
     
+
+    console.log('PAYPAL=====', checkoutData)
+
+    const [{ isPending }, { options }, dispatch] = usePayPalScriptReducer();
+
+    // dispatch({
+    //     type: "resetOptions",
+    //     value: {
+    //         ...options,
+    //         currency: 'AUD',
+    //     },
+    // });
+
+    const handleApprove = (orderId) => {
+        // send request to api to handle the order
+
+        // if response is success
+        setPaidFor(true);
+        toast.success('Thank you for your purchase!')
+
+        // Refresh the user account or subscription status.
+
+        // if response is error
+        // alert the user of the eror message
+        // toast.error('Your payment was processed successfully, however there are issues in completing your purchase. Please contact support team')
+    }
+
+
+
+
+
 	return (
-		<div style={{ maxWidth: "750px", minHeight: "200px" }}>
+		<div >
+            {isPending ? <div className="spinner" /> : null}
 
-            <PayPalButtons
-                style={{
-                    layout: 'horizontal',
-                    tagline: false,
-                   
-                }}
-            />
-
-            {/* <PayPalScriptProvider
-                options={{
-                    "client-id": process.env.NEXT_PUBLIC_PAYPAL_ID,
-                    components: "buttons",
-                    currency: "USD"
-                }}
-            >
-				<ButtonWrapper
-                    currency='USD'
-                    showSpinner={false}
-                    deliveryFee={deliveryFee}
-                    amount={amount}
-                    callOrderApi={callOrderApi}
-                    walletBalance={walletBalance}
+            <PayPalScriptProvider options={{ clientId: process.env.NEXT_PUBLIC_PAYPAL_ID }}>
+                <PayPalButtons
+                    style={{
+                        layout: 'horizontal',
+                        tagline: false,
+                    }}
+                    onClick={(data,actions)=>{
+                        // check if user has already purchased this product
+                        const hasPurchasedProduct = false;
+                        if (hasPurchasedProduct) { 
+                            setError('You have purchased this product')
+                            return actions.reject()
+                        } else {
+                            return actions.resolve()
+                        }
+                    }}
+                    createOrder={(data, actions) => {
+                        return actions.order.create({
+                            purchase_units: [
+                                {
+                                    // description: 'rrrrrrrrrrrrrrrrrr',
+                                    description: checkoutData?.quote?.quote_name,
+                                    amount: {
+                                        // value: 4,                
+                                        value: checkoutData?.poducts?.price,   
+                                        // currency_code: currency             
+                                    },
+                                   
+                                }
+                            ]
+                        })
+                    }}
+                    onApprove={async (data, actions) => {
+                        const order = await actions.order.capture();
+                        console.log('OREDER FDBK', order)
+                        handleApprove(data?.orderID)
+                    }}
+                    onCancel={()=>{
+                        // redirect user to checkout page
+                        toast.warning('Purchase was canceled')
+                        router.push('/vendorb2b/checkout')
+                    }}
+                    onError={err => {
+                        setError(err)
+                        toast.error('Error in response')
+                        console.log('PAYPAL ERROR', err)
+                    }}
                 />
-			</PayPalScriptProvider> */}
+            </PayPalScriptProvider>
+
 		</div>
 	);
 }

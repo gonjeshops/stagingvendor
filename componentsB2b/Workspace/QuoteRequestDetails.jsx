@@ -16,7 +16,7 @@ export const DisabledBtn = ({control, route, quoteData}) => {
                 control ? 'bg-blue-300 cursor-not-allowed'
                 : 'hover-blue '
             }`}
-            disabled={false}
+            disabled={control}
             onClick={()=>{
                 setCheckoutData(quoteData)
                 router.push(route)
@@ -32,6 +32,7 @@ const QuoteRequestDetails = ({content, data}) => {
     console.log('FETCHED QUOTE DATA=', data)
 
     const [quoteData, setQuoteData] = useState(data)
+    // const [quoteData2, setQuoteData2] = useState(data)
     const [selected, setSelected] = useState(quoteData?.quote?.status)
 
 
@@ -72,27 +73,27 @@ const QuoteRequestDetails = ({content, data}) => {
         [
             {
                 title: `Items Subtotal:`,
-                value: 0
+                value: data?.products?.price,
             },
             {
                 title: `Discount:`,
-                value: 0
+                value: data?.products?.discount,
             },
             {
                 title: `Tax:`,
-                value: 0
+                value: data?.products?.is_taxable
             },
             {
                 title: `Subtotal:`,
-                value: 0
+                value: data?.products?.sale_price
             },
             {
                 title: `Shipping Cost:`,
-                value: 0
+                value: data?.products?.shipping_class_id
             },
             {
                 title: `Total:`,
-                value: 0
+                value: data?.products?.price,
             }
         ]
     )
@@ -100,7 +101,33 @@ const QuoteRequestDetails = ({content, data}) => {
 
     useEffect(() => {
         setDarkmode(parseInt(localStorage.getItem('bgLightness')));
-      }, [])
+        setSummary([
+            {
+                title: `Items Subtotal:`,
+                value: data?.products?.price,
+            },
+            {
+                title: `Discount:`,
+                value: data?.products?.discount,
+            },
+            {
+                title: `Tax:`,
+                value: data?.products?.is_taxable
+            },
+            {
+                title: `Subtotal:`,
+                value: data?.products?.sale_price
+            },
+            {
+                title: `Shipping Cost:`,
+                value: data?.products?.shipping_class_id
+            },
+            {
+                title: `Total:`,
+                value: data?.products?.price,
+            }
+        ])
+      }, [data])
 
 
     const handleSelect = async (slectedOption) => {
@@ -170,7 +197,7 @@ const QuoteRequestDetails = ({content, data}) => {
             </div>
 
             <div className="flex justify-between border-t pt-3  items-center gap-6 flex-wrap">
-                <DisabledBtn control={quoteData?.quote?.status!=='FINALIZE'}  route={'/vendorb2b/checkout'} quoteData={quoteData}/>
+                <DisabledBtn control={quoteData?.quote?.status!=='FINALIZE'}  route={'/vendorb2b/checkout'} quoteData={data}/>
 
                 <div className="flex gap-6 items-center justify-end">
                     <div className="flex gap-3 items-center">
@@ -212,20 +239,20 @@ const QuoteRequestDetails = ({content, data}) => {
                     <div className="py-6  border-b border-light300 grid grid-cols-6 gap-3 items-center text-[10px] sm:text-sm md:text-md ">
                             <div className="flex flex-col col-span-4 gap-3 sm:flex-row items- ">
                                 <div className="border-2 overflow-hidden bg-light200 flex-shrink-0 w-12 h-12 ">
-                                    <img src={quoteData?.products?.image?.thumbnail} alt="product" 
+                                    <img src={data?.products?.image?.thumbnail} alt="product" 
                                     className='w-full h-full object-cover'/>
                                 </div>
-                                <p  className='text-[12px] text-blue-600'><span className='pr-2 font-semibold'>{quoteData?.products?.name}:</span>{quoteData?.products?.description}</p>
+                                <p  className='text-[12px] text-blue-600'><span className='pr-2 font-semibold'>{data?.products?.name}:</span>{data?.products?.description}</p>
                             </div>
-                            <p className="col-span-1 text-end">${quoteData?.products?.price}</p>
-                            <p className="col-span-1 text-end">{quoteData?.products?.quantity}</p>
+                            <p className="col-span-1 text-end">${data?.products?.price}</p>
+                            <p className="col-span-1 text-end">{data?.quote?.quantity}{data?.quote?.unit}</p>
                         </div>                 
                 }
 
 
                 <div className="py-6 border-b flex justify-between items-center">
                     <p className="">Items Subtotal:</p>
-                    <p className="">{summary[0]?.value}</p>
+                    <p className="">${summary[0]?.value}</p>
 
                 </div>
 
@@ -326,7 +353,7 @@ const QuoteRequestDetails = ({content, data}) => {
                 
               />
 
-                <DisabledBtn control={quoteData?.quote?.status!=='FINALIZE'}  route={'/vendorb2b/checkout'} quoteData={quoteData}/>
+                <DisabledBtn control={quoteData?.quote?.status!=='FINALIZE'}  route={'/vendorb2b/checkout'} quoteData={data}/>
 
             </div>
             </div>

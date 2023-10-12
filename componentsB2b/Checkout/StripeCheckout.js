@@ -25,7 +25,7 @@ const StripeCheckout = () => {
     setStripeError(error);
     setTimeout(() => {
       setStripeError(null);
-    }, 5000); // Clear error message after 5 seconds (adjust as needed)
+    }, 5000); // Clear error message after 5 seconds 
   };
 
   const redirectToCheckout = async () => {
@@ -66,7 +66,9 @@ const StripeCheckout = () => {
   return (
     <div>
     {stripeError && (
-      <div className="text-red-600 mb-2">{stripeError}</div>
+      <div className="text-red-600 mb-2">
+        {stripeError}
+      </div>
     )}
 
     <button
@@ -76,7 +78,8 @@ const StripeCheckout = () => {
         loading ? 'opacity-50 cursor-not-allowed' : ''
       }`}
     >
-       <FaCreditCard  /> <p> {loading ? 'Loading...' : 'Stripe Pay'} </p>
+       <FaCreditCard  /> 
+       <p> {loading ? 'Loading...' : 'Stripe Pay'} </p>
     </button>
   </div>
   );

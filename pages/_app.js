@@ -7,8 +7,8 @@ import Layout from "../components/Layout";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import '@stripe/stripe-js'
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-
+// import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 
 import LayoutB2b from "../componentsB2b/LayoutB2b/LayoutB2b";
@@ -44,42 +44,41 @@ function MyApp({ Component, pageProps }) {
     if (!isPublic && !user_detail) {
       router.push("/signup");
     }
-
+    
   }, [router.asPath]);
 
  
   return (
-    <PayPalScriptProvider options={{"client_id": process.env.NEXT_PUBLIC_PAYPAL_ID}} >
-      <Provider store={store}>
-    <GlobalStateProvider>
+    <PayPalScriptProvider options={{"client_id": 'test'}} >
+        <Provider store={store}>
+        <GlobalStateProvider>
+        
+
+        {!(router.asPath === "/contractPolicy") &&
+        !(router.asPath === "/vendor") &&
+        !(router.asPath === "/payment") &&
+        !(router.asPath === "/") &&
+        !(router.asPath === "/login") && 
+        !(router.asPath.split('/').includes('vendorb2b')) && 
+        !(router.asPath.split('/').includes('signup')) && 
+        !(router.asPath.split('/').includes('signin'))? (
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        ) : 
+        (router.asPath.split('/').includes('vendorb2b'))  ? (
+          <LayoutB2b>
+            <Component {...pageProps} />
+          </LayoutB2b>
+        )
+        :
+        (
+          <Component {...pageProps} />
+        )}
       
-
-      {!(router.asPath === "/contractPolicy") &&
-      !(router.asPath === "/vendor") &&
-      !(router.asPath === "/payment") &&
-      !(router.asPath === "/") &&
-      !(router.asPath === "/login") && 
-      !(router.asPath.split('/').includes('vendorb2b')) && 
-      !(router.asPath.split('/').includes('signup')) && 
-      !(router.asPath.split('/').includes('signin'))? (
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      ) : 
-      (router.asPath.split('/').includes('vendorb2b'))  ? (
-        <LayoutB2b>
-          <Component {...pageProps} />
-        </LayoutB2b>
-      )
-      :
-      (
-        <Component {...pageProps} />
-      )}
-    
-      <ToastContainer />
-      </GlobalStateProvider>
-    </Provider>
-
+        <ToastContainer />
+        </GlobalStateProvider>
+        </Provider>
     </PayPalScriptProvider>
     
   );

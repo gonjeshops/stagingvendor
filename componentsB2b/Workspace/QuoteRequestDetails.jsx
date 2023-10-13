@@ -5,30 +5,30 @@ import DashboardHeading from './DashboardHeading';
 import { updateQuoteRequest } from '../Api2';
 import { useRouter } from 'next/router';
 import { useGlobalState } from '@/context/GlobalStateContext';
+import { truncateText } from '@/lib/truncateText';
+import ProductDetailsModal from '../Modal/ProductDetailsModal'
 
-const DisabledBtn = ({ control, route, quoteData }) => {
+
+
+export const DisabledBtn = ({ control, route, quoteData }) => {
   const router = useRouter();
-  const { checkoutData, setCheckoutData } = useGlobalState();
+  const { setCheckoutData } = useGlobalState();
 
   const buttonClass = control
     ? 'bg-blue-300 cursor-not-allowed'
     : 'hover-blue';
 
-  const handleClick = () => {
-    if (!control) {
-      setCheckoutData(quoteData);
-      router.push(route);
-    }
-  };
-
   return (
-    <button
+    <button 
       className={`rounded text-white py-2 px-8 ${buttonClass}`}
       disabled={control}
-      onClick={handleClick}
+      onClick={()=>{
+        setCheckoutData(quoteData)
+        router.push(route)
+    }}
     >
       Checkout
-    </button>
+    </button >
   );
 };
 
@@ -148,8 +148,14 @@ const QuoteRequestDetails = ({ content, data }) => {
     }),
   };
 
+// modal control
+  const [isOpen, setIsOpen] = useState(false)
+  const [eachProduct, setEachProduct] = useState('')
+
+
   return (
     <div className='pb-20 px-4 space-y-8'>
+        {/* <ProductDetailsModal isOpen={isOpen} closeModal={()=>setIsOpen(false)}  product={eachProduct}/> */}
       <div>
         <DashboardHeading>Request details for {quoteData?.quote?.quote_number}</DashboardHeading>
         <div className="flex pb-2 gap-2 justify-between items-center flex-wrap">
@@ -191,12 +197,18 @@ const QuoteRequestDetails = ({ content, data }) => {
             </div>
           </div>
           {data?.products?.map((item) => (
-            <div key={item?.id} className="py-6 border-b border-light300 grid grid-cols-6 gap-3 items-center text-[10px] sm:text-sm md:text-md">
+            <div key={item?.id} 
+            // onClick={()=> {
+            //     setEachProduct(item)
+            //     setIsOpen(true)
+            // }}
+            className="py-6 border-b border-light300 grid grid-cols-6 gap-3 items-center text-[10px] sm:text-sm md:text-md">
               <div className="flex flex-col col-span-4 gap-3 sm:flex-row items-">
                 <div className="border-2 overflow-hidden bg-light200 flex-shrink-0 w-12 h-12 ">
                   <img src={item?.product?.image?.thumbnail} alt="product" className='w-full h-full object-cover'/>
                 </div>
-                <p className='text-[12px] text-blue-600'><span className='pr-2 font-semibold'>{item?.product?.name}:</span>{item?.product?.description}</p>
+                <p 
+                className='text-[12px] text-blue-600'><span className='pr-2 font-semibold'>{item?.product?.name}:</span>{truncateText(item?.product?.description,  200)}</p>
               </div>
               <p className="col-span-1 text-end">${item?.product?.price}</p>
               <p className="col-span-1 text-end">{data?.quote?.quantity}{data?.quote?.unit}</p>

@@ -13,6 +13,7 @@ const GlobalStateProvider = ({ children }) => {
   const [cartItem, setCartItem] = useState([]);
   const [module, setModule] = useState({ moduleType: 'vendor', navLink: [] });
   const [user, setUser] = useState('')
+  const [checkoutData, setCheckoutData] = useState('')
 
   // Function to retrieve "user-details" from local storage
 useEffect(() => {
@@ -76,6 +77,8 @@ useEffect(() => {
     setModalType('');
   };
 
+   
+
   const globalState = {
     user,
     logout,
@@ -90,6 +93,7 @@ useEffect(() => {
     setOpenNavSubmenu,
     openNavSubmenu,
     useCart, // This line might not be necessary. Make sure it's intended.
+    checkoutData, setCheckoutData,
   };
 
   return (

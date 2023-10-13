@@ -25,7 +25,7 @@ const ModalProfileDropdown = ({ stopPropagation }) => {
                   Logout
               </a>
 
-              <Link href="/workspace/help" className="flex items-center gap-3 mt-14 border-t px-4 py-2 text-sm text-gray-00 bg-hover300">
+              <Link href="/vendorb2b/help" className="flex items-center gap-3 mt-14 border-t px-4 py-2 text-sm text-gray-00 bg-hover300">
                 <MdHelpOutline size={20}/>
 
                   <div>

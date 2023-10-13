@@ -7,6 +7,9 @@ import { useRouter } from "next/router";
 
 const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
 
+
+  
+
   const route = useRouter();
   const activePath = route.asPath;
   const [toggleHrm, setHRMToggle] = useState(false);
@@ -143,7 +146,7 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
             
           );
         })}
-       <Link href={'/vendorb2b'} className="nav-link rounded-l-full" style={{color: 'black', background: 'white'}}>
+    <Link href={'/vendorb2b'} className="nav-link rounded-l-full" style={{color: 'black', background: 'white'}}>
         Switch to VendorB2B
       </Link>
       </ul>

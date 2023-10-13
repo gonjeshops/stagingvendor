@@ -42,9 +42,9 @@ const Sidebar = ({heading, onclick, list}) => {
             <div className="text-base "> Supplier Category</div>
         </div> }
 
-        <h3 className=" text-base pb-2">
+        {/* <h3 className=" text-base pb-2">
             {heading}
-        </h3>
+        </h3> */}
         <div className="space-y-">
             {
                 list?.map((item, index)=> {

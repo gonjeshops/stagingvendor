@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import {  FaStar, FaHeart, FaImage } from "react-icons/fa"
+import { truncateText } from "@/lib/truncateText"
 
 const ProductCard2 = ({product, userId, shopId, }) => {
 const {description, image, gallery, name, discount, price, slug, shop_id, id, } = product
@@ -8,12 +9,6 @@ const {description, image, gallery, name, discount, price, slug, shop_id, id, } 
 
 
   // Function to truncate text to a maximum of 50 characters
-  const truncateText = (text, maxLength) => {
-    if (text?.length > maxLength) {
-      return text.slice(0, maxLength) + '...'; // Add ellipsis for truncation
-    }
-    return text;
-  }
 
 
 return (

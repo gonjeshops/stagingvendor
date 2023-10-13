@@ -90,7 +90,7 @@ const Checkout = ({content}) => {
                     <div className="space-y-4 pb-6 border-zinc">
                         {
                             summary.map((item, index)=>(
-                                <div className="flex justify-between items-center gap-2 sm:gap-4">
+                                <div key={index} className="flex justify-between items-center gap-2 sm:gap-4">
                             <div className="img h-8 w-8 rounded-full bg-light300 flex-shrink-0">
                                 <img src="" alt="a" />
                             </div>

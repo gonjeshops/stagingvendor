@@ -49,7 +49,7 @@ function MyApp({ Component, pageProps }) {
 
  
   return (
-    <PayPalScriptProvider options={{"client_id": 'test'}} >
+    <PayPalScriptProvider options={{"client_id": process.env.NEXT_PUBLIC_PAYPAL_ID_DEFAULT_APP}} >
         <Provider store={store}>
         <GlobalStateProvider>
         

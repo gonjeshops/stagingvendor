@@ -12,12 +12,12 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 
-const ProductDetails = ({product, p}) => {
+const ProductDetails = ({product, modal, p}) => {
   const [isOpen, setIsOpen] = useState(false)
 const router = useRouter
-    const {name, description, price, discount, in_stock, status, created_at, gallery, id, image, is_taxable, max_pric, min_price, sale_price, shop_id, slug, top_deals, unit, } = product
+    const {name, description, price, discount, in_stock, status, created_at, gallery, id, image, is_taxable, max_pric, min_price, sale_price, slug, top_deals, unit, } = product
     
-  const {rating, heading,  offerEnds, bestseller,off,  imgList} = p[0]
+//   const {rating, heading,  offerEnds, bestseller,off,  imgList} = p[0]
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
@@ -76,8 +76,9 @@ const router = useRouter
                 <p className='text-red-500'>Special offer ends in {offerEnds}</p>
             </div>
         </div>
-
-        <div className="items-center  sm:flex gap-6 py-4 grid w-full">
+{ !modal ?
+      <>
+      <div className="items-center  sm:flex gap-6 py-4 grid w-full">
             
             <div className='flex items-center'>
                 <BtnOutline link={'#'} color={'orange'}>
@@ -103,11 +104,14 @@ const router = useRouter
         <div className="py-4">
             <Navigate/>
         </div>
-        
-        {/* Get quotes form with Modal-central */}
-        <GetQuotes isOpen={isOpen} closeModal={()=>setIsOpen(false)}  productId={id} />
+ 
+        <GetQuotes isOpen={isOpen} closeModal={()=>setIsOpen(false)}  productId={id} /> 
+        </> : 
+    null
+    }
+
     </div>
-    
+
   )
 }
 

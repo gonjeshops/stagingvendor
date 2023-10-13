@@ -8,11 +8,9 @@ const Dashboard = () => {
     
     <> 
         
-        <div className=" gap-3 mb-2 sm:mb-0 flex justify-between items-end w-full ">
+        <div className=" mb-2 sm:mb-0 w-full ">
             <DashboardHeading>Dashboard</DashboardHeading>
-            <div className='flex py-3 px-6 bg-light100 rounded-lg'>
-                <p> 6 August 2023</p>
-            </div>
+           
         </div>
 
                 

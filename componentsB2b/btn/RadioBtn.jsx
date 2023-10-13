@@ -6,6 +6,8 @@ const RadioBtn = ({value, selectedOption, size, setSelectedOption }) => {
         const newValue = event.target.value;
         setSelectedOption((prevValue) => (prevValue === newValue ? '' : newValue)); 
     };
+    const handleChange = ()=> {}
+    
   return (
     <label>
         <input
@@ -13,6 +15,7 @@ const RadioBtn = ({value, selectedOption, size, setSelectedOption }) => {
             name="product"
             value={value}
             checked={selectedOption === value}
+            onChange={handleChange}
             onClick={handleRadioBtn}
             className={`w-${size} h-${size} border rounded-md border-zinc-400`}
         />

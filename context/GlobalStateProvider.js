@@ -14,6 +14,8 @@ const GlobalStateProvider = ({ children }) => {
   const [module, setModule] = useState({ moduleType: 'vendor', navLink: [] });
   const [user, setUser] = useState('')
   const [checkoutData, setCheckoutData] = useState('')
+  const [supplierDetails, setSupplierDetails] = useState('')
+
 
   // Function to retrieve "user-details" from local storage
 useEffect(() => {
@@ -94,6 +96,7 @@ useEffect(() => {
     openNavSubmenu,
     useCart, // This line might not be necessary. Make sure it's intended.
     checkoutData, setCheckoutData,
+    supplierDetails, setSupplierDetails
   };
 
   return (

@@ -23,7 +23,7 @@ console.log('STRIPE ITEMS==', items)
         },
         unit_amount: item.price * 100,
       },
-      quantity: 1,
+      quantity: parseInt(item.price) || 1,
     }));
 
     const params = {

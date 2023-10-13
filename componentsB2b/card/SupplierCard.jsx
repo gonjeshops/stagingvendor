@@ -1,10 +1,11 @@
+import { useGlobalState } from '@/context/GlobalStateContext'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import { FaImage, FaStar } from 'react-icons/fa'
 
 const SupplierCard = ({ label, item, details }) => {
-
+  const{setSupplierDetails}=useGlobalState()
 
   // Function to truncate text to a maximum of 50 characters
   const truncateText = (text, maxLength) => {
@@ -20,8 +21,8 @@ const SupplierCard = ({ label, item, details }) => {
     <div className='w-full h-[335px] pb-2 border-b flex flex-col gap-1 justify-between'>
       <div className="space-y-2">
         <div className=" border border-zinc-300 p-4 h-40 rounded-lg">
-          { item?.cover_image?.thumbnail ? <div className="bg-yellow-500 h-full overflow-hidden rounded-md ">
-            <img src={item?.cover_image?.thumbnail} className='object-cover w-full h-full' />
+          { item?.logo?.thumbnail ? <div className="bg-yellow-500 h-full overflow-hidden rounded-md ">
+            <img src={item?.logo?.thumbnail} className='object-cover w-full h-full' />
           </div> : 
           <div className="bg-green-600 text-green-700 h-full rounded-md flex w-full justify-center items-center ">
             <FaImage size={30} />
@@ -42,7 +43,9 @@ const SupplierCard = ({ label, item, details }) => {
       </div>
 
       <div className="">
-        <Link href={`/vendorb2b/suppliers/${item?.slug}?userId=${item?.owner_id}&shopId=${item?.id}`} className='text-blue-500 hover:text-blue-700 duration-300'>
+        <Link href={`/vendorb2b/suppliers/${item?.slug}?userId=${item?.owner_id}&shopId=${item?.id}`} className='text-blue-500 hover:text-blue-700 duration-300'
+          onClick={()=>setSupplierDetails(item)}
+        >
           {`Visit Store >`}
         </Link>
       </div>

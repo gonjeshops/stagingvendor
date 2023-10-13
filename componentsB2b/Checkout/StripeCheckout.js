@@ -4,7 +4,7 @@ import { useGlobalState } from '@/context/GlobalStateContext';
 import { FaCreditCard } from 'react-icons/fa';
 
 const StripeCheckout = () => {
-  const{checkoutData, setCheckoutData,}=useGlobalState()
+  const{checkoutData}=useGlobalState()
   console.log('STRIPECHECKOUT==', checkoutData)
   const items = [
     {
@@ -48,7 +48,7 @@ const StripeCheckout = () => {
       if (session.error) {
         displayError(session.error.message);
       }
-
+console.log('STRIPE RESPONSE', session)
       localStorage.setItem('Stripe_Results', JSON.stringify(session));
     } catch (error) {
       console.error('Stripe Checkout Error:', error);

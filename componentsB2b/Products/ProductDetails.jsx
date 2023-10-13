@@ -17,7 +17,7 @@ const ProductDetails = ({product, modal, p}) => {
 const router = useRouter
     const {name, description, price, discount, in_stock, status, created_at, gallery, id, image, is_taxable, max_pric, min_price, sale_price, slug, top_deals, unit, } = product
     
-//   const {rating, heading,  offerEnds, bestseller,off,  imgList} = p[0]
+  const {rating, heading,  offerEnds, bestseller,off,  imgList} = p[0]
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 

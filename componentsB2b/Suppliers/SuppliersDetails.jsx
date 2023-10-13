@@ -2,29 +2,41 @@ import React from 'react'
 import ImgCard from '../card/ImgCard'
 import ProductCard2 from '../card/productCard2'
 import Image from 'next/image'
-import { FaImage } from 'react-icons/fa'
+import { FaExternalLinkAlt, FaFacebook, FaImage } from 'react-icons/fa'
+import { useGlobalState } from '@/context/GlobalStateContext'
 
 const SuppliersDetails = ({supplierData, userId, shopId, }) => {
     const {products=[]} = supplierData
+    const{supplierDetails}=useGlobalState()
   
-  console.log('supplierData=', supplierData)
+  console.log('SUPPLIER PRODUCTS=', supplierData, 'SUPPLIER DETAILS ===', supplierDetails )
   
     return (
     <div className='space-y-4'>
         <div className="w-full relative rounded-xl h-60 bg-light300">
-        <div className="absolute top-[55%] right-[10%] overflow-hidden rounded-full w-40 h-40  bg-yellow-600">
-                {supplierData?.logo ? <Image width={100} height={100} src={supplierData?.logo} alt={'logo'} className='object-cover'/> : <div className="centralize text-6xl text-yellow-700">
-                <FaImage />
-                </div> }
+           
+            <div className="w-full h-full overflow-hidden">
+                <img src={supplierDetails?.cover_image?.original} alt="cover_img" className='w-full h-full object-cover'/>
+            </div>
+
+            <div className="absolute top-[55%] right-[10%] overflow-hidden rounded-full w-40 h-40  bg-yellow-600">
+                {
+                    supplierDetails?.logo ? 
+                    <Image width={100} height={100} src={supplierDetails?.logo?.thumbnail} alt={'logo'} className='object-cover h-full w-full'/> 
+                    : 
+                    <div className="centralize text-6xl text-yellow-700">
+                        <FaImage />
+                    </div> 
+                }
             </div>
         </div>
         
             
-        <h4 className='font-medium text-3xl'>{supplierData?.name} Lorem Empire </h4>
+        <h4 className='font-medium text-3xl pt-10'>{supplierDetails?.name}  </h4>
       
         <div className="border-b pb-4 ">
             <div className="max-w-3xl">
-            {supplierData?.description} Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, similique sint! Sit magni modi doloremque asperiores vero nesciunt iste corrupti! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quisquam dolores natus voluptatem incidunt quod voluptates excepturi assumenda iure tenetur suscipit!
+            {supplierDetails?.description} 
             </div>
         </div>
 
@@ -32,16 +44,26 @@ const SuppliersDetails = ({supplierData, userId, shopId, }) => {
             <div className='space-y-2'>
                 <div className="flex gap-3 items-center">
                     <p className='font-medium'>Location: </p>
-                    <p>{supplierData?.address}Lorem ipsum dolor sit amet consectetur, adipisicing elit. Optio, nemo</p>
+                    <p>{supplierDetails?.address?.street_address} {supplierDetails?.address?.city} {supplierDetails?.address?.state} {supplierDetails?.address?.country}</p>
                 </div>
                 <div className="flex gap-3 items-center">
                     <p className='font-medium'>Phonenumber:</p>
-                    <p> {''} +44-000000001</p>
+                    <p> {supplierDetails?.settings?.contact} </p>
                 </div>
             </div>
-            <div className="flex gap-3 items-center">
-                <p className='font-medium'>Owner_id: </p>
-                <p>{supplierData?.owner_id} GS876</p>
+            <div className="flex flex-col gap-3">
+                <div className="flex gap-3 items-center">
+                    <p className='font-medium'>Owner_id: </p>
+                    <p>GONJE SHOPS {supplierDetails?.id} </p>
+                </div>
+                <div className="flex gap-3 items-center">
+                    <a href={supplierDetails?.settings?.socials[0]?.url} target="_blank" rel="noopener noreferrer">
+                        <FaFacebook size={16}/>
+                    </a>
+                    <a href={supplierDetails?.settings?.website} target="_blank" rel="noopener noreferrer" className='flex items-center gap-1'>
+                        Visit Website <FaExternalLinkAlt size={16}/>
+                    </a>
+                </div>
             </div>
          </div>
 

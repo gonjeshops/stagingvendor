@@ -220,9 +220,9 @@ const QuoteRequestDetails = ({ content, data }) => {
           </div>
         </div>
         <div className="lg:col-span-1">
-          <div className="w-full bg-light200 px-6 py-8 rounded-lg shadow">
+          <div className="w-full bg-light200 px-6 py-8 rounded-lg ">
             <h4 className="font-medium text-lg pb-6">Summary</h4>
-            <div className="grid gap-4 py-4 border-y">
+            <div className="grid gap-3 py-4 border-y">
               {summary.map((item, index) => (
                 <div key={index} className="flex justify-between gap-6 items-center">
                   <p>{item.title}:</p>

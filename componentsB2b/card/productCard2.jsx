@@ -16,7 +16,7 @@ return (
     <div  className="w-full max-w-sm bg-light200 overflow-hidden rounded-lg border border-light300">
 
     <div className="relative bg-light300 overflow-hidden h-60 w-full ">
-       {image?.thumbnail ? <Image width={100} height={100} className="w-full h-full object-cover" src={image?.thumbnail} alt="product image" /> : <div className="centralize text-6xl text-zinc-600">
+       {image?.original ? <Image width={150} height={150} className="w-full h-full object-cover" src={image?.original} alt="product image" /> : <div className="centralize text-6xl text-zinc-600">
                 <FaImage />
                 </div>}
     </div>

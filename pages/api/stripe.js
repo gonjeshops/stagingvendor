@@ -10,7 +10,7 @@ export default async function handler(req, res) {
 
   try {
     const items = req.body;
-
+console.log('STRIPE ITEMS==', items)
     if (!Array.isArray(items)) {
       return res.status(400).json({ error: 'Invalid request body' });
     }
@@ -23,7 +23,7 @@ export default async function handler(req, res) {
         },
         unit_amount: item.price * 100,
       },
-      quantity: parseInt(item.quantity) || 1,
+      quantity: 1,
     }));
 
     const params = {

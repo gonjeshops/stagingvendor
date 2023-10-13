@@ -23,7 +23,7 @@ export default async function handler(req, res) {
         },
         unit_amount: item.price * 100,
       },
-      quantity: item.quantity,
+      quantity: parseInt(item.quantity) || 1,
     }));
 
     const params = {

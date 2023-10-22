@@ -21,7 +21,7 @@ const SuppliersCatalogue = ({suppliersData, }) => {
             </section>
 
             <section className='space-y-6'>
-                <div className=" grid gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-6 ">
+                <div className=" grid gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4  xl:grid-cols-4 ">
                     {
                         suppliersData?.map((item) => (
                             <div key={item.id} className="">

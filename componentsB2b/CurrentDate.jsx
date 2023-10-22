@@ -1,3 +1,4 @@
+import { formatDate } from '@/lib/formatDate';
 import  { useState, useEffect } from 'react';
 
 function CurrentDate() {
@@ -16,7 +17,7 @@ function CurrentDate() {
 
   // Step 5: Render the current date in your component's JSX
   return (
-      <p>{currentDate.toLocaleString()}</p>
+      <p>{formatDate(currentDate)}</p>
   );
 }
 

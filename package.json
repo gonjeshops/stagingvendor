@@ -22,6 +22,7 @@
     "moment": "^2.29.4",
     "next": "^13.4.12",
     "next-redux-wrapper": "^7.0.5",
+    "react-loader-spinner": "^5.4.5",
     "pspdfkit": "^2021.6.2",
     "rc-time-picker": "^3.7.3",
     "react": "^18.2.0",

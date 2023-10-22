@@ -8,7 +8,7 @@ import { useGlobalState } from '@/context/GlobalStateContext';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 
-const GetQuotes = ({ isOpen, closeModal, productId }) => {
+const GetQuotes = ({ isOpen, closeModal, productId, productData }) => {
   const router = useRouter()
 
   const {user} = useGlobalState();
@@ -63,11 +63,12 @@ const GetQuotes = ({ isOpen, closeModal, productId }) => {
   ]
   const [formData, setFormData] = useState({
     name: '',
-    unit: null,
+    unit: productData?.unit,
     productId: productId,
     quantity: '',
     userId: user?.user_id
   });
+
   const [option, setOption] = useState(null);
   const [x, setX] = useState(null);
 
@@ -109,9 +110,9 @@ const GetQuotes = ({ isOpen, closeModal, productId }) => {
     if (!formData.name) {
       validationErrors.name = 'Please type in the name of your quote request.';
     }
-    if (!formData.unit) {
-      validationErrors.unit = 'Please select a unit of measurement.';
-    }
+    // if (!formData.unit) {
+    //   validationErrors.unit = 'Please select a unit of measurement.';
+    // }
     if (!formData.quantity) {
       validationErrors.quantity = 'Quantity is required.';
     }
@@ -121,9 +122,6 @@ const GetQuotes = ({ isOpen, closeModal, productId }) => {
       return;
     }
 
-    // Fake API submission (simulating a network delay)
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log('Form data submitted:', formData);
     try {
       const response = await createQuoteRequest(formData);
       if (response?.status === 200) {
@@ -187,7 +185,8 @@ const GetQuotes = ({ isOpen, closeModal, productId }) => {
 
           <div className="mb-4 h-20">
             <label htmlFor="name" className="block font-semibold mb-1">
-              NAME YOUR QUOTE
+              {/* NAME YOUR QUOTE */}
+              Create a new quote or Select a quote
             </label>
             <CreatableSelect 
               isClearable
@@ -205,7 +204,7 @@ const GetQuotes = ({ isOpen, closeModal, productId }) => {
           <div className="flex gap-4 w-full">
             <div className="mb-4 w-full">
               <label htmlFor="quantity" className="block font-semibold mb-1">
-                QUANTITY
+                Quantity
               </label>
               <input
                 type="number"
@@ -222,10 +221,14 @@ const GetQuotes = ({ isOpen, closeModal, productId }) => {
 
             <div className="mb-4 w-full">
               <label htmlFor="unit" className="block font-semibold mb-1">
-                UNIT OF MEASUREMENT
+                Unit of measurement
               </label>
+              <p className={`w-full p-3 border bg-transparent rounded `}
+              >
+                {productData?.unit}
+              </p>
 
-              <CreatableSelect 
+              {/* <CreatableSelect 
                 isClearable
                 isSearchable={true}
                 value={option}
@@ -235,7 +238,7 @@ const GetQuotes = ({ isOpen, closeModal, productId }) => {
                 placeholder="Select..."
               styles={customStyles} 
                 
-              />
+              /> */}
               {errors.unit && <p className="text-red-500 text-sm mt-1">{errors?.unit}</p>}
             </div>
           </div>

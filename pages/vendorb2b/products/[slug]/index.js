@@ -1,5 +1,6 @@
 
 import { viewSupplierShopProductDetails } from '@/componentsB2b/Api2';
+import { PageLoading } from '@/componentsB2b/Loader/Spinner/PageLoading';
 import ProductDetails from '@/componentsB2b/Products/ProductDetails'
 import Workspace from '@/componentsB2b/Workspace/Workspace';
 import { useRouter } from 'next/router';
@@ -116,7 +117,9 @@ const ProductDetailsPage = ({  userId, shopId, productId,  error}) => {
 
   return (
         <Workspace>
-            {productData ? <ProductDetails product={productData} p={product}/> : <div className="absolute inset-0 flex items-center justify-center">Loading...</div>}
+            {productData ? <ProductDetails product={productData} p={product}/> : <div className="absolute inset-0 flex items-center justify-center">
+              <PageLoading/>  
+            </div>}
         </Workspace>
   )
 };

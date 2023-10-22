@@ -6,8 +6,8 @@ import { updateQuoteRequest } from '../Api2';
 import { useRouter } from 'next/router';
 import { useGlobalState } from '@/context/GlobalStateContext';
 import { truncateText } from '@/lib/truncateText';
-import ProductDetailsModal from '../Modal/ProductDetailsModal'
-
+import { formatDate } from '@/lib/formatDate';
+import ChangeQuoteStatusForm from '../forms/ChangeQuoteStatusForm';
 
 
 export const DisabledBtn = ({ control, route, quoteData }) => {
@@ -60,19 +60,19 @@ const QuoteRequestDetails = ({ content, data }) => {
       setSummarySubtotal(calculatedSubtotal + data?.products?.is_taxable || 0  - data?.products?.discount  || 0)
       setTotal(calculatedSubtotal + data?.products?.is_taxable || 0  - data?.products?.discount || 0 + data?.products?.shipping_class_id || 0)
 
-      if (data.quote.status === 'SENT') {
-        if (!statusOptions.some((option) => option.value === 'FINALIZED')) {
-          setStatusOptions((prevStatusOptions) => [
-            ...prevStatusOptions,
-            { value: 'FINALIZED', label: 'FINALIZED' },
-          ]);
-        }
-      } else {
-        setStatusOptions([
-          { value: 'PENDING', label: 'PENDING' },
-          { value: 'SENT', label: 'SENT' },
-        ]);
-      }
+      // if (data.quote.status === 'SENT') {
+      //   if (!statusOptions.some((option) => option.value === 'FINALIZED')) {
+      //     setStatusOptions((prevStatusOptions) => [
+      //       ...prevStatusOptions,
+      //       { value: 'FINALIZED', label: 'FINALIZED' },
+      //     ]);
+      //   }
+      // } else {
+      //   setStatusOptions([
+      //     { value: 'PENDING', label: 'PENDING' },
+      //     { value: 'SENT', label: 'SENT' },
+      //   ]);
+      // }
     }
   }, [data]);
 
@@ -113,19 +113,19 @@ const QuoteRequestDetails = ({ content, data }) => {
         console.log('Updated quote res===', response?.data);
         setQuoteData(response?.data);
 
-        if (response?.data.quote.status === 'SENT') {
-          if (!statusOptions.some((option) => option.value === 'FINALIZED')) {
-            setStatusOptions((prevStatusOptions) => [
-              ...prevStatusOptions,
-              { value: 'FINALIZED', label: 'FINALIZED' },
-            ]);
-          }
-        } else {
-          setStatusOptions([
-            { value: 'PENDING', label: 'PENDING' },
-            { value: 'SENT', label: 'SENT' },
-          ]);
-        }
+        // if (response?.data.quote.status === 'SENT') {
+        //   if (!statusOptions.some((option) => option.value === 'FINALIZED')) {
+        //     setStatusOptions((prevStatusOptions) => [
+        //       ...prevStatusOptions,
+        //       { value: 'FINALIZED', label: 'FINALIZED' },
+        //     ]);
+        //   }
+        // } else {
+        //   setStatusOptions([
+        //     { value: 'PENDING', label: 'PENDING' },
+        //     { value: 'SENT', label: 'SENT' },
+        //   ]);
+        // }
       } else {
         console.log('Api Error res===', response);
       }
@@ -163,8 +163,9 @@ const QuoteRequestDetails = ({ content, data }) => {
           <p className='text-lg'>Store Owner: <span className='text-blue-600 font-medium'>{'-------'}</span></p>
         </div>
         <div className="flex pb-3 gap-2 justify-between items-center flex-wrap">
-          <p className='text-lg'>Status: <span className='text-blue-600 font-medium'>{quoteData?.quote?.status}</span></p>
-          <p className='text-lg'>Created at: <span className='text-blue-600 font-medium'>{new Date(quoteData?.quote.updated_at).toLocaleString()}</span></p>
+          <p className='text-lg'>Status: <span className='text-blue font-'>{quoteData?.quote?.status}</span></p>
+          {quoteData?.quote.updated_at && <p className='text-lg'>Updated at: <span className='text-blue-600 font-'>{formatDate(new Date(quoteData?.quote.updated_at))}</span></p>}
+          <p className='text-lg'>Created at: <span className='text-blue-600 font-'>{  formatDate(new Date(quoteData?.quote.created_at))}</span></p>
         </div>
         <div className="flex justify-end border-t pt-3 items-center gap-6 flex-wrap">
           <div className="flex gap-6 items-center justify-end">
@@ -279,19 +280,15 @@ const QuoteRequestDetails = ({ content, data }) => {
           </div>
         </div>
         <div className="">
-          <div className='bg-light200 rounded-lg col-span-1 px-6 py-8'>
-            <h4 className='font-medium text-lg pb-6'>Request Status</h4>
-            <p className="text-sm pb-2">Status</p>
-            <Select
-              value={selected}
-              onChange={handleSelect}
-              options={statusOptions}
-              className="bg-light100 w-full text-zinc-600 focus:outline-none focus:ring focus:border-blue-300 mb-3"
-              styles={customStyles}
-            />
-            {console.log('STATUS==', data?.quote?.status )}
+          <div className=' col-span-1 bg-light200 rounded-lg w-full px-6 py-8 space-y-3'>
+            
+          <ChangeQuoteStatusForm
+              status={quoteData?.quote?.status} quoteData={quoteData} reason={quoteData?.quote?.reason}  setQuoteData={setQuoteData}
+             />
 
-            <DisabledBtn control={quoteData?.quote?.status !== 'FINALIZED'} route={'/vendorb2b/checkout'} 
+
+
+            <DisabledBtn control={quoteData?.quote?.status !== 'ACCEPTED'} route={'/vendorb2b/checkout'} 
             quoteData={
               { 
                 subtotal, 

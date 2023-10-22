@@ -108,7 +108,7 @@ const router = useRouter
             <Navigate product={product}/>
         </div>
  
-        <GetQuotes isOpen={isOpen} closeModal={()=>setIsOpen(false)}  productId={id} /> 
+        <GetQuotes isOpen={isOpen} closeModal={()=>setIsOpen(false)}  productId={id} productData={product}/> 
         </> : 
     null
     }

@@ -3,6 +3,7 @@ import Workspace from "@/componentsB2b/Workspace/Workspace";
 import SuppliersDetails from "@/componentsB2b/Suppliers/SuppliersDetails";
 import { viewSupplierShopProducts } from "@/componentsB2b/Api2";
 import { useRouter } from "next/router";
+import { PageLoading } from "@/componentsB2b/Loader/Spinner/PageLoading";
 
 const SupplierDetailsPage = ({ userId, shopId, error }) => {
   const router = useRouter();
@@ -93,7 +94,9 @@ const SupplierDetailsPage = ({ userId, shopId, error }) => {
 
   return (
     <Workspace>
-      {supplierData ? <SuppliersDetails supplierData={supplierData} userId={userId} shopId={shopId}/> : <div className="absolute inset-0 flex items-center justify-center">Loading...</div>}
+      {supplierData ? <SuppliersDetails supplierData={supplierData} userId={userId} shopId={shopId}/> : <div className="absolute inset-0 flex items-center justify-center">
+        <PageLoading/>
+      </div>}
     </Workspace>
   );
 };

@@ -18,9 +18,9 @@ const SupplierCard = ({ label, item, details }) => {
   const truncatedDetails = truncateText(details, 120);
 
   return (
-    <div className='w-full h-[335px] pb-2 border-b flex flex-col gap-1 justify-between'>
+    <div className=' w-full h-[337px] pb-2 border-b flex flex-col gap-1 justify-between'>
       <div className="space-y-2">
-        <div className=" border border-zinc-300 p-4 h-40 rounded-lg">
+        <div className=" border border-zinc-300 p-4 h-44 rounded-lg">
           { item?.logo?.thumbnail ? <div className="bg-yellow-500 h-full overflow-hidden rounded-md ">
             <img src={item?.logo?.thumbnail} className='object-cover w-full h-full' />
           </div> : 

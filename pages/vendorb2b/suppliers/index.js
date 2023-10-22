@@ -4,6 +4,7 @@ import Workspace from '@/componentsB2b/Workspace/Workspace';
 import SuppliersCatalogue from '@/componentsB2b/Suppliers/SuppliersCatalogue';
 import { fetchSuppliersByPagination } from '@/componentsB2b/Api2';
 import Pagination from '@/componentsB2b/Pagination';
+import { PageLoading } from '@/componentsB2b/Loader/Spinner/PageLoading';
 
 
 const Supplier = () => {
@@ -79,8 +80,9 @@ const Supplier = () => {
     return (
       <Workspace>
           { console.log('loading==', pageLoading)}
-
-        <div className='absolute inset-0 flex items-center justify-center'>Loading...</div>
+        <div className='absolute inset-0 flex items-center justify-center'>
+        <PageLoading/>
+        </div>
       </Workspace>
     );
   }

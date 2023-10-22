@@ -8,7 +8,7 @@ import Pagination from '@/componentsB2b/Pagination';
 
 const Supplier = () => {
   const router = useRouter();
-  const limit = 4;
+  const limit = 8;
   const page = parseInt(router.query.page) || 1;
 
   const [suppliersData, setSuppliersData] = useState([]);

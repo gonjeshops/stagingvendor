@@ -1,9 +1,20 @@
 import Invoices from "@/componentsB2b/Invoices/Invoices"
 import Order from "@/componentsB2b/Order/Order"
 import Workspace from "@/componentsB2b/Workspace/Workspace"
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
 
 const Invoice = () => {
+
+  const { query } = useRouter();
+
+  if (query?.stripe_status === 'success') {
+    toast.success('Stripe payment was successful');
+  } else if (query?.stripe_status === 'cancelled') {
+    toast.error('Stripe payment was cancelled');
+  }
+  
  
   const invoice = {
 

@@ -1,7 +1,8 @@
 import {useState} from 'react'
 
-const Navigate = () => {
+const Navigate = ({product}) => {
     const [active, setActive] = useState(0)
+    
   return (
     <div className='pb-80'>
         <div className="flex gap-10 pb-8 ">
@@ -18,7 +19,7 @@ const Navigate = () => {
 
         <div className='md:w-[700px]'>
             {
-               [` Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium quidem in dolores repellat, dolorum nesciunt at, inventore dolore perferendis sapiente et. Quos illum eum doloribus quidem delectus aperiam magni maxime, quaerat, quasi earum quam nam odit incidunt! Blanditiis placeat sunt dolorem fugit fugiat quo neque? Deserunt at impedit id ad!`,
+               [product?.description,
 
                 `Accusantium quidem in dolores repellat, dolorum nesciunt at, inventore dolore perferendis sapiente et. Quos illum eum doloribus quidem delectus aperiam magni maxime, quaerat, quasi earum quam nam Ex architecto quisquam, perferendis dignissimos natus fuga! Corporis, ullam soluta! Mollitia laudantium, reiciendis suscipit hic quasi eligendi voluptates laborum voluptatum laboriosam perspiciatis cum dolores, pariatur culpa.`,
 

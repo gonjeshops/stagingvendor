@@ -15,7 +15,7 @@ const SuppliersDetails = ({supplierData, userId, shopId, }) => {
     <div className='space-y-4'>
         <div className="w-full relative rounded-xl h-60 bg-light300">
            
-            <div className="w-full h-full overflow-hidden">
+            <div className="w-full h-full overflow-hidden rounded-xl">
                 <img src={supplierDetails?.cover_image?.original} alt="cover_img" className='w-full h-full object-cover'/>
             </div>
 

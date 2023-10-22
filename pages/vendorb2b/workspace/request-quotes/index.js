@@ -11,8 +11,17 @@ import { toast } from 'react-toastify'
 
 
 const ReQuestQuotes = () => {
+
   const router = useRouter();
-  const limit = 20;
+
+  if (router?.query?.stripe_status === 'success') {
+    toast.success('Stripe payment was successful');
+  } else if (router?.query?.stripe_status === 'cancelled') {
+    toast.error('Stripe payment was cancelled');
+  }
+  
+
+  const limit = 8;
   const page = parseInt(router.query.page) || 1;
 
   const [quotes, setQuotes] = useState([])

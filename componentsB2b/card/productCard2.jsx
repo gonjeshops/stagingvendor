@@ -7,10 +7,6 @@ const ProductCard2 = ({product, userId, shopId, }) => {
 const {description, image, gallery, name, discount, price, slug, shop_id, id, } = product
 
 
-
-  // Function to truncate text to a maximum of 50 characters
-
-
 return (
 
     <div  className="w-full max-w-sm bg-light200 overflow-hidden rounded-lg border border-light300">

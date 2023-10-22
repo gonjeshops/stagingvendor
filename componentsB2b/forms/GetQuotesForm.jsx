@@ -27,7 +27,7 @@ const GetQuotes = ({ isOpen, closeModal, productId }) => {
       try {
         const response = await fetchQuoteNames();
         if (response?.status===200){
-          setQuoteNames(response?.data?.data)
+          // setQuoteNames(response?.data?.data)
           console.log('QUOTENAMES API RESPONSE===', response)
           
         } else {

@@ -10,6 +10,7 @@ import GetQuotes from '../forms/GetQuotesForm';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { truncateText } from '@/lib/truncateText';
 
 
 const ProductDetails = ({product, modal, p}) => {
@@ -25,6 +26,7 @@ const router = useRouter
     setActiveImageIndex(index);
   };
 
+
   return (
     <div className=' max-w-[1000px] '>
 
@@ -36,8 +38,8 @@ const router = useRouter
                 
                 <div className="h-96 bg-light100 flex justify-center items-center w-full relative overflow-hidden rounded-lg shadow-md transition-transform duration-300 transform ">
                     <Image
-                        width={100} height={100}
-                        src={gallery[activeImageIndex]?.thumbnail ? gallery[activeImageIndex]?.thumbnail : image?.thumbnail}
+                        width={200} height={200}
+                        src={gallery[activeImageIndex]?.original ? gallery[activeImageIndex]?.original : image?.original}
                         alt={name}
                         className='w-full h-full object-cover'
                     />
@@ -60,7 +62,8 @@ const router = useRouter
                 {name}
             </h4>
             <h4 className="text-xl font-medium">
-                {description}
+                {  truncateText(description, 300)}
+                <Link className='text-base font-normal  text-blue-400' href={'#description'}>{'  More'}</Link>
             </h4>
             <div className="flex gap-2 items-center">
                 <div className="rounded-full py-1 px-2 text-sm bg-green-500 text-black">{bestseller}</div>
@@ -101,8 +104,8 @@ const router = useRouter
            
         </div>
 
-        <div className="py-4">
-            <Navigate/>
+        <div id='description' className="py-4">
+            <Navigate product={product}/>
         </div>
  
         <GetQuotes isOpen={isOpen} closeModal={()=>setIsOpen(false)}  productId={id} /> 

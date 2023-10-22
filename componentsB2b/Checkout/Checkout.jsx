@@ -18,10 +18,10 @@ const Checkout = ({content}) => {
 
     const { query } = useRouter();
 
-    if (query === 'success') {
+    if (query?.stripe_status === 'success') {
       toast.success('Stripe payment was successful');
-    } else if (query === 'cancelled') {
-      toast.success('Stripe payment was cancelled');
+    } else if (query?.stripe_status === 'cancelled') {
+      toast.error('Stripe payment was cancelled');
     }
     
 

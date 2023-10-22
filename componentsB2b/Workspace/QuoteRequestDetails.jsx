@@ -17,7 +17,7 @@ export const DisabledBtn = ({ control, route, quoteData }) => {
   const buttonClass = control
     ? 'bg-blue-300 cursor-not-allowed'
     : 'hover-blue';
-
+console.log('control==', control)
   return (
     <button 
       className={`rounded text-white py-2 px-8 ${buttonClass}`}
@@ -61,10 +61,10 @@ const QuoteRequestDetails = ({ content, data }) => {
       setTotal(calculatedSubtotal + data?.products?.is_taxable || 0  - data?.products?.discount || 0 + data?.products?.shipping_class_id || 0)
 
       if (data.quote.status === 'SENT') {
-        if (!statusOptions.some((option) => option.value === 'FINALIZE')) {
+        if (!statusOptions.some((option) => option.value === 'FINALIZED')) {
           setStatusOptions((prevStatusOptions) => [
             ...prevStatusOptions,
-            { value: 'FINALIZE', label: 'FINALIZE' },
+            { value: 'FINALIZED', label: 'FINALIZED' },
           ]);
         }
       } else {
@@ -114,10 +114,10 @@ const QuoteRequestDetails = ({ content, data }) => {
         setQuoteData(response?.data);
 
         if (response?.data.quote.status === 'SENT') {
-          if (!statusOptions.some((option) => option.value === 'FINALIZE')) {
+          if (!statusOptions.some((option) => option.value === 'FINALIZED')) {
             setStatusOptions((prevStatusOptions) => [
               ...prevStatusOptions,
-              { value: 'FINALIZE', label: 'FINALIZE' },
+              { value: 'FINALIZED', label: 'FINALIZED' },
             ]);
           }
         } else {
@@ -163,7 +163,7 @@ const QuoteRequestDetails = ({ content, data }) => {
           <p className='text-lg'>Store Owner: <span className='text-blue-600 font-medium'>{'-------'}</span></p>
         </div>
         <div className="flex pb-3 gap-2 justify-between items-center flex-wrap">
-          <p className='text-lg'>Status: <span className='text-blue-600 font-medium'>{quoteData?.quote.status}</span></p>
+          <p className='text-lg'>Status: <span className='text-blue-600 font-medium'>{quoteData?.quote?.status}</span></p>
           <p className='text-lg'>Created at: <span className='text-blue-600 font-medium'>{new Date(quoteData?.quote.updated_at).toLocaleString()}</span></p>
         </div>
         <div className="flex justify-end border-t pt-3 items-center gap-6 flex-wrap">
@@ -289,7 +289,18 @@ const QuoteRequestDetails = ({ content, data }) => {
               className="bg-light100 w-full text-zinc-600 focus:outline-none focus:ring focus:border-blue-300 mb-3"
               styles={customStyles}
             />
-            <DisabledBtn control={quoteData?.quote?.status !== 'FINALIZE'} route={'/vendorb2b/checkout'} quoteData={{ subtotal, quoteName: data?.quote?.quote_name, quoteNumber: data?.quote?.quote_number }} />
+            {console.log('STATUS==', data?.quote?.status )}
+
+            <DisabledBtn control={quoteData?.quote?.status !== 'FINALIZED'} route={'/vendorb2b/checkout'} 
+            quoteData={
+              { 
+                subtotal, 
+                quoteName: quoteData?.quote?.quote_name, 
+                quoteId: quoteData?.quote?.id, 
+                quoteNumber: quoteData?.quote?.quote_number, 
+                quantity: quoteData?.quote?.quantity,  
+              }
+              } />
           </div>
         </div>
       </div>

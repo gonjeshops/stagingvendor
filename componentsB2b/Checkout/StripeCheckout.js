@@ -4,15 +4,17 @@ import { useGlobalState } from '@/context/GlobalStateContext';
 import { FaCreditCard } from 'react-icons/fa';
 
 const StripeCheckout = () => {
-  const{checkoutData}=useGlobalState()
+  const{checkoutData, user}=useGlobalState()
   console.log('STRIPECHECKOUT==', checkoutData)
   const items = [
     {
       price: checkoutData?.subtotal || 0, // Provide a default value if the properties are missing
-      quantity: 1,
-      name: 'Total Amount',
+      quantity: checkoutData?.quantity,
+      name: checkoutData?.quoteName,
     },
   ];
+
+  
   
 
   const [stripeError, setStripeError] = useState(false);
@@ -33,7 +35,7 @@ const StripeCheckout = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(items),
+        body: JSON.stringify({user, checkoutData, items}),
       });
 
       if (!response.ok) {
@@ -46,9 +48,10 @@ const StripeCheckout = () => {
       const session = await stripe.redirectToCheckout({ sessionId: data.id });
 
       if (session.error) {
-        displayError(session.error.message);
+        displayError('An error occured in the payment integration');
+        console.log('session error==', session.error)
       }
-console.log('STRIPE RESPONSE', session)
+console.log('STRIPE DATA==', data)
       localStorage.setItem('Stripe_Results', JSON.stringify(session));
     } catch (error) {
       console.error('Stripe Checkout Error:', error);

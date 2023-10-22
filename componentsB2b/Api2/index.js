@@ -8,11 +8,7 @@ export const fetchSuppliersByPagination = (page, limit) => {
   return axios({
     method: "get",
     headers: authHeader(),
-    url: url + "suppliers/shops",
-    data: {
-      page: 2,
-      limit: 4,
-    },
+    url: url + `suppliers/shops?page=${page}&limit=${limit}`,
   })
     .then((response) =>{ 
       console.log('API SHOPS====', response)
@@ -88,30 +84,24 @@ export const fetchQuoteNames = () => {
       .then((response) => response)
       .catch((error) => {
         console.log("Error in fetchQuoteNames api", error);
+        return error;
       });
   };
 
 // Get Vendor quote requets with "PENDING" status. Only vendors can view
 export const fetchQuotesWithPendingStatus = (page, limit) => {
-  console.log('=====', page, limit)
   if (!page || !limit) {
     return Promise.reject(new Error("Invalid input data."));
   }
     return axios({
       method: "get",
       headers: authHeader(),
-      url: url + "vendor/quotes",
-      data: {
-        page: page,
-        limit: limit
-      }
+      url: url + `vendor/quotes?page=${page}&limit=${limit}`,
     })
-      .then((response) => {
-        console.log('======================', page, limit)
-        return response
-      })
+      .then((response) =>  response)
       .catch((error) => {
         console.log("Error in fetchQuotesWithPendingStatus api", error);
+        return error
       });
   };
 
@@ -126,20 +116,43 @@ export const fetchQuoteDetails = (quoteId) => {
       .then((response) => response)
       .catch((error) => {
         console.log("Error in fetchQuoteDetails api", error);
+        return error
       });
   };
 
-// Get quote request from vendors with "SENT" status
-export const fetchQuotesWIthSentStatus = () => {
+
+  export const fetchSupplierQuoteDetails = (quoteId) => {
     return axios({
       method: "get",
       headers: authHeader(),
-      url: url + `supplier/quotes`,
-
+      url: url + `supplier/quote/${quoteId}`,
+     
     })
       .then((response) => response)
       .catch((error) => {
-        console.log("Error in fetchQuotesWIthSentStatus api", error);
+        console.log("Error in fetchSupplierQuoteDetails api", error);
+        return error
+      });
+  };
+
+
+
+
+// Get quote request from vendors with "SENT" status  supplier/quotes
+export const fetchQuotesWIthSentStatus = (page, limit) => {
+  console.log('=====', page, limit)
+  if (!page || !limit) {
+    return Promise.reject(new Error("Invalid input data."));
+  }
+    return axios({
+      method: "get",
+      headers: authHeader(),
+      url: url + `supplier/quotes?page=${page}&limit=${limit}`,
+    })
+      .then((response) => response)
+      .catch((error) => {
+        console.log("Error in fetchQuotesWIthSentStatus api", error)
+        return error;
       });
   };
 
@@ -190,3 +203,99 @@ export const updateQuoteRequest = (values, quoteId) => {
     });
 };
 
+
+
+// Add products
+export const  createProduct = (values) => {
+  // Validate inputs
+  if (!values) {
+    console.log('=======', values)
+    return Promise.reject(new Error("Invalid input data."));
+  }
+
+  return axios({
+    method: "post",
+    headers: authHeader(),
+    url: url + `add/supplier/product`,
+    data: {
+      name: values.name,
+      slug: values.slug,
+      description: values.description,
+      category: values.category,
+      price: values.price,
+      shop_id: values.shop_id,
+      sale_price: values.sale_price,
+      sku: values.sku,
+      quantity: values.quantity,
+      // shipping_class_id: 1,
+      status: values.status,
+      product_type: values.product_type,
+      unit: values.unit,
+      // currency: "",
+      height: values.height,
+      width: values.width,
+      length: values.length,
+      image: values.image,
+      gallery: values.gallery,
+      max_price: values.max_price,
+      min_price: values.min_price,
+      nutritional_info: values.nutritional_info,
+    },
+  })
+    .then((response) => {
+      console.log("createProduct API successful:", response);
+      return response
+    })
+    .catch((error) => {
+      console.error("Error in createProduct API:", error);
+      return Promise.reject(error); 
+    });
+};
+
+// update/supplier/product/
+// Add products
+export const  updateProduct = (values) => {
+  // Validate inputs
+  if (!values) {
+    console.log('=======', values)
+    return Promise.reject(new Error("Invalid input data."));
+  }
+
+  return axios({
+    method: "put",
+    headers: authHeader(),
+    url: url + `add/supplier/product`,
+    data: {
+      name: values.name,
+      slug: values.slug,
+      description: values.description,
+      category: values.category,
+      price: values.price,
+      shop_id: values.shop_id,
+      sale_price: values.sale_price,
+      sku: values.sku,
+      quantity: values.quantity,
+      // shipping_class_id: 1,
+      status: values.status,
+      product_type: values.product_type,
+      unit: values.unit,
+      // currency: "",
+      height: values.height,
+      width: values.width,
+      length: values.length,
+      image: values.image,
+      gallery: values.gallery,
+      max_price: values.max_price,
+      min_price: values.min_price,
+      nutritional_info: values.nutritional_info,
+    },
+  })
+    .then((response) => {
+      console.log("updateProduct API successful:", response);
+      return response
+    })
+    .catch((error) => {
+      console.error("Error in updateProduct API:", error);
+      return Promise.reject(error); 
+    });
+};

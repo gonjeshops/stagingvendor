@@ -43,6 +43,7 @@ export default async function handler(req, res) {
         quote_id: checkoutData?.quoteId,
         quote_number: checkoutData?.quoteNumber,
         quote_name: checkoutData?.quoteName,
+        user_email: user?.user_email
       },  
       customer_email: user?.user_email
     };

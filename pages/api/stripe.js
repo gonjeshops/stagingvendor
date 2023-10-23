@@ -43,7 +43,8 @@ export default async function handler(req, res) {
         quote_id: checkoutData?.quoteId,
         quote_number: checkoutData?.quoteNumber,
         quote_name: checkoutData?.quoteName,
-      },      
+      },  
+      customer_email: user?.user_email
     };
 
     const session = await stripe.checkout.sessions.create(params);

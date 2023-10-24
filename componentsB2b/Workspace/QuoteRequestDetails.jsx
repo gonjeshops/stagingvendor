@@ -41,38 +41,19 @@ const QuoteRequestDetails = ({ content, data }) => {
   const [summarySubtotal, setSummarySubtotal] = useState(0);
   const [Total, setTotal] = useState(0);
 
-  const [statusOptions, setStatusOptions] = useState([
-    { value: 'PENDING', label: 'PENDING' },
-    { value: 'SENT', label: 'SENT' },
-  ]);
-
   useEffect(() => {
     if (data) {
       setQuoteData(data);
       let calculatedSubtotal = 0;
       for (const product of data?.products) {
         if (product.product && product.product.price) {
-          calculatedSubtotal += product.product.price;
+          calculatedSubtotal += product.product.price * quoteData?.quote.quantity;
         }
       }
       setSubtotal(calculatedSubtotal);
       setItemSubtotal(calculatedSubtotal)
-      setSummarySubtotal(calculatedSubtotal + data?.products?.is_taxable || 0  - data?.products?.discount  || 0)
-      setTotal(calculatedSubtotal + data?.products?.is_taxable || 0  - data?.products?.discount || 0 + data?.products?.shipping_class_id || 0)
-
-      // if (data.quote.status === 'SENT') {
-      //   if (!statusOptions.some((option) => option.value === 'FINALIZED')) {
-      //     setStatusOptions((prevStatusOptions) => [
-      //       ...prevStatusOptions,
-      //       { value: 'FINALIZED', label: 'FINALIZED' },
-      //     ]);
-      //   }
-      // } else {
-      //   setStatusOptions([
-      //     { value: 'PENDING', label: 'PENDING' },
-      //     { value: 'SENT', label: 'SENT' },
-      //   ]);
-      // }
+      setSummarySubtotal(calculatedSubtotal - quoteData?.products?.is_taxable || 0  - quoteData?.products?.discount  || 0)
+      setTotal(calculatedSubtotal - data?.products?.is_taxable || 0  - data?.products?.discount || 0 + data?.products?.shipping_class_id || 0)
     }
   }, [data]);
 
@@ -89,7 +70,7 @@ const QuoteRequestDetails = ({ content, data }) => {
   useEffect(() => {
     setDarkmode(parseInt(localStorage.getItem('bgLightness')));
     setSummary([
-        { title: 'Items Subtotal:', value: itemSubtotal },
+        { title: 'Items Subtotal:', value: subtotal },
         { title: 'Discount:', value: data?.products?.discount || 0},
         { title: 'Tax:', value: data?.products?.is_taxable || 0},
         { title: 'Subtotal:', value: summarySubtotal},
@@ -98,41 +79,27 @@ const QuoteRequestDetails = ({ content, data }) => {
     ]);
   }, [data]);
 
-  const [selected, setSelected] = useState(data?.quote?.status)
+  // const [selected, setSelected] = useState(data?.quote?.status)
 
-  const handleSelect = async (selectedOption) => {
-    setSelected(selectedOption);
-    try {
-      const response = await updateQuoteRequest({
-        status: selectedOption?.value,
-        quantity: quoteData?.quote?.quantity,
-        reason: 'Updating quote status.',
-      }, quoteData?.quote?.id);
+  // const handleSelect = async (selectedOption) => {
+  //   setSelected(selectedOption);
+  //   try {
+  //     const response = await updateQuoteRequest({
+  //       status: selectedOption?.value,
+  //       quantity: quoteData?.quote?.quantity,
+  //       reason: 'Updating quote status.',
+  //     }, quoteData?.quote?.id);
 
-      if (response?.status === 200) {
-        console.log('Updated quote res===', response?.data);
-        setQuoteData(response?.data);
-
-        // if (response?.data.quote.status === 'SENT') {
-        //   if (!statusOptions.some((option) => option.value === 'FINALIZED')) {
-        //     setStatusOptions((prevStatusOptions) => [
-        //       ...prevStatusOptions,
-        //       { value: 'FINALIZED', label: 'FINALIZED' },
-        //     ]);
-        //   }
-        // } else {
-        //   setStatusOptions([
-        //     { value: 'PENDING', label: 'PENDING' },
-        //     { value: 'SENT', label: 'SENT' },
-        //   ]);
-        // }
-      } else {
-        console.log('Api Error res===', response);
-      }
-    } catch (error) {
-      console.log('CATCH ERROR', error);
-    }
-  };
+  //     if (response?.status === 200) {
+  //       console.log('Updated quote res===', response?.data);
+  //       setQuoteData(response?.data);
+  //     } else {
+  //       console.log('Api Error res===', response);
+  //     }
+  //   } catch (error) {
+  //     console.log('CATCH ERROR', error);
+  //   }
+  // };
 
   const customStyles = {
     control: (provided, state) => ({

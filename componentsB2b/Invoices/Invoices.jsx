@@ -4,7 +4,7 @@ import { FaAngleDown, FaFileExport } from 'react-icons/fa';
 import InvoiceTable from './InvoiceTable';
 import AddOrderForm from '../forms/AddOrderForm';
 
-const Invoices = ({invoices}) => {
+const Invoices = ({invoices, invoicess}) => {
     const {category , tableHeader, invoiceData, } = invoices;
 
     const [show, setShow] = useState('')
@@ -42,7 +42,6 @@ const Invoices = ({invoices}) => {
                     <div className="border border-zinc-400 px-8 py-3 flex items-center gap-3">
                         More filters <span className=''><FaAngleDown/></span>
                     </div>
-
                 </div>
 
             </div>
@@ -59,8 +58,8 @@ const Invoices = ({invoices}) => {
             </div>
         </div>
 
-        <div className="orders bg-light100 pb-10 pl-4">
-            <InvoiceTable data={invoiceData} tableHeader={tableHeader}/>
+        <div className="orders bg-light100 pl-4">
+            <InvoiceTable data={invoiceData} invoicess={invoicess} tableHeader={tableHeader}/>
         </div>
     </>
   )

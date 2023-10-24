@@ -204,6 +204,20 @@ export const updateQuoteRequest = (values, quoteId) => {
 };
 
 
+//  ============= INVOICE ============
+// Create quote request
+export const fetchVendorInvoice = (page, limit) => {
+  return axios({
+    method: "get",
+    headers: authHeader(),
+    url: url + `my/transactions?page=${page}&limit=${limit}`,
+  })
+    .then((response) => response)
+    .catch((error) => {
+      console.log("Error in fetchVendorInvoice api", error, page, limit);
+    });
+};
+
 
 // Add products
 export const  createProduct = (values) => {
@@ -299,3 +313,5 @@ export const  updateProduct = (values) => {
       return Promise.reject(error); 
     });
 };
+
+

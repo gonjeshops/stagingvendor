@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import GlobalStateContext from './GlobalStateContext';
 import { useCart } from '@/lib/useCart';
+import { useCartB2B } from '@/lib/useCartB2B';
 
 const GlobalStateProvider = ({ children }) => {
   const router = useRouter();
@@ -16,9 +17,8 @@ const GlobalStateProvider = ({ children }) => {
   const [checkoutData, setCheckoutData] = useState('')
   const [supplierDetails, setSupplierDetails] = useState('')
 
-
   // Function to retrieve "user-details" from local storage
-useEffect(() => {
+  useEffect(() => {
   function getUserDetailsFromLocalStorage() {
     try {
       // Retrieve the stored user details as a JSON string
@@ -45,9 +45,10 @@ useEffect(() => {
   getUserDetailsFromLocalStorage()
 
   
-}, [])
+  }, [])
 
-
+  // Create quote or cart functionality
+  const useB2Bcart = useCartB2B()
 
   // Use useEffect for initial setup when the component mounts
   useEffect(() => {
@@ -79,6 +80,9 @@ useEffect(() => {
     setModalType('');
   };
 
+// managing display similar products in product details page
+  const [active, setActive] = useState(1)
+
    
 
   const globalState = {
@@ -86,6 +90,7 @@ useEffect(() => {
     logout,
     module,setModule,
     fetchUser,
+    useB2Bcart,
     showSidebar,
     setShowSidebar,
     openModal,
@@ -96,7 +101,8 @@ useEffect(() => {
     openNavSubmenu,
     useCart, // This line might not be necessary. Make sure it's intended.
     checkoutData, setCheckoutData,
-    supplierDetails, setSupplierDetails
+    supplierDetails, setSupplierDetails,
+    active, setActive,
   };
 
   return (

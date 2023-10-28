@@ -9,7 +9,7 @@ import Link from 'next/link';
 
 
 const Navigation = ({themeBtn}) => {
-  const{module, closeModal, openModal, modalType} = useGlobalState();
+  const{module, closeModal, openModal, modalType, useB2Bcart:{totalQuantities}} = useGlobalState();
   
   return (
     <div className=' border-  w-full'>
@@ -54,7 +54,7 @@ const Navigation = ({themeBtn}) => {
 
                 <button className='relative' onClick={ () => openModal('cart')} >
                   <FiShoppingCart   className={modalType==='cart' && ' text-green-600 scale-110  '}/>
-                  <div className="rounded-full h-5 w-5 text-white bg-red-600 flex items-center justify-center absolute top-[-10px] right-[-8px] text-[10px] ">3</div>
+                  <div className="rounded-full h-5 w-5 text-white bg-red-600 flex items-center justify-center absolute top-[-10px] right-[-8px] text-[10px] ">{totalQuantities}</div>
                 </button>
                
                 <button className='relative ' onClick={ () => openModal('notification')} >

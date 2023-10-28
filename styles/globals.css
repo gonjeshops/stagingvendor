@@ -94,13 +94,16 @@ Link {
   background-color: var(--light300);
 }
 .bg-hover300 {
-  @apply hover:bg-[var(--light300)] duration-300
+  @apply  hover:bg-[var(--light300)] duration-300
 }
 .bg-hover200 {
   @apply hover:bg-[var(--light200)] duration-300
 }
 .bg-hover100 {
   @apply hover:bg-[var(--light100)] duration-300
+}
+.hover-grey {
+  @apply bg-[var(--light200)] hover:bg-[var(--light300)] duration-300
 }
 
 
@@ -153,6 +156,8 @@ Link {
 .hover-red{
   @apply bg-red-600 hover:bg-red-700 duration-300 text-white
 }
+
+
 
 .hover-green{
   @apply bg-green-600 hover:bg-green-800 duration-300 text-white

@@ -2,17 +2,26 @@ import Image from "next/image"
 import Link from "next/link"
 import {  FaStar, FaHeart, FaImage } from "react-icons/fa"
 import { truncateText } from "@/lib/truncateText"
+import { useRouter } from "next/router"
 
-const ProductCard2 = ({product, userId, shopId, }) => {
+const ProductCard2 = ({product, userId, shopId, targetId}) => {
 const {description, image, gallery, name, discount, price, slug, shop_id, id, } = product
-
+const router = useRouter()
+const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
 
 return (
 
     <div  className="w-full max-w-sm bg-light200 overflow-hidden rounded-lg border border-light300">
 
-    <div className="relative bg-light300 overflow-hidden h-60 w-full ">
-       {image?.original ? <Image width={150} height={150} className="w-full h-full object-cover" src={image?.original} alt="product image" /> : <div className="centralize text-6xl text-zinc-600">
+    <div className="relative bg-light300 overflow-hidden h-60 w-full"
+        onClick={()=>router.push(`/vendorb2b/products/${slug}?shopId=${shopId}&userId=${userId}&productId=${id}`)}
+    >
+       {image?.original ? <Image width={150} height={150} className="w-full h-full object-cover hover:scale-110 duration-300" src={image?.original} alt="product image" /> : <div className="centralize text-6xl text-zinc-600">
                 <FaImage />
                 </div>}
     </div>
@@ -51,9 +60,16 @@ return (
                     <div className="text-3xl font-bold ">${price}</div>
             </div>
 
-                <Link href={`/vendorb2b/products/${slug}?shopId=${shopId}&userId=${userId}&productId=${id}`} className="rounded hover-blue py-1  px-2">
+                <button className="rounded hover-blue py-1  px-2"
+                onClick={() => {
+                    router.push(`/vendorb2b/products/${slug}?shopId=${shopId}&userId=${userId}&productId=${id}`)
+                    const element = document.getElementById('top');
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}>
                     View
-                </Link>
+                </button>
                 
             </div>
         </div>

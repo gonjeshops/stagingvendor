@@ -1,12 +1,12 @@
 import  { useEffect, useState } from 'react';
 import ModalCentral from '../Modal/ModalCentral';
 import { FaTimes } from 'react-icons/fa';
-import Select  from 'react-select';
 import CreatableSelect from 'react-select/creatable'
 import { createQuoteRequest, fetchQuoteNames } from '../Api2';
 import { useGlobalState } from '@/context/GlobalStateContext';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
+import GetQuoteProductCard from '../card/GetQuoteProductCard';
 
 const GetQuotes = ({ isOpen, closeModal, productId, productData }) => {
   const router = useRouter()
@@ -15,14 +15,14 @@ const GetQuotes = ({ isOpen, closeModal, productId, productData }) => {
   const [quoteNames, setQuoteNames] = useState(null)
   const [success, setSuccess] = useState('')
   const [reqError, setReqError] = useState('')
+  const [showMoreProducts, setShowMoreProducts] = useState(false)
 
   const [darkmode, setDarkmode] = useState('')
+
+
   
 
   useEffect(() => {
-
-    setDarkmode(parseInt(localStorage.getItem('bgLightness')));
-
     const fetchData = async () => {
       try {
         const response = await fetchQuoteNames();
@@ -40,27 +40,13 @@ const GetQuotes = ({ isOpen, closeModal, productId, productData }) => {
     fetchData()
   }, [])
 
-  const quoteNamesOptions = [
-    {value: '', label: ''}
-  ]
-  
-
-  const unitOptions = [
-    { value: 'kg', label: 'kg' },
-    { value: 'lb', label: 'lb' },
-    { value: 'g', label: 'g' },
-    { value: 'oz', label: 'oz' },
-    { value: 'item', label: 'items' },
-    { value: 'stock', label: 'stocks' },
-    // Add more units as needed
-  ];
-
   const option2 = [
     { value: 'gsh hbhb jhkfbjsk', label: 'gsh  jhkfbjsk' },
     { value: 'gsh hbfb jhjs', label: 'gs fb jhkfbk' },
     { value: 'gsh hbhfb jhkfbjk', label: 'sh  jhbjsk' },
     { value: 'gsh hbhb jhkfjsk', label: 'gbb jhkfbjsk' },
   ]
+
   const [formData, setFormData] = useState({
     name: '',
     unit: productData?.unit,
@@ -69,28 +55,11 @@ const GetQuotes = ({ isOpen, closeModal, productId, productData }) => {
     userId: user?.user_id
   });
 
-  const [option, setOption] = useState(null);
+  const [slectedProducts, setSlectedProducts] = useState([1,2,3,4,5])
+
+
   const [x, setX] = useState(null);
-
-
-
   const [errors, setErrors] = useState({});
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSelect = (selected) => {
-    setOption(selected)
-    setFormData((prevData) => ({
-      ...prevData,
-      unit: selected?.value,
-    }));
-  };
 
   const handleSelect2 = (slectedOption2) => {
     setX(slectedOption2)
@@ -109,12 +78,6 @@ const GetQuotes = ({ isOpen, closeModal, productId, productData }) => {
     const validationErrors = {};
     if (!formData.name) {
       validationErrors.name = 'Please type in the name of your quote request.';
-    }
-    // if (!formData.unit) {
-    //   validationErrors.unit = 'Please select a unit of measurement.';
-    // }
-    if (!formData.quantity) {
-      validationErrors.quantity = 'Quantity is required.';
     }
 
     if (Object.keys(validationErrors).length > 0) {
@@ -155,24 +118,9 @@ const GetQuotes = ({ isOpen, closeModal, productId, productData }) => {
   };
 
 
-
-  const customStyles = {
-    control: (provided, state) => ({
-      ...provided,
-      backgroundColor: 'inherit',
-      color: `${darkmode===25 ? 'white': 'black'}`,
-      padding: '0.25rem'
-    }),
-    menu: (provided) => ({
-      ...provided,
-      backgroundColor: 'inherit',
-      color: `${darkmode===25 ? 'white': 'black'}`,
-    }),
-  };
-
   return (
     <ModalCentral isOpen={isOpen} closeModal={closeModal}>
-      <div className="w-full md:w-[550px] rounded-md py-8 bg-light100">
+      <div className="mx-auto w-full md:w-[650px] max-h-[700px] overflow-y-auto rounded-md py-8 bg-light100">
         <div className="flex px-4 justify-between items-center text-xl font-semibold pb-4">
           <h4>Quote Request</h4>
           <FaTimes onClick={closeModal} className="hover:scale-105 duration-300 cursor-pointer" />
@@ -196,66 +144,39 @@ const GetQuotes = ({ isOpen, closeModal, productId, productData }) => {
               onChange={handleSelect2}
               options={option2}
               className="bg-light100 w-full text-zinc-600 focus:outline-none focus:ring focus:border-blue-300"
-              styles={customStyles} 
+              // styles={customStyles} 
             />
             {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
           </div>
 
-          <div className="flex gap-4 w-full">
-            <div className="mb-4 w-full">
-              <label htmlFor="quantity" className="block font-semibold mb-1">
-                Quantity
-              </label>
-              <input
-                type="number"
-                id="quantity"
-                name="quantity"
-                value={formData.quantity}
-                onChange={handleChange}
-                className={`w-full p-3 border bg-transparent ${
-                  errors.quantity ? 'border-red-500' : 'border-gray-300'
-                } rounded focus:outline-none focus:border-blue-500`}
-              />
-              {errors.quantity && <p className="text-red-500 text-sm mt-1">{errors.quantity}</p>}
-            </div>
+          { 
+          showMoreProducts ? <div className="px-">
+            {
+              slectedProducts?.map((item, idx) => (
+                <GetQuoteProductCard item={productData}/>
+              ))
+            }
 
-            <div className="mb-4 w-full">
-              <label htmlFor="unit" className="block font-semibold mb-1">
-                Unit of measurement
-              </label>
-              <p className={`w-full p-3 border bg-transparent rounded `}
-              >
-                {productData?.unit}
-              </p>
-
-              {/* <CreatableSelect 
-                isClearable
-                isSearchable={true}
-                value={option}
-                onChange={handleSelect}
-                options={unitOptions}
-                className="bg-light100 w-full text-zinc-600 focus:outline-none focus:ring focus:border-blue-300"
-                placeholder="Select..."
-              styles={customStyles} 
-                
-              /> */}
-              {errors.unit && <p className="text-red-500 text-sm mt-1">{errors?.unit}</p>}
-            </div>
-          </div>
+          </div> : null
+        }
 
           <button
             type="submit"
-            className="bg-blue-500 text-white py-3 px-4 rounded w-full font-semibold hover:bg-blue-600"
+            className="hover-blue py-3 px-4 rounded w-full font-semibold "
           >
             Submit
           </button>
         </form>
 
-        <div className="flex justify-end pt-4 px-4">
-          <button onClick={closeModal} className="border border-blue-600 py-3 px-6 rounded-md">
-            Cancel
-          </button>
+        <div className="flex justify-between pt-4 px-4">
+            <button onClick={()=>setShowMoreProducts(prev=>!prev)} className="border border-blue-600 py-3 px-6 rounded-md">
+                {!showMoreProducts ? 'Add More Products >' : 'Collapse >'}
+              </button>
+              <button onClick={closeModal} className="border border-blue-600 py-3 px-6 rounded-md">
+                Cancel
+              </button>
         </div>
+
       </div>
     </ModalCentral>
   );

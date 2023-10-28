@@ -137,7 +137,6 @@ export const fetchQuoteDetails = (quoteId) => {
 
 
 
-
 // Get quote request from vendors with "SENT" status  supplier/quotes
 export const fetchQuotesWIthSentStatus = (page, limit) => {
   console.log('=====', page, limit)
@@ -219,6 +218,21 @@ export const fetchVendorInvoice = (page, limit) => {
 };
 
 
+
+// ======= // getNotification?limit=15 =====
+export const fetchNotifications = (limit) => {
+  return axios({
+    method: "get",
+    headers: authHeader(),
+    url: url + `getNotification?limit=${limit}`,
+  })
+    .then((response) => {
+      console.log('notification =====', response)
+      return response})
+    .catch((error) => {
+      console.log("Error in fetchNotifications api", error,  limit);
+    });
+};
 // Add products
 export const  createProduct = (values) => {
   // Validate inputs

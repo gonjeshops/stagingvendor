@@ -14,7 +14,7 @@ const Invoice = () => {
 
   const { query } = useRouter();
   if (query?.stripe_status === 'success') {
-    toast.success('Stripe payment was successful');
+    // toast.success('Stripe payment was successful');
   } else if (query?.stripe_status === 'cancelled') {
     toast.error('Stripe payment was cancelled');
   }

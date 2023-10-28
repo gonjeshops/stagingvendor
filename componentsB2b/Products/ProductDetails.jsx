@@ -5,35 +5,39 @@ import BtnOutline from '../btn/BtnOutline';
 import {MdOutlineFavoriteBorder, MdOutlineShoppingCart} from 'react-icons/md';
 import BtnOrange from '../btn/BtnOrange';
 import Navigate from './Navigate'
-import ModalCentral from '../Modal/ModalCentral';
+
 import GetQuotes from '../forms/GetQuotesForm';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { truncateText } from '@/lib/truncateText';
+import QuoteForm from '../forms/QuoteForm';
+import { useGlobalState } from '@/context/GlobalStateContext';
 
 
-const ProductDetails = ({product, modal, p}) => {
-  const [isOpen, setIsOpen] = useState(false)
-const router = useRouter
+const ProductDetails = ({product,  p}) => {
+    const {useB2Bcart:{onAdd} , setActive} = useGlobalState()
+    const [isOpen, setIsOpen] = useState(false)
+    const router = useRouter
+
     const {name, description, price, discount, in_stock, status, created_at, gallery, id, image, is_taxable, max_pric, min_price, sale_price, slug, top_deals, unit, } = product
-    
-  const {rating, heading,  offerEnds, bestseller,off,  imgList} = p[0]
+        
+    const {rating, heading,  offerEnds, bestseller,off,  imgList} = p[0]
 
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
+    const [activeImageIndex, setActiveImageIndex] = useState(0);
 
-  const handleImageClick = (index) => {
-    setActiveImageIndex(index);
-  };
+    const handleImageClick = (index) => {
+        setActiveImageIndex(index);
+    };
 
 
   return (
-    <div className=' max-w-[1000px] '>
+    <div className=' w-full ' id='top'>
 
         <button  onClick={router.back} className=" text-blue-600 hover:font-semibold duration-300">{`<   Back to products`}
         </button>
       
-       <div className="flex flex-col-reverse md:grid grid-cols-2 gap-8 lg:gap-16 mt-8">
+       <div className="max-w-[1000px] flex flex-col-reverse md:grid grid-cols-2 gap-8 lg:gap-16 mt-8">
             <div className="">
                 
                 <div className="h-96 bg-light100 flex justify-center items-center w-full relative overflow-hidden rounded-lg shadow-md transition-transform duration-300 transform ">
@@ -63,7 +67,9 @@ const router = useRouter
             </h4>
             <h4 className="text-xl font-medium">
                 {  truncateText(description, 300)}
-                <Link className='text-base font-normal  text-blue-400' href={'#description'}>{'  More'}</Link>
+                <Link className='text-base font-normal  text-blue-400' href={'#description'}
+                onClick={()=>setActive(0)}
+                >{'  More'}</Link>
             </h4>
             <div className="flex gap-2 items-center">
                 <div className="rounded-full py-1 px-2 text-sm bg-green-500 text-black">{bestseller}</div>
@@ -79,8 +85,8 @@ const router = useRouter
                 <p className='text-red-500'>Special offer ends in {offerEnds}</p>
             </div>
         </div>
-{ !modal ?
-      <>
+
+
       <div className="items-center  sm:flex gap-6 py-4 grid w-full">
             
             <div className='flex items-center'>
@@ -95,7 +101,10 @@ const router = useRouter
             
             <div className="flex items-center">
             <BtnOrange link={'#'} >
-                <div onClick={()=>setIsOpen(true)} className='flex items-center gap-3'>
+                <div onClick={ () => {
+                    onAdd(product, 1)
+                    setIsOpen(true)
+                }} className='flex items-center gap-3'>
                     <MdOutlineShoppingCart/>
                     <p>Add to quote request</p>
                 </div>
@@ -105,13 +114,12 @@ const router = useRouter
         </div>
 
         <div id='description' className="py-4">
-            <Navigate product={product}/>
+            <Navigate product={product} targetId={'top'}/>
         </div>
  
-        <GetQuotes isOpen={isOpen} closeModal={()=>setIsOpen(false)}  productId={id} productData={product}/> 
-        </> : 
-    null
-    }
+        <QuoteForm isOpen={isOpen} closeModal={()=>setIsOpen(false)}  productId={id} productData={product}/> 
+        
+
 
     </div>
 

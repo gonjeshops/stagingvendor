@@ -3,7 +3,8 @@ import CreatableSelect from 'react-select/creatable'
 import { updateQuoteRequest } from '../Api2';
 import { BtnSpinner } from '../Loader/Spinner/BtnSpinner';
 
-const ChangeQuoteStatusForm = ({status, quoteData, setQuoteData, reason}) => {
+const ChangeQuoteStatusForm = ({status, quoteData,quoteQuantity,  setQuoteData, reason}) => {
+  console.log('=========', status, quoteData, reason)
   const [show, setShow] = useState(false);
   const [selected, setSelected] = useState(null); // Initialize with null
   const [formData, setFormData] = useState({
@@ -38,16 +39,18 @@ const ChangeQuoteStatusForm = ({status, quoteData, setQuoteData, reason}) => {
       
       const response = await updateQuoteRequest({
         status: param,
-        quantity: quoteData?.quote?.quantity,
+        quantity: quoteQuantity,
         reason: formData?.reason,
       }, quoteData?.quote?.id);
 
-      if (response?.status === 200) {
-        console.log('Updated quote res===', response?.data);
-        setQuoteData(response?.data);
-      }else {
-        console.log('Api Error res===', response);
-      }
+        console.log('Updated quote res===', response);
+
+      // if (response?.status === 200) {
+      //   console.log('Updated quote res===', response?.data);
+      //   setQuoteData(response?.data);
+      // }else {
+      //   console.log('Api Error res===', response);
+      // }
     } catch (error) {
       console.log('CATCH ERROR', error);
     }finally {

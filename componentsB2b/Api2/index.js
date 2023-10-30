@@ -156,16 +156,18 @@ export const fetchQuotesWIthSentStatus = (page, limit) => {
   };
 
 // Create quote request
-export const createQuoteRequest = (values) => {
+export const createQuoteRequest = (values, method) => {
+  console.log('values===', values)
     return axios({
       method: "post",
       headers: authHeader(),
       url: url + `create/quote/request`,
       data: {
-        product_id: values.productId,
-        quote_name: values.name,
-        unit: values.unit,
-        quantity: values.quantity,
+        cart_items: values.cart,
+        quote_name: values.quoteName,
+        subtotal: values.subtotalPrice,
+        quantity: values.totalquantity,
+        shop_name: values.shopName,
         user_id: values.userId
       },
     })
@@ -173,6 +175,7 @@ export const createQuoteRequest = (values) => {
       .catch((error) => {
         console.log("Error in createQuoteRequest api", error, values);
       });
+    return values
   };
 
   // Update quote request
@@ -210,6 +213,7 @@ export const fetchVendorInvoice = (page, limit) => {
     method: "get",
     headers: authHeader(),
     url: url + `my/transactions?page=${page}&limit=${limit}`,
+    // url: url + `my/transactions?page=${page}&limit=${limit}`,
   })
     .then((response) => response)
     .catch((error) => {
@@ -224,7 +228,8 @@ export const fetchNotifications = (limit) => {
   return axios({
     method: "get",
     headers: authHeader(),
-    url: url + `getNotification?limit=${limit}`,
+    url: url + `my/notifications?limit=${limit}`,
+    // url: url + `getNotification?limit=${limit}`,
   })
     .then((response) => {
       console.log('notification =====', response)

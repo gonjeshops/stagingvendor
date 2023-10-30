@@ -1,5 +1,5 @@
 
-import { FaClock, FaShoppingCart, FaFax, FaFileExport, FaFolder } from "react-icons/fa"
+import { FaClock, FaShoppingCart, FaFax, FaFileExport, FaFolder, FaStoreAlt } from "react-icons/fa"
 import SearchBar from "../Navigation/SearchBar"
 import Link from "next/link"
 import { useState } from "react"
@@ -7,6 +7,7 @@ import Pagination from "../Pagination"
 import { useRouter } from "next/router"
 import RequestQuoteForm from "../forms/RequestQuoteForm"
 import DashboardHeading from './DashboardHeading'
+import { useGlobalState } from "@/context/GlobalStateContext"
 
 
 
@@ -17,6 +18,9 @@ const RequestQuotes = ({quotes}) => {
     console.log('QUOTES DATA=', quotes)
 
     const [show, setShow] = useState('')
+    const {useB2Bcart:{quoteCartlculator}} = useGlobalState()
+
+   
 
 
 return (
@@ -60,6 +64,7 @@ return (
                 // fetched data
 
                 quotes?.map((item, i)=>{
+                    const {quoteProducts, calculatedSubtotal, quoteQuantity} = quoteCartlculator(item)
                     return (
                         <div key={i} 
                         className="w-full border hover:shadow-lg duration-300 rounded-md p-8 space-y-8">
@@ -79,18 +84,24 @@ return (
                             <hr className="border-t border-light300" />
 
                             <div className="flex items-center justify-between">
-                                <div className="flex gap-2 items-center">
-                                <FaShoppingCart/>
-                                    <p>Total: ${'---'}</p>
+                                <div className="flex gap-4 items-center">
+                                        <div className="flex gap-2 items-center">
+                                            <FaShoppingCart/>
+                                            <p>Total: ${calculatedSubtotal}</p>
+                                        </div>
+                                        <div className="flex gap-2 items-center">
+                                            <FaFolder/>
+                                            <p>{quoteQuantity} </p>
+                                        </div>
                                 </div>
                                 <div className="flex gap-4 items-center">
                                     <div className="flex gap-2 items-center">
-                                        <FaFolder/>
-                                        <p>{'---'} Products</p>
+                                        <FaStoreAlt/>
+                                        <p>{quoteProducts[0]?.product?.shop_name}</p>
                                     </div>
                                     <div className="flex gap-2 items-center">
                                         <FaClock/>
-                                        <p>Draft</p>
+                                        <p>{item?.updated_at.split('T')[0]}</p>
                                     </div>
                                     
                                 </div>

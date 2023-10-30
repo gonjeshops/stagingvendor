@@ -14,6 +14,8 @@ const ProductDetailsPage = ({  userId, shopId, productId,  error}) => {
   const [apiError, setApiError] = useState(null);
   const [loadingTimeout, setLoadingTimeout] = useState(false);
 
+  const shopName = router.query?.shop_name
+  console.log('shop-name===', shopName)
 
   useEffect(() => {
 
@@ -117,7 +119,7 @@ const ProductDetailsPage = ({  userId, shopId, productId,  error}) => {
 
   return (
         <Workspace>
-            {productData ? <ProductDetails product={productData} p={product}/> : <div className="absolute inset-0 flex items-center justify-center">
+            {productData ? <ProductDetails product={productData} p={product} shopName={shopName}/> : <div className="absolute inset-0 flex items-center justify-center">
               <PageLoading/>  
             </div>}
         </Workspace>

@@ -7,7 +7,7 @@ import { useState } from "react"
 const Notifications = ({notificationList, modal}) => {
 
     const [notifications, setNotifications] = useState(notificationList);
-
+useRouter()
     const markAsRead = (notificationId) => {
       // Update the notification as read in the state (you may update this logic)
       const updatedNotifications = notifications.map((section) => {

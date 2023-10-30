@@ -165,15 +165,15 @@ export const createQuoteRequest = (values, method) => {
       data: {
         cart_items: values.cart,
         quote_name: values.quoteName,
-        subtotal: values.subtotalPrice,
-        quantity: values.totalquantity,
-        shop_name: values.shopName,
-        user_id: values.userId
+        // subtotal: values.subtotalPrice,
+        // quantity: values.totalquantity,
+        // shop_name: values.shopName,
+        // user_id: values.userId
       },
     })
       .then((response) => response)
       .catch((error) => {
-        console.log("Error in createQuoteRequest api", error, values);
+        console.log("Error in createQuoteRequest api", error);
       });
     return values
   };
@@ -224,7 +224,21 @@ export const fetchVendorInvoice = (page, limit) => {
 
 
 // ======= // getNotification?limit=15 =====
-export const fetchNotifications = (limit) => {
+export const fetchNotifications = (page, limit) => {
+  return axios({
+    method: "get",
+    headers: authHeader(),
+    url: url + `my/notifications?page=${page}&limit=${limit}`,
+    // url: url + `getNotification?limit=${limit}`,
+  })
+    .then((response) => {
+      console.log('notification =====', response)
+      return response})
+    .catch((error) => {
+      console.log("Error in fetchNotifications api", error,  limit);
+    });
+};
+export const fetchNotificationDropdown = (limit) => {
   return axios({
     method: "get",
     headers: authHeader(),
@@ -238,6 +252,7 @@ export const fetchNotifications = (limit) => {
       console.log("Error in fetchNotifications api", error,  limit);
     });
 };
+
 // Add products
 export const  createProduct = (values) => {
   // Validate inputs

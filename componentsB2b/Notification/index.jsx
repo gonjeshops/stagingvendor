@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { fetchNotifications } from '../Api2';
+import { fetchNotificationDropdown, fetchNotifications } from '../Api2';
+import NotificationCard from '../card/NotificationCard';
 
 const NotificationComponent = ({ initialLimit }) => {
   const [notifications, setNotifications] = useState([]);
@@ -13,18 +14,18 @@ const NotificationComponent = ({ initialLimit }) => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const response = await fetchNotifications(limit)
+        const response = await fetchNotificationDropdown(8)
         
         if (response?.status === 200) {
             setNotifications(response?.data?.data?.notifications);
             setIsLoading(false);
-            console.log('NOTIFICATION RESPONSE==== ',response)
+            console.log('NOTIFICATION DROPDOWN==== ',response)
         } else {
-            console.log('NOTIFICATION ERROR RESPONSE==== ',response)
+            console.log('NOTIFICATION DROPDOWN ERROR RESPONSE==== ',response)
         }
         
       } catch (err) {
-        console.log('NOTIFICATION CATCH ERROR RESPONSE==== ', err)
+        console.log('NOTIFICATION DROPDOWN CATCH ERROR RESPONSE==== ', err)
         // setError(err);
         setIsLoading(false);
       }
@@ -59,7 +60,7 @@ const NotificationComponent = ({ initialLimit }) => {
       {error && <p>Error: {error.message}</p>}
       <ul className='space-y-3'>
         {notifications?.map((notification, index) => (
-          <li className='pb-3' key={index}>{notification.message}</li>
+          <NotificationCard key={notification?.id} item={notification}/>
         ))}
       </ul>
       {isLoading && <p>Loading...</p>}

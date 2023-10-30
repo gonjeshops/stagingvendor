@@ -24,11 +24,10 @@ const Supplier = () => {
 
   useEffect(() => {
     
-    // Set a loading timeout of 8 seconds (8000 milliseconds)
     const timeoutId = setTimeout(() => {
       setLoadingTimeout(true);
     }, 8000);
-    console.log('page==== ',page)
+ 
 
     const fetchData = async () => {
       try {
@@ -79,7 +78,6 @@ const Supplier = () => {
   if (pageLoading) {
     return (
       <Workspace>
-          { console.log('loading==', pageLoading)}
         <div className='absolute inset-0 flex items-center justify-center'>
         <PageLoading/>
         </div>
@@ -90,8 +88,6 @@ const Supplier = () => {
   if (error) {
     return (
       <Workspace>
-          { console.log('error==', error)}
-
         <div className='absolute inset-0 flex items-center justify-center'>Error: {error}</div>
       </Workspace>
     );

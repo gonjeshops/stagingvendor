@@ -15,7 +15,7 @@ import QuoteForm from '../forms/QuoteForm';
 import { useGlobalState } from '@/context/GlobalStateContext';
 
 
-const ProductDetails = ({product, shopName, p}) => {
+const ProductDetails = ({product, p}) => {
     const {useB2Bcart:{onAdd} , setActive} = useGlobalState()
     const [isOpen, setIsOpen] = useState(false)
     const router = useRouter
@@ -34,7 +34,7 @@ const ProductDetails = ({product, shopName, p}) => {
   return (
     <div className=' w-full ' id='top'>
 
-        <button   onClick={router.back} className=" text-blue-600 hover:font-semibold duration-300">{`${shopName || shop_name} product details`}
+        <button   onClick={router.back} className=" text-blue-600 hover:font-semibold duration-300">{`${ shop_name} product details`}
         </button>
       
        <div className="max-w-[1000px] flex flex-col-reverse md:grid grid-cols-2 gap-8 lg:gap-16 mt-8">
@@ -102,7 +102,7 @@ const ProductDetails = ({product, shopName, p}) => {
             <div className="flex items-center">
             <BtnOrange link={'#'} >
                 <div onClick={ () => {
-                    onAdd(product, 1, shopName)
+                    onAdd(product, 1, product?.shop_name)
                     setIsOpen(true)
                 }} className='flex items-center gap-3'>
                     <MdOutlineShoppingCart/>
@@ -117,12 +117,8 @@ const ProductDetails = ({product, shopName, p}) => {
             <Navigate product={product} targetId={'top'}/>
         </div>
  
-        <QuoteForm isOpen={isOpen} closeModal={()=>setIsOpen(false)}  shopName={shopName || shop_name} /> 
-        
-
-
+        <QuoteForm isOpen={isOpen} closeModal={()=>setIsOpen(false)}  shopName={shop_name} /> 
     </div>
-
   )
 }
 

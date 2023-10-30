@@ -15,12 +15,12 @@ import QuoteForm from '../forms/QuoteForm';
 import { useGlobalState } from '@/context/GlobalStateContext';
 
 
-const ProductDetails = ({product,  p}) => {
+const ProductDetails = ({product, shopName, p}) => {
     const {useB2Bcart:{onAdd} , setActive} = useGlobalState()
     const [isOpen, setIsOpen] = useState(false)
     const router = useRouter
 
-    const {name, description, price, discount, in_stock, status, created_at, gallery, id, image, is_taxable, max_pric, min_price, sale_price, slug, top_deals, unit, } = product
+    const {name, description, price, discount, in_stock, status, created_at, gallery, id, image, is_taxable, max_pric, min_price, sale_price, shop_name, slug, top_deals, unit, } = product
         
     const {rating, heading,  offerEnds, bestseller,off,  imgList} = p[0]
 
@@ -34,7 +34,7 @@ const ProductDetails = ({product,  p}) => {
   return (
     <div className=' w-full ' id='top'>
 
-        <button  onClick={router.back} className=" text-blue-600 hover:font-semibold duration-300">{`<   Back to products`}
+        <button   onClick={router.back} className=" text-blue-600 hover:font-semibold duration-300">{`${shopName || shop_name} product details`}
         </button>
       
        <div className="max-w-[1000px] flex flex-col-reverse md:grid grid-cols-2 gap-8 lg:gap-16 mt-8">
@@ -102,7 +102,7 @@ const ProductDetails = ({product,  p}) => {
             <div className="flex items-center">
             <BtnOrange link={'#'} >
                 <div onClick={ () => {
-                    onAdd(product, 1)
+                    onAdd(product, 1, shopName)
                     setIsOpen(true)
                 }} className='flex items-center gap-3'>
                     <MdOutlineShoppingCart/>
@@ -117,7 +117,7 @@ const ProductDetails = ({product,  p}) => {
             <Navigate product={product} targetId={'top'}/>
         </div>
  
-        <QuoteForm isOpen={isOpen} closeModal={()=>setIsOpen(false)}  productId={id} productData={product}/> 
+        <QuoteForm isOpen={isOpen} closeModal={()=>setIsOpen(false)}  shopName={shopName || shop_name} /> 
         
 
 

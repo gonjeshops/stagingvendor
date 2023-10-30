@@ -16,7 +16,7 @@ const NotificationComponent = ({ initialLimit }) => {
         const response = await fetchNotifications(limit)
         
         if (response?.status === 200) {
-            setNotifications(response?.data?.data?.data);
+            setNotifications(response?.data?.data?.notifications);
             setIsLoading(false);
             console.log('NOTIFICATION RESPONSE==== ',response)
         } else {
@@ -58,7 +58,7 @@ const NotificationComponent = ({ initialLimit }) => {
       <h1 className='pb-2 mb-4 border-b font-medium text-lg '>Notifications</h1>
       {error && <p>Error: {error.message}</p>}
       <ul className='space-y-3'>
-        {notifications.map((notification, index) => (
+        {notifications?.map((notification, index) => (
           <li className='pb-3' key={index}>{notification.message}</li>
         ))}
       </ul>

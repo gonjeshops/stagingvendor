@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaPrint, FaRedo, FaEllipsisV } from 'react-icons/fa';
+import { FaPrint, FaRedo, FaEllipsisV, FaTrash, FaFile, FaTrashAlt } from 'react-icons/fa';
 import Select from 'react-select';
 import DashboardHeading from './DashboardHeading';
 import { updateQuoteRequest } from '../Api2';
@@ -13,8 +13,7 @@ import ProductDetailsModal from '../Modal/ProductDetailsModal';
 
 export const DisabledBtn = ({ control, route, quoteData }) => {
   const router = useRouter();
-  const { setCheckoutData } = useGlobalState();
-
+  const { setCheckoutData, useB2Bcart:{} } = useGlobalState();
   const buttonClass = control
     ? 'bg-blue-300 cursor-not-allowed'
     : 'hover-blue';
@@ -36,29 +35,26 @@ export const DisabledBtn = ({ control, route, quoteData }) => {
 const QuoteRequestDetails = ({ content, data }) => {
   console.log('FETCHED QUOTE DATA=', data);
 
+  const {useB2Bcart:{quoteCartlculator}} = useGlobalState()
+ 
+
   const [quoteData, setQuoteData] = useState(data);
-  const [subtotal, setSubtotal] = useState(0);
   const [summarySubtotal, setSummarySubtotal] = useState(0);
   const [total, setTotal] = useState(0);
+
+  const {quoteProducts, calculatedSubtotal, quoteQuantity} = quoteCartlculator(quoteData?.quote)
 
   useEffect(() => {
     if (data) {
       setQuoteData(data);
-      let calculatedSubtotal = 0;
-      for (const product of data?.products) {
-        if (product.product && product.product.price) {
-          calculatedSubtotal += product.product.price * quoteData?.quote.quantity;
-        }
-      }
-      setSubtotal(calculatedSubtotal);
 
-      setSummarySubtotal(calculatedSubtotal - (data?.products?.is_taxable || 0) - (data?.products?.discount || 0));
+      setSummarySubtotal(calculatedSubtotal - (quoteProducts[0]?.product?.is_taxable || 0) - (data?.products?.discount || 0));
       setTotal(calculatedSubtotal + (data?.products?.shipping_class_id || 0) - (data?.products?.is_taxable || 0) - (data?.products?.discount || 0) );
     }
   }, [data]);
 
   const summaryItems = [
-    { title: 'Items Subtotal:', value: subtotal },
+    { title: 'Items Subtotal:', value: calculatedSubtotal },
     { title: 'Discount:', value: data?.products?.discount || 0 },
     { title: 'Tax:', value: data?.products?.is_taxable || 0 },
     { title: 'Subtotal:', value: summarySubtotal },
@@ -68,7 +64,6 @@ const QuoteRequestDetails = ({ content, data }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [eachProduct, setEachProduct] = useState('')
 
-
   return (
     <div className='pb-20 px-4 space-y-8'>
         {/* <ProductDetailsModal isOpen={isOpen} closeModal={()=>setIsOpen(false)}  product={eachProduct}/> */}
@@ -76,7 +71,8 @@ const QuoteRequestDetails = ({ content, data }) => {
         <DashboardHeading>Request details for {quoteData?.quote?.quote_number}</DashboardHeading>
         <div className="flex pb-2 gap-2 justify-between items-center flex-wrap">
           <p className='text-lg'>Quote Name: <span className='text-blue-600 font-medium'>{quoteData?.quote.quote_name}</span></p>
-          <p className='text-lg'>Store Owner: <span className='text-blue-600 font-medium'>{'-------'}</span></p>
+          <p className='text-lg'>Stop: <span className='text-blue-600 font-medium'>{quoteProducts[0]?.product?.shop_name
+}</span></p>
         </div>
         <div className="flex pb-3 gap-2 justify-between items-center flex-wrap">
           <p className='text-lg'>Status: <span className='text-blue font-'>{quoteData?.quote?.status}</span></p>
@@ -85,41 +81,53 @@ const QuoteRequestDetails = ({ content, data }) => {
         </div>
         <div className="flex justify-end border-t pt-3 items-center gap-6 flex-wrap">
           <div className="flex gap-6 items-center justify-end">
-            <div className="flex gap-3 items-center">
+          <div className="flex gap-1 items-center">
+              <FaFile />
+              <button>Edit</button >
+            </div>
+            <div className="flex gap-1 items-center">
+              <FaTrashAlt />
+              <button >Delete</button >
+            </div>
+            <div className="flex gap-1 items-center">
               <FaPrint />
               <p>Print</p>
             </div>
-            <div className="flex gap-3 items-center">
+            <div className="flex gap-1 items-center">
               <FaRedo />
               <p>Refund</p>
             </div>
-            <div className="flex gap-3 items-center">
+            {/* <div className="flex gap-3 items-center">
               <p>More action</p>
               <FaEllipsisV/>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
-          <div className="py-3 text-[10px] border-light300 sm:text-sm md:text-md border-y font-medium capitalize grid grid-cols-6 gap- items-center">
+          <div className="py-3 text-[10px] border-light300 sm:text-sm md:text-md border-y font-medium capitalize grid grid-cols-7 gap- items-center">
             <div className="flex col-span-4 items-center justify-start gap-2">
-              <p className="space-x-2 ">PRODUCTS </p>
+              <p className="space-x-2 ">Products </p>
             </div>
             <div className="flex items-center justify-end gap-2">
-              <p className="space-x-1 col-span-1 text-end">PRICE</p>
+              <p className="space-x-1 col-span-1 text-end">Stock</p>
             </div>
             <div className="flex items-center justify-end gap-2">
-              <p className="space-x-1 col-span-1 text-end">QUANTITY</p>
+              <p className="space-x-1 col-span-1 text-end">Cart</p>
             </div>
+            <div className="flex items-center justify-end gap-2">
+              <p className="space-x-1 col-span-1 text-end">Price</p>
+            </div>
+            
           </div>
-          {data?.products?.map((item) => (
+          {quoteProducts?.map((item) => (
             <div key={item?.id} 
             // onClick={()=> {
             //     setEachProduct(item)
             //     setIsOpen(true)
             // }}
-            className="py-6 border-b border-light300 grid grid-cols-6 gap-3 items-center text-[10px] sm:text-sm md:text-md">
+            className="py-6 border-b border-light300 grid grid-cols-7 gap-3 items-center text-[10px] sm:text-sm md:text-md">
               <div className="flex flex-col col-span-4 gap-3 sm:flex-row items-">
                 <div className="border-2 overflow-hidden bg-light200 flex-shrink-0 w-12 h-12 ">
                   <img src={item?.product?.image?.thumbnail} alt="product" className='w-full h-full object-cover'/>
@@ -127,13 +135,17 @@ const QuoteRequestDetails = ({ content, data }) => {
                 <p 
                 className='text-[12px] text-blue-600'><span className='pr-2 font-semibold'>{item?.product?.name}:</span>{truncateText(item?.product?.description,  200)}</p>
               </div>
-              <p className="col-span-1 text-end">${item?.product?.price}</p>
-              <p className="col-span-1 text-end">{data?.quote?.quantity}{data?.quote?.unit}</p>
+                  <p className="col-span-1 text-end">${item?.product?.in_stock}{item?.unit}
+                  </p>
+                  <p className="col-span-1 text-end">{item?.quantity}{item?.unit}
+                  </p>
+                  <p className="col-span-1 text-end">${item?.product?.price}
+                  </p>
             </div>
           ))}
           <div className="py-6 border-b flex justify-between items-center">
             <p className="">Items Subtotal:</p>
-            <p className="">${subtotal}</p>
+            <p className="">${calculatedSubtotal}</p>
           </div>
         </div>
         <div className="lg:col-span-1">
@@ -182,7 +194,7 @@ const QuoteRequestDetails = ({ content, data }) => {
               ))}
             </div>
           </div>
-          <div className="col-span-1 w-full grid gap-4">
+          {/* <div className="col-span-1 w-full grid gap-4">
             <h4 className="text-lg font-medium">Other Details</h4>
             {content.otherDetails.map(({ title, value, icon }, i) => (
               <div key={i} className="flex gap-2 items-center">
@@ -193,13 +205,13 @@ const QuoteRequestDetails = ({ content, data }) => {
                 </div>
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
         <div className="">
           <div className=' col-span-1 bg-light200 rounded-lg w-full px-6 py-8 space-y-3'>
             
           <ChangeQuoteStatusForm
-              status={quoteData?.quote?.status} quoteData={quoteData} reason={quoteData?.quote?.reason}  setQuoteData={setQuoteData}
+              status={quoteData?.quote?.status} quoteData={quoteData} quoteQuantity={quoteQuantity} reason={quoteData?.quote?.reason}  setQuoteData={setQuoteData}
              />
 
 
@@ -207,7 +219,7 @@ const QuoteRequestDetails = ({ content, data }) => {
             <DisabledBtn control={quoteData?.quote?.status !== 'ACCEPTED'} route={'/vendorb2b/workspace/invoices'} 
             quoteData={
               { 
-                subtotal, 
+                calculatedSubtotal, 
                 quoteName: quoteData?.quote?.quote_name, 
                 quoteId: quoteData?.quote?.id, 
                 quoteNumber: quoteData?.quote?.quote_number, 

@@ -1,18 +1,19 @@
-import  { useEffect, useState } from 'react';
+import  {  useState } from 'react';
 import ModalCentral from '../Modal/ModalCentral';
 import { FaTimes } from 'react-icons/fa';
-import CreatableSelect from 'react-select/creatable'
-import { createQuoteRequest, fetchQuoteNames } from '../Api2';
+import { createQuoteRequest, } from '../Api2';
 import { useGlobalState } from '@/context/GlobalStateContext';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import GetQuoteProductCard from '../card/GetQuoteProductCard';
 import { AiOutlineShopping } from 'react-icons/ai';
+import { BtnSpinner } from '../Loader/Spinner/BtnSpinner';
 
 
-const QuoteForm = ({ isOpen, closeModal, productId, productData }) => {
+const QuoteForm = ({ isOpen, closeModal, shopName }) => {
   const {user, useB2Bcart, setActive} = useGlobalState();
   const router = useRouter()
+  const [loading, setLoading] = useState(false)
 
   const {
     cartItems,
@@ -23,46 +24,19 @@ const QuoteForm = ({ isOpen, closeModal, productId, productData }) => {
 
   const [success, setSuccess] = useState('')
   const [reqError, setReqError] = useState('')
-  const [showMoreProducts, setShowMoreProducts] = useState(false)
   const [quoteName, setQuoteName] = useState(null);
   const [errors, setErrors] = useState({});
 
-  const option = [
-    { value: 'gsh hbhb jhkfbjsk', label: 'gsh  jhkfbjsk' },
-    { value: 'gsh hbfb jhjs', label: 'gs fb jhkfbk' },
-    { value: 'gsh hbhfb jhkfbjk', label: 'sh  jhbjsk' },
-    { value: 'gsh hbhb jhkfjsk', label: 'gbb jhkfbjsk' },
-  ]
-
-  const [formData, setFormData] = useState({
-    name: '',
-    subtotalPrice: totalPrice,
-    totalquantity: totalQuantities,
-    cart: cartItems,
-    userId: user?.user_id
-  });
-
-
-  const handleSelect = (slectedOption) => {
-    setQuoteName(slectedOption)
-    setErrors({...errors, name: ""})
-    setFormData((prevData) => ({
-      ...prevData,
-      name: slectedOption?.value,
-    }));
-  }
-
-//   
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSuccess(null) 
     setReqError('')
-
-    // Validation
+    setLoading(true)
+    
     const validationErrors = {};
-    if (!formData.name) {
-      validationErrors.name = 'Please type in the name of your quote request.';
+    if (!quoteName) {
+      validationErrors.name = 'Please enter the name of your quote request.';
     }
 
     if (Object.keys(validationErrors).length > 0) {
@@ -72,41 +46,36 @@ const QuoteForm = ({ isOpen, closeModal, productId, productData }) => {
 
     try {
       const newFormData = {
-       quoteName: formData.name,
+        quoteName: quoteName,
         subtotalPrice: totalPrice,
-        // totalquantity: totalQuantities,
+        totalquantity: totalQuantities,
         cart: cartItems,
+        shopName: shopName,
         userId: user?.user_id
       }
-      console.log('QUOTE RESQUEST FORMDATA===', newFormData)
-    //   const response = await createQuoteRequest(formData);
-    //   if (response?.status === 200) {
-    //     console.log("API response:", response);
-    //     setSuccess('Quote resquest was successfull.')
-    //     toast.success('Quote resquest was successfull.')
-    //     setTimeout(() => {
-    //       router.push('/vendorb2b/workspace/request-quotes')
-    //     }, 1000);
-    //   } else {
-    //     console.log("Quote resquest API response error:", response);
-    //     toast.error('Server error.')
-    //     setReqError( "Server error. Try again or consult developer.");
-    //   }
+      
+      const response = await createQuoteRequest(newFormData);
+      if (response?.status === 200) {
+        console.log("API response:", JSON.parse(response?.data?.quote_request?.cart_items));
+        setSuccess('Quote resquest was successfull.')
+        toast.success('Quote resquest was successfull.')
+        setTimeout(() => {
+          router.push('/vendorb2b/workspace/request-quotes')
+        }, 1000);
+      } else {
+        console.log("Quote resquest API response error:", response);
+        toast.error('Server error.')
+        setReqError( "Server error. Try again or consult the developer.");
+      }
     } catch (error) {
       console.error("Quote resquest Catch error:", error);
       setReqError( "Something went wrong. Try again.");
       toast.error('Server error.')
     } finally{
-      // Reset form data and errors
-      // setFormData({
-      //   name: '',
-      //   subtotalPrice: 0,
-      //   totalquantity: 0,
-      //   cart: [],
-      //   userId: user?.user_id
-      // });
-      // setErrors({});
-      // clearCart()
+      setErrors('');
+      setQuoteName('')
+      clearCart()
+      setLoading(false)
     }    
   };
 
@@ -116,6 +85,7 @@ const QuoteForm = ({ isOpen, closeModal, productId, productData }) => {
       <div className="mx-auto w-full md:w-[650px] max-h-[700px] overflow-y-auto rounded-md py-8 bg-light100">
         <div className="flex px-4 justify-between items-center text-xl font-semibold pb-4">
           <h4>Quote Request</h4>
+          <p className="text-sm text-blue-400">{shopName}</p>
           <FaTimes onClick={closeModal} className="hover:scale-105 duration-300 cursor-pointer" />
         </div>
 
@@ -125,19 +95,16 @@ const QuoteForm = ({ isOpen, closeModal, productId, productData }) => {
 
 
           <div className="mb-4 h-20">
-            <label htmlFor="name" className="block font-semibold mb-1">
-              {/* NAME YOUR QUOTE */}
+            <label htmlFor="name" className="block font-medium mb-2">
               Create a new quote or Select a quote
             </label>
-            <CreatableSelect 
-              isClearable
-              isSearchable={true}
+            <input
               placeholder='Select or enter quote name'
               value={quoteName}
-              onChange={handleSelect}
-              options={option}
-              className="bg-light100 w-full text-zinc-600 focus:outline-none focus:ring focus:border-blue-300"
-              // styles={customStyles} 
+              name='quoteName'
+              onChange={(e)=>setQuoteName(e.target.value)}
+              required
+              className="bg-light100 w-full p-2 rounded border text-zinc-600 focus:outline-none focus:ring focus:border-blue-300"
             />
             {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
           </div>
@@ -177,7 +144,7 @@ const QuoteForm = ({ isOpen, closeModal, productId, productData }) => {
                 type="submit"
                 className="hover-blue py-3 px-4 rounded w-full font-semibold "
               >
-                Submit
+                {loading ?  <BtnSpinner/> : 'Submit'}
               </button>
             </> 
           }

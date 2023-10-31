@@ -45,11 +45,12 @@ const QuoteForm = ({ isOpen, closeModal, shopName }) => {
     }
 
     try {
+      const arr = JSON.stringify(cartItems)
       const newFormData = {
         quoteName: quoteName,
         subtotalPrice: totalPrice,
         totalquantity: totalQuantities,
-        cart: cartItems,
+        cart: arr,
         shopName: shopName,
         userId: user?.user_id
       }

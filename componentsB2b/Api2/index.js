@@ -165,10 +165,10 @@ export const createQuoteRequest = (values, method) => {
       data: {
         cart_items: values.cart,
         quote_name: values.quoteName,
-        // subtotal: values.subtotalPrice,
-        // quantity: values.totalquantity,
-        // shop_name: values.shopName,
-        // user_id: values.userId
+        subtotal: values.subtotalPrice,
+        quantity: values.totalquantity,
+        shop_name: values.shopName,
+        user_id: values.userId
       },
     })
       .then((response) => response)

@@ -14,6 +14,7 @@ const ReQuestQuotes = () => {
 
   const router = useRouter();
 
+
   if (router?.query?.stripe_status === 'success') {
     toast.success('Stripe payment was successful');
   } else if (router?.query?.stripe_status === 'cancelled') {

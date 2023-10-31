@@ -156,24 +156,28 @@ export const fetchQuotesWIthSentStatus = (page, limit) => {
   };
 
 // Create quote request
-export const createQuoteRequest = (values, method) => {
+export const createQuoteRequest = (values, ) => {
   console.log('values===', values)
     return axios({
       method: "post",
       headers: authHeader(),
       url: url + `create/quote/request`,
       data: {
-        cart_items: values.cart,
-        quote_name: values.quoteName,
-        // subtotal: values.subtotalPrice,
-        // quantity: values.totalquantity,
-        // shop_name: values.shopName,
-        // user_id: values.userId
+        "cart_items": values.cart_items,
+        "quote_name": values.quote_name,
+        "subtotal": values.subtotal,
+        "quantity": values.quantity,
+        "shop_name": values.shop_name,
+        "user_id": values.user_id
       },
     })
-      .then((response) => response)
+      .then((response) => {
+        console.log("createQuoteRequest api response", response,values);
+      return response})
       .catch((error) => {
-        console.log("Error in createQuoteRequest api", error);
+        console.log("Error in createQuoteRequest api", error, values, );
+        return error
+        
       });
     return values
   };

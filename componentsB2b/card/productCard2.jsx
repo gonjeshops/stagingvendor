@@ -62,7 +62,7 @@ return (
 
                 <button className="rounded hover-blue py-1  px-2"
                 onClick={() => {
-                    router.push(`/vendorb2b/products/${slug}?shopId=${shopId}&userId=${userId}&productId=${id}&shop_name=${item?.shop_name}`)
+                    router.push(`/vendorb2b/products/${slug}?shopId=${shopId}&userId=${userId}&productId=${id}&shop_name=${product?.shop_name}`)
                     const element = document.getElementById('top');
                     if (element) {
                       element.scrollIntoView({ behavior: 'smooth' });

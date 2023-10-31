@@ -25,7 +25,7 @@ const ChangeQuoteStatusForm = ({status, quoteData,quoteQuantity,  setQuoteData, 
     setSelected(option);
     setFormData((prev) => ({
       ...prev,
-      reason: option?.value, // Set the value of the selected option
+      reason: option?.value, 
     }));
   };
 
@@ -43,14 +43,12 @@ const ChangeQuoteStatusForm = ({status, quoteData,quoteQuantity,  setQuoteData, 
         reason: formData?.reason,
       }, quoteData?.quote?.id);
 
-        console.log('Updated quote res===', response);
-
-      // if (response?.status === 200) {
-      //   console.log('Updated quote res===', response?.data);
-      //   setQuoteData(response?.data);
-      // }else {
-      //   console.log('Api Error res===', response);
-      // }
+      if (response?.status === 200) {
+        console.log('Updated quote res===', response?.data);
+        setQuoteData(response?.data);
+      }else {
+        console.log('Api Error res===', response);
+      }
     } catch (error) {
       console.log('CATCH ERROR', error);
     }finally {

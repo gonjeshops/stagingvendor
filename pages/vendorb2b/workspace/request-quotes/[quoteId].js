@@ -167,7 +167,7 @@ console.log(error)
 export async function getServerSideProps({params}) {
     try {
       const { quoteId} = params;
-      console.log(params)
+      
   
     //   if (!quoteId || isNaN(quoteId) ) {
     //     throw new Error("Invalid quoteId.");

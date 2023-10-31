@@ -28,7 +28,11 @@ const Breadcrumb = () => {
           {item.path ? (
             // Check if there's a path (i.e., a link) and add hover classes
             <Link href={item.path} className="capitalize hover:text-blue-500 hover:underline">
-             {item.label}
+                {item.label.startsWith('[') && item.label.endsWith(']') ? 
+                  router.query[item.label.slice(1, -1)] :
+                  item.label
+                }
+           
             </Link>
           ) : (
             <span className="capitalize">{item.label}</span>

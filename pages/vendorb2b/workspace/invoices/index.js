@@ -1,6 +1,7 @@
-import { fetchVendorInvoice } from "@/componentsB2b/Api2";
+import { fetchQuotesWithPendingStatus, fetchVendorInvoice } from "@/componentsB2b/Api2";
 import Invoices from "@/componentsB2b/Invoices/Invoices"
 import LoadingTimeout from "@/componentsB2b/Loader/LoadingTimeout";
+import { PageLoading } from "@/componentsB2b/Loader/Spinner/PageLoading";
 import Order from "@/componentsB2b/Order/Order"
 import Pagination from "@/componentsB2b/Pagination";
 import Workspace from "@/componentsB2b/Workspace/Workspace"
@@ -12,16 +13,16 @@ import { toast } from 'react-toastify';
 
 const Invoice = () => {
 
-  const { query } = useRouter();
-  if (query?.stripe_status === 'success') {
+  const router = useRouter();
+  if (router.query?.stripe_status === 'success') {
     // toast.success('Stripe payment was successful');
-  } else if (query?.stripe_status === 'cancelled') {
+  } else if (router.query?.stripe_status === 'cancelled') {
     toast.error('Stripe payment was cancelled');
   }
 
 
   const limit = 12;
-  const page = parseInt(query?.page) || 1;
+  const page = parseInt(router.query?.page) || 1;
 
   const [invoices, setInvoices] = useState([])
   const [totalPages, setTotalPages] = useState(0);
@@ -41,14 +42,17 @@ const Invoice = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetchVendorInvoice(page, limit);
+      const response = await fetchQuotesWithPendingStatus(page, limit);
+      // const response = await fetchVendorInvoice(page, limit);
 
       if (response.status === 200) {
-          setInvoices(response?.data?.data?.transactions);
+          // setInvoices(response?.data?.data?.transactions);
+          setInvoices(response?.data?.data?.quotes);
           setTotalPages(response?.data?.data?.total_pages);
 
-          // toast.success('Updated quote requests')
-    console.log('Fetch all invoices response=== ',response?.data?.data?.transactions)
+          toast.success(response?.data?.message)
+    console.log('Fetch all invoices response=== ',response)
+    // console.log('Fetch all invoices response=== ',response?.data?.data?.transactions)
 
       } else {
         setError('Something went wrong. Refresh page');
@@ -72,8 +76,19 @@ const Invoice = () => {
  
   const invoice = {
 
+    // page: 'Invoices',
+    // tableHeader: ['TRANSACTION ID', 'INVOICE ID', 'ORDER ID', 'AMOUNT', 'BUYER NAME', 'PAYMENT STATUS', 'PAYMENT METHOD', 'DATE'],
+    // category: [
+    //   {title: 'All', value: '187'},
+    //   {title: 'Pending payment', value: '67'},
+    //   {title: 'Unfufilled', value: '87'},
+    //   {title: 'Completed', value: '56'},
+    //   {title: 'Refunded', value: '109'},
+    //   {title: 'Failed', value: '6'},
+    // ],
+
     page: 'Invoices',
-    tableHeader: ['TRANSACTION ID', 'INVOICE ID', 'ORDER ID', 'AMOUNT', 'BUYER NAME', 'PAYMENT STATUS', 'PAYMENT METHOD', 'DATE'],
+    tableHeader: ['QUOTE ID', 'INVOICE ID', 'QUOTE NAME', 'SHOP NAME','BUYER NAME', 'ITEMS',  'AMOUNT', 'STATUS', 'DATE'],
     category: [
       {title: 'All', value: '187'},
       {title: 'Pending payment', value: '67'},
@@ -107,7 +122,7 @@ const Invoice = () => {
   if (loading) {
     return (
       <Workspace>
-        <div className='absolute inset-0 flex items-center justify-center'>Loading...</div>
+        <div className='absolute inset-0 flex items-center justify-center'><PageLoading/></div>
       </Workspace>
     );
   }

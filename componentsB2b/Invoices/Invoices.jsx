@@ -3,6 +3,7 @@ import DashboardHeading from '../Workspace/DashboardHeading'
 import { FaAngleDown, FaFileExport } from 'react-icons/fa';
 import InvoiceTable from './InvoiceTable';
 import AddOrderForm from '../forms/AddOrderForm';
+import InvoiceTable2 from './InvoiceTbale2';
 
 const Invoices = ({invoices, invoicess}) => {
     const {category , tableHeader, invoiceData, } = invoices;
@@ -59,7 +60,8 @@ const Invoices = ({invoices, invoicess}) => {
         </div>
 
         <div className="orders bg-light100 pl-4">
-            <InvoiceTable data={invoiceData} invoicess={invoicess} tableHeader={tableHeader}/>
+            <InvoiceTable2 data={invoiceData} invoicess={invoicess} tableHeader={tableHeader}/>
+            {/* <InvoiceTable data={invoiceData} invoicess={invoicess} tableHeader={tableHeader}/> */}
         </div>
     </>
   )

@@ -2,14 +2,12 @@
 import { FaClock, FaShoppingCart, FaFax, FaFileExport, FaFolder, FaStoreAlt } from "react-icons/fa"
 import SearchBar from "../Navigation/SearchBar"
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Pagination from "../Pagination"
 import { useRouter } from "next/router"
 import RequestQuoteForm from "../forms/RequestQuoteForm"
 import DashboardHeading from './DashboardHeading'
 import { useGlobalState } from "@/context/GlobalStateContext"
-
-
 
 
 const RequestQuotes = ({quotes}) => {
@@ -18,10 +16,7 @@ const RequestQuotes = ({quotes}) => {
     console.log('QUOTES DATA=', quotes)
 
     const [show, setShow] = useState('')
-    const {useB2Bcart:{quoteCartlculator}} = useGlobalState()
-
-   
-
+    const {useB2Bcart:{quoteCartcalculator}} = useGlobalState()
 
 return (
 
@@ -64,7 +59,15 @@ return (
                 // fetched data
 
                 quotes?.map((item, i)=>{
-                    const {quoteProducts, calculatedSubtotal, quoteQuantity} = quoteCartlculator(item)
+                    // const [qty, setQty] = useState(0)
+                    // const [subtotal, setSubtotal] = useState(0)
+                    // useEffect(() => {
+                    //     const {quoteProducts, calculatedSubtotal, quoteQuantity} = quoteCartcalculator(item)
+                    //     setQty(quoteQuantity)
+                    //     setSubtotal(calculatedSubtotal)
+
+                    // }, [quotes])
+                    
                     return (
                         <div key={i} 
                         className="w-full border hover:shadow-lg duration-300 rounded-md p-8 space-y-8">
@@ -87,21 +90,23 @@ return (
                                 <div className="flex gap-4 items-center">
                                         <div className="flex gap-2 items-center">
                                             <FaShoppingCart/>
-                                            <p>Total: ${calculatedSubtotal}</p>
+                                            {/* <p>Total: ${subtotal}</p> */}
+                                            <p>Total: ${item?.subtotal}</p>
                                         </div>
                                         <div className="flex gap-2 items-center">
                                             <FaFolder/>
-                                            <p>{quoteQuantity} </p>
+                                            {/* <p>{qty} </p> */}
+                                            <p>{item?.quantity} </p>
                                         </div>
                                 </div>
                                 <div className="flex gap-4 items-center">
                                     <div className="flex gap-2 items-center">
                                         <FaStoreAlt/>
-                                        <p>{quoteProducts[0]?.product?.shop_name}</p>
+                                        <p>{item?.shop_name}</p>
                                     </div>
                                     <div className="flex gap-2 items-center">
                                         <FaClock/>
-                                        <p>{item?.updated_at.split('T')[0]}</p>
+                                        <p>{new Date(item?.updated_at).toDateString()}</p>
                                     </div>
                                     
                                 </div>

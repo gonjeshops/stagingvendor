@@ -35,18 +35,28 @@ export const DisabledBtn = ({ control, route, quoteData }) => {
 const QuoteRequestDetails = ({ content, data }) => {
   console.log('FETCHED QUOTE DATA=', data);
 
-  const {useB2Bcart:{quoteCartlculator}} = useGlobalState()
+  const {useB2Bcart:{quoteCartcalculator}} = useGlobalState()
  
 
   const [quoteData, setQuoteData] = useState(data);
   const [summarySubtotal, setSummarySubtotal] = useState(0);
   const [total, setTotal] = useState(0);
 
-  const {quoteProducts, calculatedSubtotal, quoteQuantity} = quoteCartlculator(quoteData?.quote)
+  const [quoteProducts, setQuoteProducts] = useState([])
+  const [calculatedSubtotal, setSubtotal] = useState(0)
+  const [quoteQuantity, setQty] = useState(0)
+
+ 
 
   useEffect(() => {
     if (data) {
-      setQuoteData(data);
+      setQuoteData(data)
+      const {quoteProducts, calculatedSubtotal, quoteQuantity} = quoteCartcalculator(data?.quote)
+      setQuoteProducts(quoteProducts)
+      setSubtotal(calculatedSubtotal)
+      setQty(quoteQuantity)
+
+      console.log('QUOTE CALC', data?.quote)
 
       setSummarySubtotal(calculatedSubtotal - (quoteProducts[0]?.product?.is_taxable || 0) - (data?.products?.discount || 0));
       setTotal(calculatedSubtotal + (data?.products?.shipping_class_id || 0) - (data?.products?.is_taxable || 0) - (data?.products?.discount || 0) );
@@ -68,16 +78,15 @@ const QuoteRequestDetails = ({ content, data }) => {
     <div className='pb-20 px-4 space-y-8'>
         {/* <ProductDetailsModal isOpen={isOpen} closeModal={()=>setIsOpen(false)}  product={eachProduct}/> */}
       <div>
-        <DashboardHeading>Request details for {quoteData?.quote?.quote_number}</DashboardHeading>
+        <DashboardHeading>Request details for {quoteData?.quote_number}</DashboardHeading>
         <div className="flex pb-2 gap-2 justify-between items-center flex-wrap">
-          <p className='text-lg'>Quote Name: <span className='text-blue-600 font-medium'>{quoteData?.quote.quote_name}</span></p>
-          <p className='text-lg'>Stop: <span className='text-blue-600 font-medium'>{quoteProducts[0]?.product?.shop_name
-}</span></p>
+          <p className='text-lg'>Quote Name: <span className='text-blue-600 font-medium capitalize'>{quoteData?.quote?.quote_name}</span></p>
+          <p className='text-lg capitalize'>Shop: <span className='text-blue-600 font-medium'>{quoteData?.quote?.shop_name}</span></p>
         </div>
         <div className="flex pb-3 gap-2 justify-between items-center flex-wrap">
           <p className='text-lg'>Status: <span className='text-blue font-'>{quoteData?.quote?.status}</span></p>
-          {quoteData?.quote.updated_at && <p className='text-lg'>Updated at: <span className='text-blue-600 font-'>{formatDate(new Date(quoteData?.quote.updated_at))}</span></p>}
-          <p className='text-lg'>Created at: <span className='text-blue-600 font-'>{  formatDate(new Date(quoteData?.quote.created_at))}</span></p>
+          {quoteData?.quote?.updated_at && <p className='text-lg'>Updated at: <span className='text-blue-600 font-'>{formatDate(new Date(quoteData?.quote.updated_at))}</span></p>}
+          <p className='text-lg'>Created at: <span className='text-blue-600 font-'>{  formatDate(new Date(quoteData?.quote?.created_at))}</span></p>
         </div>
         <div className="flex justify-end border-t pt-3 items-center gap-6 flex-wrap">
           <div className="flex gap-6 items-center justify-end">
@@ -106,18 +115,21 @@ const QuoteRequestDetails = ({ content, data }) => {
       </div>
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
-          <div className="py-3 text-[10px] border-light300 sm:text-sm md:text-md border-y font-medium capitalize grid grid-cols-7 gap- items-center">
+          <div className="py-3 text-[10px] border-light300 sm:text-sm md:text-md border-y font-medium capitalize grid grid-cols-8 gap- items-center">
             <div className="flex col-span-4 items-center justify-start gap-2">
               <p className="space-x-2 ">Products </p>
             </div>
             <div className="flex items-center justify-end gap-2">
-              <p className="space-x-1 col-span-1 text-end">Stock</p>
+              <p className="space-x-1 col-span-1 text-end">InStock</p>
             </div>
             <div className="flex items-center justify-end gap-2">
-              <p className="space-x-1 col-span-1 text-end">Cart</p>
+              <p className="space-x-1 col-span-1 text-end">Quantity</p>
             </div>
             <div className="flex items-center justify-end gap-2">
               <p className="space-x-1 col-span-1 text-end">Price</p>
+            </div>
+            <div className="flex items-center justify-end gap-2">
+              <p className="space-x-1 col-span-1 text-end">Subtotal</p>
             </div>
             
           </div>
@@ -127,7 +139,7 @@ const QuoteRequestDetails = ({ content, data }) => {
             //     setEachProduct(item)
             //     setIsOpen(true)
             // }}
-            className="py-6 border-b border-light300 grid grid-cols-7 gap-3 items-center text-[10px] sm:text-sm md:text-md">
+            className="py-6 border-b border-light300 grid grid-cols-8 gap-3 items-center text-[10px] sm:text-sm md:text-md">
               <div className="flex flex-col col-span-4 gap-3 sm:flex-row items-">
                 <div className="border-2 overflow-hidden bg-light200 flex-shrink-0 w-12 h-12 ">
                   <img src={item?.product?.image?.thumbnail} alt="product" className='w-full h-full object-cover'/>
@@ -139,7 +151,9 @@ const QuoteRequestDetails = ({ content, data }) => {
                   </p>
                   <p className="col-span-1 text-end">{item?.quantity}{item?.unit}
                   </p>
-                  <p className="col-span-1 text-end">${item?.product?.price}
+                  <p className="col-span-1 text-end">${item?.price}
+                  </p>
+                  <p className="col-span-1 text-end">${item?.subtotal}
                   </p>
             </div>
           ))}

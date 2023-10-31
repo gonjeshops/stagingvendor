@@ -24,7 +24,7 @@ const QuoteForm = ({ isOpen, closeModal, shopName }) => {
 
   const [success, setSuccess] = useState('')
   const [reqError, setReqError] = useState('')
-  const [quoteName, setQuoteName] = useState(null);
+  const [quoteName, setQuoteName] = useState('');
   const [errors, setErrors] = useState({});
 
 
@@ -47,17 +47,18 @@ const QuoteForm = ({ isOpen, closeModal, shopName }) => {
     try {
       const arr = JSON.stringify(cartItems)
       const newFormData = {
-        quoteName: quoteName,
-        subtotalPrice: totalPrice,
-        totalquantity: totalQuantities,
-        cart: arr,
-        shopName: shopName,
-        userId: user?.user_id
+        quote_name: quoteName,
+        subtotal: totalPrice,
+        quantity: totalQuantities,
+        cart_items: cartItems,
+        // cart: JSON.stringify(cartItems),
+        shop_name: shopName,
+        user_id: user?.user_id
       }
-      
+      console.log('nes form Data',newFormData)
       const response = await createQuoteRequest(newFormData);
       if (response?.status === 200) {
-        console.log("API response:", JSON.parse(response?.data?.quote_request?.cart_items));
+        console.log("API response:", response);
         setSuccess('Quote resquest was successfull.')
         toast.success('Quote resquest was successfull.')
         setTimeout(() => {
@@ -104,7 +105,6 @@ const QuoteForm = ({ isOpen, closeModal, shopName }) => {
               value={quoteName}
               name='quoteName'
               onChange={(e)=>setQuoteName(e.target.value)}
-              required
               className="bg-light100 w-full p-2 rounded border text-zinc-600 focus:outline-none focus:ring focus:border-blue-300"
             />
             {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}

@@ -2,15 +2,16 @@ import { useState } from 'react';
 import getStripe from '@/util/getStripe';
 import { useGlobalState } from '@/context/GlobalStateContext';
 import { FaCreditCard } from 'react-icons/fa';
+import { BtnSpinner } from '../Loader/Spinner/BtnSpinner';
 
 const StripeCheckout = () => {
   const{checkoutData, user}=useGlobalState()
   console.log('STRIPECHECKOUT==', checkoutData)
   const items = [
     {
-      price: checkoutData?.subtotal || 0, // Provide a default value if the properties are missing
+      price: checkoutData?.subtotal || 0, 
       quantity: checkoutData?.quantity,
-      name: checkoutData?.quoteName,
+      name: checkoutData?.quote_name,
     },
   ];
 
@@ -77,7 +78,7 @@ console.log('STRIPE DATA==', data)
       }`}
     >
        <FaCreditCard  /> 
-       <p> {loading ? 'Loading...' : 'Stripe Pay'} </p>
+       <p> {loading ? <BtnSpinner/> : 'Stripe Pay'} </p>
     </button>
   </div>
   );

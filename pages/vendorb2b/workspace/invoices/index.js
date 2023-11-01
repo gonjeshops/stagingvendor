@@ -21,7 +21,7 @@ const Invoice = () => {
   }
 
 
-  const limit = 12;
+  const limit = 104;
   const page = parseInt(router.query?.page) || 1;
 
   const [invoices, setInvoices] = useState([])
@@ -47,11 +47,12 @@ const Invoice = () => {
 
       if (response.status === 200) {
           // setInvoices(response?.data?.data?.transactions);
-          setInvoices(response?.data?.data?.quotes);
+          // setInvoices(response?.data?.data?.quotes);
+          setInvoices(response?.data?.data?.quotes.filter(item => !['PENDING', 'SENT', 'REJECTED', 'CANCELLED'].includes(item.status)));
           setTotalPages(response?.data?.data?.total_pages);
 
           toast.success(response?.data?.message)
-    console.log('Fetch all invoices response=== ',response)
+    console.log('Fetch all invoices response=== ',response?.data?.data?.quotes)
     // console.log('Fetch all invoices response=== ',response?.data?.data?.transactions)
 
       } else {
@@ -71,7 +72,7 @@ const Invoice = () => {
   fetchData();
 
   return () => clearTimeout(timeoutId);
-}, []);
+}, [page]);
 
  
   const invoice = {

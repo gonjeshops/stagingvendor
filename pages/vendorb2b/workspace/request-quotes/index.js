@@ -1,5 +1,6 @@
 import { fetchQuotesWithPendingStatus } from "@/componentsB2b/Api2"
 import LoadingTimeout from "@/componentsB2b/Loader/LoadingTimeout"
+import { PageLoading } from "@/componentsB2b/Loader/Spinner/PageLoading"
 import Pagination from "@/componentsB2b/Pagination"
 import RequestQuotes from "@/componentsB2b/Workspace/RequestQuotes"
 import Workspace from "@/componentsB2b/Workspace/Workspace"
@@ -68,7 +69,7 @@ const ReQuestQuotes = () => {
       fetchData();
   
       return () => clearTimeout(timeoutId);
-    }, []);
+    }, [page]);
 
 
     if (loadingTimeout) {
@@ -82,7 +83,7 @@ const ReQuestQuotes = () => {
     if (loading) {
       return (
         <Workspace>
-          <div className='absolute inset-0 flex items-center justify-center'>Loading...</div>
+          <div className='absolute inset-0 flex items-center justify-center'><PageLoading/></div>
         </Workspace>
       );
     }

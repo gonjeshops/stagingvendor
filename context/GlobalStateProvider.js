@@ -48,7 +48,7 @@ const GlobalStateProvider = ({ children }) => {
   }, [])
 
   // Create quote or cart functionality
-  const useB2Bcart = useCartB2B()
+  const useB2Bcart = useCartB2B(user)
 
   // Use useEffect for initial setup when the component mounts
   useEffect(() => {

@@ -8,7 +8,7 @@ const InvoiceDetails = ({invoice, fakeData}) => {
   return (
     <div className='pt-12 space-y-8 '>
 
-        <div className="grid sm:flex justify-between  items-end gap-3">
+        <div className="">
             <DashboardHeading>           
                 Invocie <span>#{invoice}</span>
             </DashboardHeading>

@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { FaPrint, FaRedo, FaEllipsisV, FaTrash, FaFile, FaTrashAlt } from 'react-icons/fa';
-import Select from 'react-select';
+import { FaPrint, FaRedo, FaFile, FaTrashAlt } from 'react-icons/fa';
 import DashboardHeading from './DashboardHeading';
-import { updateQuoteRequest } from '../Api2';
 import { useRouter } from 'next/router';
 import { useGlobalState } from '@/context/GlobalStateContext';
 import { truncateText } from '@/lib/truncateText';
 import { formatDate } from '@/lib/formatDate';
 import ChangeQuoteStatusForm from '../forms/ChangeQuoteStatusForm';
-import ProductDetailsModal from '../Modal/ProductDetailsModal';
 
 
 export const DisabledBtn = ({ control, route, quoteData }) => {
@@ -56,8 +53,6 @@ const QuoteRequestDetails = ({ content, data }) => {
       setSubtotal(calculatedSubtotal)
       setQty(quoteQuantity)
 
-      console.log('QUOTE CALC', data?.quote)
-
       setSummarySubtotal(calculatedSubtotal - (quoteProducts[0]?.product?.is_taxable || 0) - (data?.products?.discount || 0));
       setTotal(calculatedSubtotal + (data?.products?.shipping_class_id || 0) - (data?.products?.is_taxable || 0) - (data?.products?.discount || 0) );
     }
@@ -88,6 +83,7 @@ const QuoteRequestDetails = ({ content, data }) => {
           {quoteData?.quote?.updated_at && <p className='text-lg'>Updated at: <span className='text-blue-600 font-'>{formatDate(new Date(quoteData?.quote.updated_at))}</span></p>}
           <p className='text-lg'>Created at: <span className='text-blue-600 font-'>{  formatDate(new Date(quoteData?.quote?.created_at))}</span></p>
         </div>
+
         <div className="flex justify-end border-t pt-3 items-center gap-6 flex-wrap">
           <div className="flex gap-6 items-center justify-end">
           <div className="flex gap-1 items-center">
@@ -113,8 +109,11 @@ const QuoteRequestDetails = ({ content, data }) => {
           </div>
         </div>
       </div>
+
+      {/* product listing */}
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
+
           <div className="py-3 text-[10px] border-light300 sm:text-sm md:text-md border-y font-medium capitalize grid grid-cols-8 gap- items-center">
             <div className="flex col-span-4 items-center justify-start gap-2">
               <p className="space-x-2 ">Products </p>
@@ -131,8 +130,8 @@ const QuoteRequestDetails = ({ content, data }) => {
             <div className="flex items-center justify-end gap-2">
               <p className="space-x-1 col-span-1 text-end">Subtotal</p>
             </div>
-            
           </div>
+
           {quoteProducts?.map((item) => (
             <div key={item?.id} 
             // onClick={()=> {
@@ -147,7 +146,7 @@ const QuoteRequestDetails = ({ content, data }) => {
                 <p 
                 className='text-[12px] text-blue-600'><span className='pr-2 font-semibold'>{item?.product?.name}:</span>{truncateText(item?.product?.description,  200)}</p>
               </div>
-                  <p className="col-span-1 text-end">${item?.product?.in_stock}{item?.unit}
+                  <p className="col-span-1 text-end">{item?.product?.in_stock}{item?.unit}
                   </p>
                   <p className="col-span-1 text-end">{item?.quantity}{item?.unit}
                   </p>
@@ -157,11 +156,13 @@ const QuoteRequestDetails = ({ content, data }) => {
                   </p>
             </div>
           ))}
+
           <div className="py-6 border-b flex justify-between items-center">
             <p className="">Items Subtotal:</p>
             <p className="">${calculatedSubtotal}</p>
           </div>
         </div>
+
         <div className="lg:col-span-1">
           <div className="w-full bg-light200 px-6 py-8 rounded-lg ">
             <h4 className="font-medium text-lg pb-6">Summary</h4>
@@ -180,6 +181,7 @@ const QuoteRequestDetails = ({ content, data }) => {
           </div>
         </div>
       </div>
+
       <div className="flex flex-col-reverse md:grid grid-cols-2 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 grid">
           <div className="sm:grid-cols-2 md:grid-cols-1 lg:col-span-2 grid gap-6 lg:grid-cols-2">

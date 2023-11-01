@@ -41,21 +41,20 @@ const QuoteForm = ({ isOpen, closeModal, shopName }) => {
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
+      setLoading(false)
       return;
     }
 
     try {
-      const arr = JSON.stringify(cartItems)
       const newFormData = {
         quote_name: quoteName,
         subtotal: totalPrice,
         quantity: totalQuantities,
         cart_items: cartItems,
-        // cart: JSON.stringify(cartItems),
         shop_name: shopName,
         user_id: user?.user_id
       }
-      console.log('nes form Data',newFormData)
+
       const response = await createQuoteRequest(newFormData);
       if (response?.status === 200) {
         console.log("API response:", response);

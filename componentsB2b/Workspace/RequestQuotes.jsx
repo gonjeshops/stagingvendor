@@ -2,12 +2,11 @@
 import { FaClock, FaShoppingCart, FaFax, FaFileExport, FaFolder, FaStoreAlt } from "react-icons/fa"
 import SearchBar from "../Navigation/SearchBar"
 import Link from "next/link"
-import { useEffect, useState } from "react"
-import Pagination from "../Pagination"
 import { useRouter } from "next/router"
 import RequestQuoteForm from "../forms/RequestQuoteForm"
 import DashboardHeading from './DashboardHeading'
 import { useGlobalState } from "@/context/GlobalStateContext"
+import { useState } from "react"
 
 
 const RequestQuotes = ({quotes}) => {
@@ -25,12 +24,12 @@ return (
     <RequestQuoteForm  closeModal={()=>setShow('')} isModalOpen={show} />
 
 
-    <div className="space-y-10">
-        <div className="space-y-6 ">
+    <div className="">
+        <div className=" border-b border-light300 mb-4 pb-4 ">
           
             <DashboardHeading>Request Quotes</DashboardHeading>
 
-            <div className="grid  sm:flex justify-between items-center">
+            {/* <div className="grid  sm:flex justify-between items-center">
                 <div className="">
                     <div className="flex gap-4 items-center  font-medium">
 
@@ -46,28 +45,15 @@ return (
                     <div className="search">
                         <SearchBar/>
                     </div>
-                    {/* <div className="p-3">
-                        <FaFax size={16} color={'green'}/>
-                    </div> */}
                 </div>
-            </div>
+            </div> */}
         </div>
 
         {/* cards */}
         <div className=" pb-2 grid md:grid-cols-2 gap-6  ">
             {
                 // fetched data
-
-                quotes?.map((item, i)=>{
-                    // const [qty, setQty] = useState(0)
-                    // const [subtotal, setSubtotal] = useState(0)
-                    // useEffect(() => {
-                    //     const {quoteProducts, calculatedSubtotal, quoteQuantity} = quoteCartcalculator(item)
-                    //     setQty(quoteQuantity)
-                    //     setSubtotal(calculatedSubtotal)
-
-                    // }, [quotes])
-                    
+                quotes?.map((item, i)=>{                    
                     return (
                         <div key={i} 
                         className="w-full border hover:shadow-lg duration-300 rounded-md p-8 space-y-8">
@@ -89,13 +75,11 @@ return (
                             <div className="flex items-center justify-between">
                                 <div className="flex gap-4 items-center">
                                         <div className="flex gap-2 items-center">
-                                            <FaShoppingCart/>
-                                            {/* <p>Total: ${subtotal}</p> */}
+                                            <FaShoppingCart/>            
                                             <p>Total: ${item?.subtotal}</p>
                                         </div>
                                         <div className="flex gap-2 items-center">
                                             <FaFolder/>
-                                            {/* <p>{qty} </p> */}
                                             <p>{item?.quantity} </p>
                                         </div>
                                 </div>

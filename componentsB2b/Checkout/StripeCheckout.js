@@ -10,7 +10,8 @@ const StripeCheckout = () => {
   const items = [
     {
       price: checkoutData?.subtotal || 0, 
-      quantity: checkoutData?.quantity,
+      quantity: 1,
+      // quantity: checkoutData?.quantity,
       name: checkoutData?.quote_name,
     },
   ];

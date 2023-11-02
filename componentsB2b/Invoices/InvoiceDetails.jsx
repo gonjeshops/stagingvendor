@@ -124,7 +124,8 @@ const InvoiceDetails = ({invoiceId, data, }) => {
 
         <div className='py-16'>
             <button onClick={()=>{
-                setCheckoutData(data?.quote)
+                setCheckoutData(data?.quote
+                    )
                 router.push('/vendorb2b/checkout')
             }}
              className='hover-blue rounded px-6 py-2'>Checkout</button >

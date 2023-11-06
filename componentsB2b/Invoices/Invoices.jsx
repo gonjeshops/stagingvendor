@@ -1,12 +1,14 @@
-import {useState} from 'react'
+import {useRef, useState} from 'react'
 import DashboardHeading from '../Workspace/DashboardHeading'
 import { FaAngleDown, FaFileExport } from 'react-icons/fa';
 import InvoiceTable from './InvoiceTable';
 import AddOrderForm from '../forms/AddOrderForm';
 import InvoiceTable2 from './InvoiceTbale2';
+import generatePDF from 'react-to-pdf';
 
 const Invoices = ({invoices, invoicess}) => {
     const {category , tableHeader, invoiceData, } = invoices;
+    const downloadInvoiceRef = useRef()
 
     const [show, setShow] = useState('')
 
@@ -48,18 +50,19 @@ const Invoices = ({invoices, invoicess}) => {
             </div>
 
             <div className="flex gap-12 items-center">
-                <button className="flex items-center gap-4">
+                <button className="flex items-center gap-2 border border-gray-500 p-2">
                     <FaFileExport/>
-                    <p>Export</p>
+                    <div onClick={() => generatePDF(downloadInvoiceRef, {filename: `${invoicess[0]?.user_name}'s invoice.pdf`})} className="">Export invoice</div>
+                        
                 </button>
-                <button onClick={()=>setShow('dashboard')} className="flex hover-blue py-3 px-8 rounded-sm items-center gap-4">
+                {/* <button onClick={()=>setShow('dashboard')} className="flex hover-blue py-3 px-8 rounded-sm items-center gap-4">
                     <p>{'+'}</p>
                     <p>Add Order</p>
-                </button>
+                </button> */}
             </div>
         </div>
 
-        <div className="orders bg-light100 pl-4">
+        <div ref={downloadInvoiceRef} className="orders bg-light100 pl-4">
             <InvoiceTable2 data={invoiceData} invoicess={invoicess} tableHeader={tableHeader}/>
             {/* <InvoiceTable data={invoiceData} invoicess={invoicess} tableHeader={tableHeader}/> */}
         </div>

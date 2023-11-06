@@ -168,7 +168,8 @@ export const createQuoteRequest = (values, ) => {
         "subtotal": values.subtotal,
         "quantity": values.quantity,
         "shop_name": values.shop_name,
-        "user_id": values.user_id
+        "user_name": values.user_name,
+        "user_id": values.user_id,
       },
     })
       .then((response) => {
@@ -228,34 +229,22 @@ export const fetchVendorInvoice = (page, limit) => {
 
 
 // ======= // getNotification?limit=15 =====
-export const fetchNotifications = (page, limit) => {
+export const fetchNotifications = (limit, page) => {
   return axios({
     method: "get",
     headers: authHeader(),
-    url: url + `my/notifications?page=${page}&limit=${limit}`,
+    url: url + `my/notifications?limit=${limit}&page=${page}`,
     // url: url + `getNotification?limit=${limit}`,
   })
     .then((response) => {
-      console.log('notification =====', response)
+      console.log('VENDOR notification =====', response, 'params===', limit, page)
       return response})
     .catch((error) => {
-      console.log("Error in fetchNotifications api", error,  limit);
+      console.log("VENDOR Error in fetchNotifications api", error,  'params==', limit, page);
     });
 };
-export const fetchNotificationDropdown = (limit) => {
-  return axios({
-    method: "get",
-    headers: authHeader(),
-    url: url + `my/notifications?limit=${limit}`,
-    // url: url + `getNotification?limit=${limit}`,
-  })
-    .then((response) => {
-      console.log('notification =====', response)
-      return response})
-    .catch((error) => {
-      console.log("Error in fetchNotifications api", error,  limit);
-    });
-};
+
+
 
 // Add products
 export const  createProduct = (values) => {

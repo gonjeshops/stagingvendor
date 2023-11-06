@@ -7,10 +7,9 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
-// console.log('STIPE SESSION===========')
+console.log('STIPE SESSION===========', req.body)
   try {
     const {items, checkoutData, user} = req.body;
-    console.log('STRIPE===  ', items, checkoutData, user)
 
     if (!Array.isArray(items)) {
       return res.status(400).json({ error: 'Invalid request body' });
@@ -44,9 +43,9 @@ export default async function handler(req, res) {
         quote_id: checkoutData?.quote_id || 0,
         quote_number: checkoutData?.quote_number || 0,
         quote_name: checkoutData?.quote_name || 'no name',
-        user_email: user?.user_email
+        user_email: user?.user_email || 'noemail@email.com'
       },  
-      customer_email: user?.user_email
+      customer_email: user?.user_email || 'noemail@email.com'
     };
 
     const session = await stripe.checkout.sessions.create(params);

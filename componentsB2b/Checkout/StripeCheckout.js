@@ -14,10 +14,7 @@ const StripeCheckout = () => {
       // quantity: checkoutData?.quantity,
       name: checkoutData?.quote_name,
     },
-  ];
-
-  
-  
+  ];  
 
   const [stripeError, setStripeError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -79,7 +76,7 @@ console.log('STRIPE DATA==', data)
       }`}
     >
        <FaCreditCard  /> 
-       <p> {loading ? <BtnSpinner/> : 'Stripe Pay'} </p>
+       <div> {loading ? <BtnSpinner/> : 'Stripe Pay'} </div>
     </button>
   </div>
   );

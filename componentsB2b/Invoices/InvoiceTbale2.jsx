@@ -72,6 +72,7 @@ const InvoiceTable2 = ({data, invoicess, tableHeader}) => {
         <tbody>
           {
             invoicess?.map((item, idx) => {
+              console.log('ITEMS', item)
              return ( <tr key={item?.id} className='border-b   border-light300 bg-hover300  duration-300' 
             onClick={()=>router.push(`/vendorb2b/workspace/invoices/${item?.id}`)} 
             >
@@ -106,9 +107,9 @@ const InvoiceTable2 = ({data, invoicess, tableHeader}) => {
               </td>
 
               <td className="px-2 cursor-pointer">
-                <p className="text-">{JSON.parse(item?.cart_items) && JSON.parse(item?.cart_items)[0]?.userName}</p>
+                <p className="text-">{item?.user_name}</p>
+                {/* <p className="text-">{JSON.parse(item?.cart_items) && JSON.parse(item?.cart_items)[0]?.userName}</p> */}
               </td>
-
               <td className="px-2  " onClick={stopPropagation}>
                 <div className="flex gap-2 items-center flex-wrap">
                     {JSON.parse(item?.cart_items)?.map((product, idx) => (
@@ -201,3 +202,5 @@ const ProductModal = ({ product, closeModal, isOpen }) => {
       </div>
     );
   };
+
+  "[{\"quantity\":4,\"price\":120,\"id\":107,\"name\":\"Armani Silver Purse\",\"inStock\":1,\"shopId\":3,\"unit\":\"kg\",\"subtotal\":360,\"product\":{\"id\":107,\"name\":\"Armani Silver Purse\",\"slug\":\"armani-silver-purse\",\"description\":\"The name Giorgio Armani has become synonymous with clean lines and Italian style. One of the most recognisable fashion houses in the world, the label has dressed some of the world\\u2019s most beautiful women.\",\"category\":null,\"type_id\":4,\"price\":120,\"shop_id\":3,\"shop_name\":\"My Shop\",\"sale_price\":null,\"sku\":\"2006\",\"quantity\":49,\"in_stock\":1,\"is_taxable\":0,\"shipping_class_id\":null,\"status\":\"publish\",\"product_type\":\"simple\",\"unit\":\"kg\",\"height\":null,\"width\":null,\"length\":null,\"product_image\":null,\"image\":{\"id\":\"108\",\"original\":\"https:\\/\\/pickbazarlaravel.s3.ap-southeast-1.amazonaws.com\\/108\\/91PirQjxGjL._UL1500_.jpg\",\"thumbnail\":\"https:\\/\\/pickbazarlaravel.s3.ap-southeast-1.amazonaws.com\\/108\\/conversions\\/91PirQjxGjL._UL1500_-thumbnail.jpg\"},\"gallery\":[],\"deleted_at\":null,\"created_at\":\"2021-03-09T17:40:49.000000Z\",\"updated_at\":\"2022-01-17T09:10:37.000000Z\",\"max_price\":0,\"min_price\":0,\"nutritional_info\":\"Lorem Ipsum is simply dummy text of the printing and typesetting industry.\",\"top_deals\":0,\"discount\":0},\"userName\":\"undefined undefined\",\"shopName\":\"My Shop\"}]"

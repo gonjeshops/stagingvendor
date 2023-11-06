@@ -52,7 +52,8 @@ const QuoteForm = ({ isOpen, closeModal, shopName }) => {
         quantity: totalQuantities,
         cart_items: cartItems,
         shop_name: shopName,
-        user_id: user?.user_id
+        user_id: user?.user_id,
+        user_name: `${user?.user_name} ${user?.user_lastname}`,
       }
 
       const response = await createQuoteRequest(newFormData);
@@ -104,7 +105,7 @@ const QuoteForm = ({ isOpen, closeModal, shopName }) => {
               value={quoteName}
               name='quoteName'
               onChange={(e)=>setQuoteName(e.target.value)}
-              className="bg-light100 w-full p-2 rounded border text-zinc-600 focus:outline-none focus:ring focus:border-blue-300"
+              className="bg-light100  w-full p-2 rounded border focus:outline-none focus:ring focus:border-blue-300"
             />
             {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
           </div>

@@ -72,7 +72,8 @@ const GetQuoteProductCard = ({ item, toggleCartItemQuanitity, onRemove}) => {
 
           <div className="total">
             <h5 className="text font-medium mb-2">Subtotal</h5>
-            <h3 className="text-xl sm:text-2xl font-semibold">${totalprice}</h3>
+            <h3 className="text-xl sm:text-2xl font-semibold">${item?.subtotal}</h3>
+            {/* <h3 className="text-xl sm:text-2xl font-semibold">${totalprice}</h3> */}
           </div>
 
           <div className="shrink-0">

@@ -1,57 +1,60 @@
-import React, { useState, useEffect, useRef } from 'react';
+import Workspace from "@/componentsB2b/Workspace/Workspace";
+import Notifications from "@/componentsB2b/Notifications/Notifications";
+import { fetchNotifications } from "@/componentsB2b/Api2";
+import { PageLoading } from "@/componentsB2b/Loader/Spinner/PageLoading";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import Pagination from "@/componentsB2b/Pagination";
 
-import Workspace from '@/componentsB2b/Workspace/Workspace';
-import DashboardHeading from '@/componentsB2b/Workspace/DashboardHeading';
-import { PageLoading } from '@/componentsB2b/Loader/Spinner/PageLoading';
-import { fetchNotifications } from '@/componentsB2b/Api2';
-import NotificationCard from '@/componentsB2b/card/NotificationCard';
-import Pagination from '@/componentsB2b/Pagination';
-import { useRouter } from 'next/router';
 
-const NotificationPage = ({  }) => {
+const NotificationsPage = () => {
+
   const router = useRouter();
-  const limit = 14;
+  const limit = 10;
   const page = parseInt(router.query.page) || 1;
 
   const [notifications, setNotifications] = useState([]);
-  const [totalPages, setTotalPages] = useState(0);
   const [error, setError] = useState('');
+  const [totalPages, setTotalPages] = useState(0);
   const [pageLoading, setPageLoading] = useState(true);
   const [loadingTimeout, setLoadingTimeout] = useState(false);
 
+
   const handlePageChange = (newPage) => {
-    router.push(`/vendorb2b/notifications?page=${newPage}`);
+    router.push(`/notifications?page=${newPage}`);
   };
 
   useEffect(() => {
+    
     const timeoutId = setTimeout(() => {
       setLoadingTimeout(true);
     }, 8000);
- 
+    console.log('page==== ',page)
 
     const fetchData = async () => {
       try {
-        const response = await fetchNotifications(page, limit)
-        
-        if (response?.status === 200) {
-            setNotifications(response?.data?.data?.notifications);
-            setTotalPages(response?.data?.data?.total_pages);
+        const response = await fetchNotifications(limit, page);
 
-            console.log('NOTIFICATION RESPONSE==== ',response)
+        if (response.status === 200) {
+          setNotifications(response?.data?.data?.notifications);
+          setTotalPages(response?.data?.data?.total_pages);
+      console.log('NOTIFICATIONS RESPONSE==== ',response)
+
         } else {
-            console.log('NOTIFICATION ERROR RESPONSE==== ',response)
-            setError('Something went wrong. Try again');
+          setError('Something went wrong. Try again');
         }
-      } catch (err) {
-        console.log('NOTIFICATION CATCH ERROR RESPONSE==== ', err)
+        setPageLoading(false);
+        clearTimeout(timeoutId); 
+      } catch (error) {
         setError('Server is not available. Refer to developer');
-      } finally {
         setPageLoading(false);
         clearTimeout(timeoutId);
+        console.error('Catch error=', error);
       }
     };
 
     fetchData();
+
     return () => clearTimeout(timeoutId);
   }, [page]);
 
@@ -75,8 +78,10 @@ const NotificationPage = ({  }) => {
   if (pageLoading) {
     return (
       <Workspace>
+          { console.log('loading==', pageLoading)}
+
         <div className='absolute inset-0 flex items-center justify-center'>
-        <PageLoading/>
+          <PageLoading/>
         </div>
       </Workspace>
     );
@@ -85,35 +90,28 @@ const NotificationPage = ({  }) => {
   if (error) {
     return (
       <Workspace>
+          { console.log('error==', error)}
+
         <div className='absolute inset-0 flex items-center justify-center'>Error: {error}</div>
       </Workspace>
     );
   }
 
- 
+ return (
+  <Workspace>
+  <div className="space-y-12 h-full">
+    <div className="pb-28">
+      <Notifications notificationList={notifications} />
 
-  return (
-    <Workspace>
-       <div className="space-y-12 h-full">
-      <div  className=" ">
-        <DashboardHeading>
-        Notifications
-        </DashboardHeading>
-      {error && <p className='absolute inset-0 flex items-center justify-center'>Error: {error.message}</p>}
-      <ul className='space-y-3'>
-        {notifications?.map((notification, index) => (
-          <NotificationCard key={notification?.id} item={notification}/>
-        ))}
-      </ul>
     </div>
+
     <div className="absolute bottom-0 bg-light100 pb-4  left-0 w-full">
-          <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />
-        </div>
-      </div>
+      <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />
+    </div>
+  </div>
+</Workspace>
+  )    
+}
 
-    </Workspace>
-    
-  );
-};
+export default NotificationsPage;
 
-export default NotificationPage;

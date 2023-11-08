@@ -85,6 +85,7 @@ export function DataTable<TData, TValue>({
                     </TableHead>
                   );
                 })}
+                <TableHead>Action</TableHead>
               </TableRow>
             ))}
           </TableHeader>

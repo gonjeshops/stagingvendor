@@ -96,7 +96,7 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                           return innerTab.url !== "/timesheet" && isVendor ? (
                             <li key={`key_${innerTab.name}`}>
                               <Link href={innerTab.url}>
-                                <a
+                                <div
                                   className={`nav-link  ${
                                     route.asPath.includes(innerTab.url)
                                       ? "active"
@@ -104,7 +104,7 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                                   }`}
                                 >
                                   {innerTab.name}
-                                </a>
+                                </div>
                               </Link>
                             </li>
                           ) : route.asPath.includes(innerTab.url) ||
@@ -128,7 +128,7 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                 </>
               ) : (
                 <Link href={Tab.url}>
-                  <a
+                  <div
                     className={`d-flex nav-link ${
                       route.asPath.includes(Tab.url) ? "active" : "text-whitee"
                     }`}
@@ -138,7 +138,7 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                       <Image src={Tab.image} alt="" height={20} width={20} />
                     </div>
                     <span className="ms-2">{Tab.name}</span>
-                  </a>
+                  </div>
                 </Link>
               )}
             </li>

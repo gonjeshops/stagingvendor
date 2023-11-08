@@ -17,6 +17,25 @@ export const SideTabs = {
       url: "/inventory",
       image: Inventory,
     },
+    finance: {
+      name: "Finance",
+      image: HRMSvg,
+      isCollapsable: true,
+      innerTabs: [
+        {
+          name: "Accounting",
+          url: "/accounting",
+        },
+        {
+          name: "Invoicing",
+          url: "/invoicing",
+        },
+        {
+          name: "Expenses",
+          url: "/expenses",
+        }
+      ],
+    },
     hrm: {
       name: "HRM",
       image: HRMSvg,

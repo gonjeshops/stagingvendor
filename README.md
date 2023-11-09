@@ -1,5 +1,7 @@
 # Gonje Frontend app
 
+## Vendor Module
+
 ## Introduction
 
 Gonje is a Multi-vendor E-commerce application that specializes in the delivery of African/Continental groceries.

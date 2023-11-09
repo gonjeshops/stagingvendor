@@ -4,7 +4,7 @@ import {  FaStar, FaHeart, FaImage } from "react-icons/fa"
 import { truncateText } from "@/lib/truncateText"
 import { useRouter } from "next/router"
 
-const ProductCard2 = ({product, shopName, userId, shopId, targetId}) => {
+const ProductCard2 = ({product,  userId, shopId, }) => {
 const {description, image, gallery, name, discount, price, slug, shop_id, id, } = product
 const router = useRouter()
 const scrollToTop = () => {

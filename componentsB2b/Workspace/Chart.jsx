@@ -24,7 +24,8 @@ const ExampleChart = ({type, heading, description }) => {
           "#2a71d0"
         ],
         borderColor: "black",
-        borderWidth: 0
+        borderWidth: 0,
+       
       }
     ]
   });

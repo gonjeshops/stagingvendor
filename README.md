@@ -1,8 +1,5 @@
-# gonje-staging
-Gonje Frontend app
-<<<<<<< HEAD
-# gonje-frontend
-=======
+# Gonje Frontend app
+
 ## Introduction
 
 Gonje is a Multi-vendor E-commerce application that specializes in the delivery of African/Continental groceries.

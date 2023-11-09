@@ -24,60 +24,20 @@ const ExampleChart = ({type, heading, description }) => {
           "#2a71d0"
         ],
         borderColor: "black",
-        borderWidth: 2
+        borderWidth: 0
       }
     ]
   });
 
 
-  const datssa = {
-    labels: ['Red', 'Orange', 'Blue'],
-    // datasets is an array of objects where each object represents a set of data to display corresponding to the labels above. for brevity, we'll keep it at one object
-    datasets: [
-        {
-          label: 'Popularity of colours',
-          data: [55, 23, 96],
-          // you can set indiviual colors for each bar
-          backgroundColor: [
-            'rgba(255, 255, 255, 0.6)',
-            'rgba(255, 255, 255, 0.6)',
-            'rgba(255, 255, 255, 0.6)',
-          ],
-          borderWidth: 1,
-        }
-    ]
-}
-
-
-  const datsa = {
-    labels: ['January', 'February', 'March', 'April', 'May'],
-    datasets: [
-      {
-        label: 'Monthly Sales',
-        data: [65, 59, 80, 81, 56],
-        backgroundColor: 'rgba(54, 162, 235, 0.6)',
-      },
-    ],
-  };
-
-  const options = {
-    scales: {
-      x: {
-        grid: {
-          display: false,
-        },
-      },
-      y: {
-        beginAtZero: true,
-      },
-    },
-  };
-  
+ 
 
   return (
-    <div>
-      <h2 className='text-lg font-medium'>{heading}</h2>
-      <p>{description}</p>
+    <div className='flex flex-col h-full justify-between gap-8 '>
+      <div className="">
+        <h2 className='text-lg font-medium'>{heading}</h2>
+        <p>{description}</p>
+      </div>
 
       {type==='Pie' && <Pie
         data={chartData}

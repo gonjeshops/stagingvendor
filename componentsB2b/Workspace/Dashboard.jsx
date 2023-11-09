@@ -14,7 +14,7 @@ const Dashboard = () => {
         </div>
 
                 
-                <div className="px-4 rounded-xl bg-light200 w-full grid grid-cols-2 md:grid-cols-3">
+                <div className=" rounded-xl w-full grid gap-12 grid-cols-2 md:grid-cols-3">
                     <Card data={workspaceData.quotes} 
                         iconColor={`text-blue-600`}
                         titleColor={`text-blue-600`}
@@ -38,12 +38,14 @@ const Dashboard = () => {
                 </div>
                 
 
-                <div className="px-4 py-8 grid sm:grid-cols-2 gap-6 md:gap-12">
+                <div className="px-4 py-16 grid sm:grid-cols-2 gap-12">
+
                     <Chart type={'Pie'} heading={`Email Campaign Report`} description='Paid and verified for each piece of content' />
+
                     <Chart type={'Bar'} heading={`Marketing Campaign Report`} description='According to the sales and data' />
                 </div>
 
-                <div className="py-8 px-4 bg-light200 grid sm:grid-cols-2 gap-6 md:gap-12">
+                <div className="py-16 px-4 bg-light200 grid sm:grid-cols-2 gap-12 rounded-lg overflow-hidden">
                     <Chart type={'Line'} heading={`Sales Trends`} description='Updated inventroy & the sales report.' />
                     <Chart type={'Doughnut'} heading={`Call Campaign Report`} description='All Call Campaign Succeeded' />
                 </div>

@@ -1,4 +1,6 @@
+import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
+import Link from "next/link";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -9,45 +11,65 @@ export type InvoicingType = {
   purchaseName: string;
   amount: number;
   dueDate: string;
-  status: 'Paid'|'Sent'|'Overdue';
+  status: "Paid" | "Sent" | "Overdue";
   PaidOn: string;
   paymentMethod: string;
 };
 export const columns: ColumnDef<InvoicingType>[] = [
   {
-    accessorKey: 'transactionId',
-    header: 'Transaction ID',
+    accessorKey: "transactionId",
+    header: "Transaction ID",
   },
   {
-    accessorKey: 'invoiceId',
-    header: 'Invoice ID',
+    accessorKey: "invoiceId",
+    header: "Invoice ID",
   },
   {
-    accessorKey: 'orderId',
-    header: 'Order ID',
+    accessorKey: "orderId",
+    header: "Order ID",
   },
   {
-    accessorKey: 'purchaseName',
-    header: 'Purchase Name',
+    accessorKey: "purchaseName",
+    header: "Purchase Name",
   },
   {
-    accessorKey: 'amount',
-    header: 'Amount',
+    accessorKey: "amount",
+    header: "Amount",
   },
   {
-    accessorKey: 'dueDate',
-    header: 'Due Date',
+    accessorKey: "dueDate",
+    header: "Due Date",
   },
   {
-    accessorKey: 'status',
-    header: 'Status',
+    accessorKey: "status",
+    header: "Status",
   },
   {
-    accessorKey: 'PaidOn',
-    header: 'Paid On',
+    accessorKey: "PaidOn",
+    header: "Paid On",
   },
   {
-    accessorKey: 'paymentMethod',
-    header: 'Payment Method',
+    accessorKey: "paymentMethod",
+    header: "Payment Method",
+  },
+  {
+    id: "actions",
+    header: "Actions",
+    cell: ({ row }) => {
+      const {transactionId} = row.original;
+      return (
+        <div className="flex gap-x-4">
+          <Button className="p-3  bg-gonje-green text-white capitalize" asChild>
+            <Link href={`/invoicing/${transactionId}`}>View</Link>
+          </Button>
+          <Button className="p-3 bg-gonje text-white capitalize">
+            edit
+          </Button>
+          <Button variant="destructive" className="p-3 capitalize">
+            delete
+          </Button>
+        </div>
+      );
+    },
   },
 ];

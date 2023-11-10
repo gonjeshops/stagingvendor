@@ -39,5 +39,5 @@ export const columns: ColumnDef<AccountingType>[] = [
   {
     accessorKey: "paymentMethod",
     header: "Payment Method",
-  },
+  }
 ];

@@ -70,9 +70,9 @@ export function DataTable<TData, TValue>({
 
       <div className="rounded-md border">
         <Table className="border-spacing-y-8 border-separate bg-clip-padding bg-white px-3">
-          <TableHeader className=" bg-gonje font-semibold">
+          <TableHeader className=" bg-gonje font-semibold rounded-md text-black">
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} className="">
+              <TableRow key={headerGroup.id} className="rounded-md">
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead key={header.id}>
@@ -85,7 +85,6 @@ export function DataTable<TData, TValue>({
                     </TableHead>
                   );
                 })}
-                <TableHead>Action</TableHead>
               </TableRow>
             ))}
           </TableHeader>
@@ -95,9 +94,10 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  className="border-b border-black"
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell key={cell.id} className="font-medium">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

@@ -56,14 +56,14 @@ export const columns: ColumnDef<InvoicingType>[] = [
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      const {transactionId} = row.original;
+      const { transactionId,invoiceId } = row.original;
       return (
         <div className="flex gap-x-4">
           <Button className="p-3  bg-gonje-green text-white capitalize" asChild>
             <Link href={`/invoicing/${transactionId}`}>View</Link>
           </Button>
           <Button className="p-3 bg-gonje text-white capitalize">
-            edit
+            <Link href={`/invoicing/edit/${invoiceId}`}>edit</Link>
           </Button>
           <Button variant="destructive" className="p-3 capitalize">
             delete

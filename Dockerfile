@@ -14,9 +14,6 @@ RUN npm install
 # Copy all files from the current directory to the working directory in the container
 COPY . .
 
-# Build the Next.js application to generate necessary files including BUILD_ID
-RUN npm run build
-
 # Expose port 3004 (the port your application will run on)
 EXPOSE 3004
 

@@ -26,44 +26,44 @@ pipeline {
             }
         }
 
-        stage('Build App') {
-            steps {
-                script {
-                    // Change directory to your Node.js application's directory
-                    dir('./') {
-                        // Install dependencies and build the application
-                        sh 'npm install'
+        // stage('Build App') {
+        //     steps {
+        //         script {
+        //             // Change directory to your Node.js application's directory
+        //             dir('./') {
+        //                 // Install dependencies and build the application
+        //                 sh 'npm install'
                      
-                    }
-                }
-            }
-        }
+        //             }
+        //         }
+        //     }
+        // }
 
-        stage('Build Image') {
-            steps {
-                script {
-                    docker_image = docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
-                }
-            }
-        }
+        // stage('Build Image') {
+        //     steps {
+        //         script {
+        //             docker_image = docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
+        //         }
+        //     }
+        // }
 
-        stage('Push Image') {
-            steps {
-                script {
-                    docker.withRegistry('',REGISTRY_CREDS){
-                        docker_image.push("$BUILD_NUMBER")
-                        docker_image.push('latest')
-                    }
-                }
-            }
-        }
+        // stage('Push Image') {
+        //     steps {
+        //         script {
+        //             docker.withRegistry('',REGISTRY_CREDS){
+        //                 docker_image.push("$BUILD_NUMBER")
+        //                 docker_image.push('latest')
+        //             }
+        //         }
+        //     }
+        // }
 
-        stage('Remove Images'){
-            steps{
-                sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
-                sh "docker rmi ${IMAGE_NAME}:latest"
-            }
-        }
+        // stage('Remove Images'){
+        //     steps{
+        //         sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
+        //         sh "docker rmi ${IMAGE_NAME}:latest"
+        //     }
+        // }
 
     }
 }

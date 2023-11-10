@@ -33,7 +33,7 @@ pipeline {
                     dir('./') {
                         // Install dependencies and build the application
                         sh 'npm install'
-                        sh 'npm run build'  // or any build command you use in your project
+                     
                     }
                 }
             }

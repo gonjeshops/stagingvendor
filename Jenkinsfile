@@ -9,6 +9,10 @@ pipeline {
         REGISTRY_CREDS = 'dockerhub'
     }
 
+    tools {
+        nodejs "nodejs" //name in "" should be similar to name used for installer in the global tool configuration.
+    }  
+
     stages {
         stage('Clean up workspace') {
             steps {

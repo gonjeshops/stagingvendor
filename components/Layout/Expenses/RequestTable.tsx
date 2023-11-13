@@ -21,15 +21,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 
-interface DataTableProps<TData, TValue> {
+interface RequestTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
+export function RequestTable<TData, TValue>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: RequestTableProps<TData, TValue>) {
   //state for table filtering
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const table = useReactTable({
@@ -42,25 +42,24 @@ export function DataTable<TData, TValue>({
       columnFilters,
     },
   });
-
   return (
     <section>
-      <section className="flex justify-between py-1 px-4 items-center bg-white">
+      <section className="flex justify-between py-1 px-4 items-center bg-white my-12">
         <div>
-          <h3 className="text-xl font-semibold">Accounting</h3>
+          <h3 className="text-xl font-semibold capitalize">Request for quotes</h3>
         </div>
         <div className="flex items-center py-4">
           <Input
-          //@ts-ignore
-            placeholder="Filter table"
-          //@ts-ignore
+            //@ts-ignore
+            placeholder="Filter Product Type"
+            //@ts-ignore
             value={
-              (table.getColumn("purchaseName")?.getFilterValue() as string) ??
+              (table.getColumn("productType")?.getFilterValue() as string) ??
               ""
             }
             onChange={(event) =>
               table
-                .getColumn("purchaseName")
+                .getColumn("productType")
                 ?.setFilterValue(event.target.value)
             }
             className="w-[300px] py-4"
@@ -88,7 +87,7 @@ export function DataTable<TData, TValue>({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody>
+          <TableBody className="divide-y-2 divide-gray-400">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow

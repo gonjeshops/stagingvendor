@@ -17,6 +17,11 @@ export const SideTabs = {
       url: "/inventory",
       image: Inventory,
     },
+    sales: {
+      name: "Sales",
+      url: "/sales",
+      image: Shipping,
+    },
     finance: {
       name: "Finance",
       image: HRMSvg,

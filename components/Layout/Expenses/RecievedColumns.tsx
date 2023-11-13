@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
+import { AcceptQuote, DeleteQuote } from "./ExpensesModals";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -15,7 +16,7 @@ export type InvoicingType = {
   PaidOn: string;
   paymentMethod: string;
 };
-export const columns: ColumnDef<InvoicingType>[] = [
+export const ReceivedColumns: ColumnDef<InvoicingType>[] = [
   {
     accessorKey: "transactionId",
     header: "Transaction ID",
@@ -56,18 +57,14 @@ export const columns: ColumnDef<InvoicingType>[] = [
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      const { transactionId,invoiceId } = row.original;
+      const { transactionId, invoiceId } = row.original;
       return (
         <div className="flex gap-x-4">
-          <Button className="p-3  bg-gonje-green text-white capitalize" asChild>
+          {/* <Button className="p-3  bg-gonje-green text-white capitalize" asChild>
             <Link href={`/invoicing/${transactionId}`}>View</Link>
-          </Button>
-          <Button className="p-3 bg-gonje text-white capitalize">
-            <Link href={`/invoicing/edit/${invoiceId}`}>edit</Link>
-          </Button>
-          <Button variant="destructive" className="p-3 capitalize">
-            delete
-          </Button>
+          </Button> */}
+          <AcceptQuote />
+          <DeleteQuote />
         </div>
       );
     },

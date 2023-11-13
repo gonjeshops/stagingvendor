@@ -19,26 +19,10 @@ const Dashboard = ({stats}) => {
            
         </div>
 
-        {/* order_count
-: 
-3
-quote_request_count
-: 
-9
-shop_count
-: 
-0
-transaction_count
-: 
-11
-wishlist_count
-: 
-0 */}
-
                 
-                <div className=" rounded-xl w-full grid gap-12 grid-cols-2 md:grid-cols-3">
+                <div className=" rounded-xl w-full grid gap-2 sm:gap-12 sm:grid-cols-2 md:grid-cols-3">
                     {/* quote stats */}
-                    <div className="grid  gap-3 rounded-lg bg-light200 p-8">
+                    <div className="grid  gap-3 rounded-lg bg-light200 p-4 sm:p-8">
                         <Link href={'/vendorb2b/workspace/request-quotes'} className='flex gap-2 justify-center items-center text-xl font-semibold text-blue-hover'>
                             <FaFileAlt />
                             <div className="">Quote Requets</div>
@@ -72,7 +56,7 @@ wishlist_count
                     </div>
 
                     {/* invoices stats */}
-                    <div className="grid  gap-3 rounded-lg bg-light200 p-8">
+                    <div className="grid  gap-3 rounded-lg bg-light200 p-4 sm:p-8">
                         <Link href={'/vendorb2b/workspace/invoices'} className='flex gap-2 justify-center items-center text-xl font-semibold text-blue-hover'>
                             <FaFileAlt  />
                             <div className="">Invoice</div>
@@ -93,8 +77,8 @@ wishlist_count
                         </div>
                     </div>
 
-                    {/* invoices stats */}
-                    <div className="grid  gap-3 rounded-lg bg-light200 p-8">
+                    {/* order stats */}
+                    <div className="grid  gap-3 rounded-lg bg-light200 p-4 sm:p-8">
                         <Link href={'/vendorb2b/workspace/orders'} className='flex gap-2 justify-center items-center text-xl font-semibold text-blue-hover'>
                             <FaFileAlt  />
                             <div className="">Orders</div>
@@ -117,7 +101,7 @@ wishlist_count
                     </div>
 
                      {/* wishlist stats */}
-                     <div className="grid  gap-3 rounded-lg bg-light200 p-8">
+                     <div className="grid  gap-3 rounded-lg bg-light200 p-4 sm:p-8">
                         <div className='flex gap-2 justify-center items-center text-xl font-semibold text-blue-hover'>
                             <FaHeart/>
                             <div className="">Wishlist</div>
@@ -140,7 +124,7 @@ wishlist_count
                     </div>
 
                     {/* cart stats */}
-                    <div className="grid  gap-3 rounded-lg bg-light200 p-8">
+                    <div className="grid  gap-3 rounded-lg bg-light200 p-4 sm:p-8">
                         <Link href={'/venorb2b/workspace/quotes-request'} className='flex gap-2 justify-center items-center text-xl font-semibold text-blue-hover'>
                             <FaCartArrowDown/>
                             <div className="">Cart</div>
@@ -183,14 +167,14 @@ wishlist_count
                 </div>
                 
 
-                <div className="px-4 py-16 grid sm:grid-cols-2 gap-12">
+                <div className="px-4 py-16 grid sm:sm:grid-cols-2 gap-12">
 
                     <Chart type={'Pie'} heading={`Email Campaign Report`} description='Paid and verified for each piece of content' />
 
                     <Chart type={'Bar'} heading={`Marketing Campaign Report`} description='According to the sales and data' />
                 </div>
 
-                <div className="py-16 px-4 bg-light200 grid sm:grid-cols-2 gap-12 rounded-lg overflow-hidden">
+                <div className="py-16 px-4 bg-light200 grid sm:sm:grid-cols-2 gap-12 rounded-lg overflow-hidden">
                     <Chart type={'Line'} heading={`Sales Trends`} description='Updated inventroy & the sales report.' />
                     <Chart type={'Doughnut'} heading={`Call Campaign Report`} description='All Call Campaign Succeeded' />
                 </div>

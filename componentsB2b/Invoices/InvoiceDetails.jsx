@@ -1,12 +1,10 @@
-import React, { useRef, useState } from 'react'
+import  { useRef, useState } from 'react'
 import DashboardHeading from '../Workspace/DashboardHeading'
 import { FaPrint, FaSave } from 'react-icons/fa'
-import Link from 'next/link'
 import { truncateText } from '@/lib/truncateText'
 import { useGlobalState } from '@/context/GlobalStateContext'
 import { useRouter } from 'next/router'
 import generatePDF from 'react-to-pdf';
-import { InvoiceDownload } from '../DownloadPrint/InvoiceDownload'
 
 const InvoiceDetails = ({invoiceId, data, }) => {
     const downloadInvoiceRef = useRef()
@@ -43,11 +41,7 @@ const InvoiceDetails = ({invoiceId, data, }) => {
                         <div onClick={() => generatePDF(downloadInvoiceRef, {filename: `${data?.quote?.quote_name}.pdf`})} className="">Download invoice</div>
                         
                     </button>
-                    {/* <InvoiceDownload invoiceData={data?.quote}>Download Pdf</InvoiceDownload> */}
-                    {/* <div className="bg-light300  hover:bg-zinc-400 duration-500 border-zinc-400 border flex px-4 py-2 rounded-sm items-center gap-2">
-                        <FaPrint/>
-                        <div className="">Print</div>
-                    </div> */}
+              
                 </div>
             </div>
         </div> 
@@ -86,10 +80,7 @@ const InvoiceDetails = ({invoiceId, data, }) => {
 
                 {data?.quote?.cart_items?.map((item, i) => (
                 <div key={item?.id} 
-                // onClick={()=> {
-                //     setEachProduct(item)
-                //     setIsOpen(true)
-                // }}
+
                 className="py-6 px-4 border-b border-light300 grid grid-cols-8 gap-3 items-center text-[10px] sm:text-sm md:text-md md:overflow-hidden">
                 <div className="flex flex-col col-span-4 gap-3 sm:flex-row items-">
                     <p className='shrink-0 w-6'>{i+1}</p>

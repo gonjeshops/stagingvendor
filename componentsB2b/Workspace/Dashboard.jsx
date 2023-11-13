@@ -20,7 +20,7 @@ const Dashboard = ({stats}) => {
         </div>
 
                 
-                <div className=" rounded-xl w-full grid gap-2 sm:gap-12 sm:grid-cols-2 md:grid-cols-3">
+                <div className=" rounded-xl w-full grid  max-sm:gap-4 sm:gap-12 sm:grid-cols-2 md:grid-cols-3">
                     {/* quote stats */}
                     <div className="grid  gap-3 rounded-lg bg-light200 p-4 sm:p-8">
                         <Link href={'/vendorb2b/workspace/request-quotes'} className='flex gap-2 justify-center items-center text-xl font-semibold text-blue-hover'>

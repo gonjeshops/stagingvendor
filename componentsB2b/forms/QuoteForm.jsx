@@ -20,11 +20,10 @@ const QuoteForm = ({ isOpen, closeModal, shopName }) => {
     totalPrice,
     totalQuantities,clearCart,
     toggleCartItemQuanitity,
-    onRemove,} = useB2Bcart
+    onRemove, quoteName, setQuoteName,} = useB2Bcart
 
   const [success, setSuccess] = useState('')
   const [reqError, setReqError] = useState('')
-  const [quoteName, setQuoteName] = useState('');
   const [errors, setErrors] = useState({});
 
 

@@ -207,7 +207,7 @@ Link {
 }
 
 .text-blue{
-  @apply text-blue-600
+  @apply text-blue-400
 }
 
 .hover-blue{
@@ -215,7 +215,7 @@ Link {
 }
 
 .text-blue-hover {
-  @apply  hover:text-blue-600 duration-300
+  @apply  text-blue-400 hover:text-blue-600 duration-300
 }
 
 .bg-red{

@@ -244,8 +244,24 @@ export const fetchNotifications = (limit, page) => {
     });
 };
 
-// ======= COunts for dashboard =====
+// =======  dashboard stats =====
 export const fetchCounts = (type) => {
+
+if (type===`vendor/my/stats`) {
+  return axios({
+    method: "get",
+    headers: authHeader(),
+    url: url + `vendor/my/stats`,
+  })
+    .then((response) => {
+      console.log('VENDOR dashboard stats =====', response, 'type==', type)
+      return response})
+    .catch((error) => {
+      console.log("VENDOR Error in dashboard stats api", error,  'type==', type);
+    });
+}
+
+
 
   if (type===`vendor/quotes/count`) {
     return axios({
@@ -257,7 +273,7 @@ export const fetchCounts = (type) => {
         console.log('VENDOR quote counts =====', response, 'type==', type)
         return response})
       .catch((error) => {
-        console.log("VENDOR Error in fetchNotifications api", error,  'type==', type);
+        console.log("VENDOR Error in vendor/quotes/count api", error,  'type==', type);
       });
   }
 
@@ -355,7 +371,6 @@ export const fetchCounts = (type) => {
   
   
 };
-
 
 
 

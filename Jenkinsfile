@@ -26,18 +26,18 @@ pipeline {
             }
         }
 
-        // stage('Build App') {
-        //     steps {
-        //         script {
-        //             // Change directory to your Node.js application's directory
-        //             dir('./') {
-        //                 // Install dependencies and build the application
-        //                 sh 'npm install'
+        stage('Build App') {
+            steps {
+                script {
+                    // Change directory to your Node.js application's directory
+                    dir('./') {
+                        // Install dependencies and build the application
+                        sh 'npm install'
                      
-        //             }
-        //         }
-        //     }
-        // }
+                    }
+                }
+            }
+        }
 
         stage('Build Image') {
             steps {

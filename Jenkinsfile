@@ -10,7 +10,7 @@ pipeline {
     }
 
     tools {
-        nodejs "nodejs" // name in "" should be similar to the name used for installer in the global tool configuration.
+        nodejs "nodejs" // name in "" should be similar to the name used for installer in the global tool configuration
     }  
 
     stages {

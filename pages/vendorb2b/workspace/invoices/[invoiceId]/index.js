@@ -6,8 +6,6 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 
-
-
 const InvoiceDetailsPage = ({ invoiceId }) => {
 
   const router = useRouter();
@@ -15,6 +13,7 @@ const InvoiceDetailsPage = ({ invoiceId }) => {
     const [quoteData, setQuoteData] = useState(null);
     const [apiError, setApiError] = useState(null);
     const [loadingTimeout, setLoadingTimeout] = useState(false);
+    const [loading, setLoading] = useState(false);
     
   
     useEffect(() => {
@@ -25,6 +24,8 @@ const InvoiceDetailsPage = ({ invoiceId }) => {
   
       const fetchData = async () => {
         try {
+        setLoading(true)
+
           const response = await fetchQuoteDetails(invoiceId);
   
           if (response?.status === 200) {
@@ -39,6 +40,8 @@ const InvoiceDetailsPage = ({ invoiceId }) => {
           console.error("Catch error:", error);
           setApiError("Server is not available. Try again or consult a developer.");
           clearTimeout(timeoutId); // Clear the loading timeout
+        } finally {
+          setLoading(false)
         }
       };
   
@@ -58,7 +61,22 @@ const InvoiceDetailsPage = ({ invoiceId }) => {
           </Workspace>
         );
       }
-    
+      if (loadingTimeout) {
+        return (
+          <Workspace>
+                <div className='absolute inset-0 flex flex-col gap-4 items-center justify-center text-center'>
+                  { console.log('loadingTimeout==', loadingTimeout)}
+                    <p className="text-lg font-semibold">
+                    Server is not responding. Please choose an action:
+                    </p>
+                    <div className="flex items-center gap-4">
+                      <button className='hover-blue rounded py-2 px-4' onClick={() => router.back()}>Go Back</button>
+                      <button className='hover-blue rounded py-2 px-4' onClick={() => window.location.reload()}>Reload</button>
+                    </div>
+                </div>
+          </Workspace>
+        );
+      }
       if (apiError) {
         return (
           <Workspace>
@@ -89,12 +107,15 @@ const InvoiceDetailsPage = ({ invoiceId }) => {
         return <div className='inset-0 flex justify-center items-center'>Page not found</div>;
       }
 
+
+
   return (
-    <div className="-4">
+  
       <Workspace>
-          <InvoiceDetails invoiceId={invoiceId} fakeData={''} data={quoteData}/>
+        { !quoteData ? <div className='absolute inset-0 flex items-center justify-center'><PageLoading/></div>  :
+          <InvoiceDetails invoiceId={invoiceId} fakeData={''} data={quoteData}/>}
       </Workspace>
-    </div>
+
   );
 };
 

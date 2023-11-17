@@ -85,11 +85,11 @@ const InvoiceTable2 = ({data, invoices, tableHeader}) => {
                 <p className="text-">{item?.user_name}</p>
                 {/* <p className="text-">{JSON.parse(item?.cart_items) && JSON.parse(item?.cart_items)[0]?.userName}</p> */}
               </td>
-              <td className="px-2  " onClick={stopPropagation}>
+              <td className="px-2  " >
                 <div className="flex gap-2 items-center flex-wrap">
                     {JSON.parse(item?.cart_items)?.map((product, idx) => (
-                        <div key={idx} className="shrink-0">
-                        <p className="text-blue-500 hover:underline cursor-pointer"  onClick={() => openModal(product)} >
+                        <div key={idx} className="shrink-0" onClick={stopPropagation}>
+                        <p  className="text-blue-500 hover:underline cursor-pointer"  onClick={() => openModal(product)} >
                             {product?.name}{idx !== JSON.parse(item?.cart_items)?.length - 1 && <span>, </span>}
                         </p>
                         {isModalOpen && <ProductModal isOpen={isModalOpen} closeModal={closeModal} product={selectedProduct} />

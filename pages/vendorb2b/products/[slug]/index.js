@@ -27,7 +27,7 @@ const ProductDetailsPage = ({  userId, shopId, productId,  error}) => {
 
         if (response?.status === 200) {
         const response = await viewSupplierShopProductDetails(userId, productId, shopId);
-        console.log("API  response:", response);
+        console.log("viewSupplierShopProductDetails API  response:", response);
           setProductData(response?.data);
         } else {
           setApiError("Something went wrong. Try again or consult a developer.");

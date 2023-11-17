@@ -70,7 +70,7 @@ const InvoiceTable2 = ({data, invoices, tableHeader}) => {
               </td>
 
               <td className="px-2 cursor-pointer">
-                <p className="text-">{item?.id}</p>
+                <p className="text-">INV{item?.id}</p>
               </td>
 
               <td className="px-2 cursor-pointer">

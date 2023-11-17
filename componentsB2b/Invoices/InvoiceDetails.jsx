@@ -11,7 +11,6 @@ const InvoiceDetails = ({invoiceId, data, }) => {
     const downloadInvoiceRef = useRef()
     const router = useRouter()
     const { setCheckoutData} = useGlobalState();
-    console.log('INVOCIE DATA == ', data)
     const [invoice, setInvoice] = useState(data?.quote)
 
   return (
@@ -19,7 +18,7 @@ const InvoiceDetails = ({invoiceId, data, }) => {
 
         <div className="">
             <DashboardHeading>           
-                Invocie <span>#{invoiceId}</span>
+                Invocie <span>INV{invoiceId}</span>
             </DashboardHeading>
             <div className="flex justify-between font-semibold gap-3">
                 <div className="flex items-center gap-4">

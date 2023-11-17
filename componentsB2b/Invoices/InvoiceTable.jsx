@@ -1,6 +1,5 @@
 import {useState} from 'react';
 import { FaEnvelope, FaAngleDown } from 'react-icons/fa';
-import ImgCard from '../card/ImgCard';
 import { useRouter } from 'next/router';
 
 const InvoiceTable = ({data, invoicess, tableHeader}) => {
@@ -52,8 +51,7 @@ const InvoiceTable = ({data, invoicess, tableHeader}) => {
         <tbody>
           {
             invoicess?.map((item, idx) => {
-              console.log('==================item', item)
-              
+        
              return ( <tr key={item?.id} className='border-b   border-light300 bg-hover300  duration-300' 
             onClick={()=>router.push(`/vendorb2b/workspace/invoices/${item?.id}`)}            >
               <td className="pl-2 py-4 text-start w-10">
@@ -70,16 +68,16 @@ const InvoiceTable = ({data, invoicess, tableHeader}) => {
                 </label>
               </td>
 
-              <td className="px-2">
+              {/* <td className="px-2">
                 <p className="text-blue">{item?.id}</p>
+              </td> */}
+
+              <td className="px-2">
+                <p className="">{item?.id}</p>
               </td>
 
               <td className="px-2">
-                <p className="text-blue">INV-{item?.id}</p>
-              </td>
-
-              <td className="px-2">
-                <p className="text-blue">{item?.id}</p>
+                <p className="">INV-{item?.id}</p>
               </td>
 
               <td className="px-2">

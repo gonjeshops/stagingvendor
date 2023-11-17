@@ -2,14 +2,16 @@ import { useRouter } from 'next/router';
 import ProductCard2 from '../card/productCard2'
 import { useEffect, useState } from 'react';
 import { viewSupplierShopProducts } from '../Api2';
+import { PageLoading } from '../Loader/Spinner/PageLoading';
 
 
-const SimilarProducts = () => {
+const SimilarProducts = ({small}) => {
     const router = useRouter();
 
     const [supplierProducts, setSupplierProducts] = useState(null);
     const [apiError, setApiError] = useState(null);
     const [loadingTimeout, setLoadingTimeout] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const userId = router?.query?.userId, shopId = router?.query?.shopId
  
@@ -21,7 +23,9 @@ const SimilarProducts = () => {
       }, 8000);
   
       const fetchData = async () => {
+
         try {
+          setLoading(true)
           const response = await viewSupplierShopProducts(userId, shopId);
   
           if (response.status === 200) {
@@ -36,6 +40,8 @@ const SimilarProducts = () => {
           console.error("Catch error:", error);
           setApiError("Server is not available. Try again or consult a developer.");
           clearTimeout(timeoutId); // Clear the loading timeout
+        } finally {
+          setLoading(false)
         }
       };
   
@@ -83,18 +89,22 @@ const SimilarProducts = () => {
   
     return (
          <div >
-            <h4 className='font-medium pb-4 text-2xl'>Products From The Same Shop </h4>
-            {/* <h4 className='font-medium pb-4 text-lg'>{setSupplierProducts?.name} </h4> */}
-            <div className=' min-h-96 w-full grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-4'>
-                {
-                   supplierProducts?.map((item, i)=>(
-                    <div key={item?.id}>
-                        <ProductCard2 product={item} userId={userId} shopId={shopId} targetId={'top'}/>
-                    </div>
-                    )) 
-                }
+            {
+              loading ? <div className="inset-0 flex justify-center items-center"> <PageLoading/></div> :
+              <>
+                <h4 className='font-medium pb-2 text-xl'>Products From The Same Shop </h4>
+                <div className={small ? 'w-full grid sm:grid-cols-2 h-[83vh] overflow-auto border rounded-lg p-2 2:grid-cols-3   gap-4' : ' min-h-96 w-full grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-4'}>
+                    {
+                      supplierProducts?.map((item, i)=>(
+                        <div key={item?.id}>
+                            <ProductCard2 product={item} userId={userId} shopId={shopId} targetId={'top'}/>
+                        </div>
+                        )) 
+                    }
 
-            </div>
+                </div>
+              </>
+            }
          </div>
   )
 }

@@ -5,6 +5,7 @@ import { truncateText } from '@/lib/truncateText'
 import { useGlobalState } from '@/context/GlobalStateContext'
 import { useRouter } from 'next/router'
 import generatePDF from 'react-to-pdf';
+import Image from 'next/image'
 
 const InvoiceDetails = ({invoiceId, data, }) => {
     const downloadInvoiceRef = useRef()
@@ -47,13 +48,17 @@ const InvoiceDetails = ({invoiceId, data, }) => {
         </div> 
 
         <div ref={downloadInvoiceRef} className="max-w-4xl mx-auto">
-            <div className="rounded-sm bg-light300 h-60 w-full px-4 flex items-center justify-between flex-wrap">
-
-                <div className="space-y-12 shrink-0">
-                    <div className="space-y-2">
+            <div className="w-full pb-4 h-20 flex justify-between gap-6 items-center">
+                <Image src={'/logo.png'} alt='logo' width={100} height={60} />
+                <div className="space-y-2">
                         <p className='font-medium'>Invoice No: <span>{invoice?.id}</span></p>
                         <p className='font-medium'>Invoice Date: <span>{new Date(data?.quote?.updated_at)?.toDateString()}</span></p>
                     </div>
+            </div>
+            <div className="rounded-sm bg-light300 h-60 w-full px-4 flex items-center justify-between flex-wrap">
+
+                <div className="space-y-12 shrink-0">
+                   
                     <div className="space-y-2">
                         <p className='font-medium'>Sold By:</p>
                         <p className='font-'>{data?.quote?.shop_name}</p>

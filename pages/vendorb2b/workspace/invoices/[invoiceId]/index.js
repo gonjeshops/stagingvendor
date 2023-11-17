@@ -1,5 +1,6 @@
 import { fetchQuoteDetails } from '@/componentsB2b/Api2';
 import InvoiceDetails from '@/componentsB2b/Invoices/InvoiceDetails';
+import { PageLoading } from '@/componentsB2b/Loader/Spinner/PageLoading';
 import Workspace from '@/componentsB2b/Workspace/Workspace';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -26,7 +27,7 @@ const InvoiceDetailsPage = ({ invoiceId }) => {
         try {
           const response = await fetchQuoteDetails(invoiceId);
   
-          if (response.status === 200) {
+          if (response?.status === 200) {
             console.log("API response:", response);
             setQuoteData(response?.data);
           } else {
@@ -76,15 +77,23 @@ const InvoiceDetailsPage = ({ invoiceId }) => {
         );
       }
 
+   
+
+        // If the data is not yet available (during static generation), return loading state
       if (router.isFallback) {
-        return <div>Loading...</div>;
+        return <div className='inset-0 flex justify-center items-center'><PageLoading/></div>;
+      }
+
+      // If quoteData is not found, render a 404 page
+      if (!quoteData) {
+        return <div className='inset-0 flex justify-center items-center'>Page not found</div>;
       }
 
   return (
-    <div className="max-w-6xl m-auto px-4">
-
-        <InvoiceDetails invoiceId={invoiceId} fakeData={''} data={quoteData}/>
-
+    <div className="-4">
+      <Workspace>
+          <InvoiceDetails invoiceId={invoiceId} fakeData={''} data={quoteData}/>
+      </Workspace>
     </div>
   );
 };

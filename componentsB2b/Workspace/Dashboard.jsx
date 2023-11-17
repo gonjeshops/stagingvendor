@@ -25,7 +25,7 @@ const Dashboard = ({stats}) => {
                     <div className="grid  gap-3 rounded-lg bg-light200 p-4 sm:p-8">
                         <Link href={'/vendorb2b/workspace/request-quotes'} className='flex gap-2 justify-center items-center text-xl font-semibold text-blue-hover'>
                             <FaFileAlt />
-                            <div className="">Quote Requets</div>
+                            <div className="">Quote Request</div>
                         </Link>
                         <div className="grid grid-cols-2 gap-2">
                             <div className="shrink-0 flex items-center gap-2">

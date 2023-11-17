@@ -46,7 +46,7 @@ const ReQuestQuotes = () => {
           const response = await fetchQuotesWithPendingStatus(page, limit);
   
           if (response.status === 200) {
-            setQuotes(response?.data?.data?.quotes.filter(item => !['PAID', 'PENDING', ].includes(item.status)));
+            setQuotes(response?.data?.data?.quotes.filter(item => ['PENDING', ].includes(item.status)));
           // setQuotes(response?.data?.data?.quotes);
               setTotalPages(response?.data?.data?.total_pages);
 

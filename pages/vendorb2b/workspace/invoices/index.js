@@ -46,8 +46,7 @@ const Invoice = () => {
       // const response = await fetchVendorInvoice(page, limit);
 
       if (response.status === 200) {
-          // setInvoices(response?.data?.data?.transactions);
-          // setInvoices(response?.data?.data?.quotes);
+        
           setInvoices(response?.data?.data?.quotes.filter(item => !['PENDING', 'SENT', 'REJECTED', 'CANCELLED'].includes(item.status)));
           setTotalPages(response?.data?.data?.total_pages);
 

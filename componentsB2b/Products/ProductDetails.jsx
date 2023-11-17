@@ -15,7 +15,7 @@ import { useGlobalState } from '@/context/GlobalStateContext';
 
 
 const ProductDetails = ({product, p}) => {
-    const {useB2Bcart:{onAdd} , setActive, user} = useGlobalState()
+    const {useB2Bcart:{onAdd} , setActive, user, openModal} = useGlobalState()
     const [isOpen, setIsOpen] = useState(false)
     const router = useRouter()
 
@@ -107,7 +107,7 @@ const ProductDetails = ({product, p}) => {
             <BtnOrange link={'#'} >
                 <div onClick={ () => {
                     onAdd(product, 1, product?.shop_name)
-                    setIsOpen(true)
+                    openModal('quoteform')
                 }} className='flex items-center gap-3'>
                     <MdOutlineShoppingCart/>
                     <p>Add to quote request</p>
@@ -121,7 +121,7 @@ const ProductDetails = ({product, p}) => {
             <Navigate product={product} targetId={'top'}/>
         </div>
  
-        <QuoteForm isOpen={isOpen} closeModal={()=>setIsOpen(false)}  shopName={shop_name} /> 
+        {/* <QuoteForm isOpen={isOpen} closeModal={()=>setIsOpen(false)}  shopName={shop_name} />  */}
     </div>
   )
 }

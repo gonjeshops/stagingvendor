@@ -75,7 +75,7 @@ const InvoiceTable = ({data, invoicess, tableHeader}) => {
               </td>
 
               <td className="px-2">
-                <p className="text-blue">{item?.id}</p>
+                <p className="text-blue">INV-{item?.id}</p>
               </td>
 
               <td className="px-2">

@@ -12,10 +12,11 @@ import { useRouter } from 'next/router';
 import { truncateText } from '@/lib/truncateText';
 import QuoteForm from '../forms/QuoteForm';
 import { useGlobalState } from '@/context/GlobalStateContext';
+import DashboardHeading from '../Workspace/DashboardHeading';
 
 
 const ProductDetails = ({product, p}) => {
-    const {useB2Bcart:{onAdd} , setActive, user, openModal} = useGlobalState()
+    const {useB2Bcart:{onAdd} , setActive, user, openModal, supplierDetails} = useGlobalState()
     const [isOpen, setIsOpen] = useState(false)
     const router = useRouter()
 
@@ -33,12 +34,12 @@ const ProductDetails = ({product, p}) => {
   return (
     <div className=' w-full ' id='top'>
 
-       <div className="flex justify-between gap-4 items-center"> 
-            <p  className=" text-blue-400 ">{`${ shop_name} product details`}</p>
-            {/* <Link  href={`/vendorb2b/suppliers/${'store_slug'}?userId=${'store_owner_user_id'}&shopId=${'shop_id'}`}
+       <div className="pb-"> 
+            <DashboardHeading><p  className=" text-blue-400 ">{`${ supplierDetails?.name} product details`}</p></DashboardHeading>
+            <Link  href={`/vendorb2b/suppliers/${supplierDetails?.slug}?userId=${supplierDetails?.owner_id}&shopId=${supplierDetails?.id}`}
              className=" text-blue-600 hover:font-semibold duration-300">
-                {`< Go to store`}
-            </Link> */}
+                {`< Go to Shop`}
+            </Link>
         </div>
       
        <div className="max-w-[1000px] flex flex-col-reverse md:grid grid-cols-2 gap-8 lg:gap-16 mt-8">

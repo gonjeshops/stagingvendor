@@ -3,10 +3,12 @@ import ProductCard2 from '../card/productCard2'
 import { useEffect, useState } from 'react';
 import { viewSupplierShopProducts } from '../Api2';
 import { PageLoading } from '../Loader/Spinner/PageLoading';
+import { useGlobalState } from '@/context/GlobalStateContext';
 
 
 const SimilarProducts = ({small}) => {
     const router = useRouter();
+    const {supplierDetails} = useGlobalState()
 
     const [supplierProducts, setSupplierProducts] = useState(null);
     const [apiError, setApiError] = useState(null);
@@ -21,15 +23,15 @@ const SimilarProducts = ({small}) => {
       const timeoutId = setTimeout(() => {
         setLoadingTimeout(true);
       }, 8000);
-  
+
       const fetchData = async () => {
 
         try {
           setLoading(true)
-          const response = await viewSupplierShopProducts(userId, shopId);
+          const response = await viewSupplierShopProducts(userId || supplierDetails?.owner_id, shopId || supplierDetails?.id);
   
-          if (response.status === 200) {
-            console.log("API response:", response?.data?.data?.products);
+          if (response?.status === 200) {
+            console.log("API viewSupplierShopProducts response:", response?.data);
             setSupplierProducts(response?.data?.data?.products);
           } else {
             setApiError("Something went wrong. Try again or consult a developer.");
@@ -76,16 +78,7 @@ const SimilarProducts = ({small}) => {
 
       );
     }
-  
-    if (!userId || isNaN(userId) || !shopId || isNaN(shopId)) {
-      return (
 
-          <div className="absolute inset-0 flex items-center justify-center">
-            Error: The URL should contain a valid shop Id and a valid user Id.
-          </div>
-
-      );
-    }
   
     return (
          <div >

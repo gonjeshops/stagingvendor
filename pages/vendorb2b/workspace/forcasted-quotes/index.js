@@ -101,7 +101,7 @@ const ReQuestQuotes = () => {
 
         <Workspace>
             <div className="pb-28">
-                <RequestQuotes quotes={quotes}/>
+                <RequestQuotes quotes={quotes} heading={'Forcasted Qoutes'} description={'Quotes saved as draft'}/>
             </div>
 
         <div className="absolute bottom-0 bg-light100 pb-4  left-0 w-full">

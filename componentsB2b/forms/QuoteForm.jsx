@@ -14,7 +14,7 @@ import { MdSendAndArchive } from 'react-icons/md';
 
 
 const QuoteForm = () => {
-  const {user, useB2Bcart, closeModal, setActive} = useGlobalState();
+  const {user, useB2Bcart, closeModal, setActive, supplierDetails} = useGlobalState();
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   
@@ -61,7 +61,7 @@ const QuoteForm = () => {
 
       const response = await createQuoteRequest(newFormData);
       if (response?.status === 200) {
-        console.log("API response:", response);
+        console.log("createQuoteRequest API  response:", response);
         setSuccess('Quote resquest was successfull.')
         toast.success('Quote resquest was successfull.')
         setTimeout(() => {
@@ -92,7 +92,7 @@ const QuoteForm = () => {
        <div> 
             <div className="flex px-4 justify-between items-center text-xl font-semibold pb-4">
               <h4>Quote Request</h4>
-              <p className="text-sm text-blue-400">{shopName}</p>
+              <p className="text-sm text-blue-400">{supplierDetails?.name}</p>
               
             </div>
 
@@ -186,7 +186,9 @@ const QuoteForm = () => {
 
         </div>
 
-        <SimilarProducts small={true}/>
+        <div className="relative">
+          <SimilarProducts small={true}/>
+        </div>
 
       </div>
  

@@ -9,7 +9,7 @@ const ProductCard2 = ({product,  userId, shopId, }) => {
 const {description, image, gallery, name, discount, price, slug, shop_name, shop_id, id, } = product
 const router = useRouter()
 
-const {openModal, closeModal, useB2Bcart:{onAdd}} = useGlobalState()
+const {openModal, closeModal, useB2Bcart:{onAdd}, supplierDetails} = useGlobalState()
 return (
 
     <div  className="w-full max-w-sm bg-light200 overflow-hidden rounded-lg border border-light300">
@@ -73,7 +73,7 @@ return (
 
         <div className="rounded cursor-pointer hover-blue py-2  px-2 mb-2 mx-4 flex justify-center items-center gap-2" 
                 onClick={() => {
-                    onAdd(product, 1, product?.shop_name)
+                    onAdd(product, 1, product?.shop_name, shop_id, userId)
                     openModal('quoteform')
                     const element = document.getElementById('top');
                     if (element) {

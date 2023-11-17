@@ -4,9 +4,11 @@ import SuppliersDetails from "@/componentsB2b/Suppliers/SuppliersDetails";
 import { viewSupplierShopProducts } from "@/componentsB2b/Api2";
 import { useRouter } from "next/router";
 import { PageLoading } from "@/componentsB2b/Loader/Spinner/PageLoading";
+import { useGlobalState } from "@/context/GlobalStateContext";
 
 const SupplierDetailsPage = ({ userId, shopId, error }) => {
   const router = useRouter();
+  const {setSupplierDetails} = useGlobalState()
 
   const [supplierData, setSupplierData] = useState(null);
   const [apiError, setApiError] = useState(null);
@@ -24,8 +26,9 @@ const SupplierDetailsPage = ({ userId, shopId, error }) => {
         const response = await viewSupplierShopProducts(userId, shopId);
 
         if (response.status === 200) {
-          console.log("API response:", response);
+          console.log("supplierData API response:", response?.data?.data);
           setSupplierData(response?.data?.data);
+          setSupplierDetails(response?.data?.data?.shop)
         } else {
           setApiError("Something went wrong. Try again or consult a developer.");
         }

@@ -104,7 +104,6 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                                 href={innerTab.url}
                                 className="cursor-pointer"
                               >
-                                {console.log(innerTab.url)}
                                 <div
                                   className={`nav-link  ${
                                     route.asPath.includes(innerTab.url)

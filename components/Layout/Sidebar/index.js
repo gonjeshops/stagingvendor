@@ -6,14 +6,11 @@ import { SideTabs } from "./SideTabs";
 import { useRouter } from "next/router";
 
 const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
-
-
-  
-
   const route = useRouter();
   const activePath = route.asPath;
   const [toggleHrm, setHRMToggle] = useState(false);
-  const [sideTabs, setSideTabs] = useState(SideTabs.staff);
+  const [dropdownName, setDropdownName] = useState("");
+  const [sideTabs, setSideTabs] = useState(SideTabs.vendor); //changed the staff to vendor
   const [isVendor, setVendor] = useState(false);
 
   useEffect(() => {
@@ -64,13 +61,19 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                     aria-expanded={toggleHrm}
                     onClick={() => {
                       setHRMToggle(!toggleHrm);
+                      setDropdownName(Tab.name);
                     }}
                     className={`d-flex togg justify-content-between nav-link text-whitee `}
                     aria-current="page"
                   >
                     <div className="d-flex">
                       <div className="icon text-center">
-                        <Image src={Tab.image} alt="xsxcc" height={20} width={20} />
+                        <Image
+                          src={Tab.image}
+                          alt="xsxcc"
+                          height={20}
+                          width={20}
+                        />
                       </div>
                       <span className="ms-2">{Tab.name}</span>
                     </div>
@@ -86,8 +89,10 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
 
                   <div
                     id="collapseExample1"
-                    className={`panel-collapse collapse ${
-                      toggleHrm ? "show" : ""
+                    className={`pl-5  ${
+                      toggleHrm && dropdownName == Tab.name
+                        ? "visible	"
+                        : "hidden"
                     }`}
                   >
                     <div className="panel-body">
@@ -95,12 +100,15 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                         {(Tab?.innerTabs || []).map((innerTab) => {
                           return innerTab.url !== "/timesheet" && isVendor ? (
                             <li key={`key_${innerTab.name}`}>
-                              <Link href={innerTab.url}>
+                              <Link
+                                href={innerTab.url}
+                                className="cursor-pointer"
+                              >
                                 <div
                                   className={`nav-link  ${
                                     route.asPath.includes(innerTab.url)
                                       ? "active"
-                                      : "text-whitee"
+                                      : "text-white"
                                   }`}
                                 >
                                   {innerTab.name}
@@ -110,7 +118,8 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                           ) : route.asPath.includes(innerTab.url) ||
                             !isVendor ? (
                             <li key={`key_${innerTab.name}`}>
-                              <a
+                              <Link
+                              href={innerTab.url}
                                 className={`nav-link  ${
                                   route.asPath.includes(innerTab.url)
                                     ? "active"
@@ -118,7 +127,7 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                                 }`}
                               >
                                 {innerTab.name}
-                              </a>
+                              </Link>
                             </li>
                           ) : null;
                         })}
@@ -142,15 +151,16 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                 </Link>
               )}
             </li>
-
-            
           );
         })}
-    <Link href={'/vendorb2b'} className="nav-link rounded-l-full" style={{color: 'black', background: 'white'}}>
-        Switch to VendorB2B
-      </Link>
+        <Link
+          href={"/vendorb2b"}
+          className="nav-link rounded-l-full"
+          style={{ color: "black", background: "white" }}
+        >
+          Switch to VendorB2B
+        </Link>
       </ul>
-      
     </div>
   );
 };

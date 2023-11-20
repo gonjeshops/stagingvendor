@@ -33,12 +33,12 @@ export const workspaceLinks = [
         link: '/vendorb2b/workspace/quotes',
         submenu: [
             {
-                title: 'Quote Request',
+                title: 'Manage Quotes',
                 link: '/vendorb2b/workspace/request-quotes',
                 path: 'request-quotes'
             }, 
-            {   title: 'Manage Quotes',
-                link: '/vendorb2b/workspace/manage-quotes',
+            {   title: 'Forcasted Quotes',
+                link: '/vendorb2b/workspace/forcasted-quotes',
                 path: 'manage-quotes',
             }
         ]       

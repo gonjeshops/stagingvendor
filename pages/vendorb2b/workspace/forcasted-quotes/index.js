@@ -46,7 +46,7 @@ const ReQuestQuotes = () => {
           const response = await fetchQuotesWithPendingStatus(page, limit);
   
           if (response.status === 200) {
-            setQuotes(response?.data?.data?.quotes.filter(item => !['PAID', 'PENDING', ].includes(item.status)));
+            setQuotes(response?.data?.data?.quotes.filter(item => ['PENDING', ].includes(item.status)));
           // setQuotes(response?.data?.data?.quotes);
               setTotalPages(response?.data?.data?.total_pages);
 
@@ -101,7 +101,7 @@ const ReQuestQuotes = () => {
 
         <Workspace>
             <div className="pb-28">
-            <RequestQuotes quotes={quotes} heading={'Manage Qoutes'} description={'Manage Sent Quotes'}/>
+                <RequestQuotes quotes={quotes} heading={'Forcasted Qoutes'} description={'Quotes saved as draft'}/>
             </div>
 
         <div className="absolute bottom-0 bg-light100 pb-4  left-0 w-full">

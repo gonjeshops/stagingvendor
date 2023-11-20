@@ -1,18 +1,16 @@
-import React, { useRef, useState } from 'react'
+import  { useRef, useState } from 'react'
 import DashboardHeading from '../Workspace/DashboardHeading'
 import { FaPrint, FaSave } from 'react-icons/fa'
-import Link from 'next/link'
 import { truncateText } from '@/lib/truncateText'
 import { useGlobalState } from '@/context/GlobalStateContext'
 import { useRouter } from 'next/router'
 import generatePDF from 'react-to-pdf';
-import { InvoiceDownload } from '../DownloadPrint/InvoiceDownload'
+import Image from 'next/image'
 
 const InvoiceDetails = ({invoiceId, data, }) => {
     const downloadInvoiceRef = useRef()
     const router = useRouter()
     const { setCheckoutData} = useGlobalState();
-    console.log('INVOCIE DATA == ', data)
     const [invoice, setInvoice] = useState(data?.quote)
 
   return (
@@ -20,7 +18,7 @@ const InvoiceDetails = ({invoiceId, data, }) => {
 
         <div className="">
             <DashboardHeading>           
-                Invocie <span>#{invoiceId}</span>
+                Invocie <span>INV{invoiceId}</span>
             </DashboardHeading>
             <div className="flex justify-between font-semibold gap-3">
                 <div className="flex items-center gap-4">
@@ -43,23 +41,23 @@ const InvoiceDetails = ({invoiceId, data, }) => {
                         <div onClick={() => generatePDF(downloadInvoiceRef, {filename: `${data?.quote?.quote_name}.pdf`})} className="">Download invoice</div>
                         
                     </button>
-                    {/* <InvoiceDownload invoiceData={data?.quote}>Download Pdf</InvoiceDownload> */}
-                    {/* <div className="bg-light300  hover:bg-zinc-400 duration-500 border-zinc-400 border flex px-4 py-2 rounded-sm items-center gap-2">
-                        <FaPrint/>
-                        <div className="">Print</div>
-                    </div> */}
+              
                 </div>
             </div>
         </div> 
 
         <div ref={downloadInvoiceRef} className="max-w-4xl mx-auto">
-            <div className="rounded-sm bg-light300 h-60 w-full px-4 flex items-center justify-between flex-wrap">
-
-                <div className="space-y-12 shrink-0">
-                    <div className="space-y-2">
+            <div className="w-full pb-4 h-20 flex justify-between gap-6 items-center">
+                <Image src={'/logo.png'} alt='logo' width={100} height={60} />
+                <div className="space-y-2">
                         <p className='font-medium'>Invoice No: <span>{invoice?.id}</span></p>
                         <p className='font-medium'>Invoice Date: <span>{new Date(data?.quote?.updated_at)?.toDateString()}</span></p>
                     </div>
+            </div>
+            <div className="rounded-sm bg-light300 h-60 w-full px-4 flex items-center justify-between flex-wrap">
+
+                <div className="space-y-12 shrink-0">
+                   
                     <div className="space-y-2">
                         <p className='font-medium'>Sold By:</p>
                         <p className='font-'>{data?.quote?.shop_name}</p>
@@ -86,10 +84,7 @@ const InvoiceDetails = ({invoiceId, data, }) => {
 
                 {data?.quote?.cart_items?.map((item, i) => (
                 <div key={item?.id} 
-                // onClick={()=> {
-                //     setEachProduct(item)
-                //     setIsOpen(true)
-                // }}
+
                 className="py-6 px-4 border-b border-light300 grid grid-cols-8 gap-3 items-center text-[10px] sm:text-sm md:text-md md:overflow-hidden">
                 <div className="flex flex-col col-span-4 gap-3 sm:flex-row items-">
                     <p className='shrink-0 w-6'>{i+1}</p>

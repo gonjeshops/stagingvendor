@@ -88,6 +88,8 @@ export const fetchQuoteNames = () => {
       });
   };
 
+
+
 // Get Vendor quote requets with "PENDING" status. Only vendors can view
 export const fetchQuotesWithPendingStatus = (page, limit) => {
   if (!page || !limit) {
@@ -180,8 +182,46 @@ export const createQuoteRequest = (values, ) => {
         return error
         
       });
-    return values
   };
+
+  
+  // Create quote request with SEND status
+export const createQuoteWithSendStatus = (values, ) => {
+  try {
+    // Validate inputs
+    if (!values) {
+      console.error('Invalid input data. Please provide valid values.');
+      return Promise.reject(new Error('Invalid input data.'));
+    }
+
+    return axios({
+      method: "post",
+      headers: authHeader(),
+      url: url + `send/quote/request`,
+      data: {
+        "cart_items": values.cart_items,
+        "quote_name": values.quote_name,
+        "subtotal": values.subtotal,
+        "quantity": values.quantity,
+        "shop_name": values.shop_name,
+        "user_name": values.user_name,
+        "user_id": values.user_id,
+      },
+    })
+    .then((response) => {
+      console.log('createQuoteWithSendStatus API successful:', response);
+      return response;
+    })
+    .catch((error) => {
+      console.error('Error in createQuoteWithSendStatus API:', error);
+      return error.response?.data || error.message || 'An unexpected error occurred.';
+    });
+} catch (error) {
+  console.error('An unexpected error occurred:', error);
+  throw 'An unexpected error occurred.';
+}
+};
+
 
   // Update quote request
 export const updateQuoteRequest = (values, quoteId) => {
@@ -242,6 +282,134 @@ export const fetchNotifications = (limit, page) => {
     .catch((error) => {
       console.log("VENDOR Error in fetchNotifications api", error,  'params==', limit, page);
     });
+};
+
+// =======  dashboard stats =====
+export const fetchCounts = (type) => {
+
+if (type===`vendor/my/stats`) {
+  return axios({
+    method: "get",
+    headers: authHeader(),
+    url: url + `vendor/my/stats`,
+  })
+    .then((response) => {
+      console.log('VENDOR dashboard stats =====', response, 'type==', type)
+      return response})
+    .catch((error) => {
+      console.log("VENDOR Error in dashboard stats api", error,  'type==', type);
+    });
+}
+
+
+
+  if (type===`vendor/quotes/count`) {
+    return axios({
+      method: "get",
+      headers: authHeader(),
+      url: url + `vendor/quotes/count`,
+    })
+      .then((response) => {
+        console.log('VENDOR quote counts =====', response, 'type==', type)
+        return response})
+      .catch((error) => {
+        console.log("VENDOR Error in vendor/quotes/count api", error,  'type==', type);
+      });
+  }
+
+  if (type===`vendor/b2b/my/total/orders`) {
+    return axios({
+      method: "get",
+      headers: authHeader(),
+      url: url + `vendor/b2b/my/total/orders`,
+    })
+      .then((response) => {
+        console.log('VENDOR orders counts =====', response, 'type==', type)
+        return response})
+      .catch((error) => {
+        console.log("VENDOR Error in orders counts api", error,  'type==', type);
+      });
+  }
+
+  
+
+
+
+
+  // supplier ===
+
+  if (type===`supplier/quotes/count`) {
+    return axios({
+      method: "get",
+      headers: authHeader(),
+      url: url + `supplier/quotes/count`,
+    })
+      .then((response) => {
+        console.log('SUPPLIER quote counts =====', response, 'type==', type)
+        return response})
+      .catch((error) => {
+        console.log("SUPPLIER Error in quotes counts api", error,  'type==', type);
+      });
+  }
+
+  if (type===`supplier/product/total`) {
+    return axios({
+      method: "get",
+      headers: authHeader(),
+      url: url + `supplier/product/total`,
+    })
+      .then((response) => {
+        console.log('SUPPLIER product counts =====', response, 'type==', type)
+        return response})
+      .catch((error) => {
+        console.log("SUPPLIER Error in product counts api", error,  'type==', type);
+      });
+  }
+
+  if (type===`supplier/shop/total`) {
+    return axios({
+      method: "get",
+      headers: authHeader(),
+      url: url + `supplier/shop/total`,
+    })
+      .then((response) => {
+        console.log('SUPPLIER shop counts =====', response, 'type==', type)
+        return response})
+      .catch((error) => {
+        console.log("SUPPLIER Error in shop counts api", error,  'type==', type);
+      });
+  }
+
+  if (type===`transaction/total`) {
+    return axios({
+      method: "get",
+      headers: authHeader(),
+      url: url + `transaction/total`,
+    })
+      .then((response) => {
+        console.log(' transaction counts =====', response, 'type==', type)
+        return response})
+      .catch((error) => {
+        console.log(" Error in transaction counts api", error,  'type==', type);
+      });
+  }
+
+  if (type===`wishlist/total`) {
+    return axios({
+      method: "get",
+      headers: authHeader(),
+      url: url + `wishlist/total`,
+    })
+      .then((response) => {
+        console.log(' wishlist counts =====', response, 'type==', type)
+        return response})
+      .catch((error) => {
+        console.log(" Error in wishlist counts api", error,  'type==', type);
+      });
+  }
+
+  
+  
 };
 
 

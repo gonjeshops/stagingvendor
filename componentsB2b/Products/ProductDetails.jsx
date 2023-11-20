@@ -6,21 +6,22 @@ import {MdOutlineFavoriteBorder, MdOutlineShoppingCart} from 'react-icons/md';
 import BtnOrange from '../btn/BtnOrange';
 import Navigate from './Navigate'
 
-import GetQuotes from '../forms/GetQuotesForm';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { truncateText } from '@/lib/truncateText';
 import QuoteForm from '../forms/QuoteForm';
 import { useGlobalState } from '@/context/GlobalStateContext';
+import DashboardHeading from '../Workspace/DashboardHeading';
 
 
 const ProductDetails = ({product, p}) => {
-    const {useB2Bcart:{onAdd} , setActive} = useGlobalState()
-    const [isOpen, setIsOpen] = useState(false)
-    const router = useRouter
 
-    const {name, description, price, discount, in_stock, status, created_at, gallery, id, image, is_taxable, max_pric, min_price, sale_price, shop_name, slug, top_deals, unit, } = product
+    const {useB2Bcart:{onAdd} , setActive, user, openModal, setSupplierDetails, supplierDetails} = useGlobalState()
+    const [isOpen, setIsOpen] = useState(false)
+    const router = useRouter()
+
+    const {name, description, price, discount,  in_stock, status, shop_id, created_at, gallery, id, image, is_taxable, max_pric, min_price, sale_price, shop_name, slug, top_deals, unit, shop} = product
         
     const {rating, heading,  offerEnds, bestseller,off,  imgList} = p[0]
 
@@ -30,12 +31,19 @@ const ProductDetails = ({product, p}) => {
         setActiveImageIndex(index);
     };
 
+    // setSupplierDetails(shop)
+
 
   return (
     <div className=' w-full ' id='top'>
 
-        <button   onClick={router.back} className=" text-blue-600 hover:font-semibold duration-300">{`${ shop_name} product details`}
-        </button>
+       <div className="pb-"> 
+            <DashboardHeading><p  className=" text-blue-400 ">{`${ shop?.name} product details`}</p></DashboardHeading>
+            <Link  href={`/vendorb2b/suppliers/${shop?.slug}?userId=${shop?.owner_id}&shopId=${shop?.id}`}
+             className=" text-blue-600 hover:font-semibold duration-300">
+                {`< Go to Shop`}
+            </Link>
+        </div>
       
        <div className="max-w-[1000px] flex flex-col-reverse md:grid grid-cols-2 gap-8 lg:gap-16 mt-8">
             <div className="">
@@ -43,7 +51,14 @@ const ProductDetails = ({product, p}) => {
                 <div className="h-96 bg-light100 flex justify-center items-center w-full relative overflow-hidden rounded-lg shadow-md transition-transform duration-300 transform ">
                     <Image
                         width={200} height={200}
-                        src={gallery[activeImageIndex]?.original ? gallery[activeImageIndex]?.original : image?.original}
+                        src={
+                            gallery && activeImageIndex && gallery?.length &&
+                            gallery[activeImageIndex] &&
+                            gallery[activeImageIndex]?.original
+                              ? gallery[activeImageIndex]?.original
+                              : 
+                              image?.original
+                          }
                         alt={name}
                         className='w-full h-full object-cover'
                     />
@@ -103,7 +118,7 @@ const ProductDetails = ({product, p}) => {
             <BtnOrange link={'#'} >
                 <div onClick={ () => {
                     onAdd(product, 1, product?.shop_name)
-                    setIsOpen(true)
+                    openModal('quoteform')
                 }} className='flex items-center gap-3'>
                     <MdOutlineShoppingCart/>
                     <p>Add to quote request</p>
@@ -117,7 +132,7 @@ const ProductDetails = ({product, p}) => {
             <Navigate product={product} targetId={'top'}/>
         </div>
  
-        <QuoteForm isOpen={isOpen} closeModal={()=>setIsOpen(false)}  shopName={shop_name} /> 
+        {/* <QuoteForm isOpen={isOpen} closeModal={()=>setIsOpen(false)}  shopName={shop_name} />  */}
     </div>
   )
 }

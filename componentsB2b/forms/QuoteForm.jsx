@@ -1,7 +1,7 @@
 import  {  useState } from 'react';
 import ModalCentral from '../Modal/ModalCentral';
 import { FaTimes, FaTrashAlt } from 'react-icons/fa';
-import { createQuoteRequest, } from '../Api2';
+import { createQuoteRequest, createQuoteWithSendStatus, } from '../Api2';
 import { useGlobalState } from '@/context/GlobalStateContext';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
@@ -29,6 +29,60 @@ const QuoteForm = () => {
   const [success, setSuccess] = useState('')
   const [reqError, setReqError] = useState('')
   const [errors, setErrors] = useState({});
+
+  const handleSendQuote = async (e) => {
+      e.preventDefault();
+      setSuccess(null) 
+      setReqError('')
+      setLoading('send')
+      
+      const validationErrors = {};
+      if (!quoteName) {
+        validationErrors.name = 'Please enter the name of your quote request.';
+      }
+
+      if (Object.keys(validationErrors).length > 0) {
+        setErrors(validationErrors);
+        setLoading('')
+        return;
+      }
+
+      try {
+        const newFormData = {
+          quote_name: quoteName,
+          subtotal: totalPrice,
+          quantity: totalQuantities,
+          cart_items: cartItems,
+          shop_name: shopName,
+          user_id: user?.user_id,
+          user_name: `${user?.user_name} ${user?.user_lastname}`,
+        }
+
+        const response = await createQuoteWithSendStatus(newFormData);
+        if (response?.status === 200) {
+          console.log("createQuoteRequest API  response:", response);
+          setSuccess('Quote resquest was successfull.')
+          toast.success('Quote resquest was successfull.')
+          setTimeout(() => {
+            router.push('/vendorb2b/workspace/request-quotes')
+          }, 1000);
+        } else {
+          console.log("Quote resquest API response error:", response);
+          toast.error(response || 'Error submitting the form. Please try again.');
+          setReqError( response?.message || 'Error submitting the form. Please try again.');
+        }
+      } catch (error) {
+        console.error("Catching Quote resquest Catch error:", error);
+        setReqError( error || 'An error occurred. Please try again later.');
+        toast.error(err || 'An error occurred. Please try again later.')
+      } finally{
+        setErrors('');
+        setQuoteName('')
+        clearCart()
+        setLoading(false)
+      }    
+    };
+
 
 
   const handleSubmit = async (e) => {
@@ -96,7 +150,7 @@ const QuoteForm = () => {
               
             </div>
 
-            <form  className="">
+            <form onSubmit={handleSendQuote} className="">
               <div className='w-full max-h-[65vh] overflow-auto px-4 sm:px-8 py-6 border-zinc-500 border-y space-y-5'>
             {reqError && <p className="text-red-500 text-sm mt-1">{reqError}</p>}
             {success && <p className="text-green-600 text-sm mt-1">{success}</p>}
@@ -157,13 +211,13 @@ const QuoteForm = () => {
             </div>
 
             <div className="px-4 pt-4">
-                <div 
-                // onClick={handleSubmit}
+                <button 
+               
                         type="submit"
                         className="hover-blue min-w-40 text-center cursor-pointer py-3 px-4 rounded w-full font-semibold "
                       >
                         {loading==='send' ?  <BtnSpinner/> : <div className="flex justify-center items-center gap-2"><MdSendAndArchive size={20}/> Send Quote </div>}
-                </div>
+                </button>
 
                 <div className="flex justify-between gap-6 pt-3 ">
                     <button onClick={(e)=> { 

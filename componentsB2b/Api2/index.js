@@ -88,6 +88,8 @@ export const fetchQuoteNames = () => {
       });
   };
 
+
+
 // Get Vendor quote requets with "PENDING" status. Only vendors can view
 export const fetchQuotesWithPendingStatus = (page, limit) => {
   if (!page || !limit) {
@@ -180,8 +182,46 @@ export const createQuoteRequest = (values, ) => {
         return error
         
       });
-    return values
   };
+
+  
+  // Create quote request with SEND status
+export const createQuoteWithSendStatus = (values, ) => {
+  try {
+    // Validate inputs
+    if (!values) {
+      console.error('Invalid input data. Please provide valid values.');
+      return Promise.reject(new Error('Invalid input data.'));
+    }
+
+    return axios({
+      method: "post",
+      headers: authHeader(),
+      url: url + `send/quote/request`,
+      data: {
+        "cart_items": values.cart_items,
+        "quote_name": values.quote_name,
+        "subtotal": values.subtotal,
+        "quantity": values.quantity,
+        "shop_name": values.shop_name,
+        "user_name": values.user_name,
+        "user_id": values.user_id,
+      },
+    })
+    .then((response) => {
+      console.log('createQuoteWithSendStatus API successful:', response);
+      return response;
+    })
+    .catch((error) => {
+      console.error('Error in createQuoteWithSendStatus API:', error);
+      return error.response?.data || error.message || 'An unexpected error occurred.';
+    });
+} catch (error) {
+  console.error('An unexpected error occurred:', error);
+  throw 'An unexpected error occurred.';
+}
+};
+
 
   // Update quote request
 export const updateQuoteRequest = (values, quoteId) => {

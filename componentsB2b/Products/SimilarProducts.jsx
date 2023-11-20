@@ -31,7 +31,7 @@ const SimilarProducts = ({small}) => {
           const response = await viewSupplierShopProducts(userId || supplierDetails?.owner_id, shopId || supplierDetails?.id);
   
           if (response?.status === 200) {
-            console.log("API viewSupplierShopProducts response:", response?.data);
+            console.log("API Similar products response:", response);
             setSupplierProducts(response?.data?.data?.products);
           } else {
             setApiError("Something went wrong. Try again or consult a developer.");

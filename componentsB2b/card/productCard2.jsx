@@ -6,10 +6,10 @@ import { useRouter } from "next/router"
 import { useGlobalState } from "@/context/GlobalStateContext"
 
 const ProductCard2 = ({product,  userId, shopId, }) => {
-const {description, image, gallery, name, discount, price, slug, shop_name, shop_id, id, } = product
+const {description, image, gallery, name, discount, price, slug, shop_name, shop_id, id, shop} = product
 const router = useRouter()
 
-const {openModal, closeModal, useB2Bcart:{onAdd}, supplierDetails} = useGlobalState()
+const {openModal, closeModal, useB2Bcart:{onAdd}, setSupplierDetails } = useGlobalState()
 return (
 
     <div  className="w-full max-w-sm bg-light200 overflow-hidden rounded-lg border border-light300">
@@ -75,6 +75,7 @@ return (
                 onClick={() => {
                     onAdd(product, 1, product?.shop_name, shop_id, userId)
                     openModal('quoteform')
+                    // setSupplierDetails(shop)
                     const element = document.getElementById('top');
                     if (element) {
                       element.scrollIntoView({ behavior: 'smooth' });

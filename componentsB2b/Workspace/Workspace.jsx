@@ -34,7 +34,6 @@ const Workspace = ({children, navLinks}) => {
         {/* content */}
         <div className="md:pl-60 ">
             <div className="relative w-full rounded-xl overflow-hidden h-screen bg-light100">
-                <ModalQuoteForm/>
                 <CreateQuoteBtnModal/>
                 <div className=" w-full h-full overflow-auto py-12 px-4">
                     {children}

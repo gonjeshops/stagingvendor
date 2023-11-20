@@ -21,20 +21,20 @@ export const fetchSuppliersByPagination = (page, limit) => {
 
 
 // View a supplier shop's products.  usage - /suppliers/[supplierId]
-export const viewSupplierShopProducts = (userId, shopId) => {
+export const viewSupplierShopProducts = (userId, shopId, page, limit) => {
+  return axios({
+    method: "get",
+    headers: authHeader(),
+    url: url + `suppliers/${userId}/shop/${shopId}/products?page=${page}&limit=${limit}`,
+  })
+    .then((response) => { 
+      console.log('API SHOP DETAILS====', response)
+      return response})
+    .catch((error) => {
+      console.log("Error in viewSupplierShopProducts api", error);
+    });
+};
 
-    return axios({
-      method: "get",
-      headers: authHeader(),
-      url: url + `suppliers/${userId}/shop/${shopId}/products`,
-    })
-      .then((response) => { 
-        console.log('API SHOP DETAILS====', response)
-        return response})
-      .catch((error) => {
-        console.log("Error in viewSupplierShopProducts api", error);
-      });
-  };
 
 
 // View Supplier Product Details

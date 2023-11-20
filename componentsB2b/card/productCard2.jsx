@@ -9,7 +9,7 @@ const ProductCard2 = ({product,  userId, shopId, }) => {
 const {description, image, gallery, name, discount, price, slug, shop_name, shop_id, id, shop} = product
 const router = useRouter()
 
-const {openModal, closeModal, useB2Bcart:{onAdd}, setSupplierDetails } = useGlobalState()
+const {openModal, closeModal, useB2Bcart:{onAdd}, } = useGlobalState()
 return (
 
     <div  className="w-full max-w-sm bg-light200 overflow-hidden rounded-lg border border-light300">

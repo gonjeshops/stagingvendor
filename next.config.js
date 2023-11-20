@@ -6,6 +6,7 @@ module.exports = {
       "gonje.iapplabz.co.in",
       "gonje.com.au",
       "192.168.1.246",
+      "backendapi.gonje.com",
       "localhost",
     ],
   },

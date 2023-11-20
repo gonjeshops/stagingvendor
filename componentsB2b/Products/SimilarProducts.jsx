@@ -31,10 +31,10 @@ const SimilarProducts = ({small}) => {
           const response = await viewSupplierShopProducts(userId || supplierDetails?.owner_id, shopId || supplierDetails?.id);
   
           if (response?.status === 200) {
-            console.log("API Similar products response:", response);
+            console.log("API Similar products response:", );
             setSupplierProducts(response?.data?.data?.products);
           } else {
-            setApiError("Something went wrong. Try again or consult a developer.");
+            setApiError("Something went wrong. Try again or consult a developer.")
           }
           clearTimeout(timeoutId); // Clear the loading timeout
   
@@ -71,13 +71,13 @@ const SimilarProducts = ({small}) => {
       );
     }
   
-    if (apiError) {
-      return (
+    // if (apiError) {
+    //   return (
 
-          <div className="absolute inset-0 flex items-center justify-center">{apiError}</div>
+    //       <div className="absolute inset-0 flex items-center justify-center">{apiError}</div>
 
-      );
-    }
+    //   );
+    // }
 
   
     return (

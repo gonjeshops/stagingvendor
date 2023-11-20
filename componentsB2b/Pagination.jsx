@@ -1,7 +1,7 @@
 import {MdKeyboardArrowRight, MdKeyboardArrowLeft} from 'react-icons/md'
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-  const pagesToShow = 5; // Number of page toggle buttons to display
+  const pagesToShow = 6; // Number of page toggle buttons to display
 
   const getPageNumbers = () => {
     const pageNumbers = [];

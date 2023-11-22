@@ -31,7 +31,7 @@ const SupplierCard = ({ label, item, details }) => {
         }
          className="border border-zinc-500 p-4 h-44 rounded-lg">
           { item?.logo?.thumbnail ? <div className="bg-yellow-500 h-full overflow-hidden rounded-md ">
-            <img src={item?.logo?.thumbnail} className='object-cover w-full h-full hover:scale-105 duration-300' />
+            <Image width={250} height={200} src={item?.logo?.thumbnail} className='object-cover w-full h-full hover:scale-105 duration-300' />
           </div> : 
           <div className="bg-green-600 text-green-700 h-full rounded-md flex w-full justify-center items-center ">
             <FaImage size={30} />

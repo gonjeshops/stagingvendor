@@ -13,14 +13,14 @@ const CreateQuoteBtn = () => {
       };
 
   return (
-    <button onClick={()=> {
+    <div onClick={()=> {
         if(totalQuantities ===0) {
             router?.push('/vendorb2b/suppliers')
         } else {
             openModal('createNewquotebtn')
         }
     } } 
-    className="bg-blue-600 mb-2 cursor-pointer sm:mb-0 px-4 py-2 rounded hover:bg-blue-700 duration-300 text-white relative">
+    className="hover-blue mb-2 cursor-pointer sm:mb-0 px-4 py-2 rounded relative">
         {`+ Create New Quote`}
         { totalQuantities !== 0 && <button onMouseOver={()=>setShow(1)} onClick={stopPropagation}
         className="bg-red-500 h-3 w-3 rounded-full absolute -right-1 -top-1 "></button>}
@@ -33,7 +33,7 @@ const CreateQuoteBtn = () => {
             <FaTimes/>
         </button>
         </div>}
-    </button>
+    </div>
   )
 }
 

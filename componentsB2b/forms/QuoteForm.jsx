@@ -24,11 +24,13 @@ const QuoteForm = () => {
     totalPrice,
     totalQuantities,clearCart,
     toggleCartItemQuanitity,
-    onRemove, quoteName, setQuoteName, shopName} = useB2Bcart
+    onRemove, quoteName, setQuoteName, shopName, } = useB2Bcart
 
   const [success, setSuccess] = useState('')
   const [reqError, setReqError] = useState('')
   const [errors, setErrors] = useState({});
+
+
 
   const handleSendQuote = async (e) => {
       e.preventDefault();
@@ -194,6 +196,8 @@ const QuoteForm = () => {
               <> 
                 <div className="px-">
                     {
+                      
+                                         
                       cartItems?.map((item, idx) => (
                         <GetQuoteProductCard key={item?.id} item={item} toggleCartItemQuanitity={toggleCartItemQuanitity} onRemove={onRemove}/>
                       ))
@@ -202,7 +206,7 @@ const QuoteForm = () => {
                     
                     <div className='flex justify-between items-center pt-4 font-medium text-lg'>
                       <p>Subtotal:</p>
-                      <p>${totalPrice}</p>
+                      <p>${totalPrice }</p>
                     </div>
                   </div>
                 </> 
@@ -241,7 +245,7 @@ const QuoteForm = () => {
         </div>
 
         <div className="relative">
-          <SimilarProducts small={true}/>
+          <SimilarProducts small={true} shop={cartItems[0]?.shop}/>
         </div>
 
       </div>

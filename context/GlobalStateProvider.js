@@ -11,7 +11,6 @@ const GlobalStateProvider = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState('');
   const [openNavSubmenu, setOpenNavSubmenu] = useState('');
-  const [cartItem, setCartItem] = useState([]);
   const [module, setModule] = useState({ moduleType: 'vendor', navLink: [] });
   const [user, setUser] = useState('')
   const [checkoutData, setCheckoutData] = useState('')
@@ -84,7 +83,6 @@ const GlobalStateProvider = ({ children }) => {
   const [active, setActive] = useState(1)
 
    
-
   const globalState = {
     user,
     logout,

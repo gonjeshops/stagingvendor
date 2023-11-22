@@ -69,7 +69,7 @@ const SuppliersDetails = ({supplierData, userId, shopId, }) => {
             <div className='min-h-96 w-full grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-4'>
                 {
                     products ? products?.map((item, i)=>(
-                        <ProductCard2 key={item.id} product={item} userId={userId} shopId={shopId} shopName={supplierData?.shop?.name}/>
+                        <ProductCard2 key={item.id} product={item} userId={supplierDetails?.owner_id} shopId={supplierDetails?.id} shopName={supplierData?.shop?.name}/>
                     )) 
                     : 
                     <div className='flex justify-center items-center w-full font-medium text-lg'>

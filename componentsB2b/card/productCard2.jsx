@@ -9,13 +9,14 @@ const ProductCard2 = ({product,  userId, shopId, }) => {
 const {description, image, gallery, name, discount, price, slug, shop_name, shop_id, id, shop} = product
 const router = useRouter()
 
-const {openModal, closeModal, useB2Bcart:{onAdd}, } = useGlobalState()
+const {openModal, closeModal, useB2Bcart:{onAdd},  } = useGlobalState()
+
 return (
 
     <div  className="w-full max-w-sm bg-light200 overflow-hidden rounded-lg border border-light300">
 
         <div className="relative bg-light300 overflow-hidden h-60 w-full"
-        onClick={()=>router.push(`/vendorb2b/products/${slug}?shopId=${shopId}&userId=${userId}&productId=${id}`)}
+        onClick={()=>router.push(`/vendorb2b/products/shop${slug}?shopId=${shopId || shop?.id}&userId=${userId || shop?.owner_id}&productId=${id}`)}
     >
        {image?.original ? <Image width={150} height={150} className="w-full h-full object-cover hover:scale-110 duration-300" src={image?.original} alt="product image" /> : <div className="centralize text-6xl text-zinc-600">
                 <FaImage />
@@ -59,7 +60,7 @@ return (
                 <button className="rounded hover-grey border py-1  px-2"
                 onClick={() => {
                     closeModal()
-                    router.push(`/vendorb2b/products/${slug}?shopId=${shopId}&userId=${userId}&productId=${id}&shop_name=${product?.shop_name}`)
+                    router.push(`/vendorb2b/products/${slug}?shopId=${shopId || shop?.id}&userId=${userId || shop?.owner_id}&productId=${id}&shop_name=${product?.shop_name}`)
                     const element = document.getElementById('top');
                     if (element) {
                       element.scrollIntoView({ behavior: 'smooth' });
@@ -73,7 +74,7 @@ return (
 
         <div className="rounded cursor-pointer hover-blue py-2  px-2 mb-2 mx-4 flex justify-center items-center gap-2" 
                 onClick={() => {
-                    onAdd(product, 1, product?.shop_name, shop_id, userId)
+                    onAdd(product, 1, product?.shop_name, userId, shopId)
                     openModal('quoteform')
                     // setSupplierDetails(shop)
                     const element = document.getElementById('top');

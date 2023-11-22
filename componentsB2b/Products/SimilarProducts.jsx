@@ -4,54 +4,68 @@ import { useEffect, useState } from 'react';
 import { viewSupplierShopProducts } from '../Api2';
 import { PageLoading } from '../Loader/Spinner/PageLoading';
 import { useGlobalState } from '@/context/GlobalStateContext';
+import Pagination from '../Pagination';
 
 
-const SimilarProducts = ({small}) => {
+
+const SimilarProducts = ({small, }) => {
     const router = useRouter();
-    const {supplierDetails} = useGlobalState()
+    const {supplierDetails, useB2Bcart:{shop} } = useGlobalState()
 
     const [supplierProducts, setSupplierProducts] = useState(null);
     const [apiError, setApiError] = useState(null);
     const [loadingTimeout, setLoadingTimeout] = useState(false);
     const [loading, setLoading] = useState(false);
 
+
     const userId = router?.query?.userId, shopId = router?.query?.shopId
+
+    let limit = 12;
+    const [page, setPage] = useState(1);
+
+    const [totalPages, setTotalPages] = useState(0);
  
+    const handlePageChange = (newPage) => {
+      setPage(newPage);
+    };
+
   
     useEffect(() => {
-      // Set a loading timeout of 8 seconds (8000 milliseconds)
       const timeoutId = setTimeout(() => {
         setLoadingTimeout(true);
       }, 8000);
 
       const fetchData = async () => {
+          try {
+            setLoading(true)
+            const response = await viewSupplierShopProducts(shop?.ownerId || userId, shop?.id || shopId,  page, limit);
 
-        try {
-          setLoading(true)
-          const response = await viewSupplierShopProducts(userId || supplierDetails?.owner_id, shopId || supplierDetails?.id);
-  
-          if (response?.status === 200) {
-            console.log("API Similar products response:", );
-            setSupplierProducts(response?.data?.data?.products);
-          } else {
-            setApiError("Something went wrong. Try again or consult a developer.")
+            console.log('=s', shop?.ownerId, '=' ,shop?.id, '=',  page, '=', limit, '=', shop)
+    
+            if (response?.status === 200) {
+              console.log("API Similar products response:", response?.data?.data?.products);
+
+              setSupplierProducts(response?.data?.data?.products);
+
+              setTotalPages(response?.data?.data?.total_pages)
+            } else {
+              setApiError("Something went wrong. Try again or consult a developer.")
+              console.error("Something went wrong.", response );
+            }
+            clearTimeout(timeoutId); 
+    
+          } catch (error) {
+            console.error("Catch error:", error);
+            setApiError("Server is not available. Try again or consult a developer.");
+            clearTimeout(timeoutId); 
+          } finally {
+            setLoading(false)
           }
-          clearTimeout(timeoutId); // Clear the loading timeout
-  
-        } catch (error) {
-          console.error("Catch error:", error);
-          setApiError("Server is not available. Try again or consult a developer.");
-          clearTimeout(timeoutId); // Clear the loading timeout
-        } finally {
-          setLoading(false)
         }
-      };
-  
-      fetchData();
-  
-      // Cleanup the timeout when the component unmounts
+     
+      fetchData();  
       return () => clearTimeout(timeoutId);
-    }, [userId, shopId]);
+    }, [page, shop?.ownerId]);
   
   
     if (loadingTimeout) {
@@ -83,19 +97,30 @@ const SimilarProducts = ({small}) => {
     return (
          <div >
             {
-              loading ? <div className="inset-0 flex justify-center items-center"> <PageLoading/></div> :
+               
               <>
                 <h4 className='font-medium pb-2 text-xl'>Products From The Same Shop </h4>
-                <div className={small ? 'w-full grid sm:grid-cols-2 h-[83vh] overflow-auto border rounded-lg p-2 2:grid-cols-3   gap-4' : ' min-h-96 w-full grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-4'}>
-                    {
-                      supplierProducts?.map((item, i)=>(
-                        <div key={item?.id}>
-                            <ProductCard2 product={item} userId={userId} shopId={shopId} targetId={'top'}/>
-                        </div>
-                        )) 
-                    }
+                { !loading ?
+                <div className={small ? 'w-full h-[83vh]  grid  overflow-hidden border gap-8 p-2' : ' min-h-96 w-full grid gap-8 overflow-hidden p-2 border'}>
+                      {/* product listing */}
+                      <div className={small ? 'w-full h-[100%] grid sm:grid-cols-2  overflow-auto  rounded-lg  2:grid-cols-3   gap-4' : ' h-[100%] w-full grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-4'}>
+                        {
+                          supplierProducts?.map((item, i)=>(
+                            <div key={item?.id}>
+                                <ProductCard2 product={item} userId={shop?.ownerId} shopId={shop?.id} targetId={'top'}/>
+                            </div>
+                            )) 
+                        }
 
+                    </div>
+
+                    <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />
                 </div>
+                  :
+                <div className="absolute inset-0 flex items-center justify-center">
+                <PageLoading/>
+              </div>
+            }
               </>
             }
          </div>

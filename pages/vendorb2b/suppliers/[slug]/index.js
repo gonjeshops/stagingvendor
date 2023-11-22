@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import Workspace from "@/componentsB2b/Workspace/Workspace";
 import SuppliersDetails from "@/componentsB2b/Suppliers/SuppliersDetails";
 import { viewSupplierShopProducts } from "@/componentsB2b/Api2";
 import { useRouter } from "next/router";
 import { PageLoading } from "@/componentsB2b/Loader/Spinner/PageLoading";
-import { useGlobalState } from "@/context/GlobalStateContext";
 import Pagination from "@/componentsB2b/Pagination";
 
 const SupplierDetailsPage = ({ userId, shopId, error }) => {
   const router = useRouter();
-  const {setSupplierDetails} = useGlobalState()
 
   const limit = 8;
   const page = parseInt(router.query.page) || 1;
@@ -19,6 +17,7 @@ const SupplierDetailsPage = ({ userId, shopId, error }) => {
   const [supplierData, setSupplierData] = useState(null);
   const [apiError, setApiError] = useState(null);
   const [loadingTimeout, setLoadingTimeout] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handlePageChange = (newPage) => {
     router.push(`/vendorb2b/suppliers/shop?userId=${userId}&shopId=${shopId}&page=${newPage}`);
@@ -32,28 +31,30 @@ const SupplierDetailsPage = ({ userId, shopId, error }) => {
 
     const fetchData = async () => {
       try {
+        setLoading(true)
         const response = await viewSupplierShopProducts(userId, shopId, page, limit);
 
         if (response.status === 200) {
           console.log("supplierData API response:", response?.data?.data);
           setSupplierData(response?.data?.data);
           setTotalPages(response?.data?.data?.total_pages)
-          setSupplierDetails(response?.data?.data?.shop)
+
         } else {
           setApiError("Something went wrong. Try again or consult a developer.");
         }
-        clearTimeout(timeoutId); // Clear the loading timeout
+        clearTimeout(timeoutId); 
 
       } catch (error) {
         console.error("Catch error:", error);
         setApiError("Server is not available. Try again or consult a developer.");
-        clearTimeout(timeoutId); // Clear the loading timeout
+        clearTimeout(timeoutId); 
+      } finally {
+        setLoading(false)
       }
     };
 
     fetchData();
 
-    // Cleanup the timeout when the component unmounts
     return () => clearTimeout(timeoutId);
   }, [userId, shopId, page]);
 
@@ -121,7 +122,8 @@ const SupplierDetailsPage = ({ userId, shopId, error }) => {
       : 
       <div className="absolute inset-0 flex items-center justify-center">
         <PageLoading/>
-        </div>}
+      </div>
+        }
     </Workspace>
   );
 };

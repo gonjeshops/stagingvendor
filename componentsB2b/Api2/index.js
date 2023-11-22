@@ -21,19 +21,58 @@ export const fetchSuppliersByPagination = (page, limit) => {
 
 
 // View a supplier shop's products.  usage - /suppliers/[supplierId]
-export const viewSupplierShopProducts = (userId, shopId, page, limit) => {
-  return axios({
-    method: "get",
-    headers: authHeader(),
-    url: url + `suppliers/${userId}/shop/${shopId}/products?page=${page}&limit=${limit}`,
-  })
-    .then((response) => { 
-      console.log('API SHOP DETAILS====', response)
-      return response})
-    .catch((error) => {
-      console.log("Error in viewSupplierShopProducts api", error);
+export const viewSupplierShopProducts = async (userId, shopId, page, limit) => {
+  try {
+    // Validate inputs
+    if (!userId || !shopId || !page || !limit) {
+      console.error('Invalid input data. Please provide valid userId, shopId, page, and limit.');
+      return Promise.reject(new Error('Invalid input data.'));
+    }
+
+    console.log('API SHOP DETAILS Request Params:', { userId, shopId, page, limit });
+
+    const response = await axios({
+      method: 'get',
+      headers: authHeader(),
+      url: `${url}suppliers/${userId}/shop/${shopId}/products?page=${page}&limit=${limit}`,
     });
+
+    console.log('API SHOP DETAILS Response:', response);
+
+    if (response?.status === 200) {
+      console.log("API Similar products response:", response?.data?.data?.products);
+      console.log('API SHOP DETAILS Request Params:', { userId, shopId, page, limit });
+      return response;
+    } else {
+      console.error("API Error: Something went wrong.", response);
+      throw new Error(`Something went wrong. Server responded with ${response?.status}`);
+    }
+  } catch (error) {
+    console.log('API SHOP DETAILS Request Params:', { userId, shopId, page, limit });
+    console.error('Error in viewSupplierShopProducts API:', error);
+
+    // Handle specific axios errors
+    if (axios.isAxiosError(error)) {
+      // Handle different axios error statuses
+      if (error.response) {
+        console.log('API SHOP DETAILS Request Params:', { userId, shopId, page, limit });
+        console.error('Server responded with:', error.response.status, error.response.data, '==', userId, '==', shopId);
+        return Promise.reject(new Error(`Server responded with ${error.response.status}: ${error.response.data}`));
+      } else if (error.request) {
+        console.error('No response received from the server.');
+        return Promise.reject(new Error('No response received from the server.'));
+      } else {
+        console.error('Error setting up the request:', error.message);
+        return Promise.reject(new Error(`Error setting up the request: ${error.message}`));
+      }
+    }
+
+    console.error('An unexpected error occurred:', error);
+    return Promise.reject(new Error('An unexpected error occurred.'));
+  }
 };
+
+
 
 
 

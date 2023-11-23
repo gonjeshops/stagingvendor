@@ -167,16 +167,16 @@ Link {
   background-color: var(--light300);
 }
 .bg-hover300 {
-  @apply  hover:bg-[var(--light300)] duration-300
+  @apply  cursor-pointer hover:bg-[var(--light300)] duration-300
 }
 .bg-hover200 {
-  @apply hover:bg-[var(--light200)] duration-300
+  @apply cursor-pointer hover:bg-[var(--light200)] duration-300
 }
 .bg-hover100 {
-  @apply hover:bg-[var(--light100)] duration-300
+  @apply cursor-pointer hover:bg-[var(--light100)] duration-300
 }
 .hover-grey {
-  @apply bg-[var(--light200)] hover:bg-[var(--light300)] duration-300
+  @apply cursor-pointer bg-[var(--light200)] hover:bg-[var(--light300)] duration-300
 }
 
 
@@ -229,12 +229,23 @@ Link {
 .hover-red{
   @apply bg-red-600 hover:bg-red-700 duration-300 text-white
 }
-
+.text-gray{
+  @apply text-gray-500
+}
 
 
 .hover-green{
   @apply bg-green-600 hover:bg-green-800 duration-300 text-white
 }
+
+
+.disable{
+  @apply bg-gray-400 text-gray-600 cursor-not-allowed
+}
+
+
+
+
 /* .bg-gonje-gradient {
   background: rgb(2,0,36);
   background: linear-gradient(163deg, rgba(2,0,36,1) 0%, rgba(9,121,86,1) 0%, rgba(7,123,83,1) 0%, rgba(4,154,163,1) 51%, rgba(0,47,107,1) 100%);

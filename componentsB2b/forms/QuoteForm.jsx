@@ -1,4 +1,4 @@
-import  {  useState } from 'react';
+import  {  useState, useEffect } from 'react';
 import ModalCentral from '../Modal/ModalCentral';
 import { FaTimes, FaTrashAlt } from 'react-icons/fa';
 import { createQuoteRequest, createQuoteWithSendStatus, } from '../Api2';
@@ -14,9 +14,16 @@ import { MdSendAndArchive } from 'react-icons/md';
 
 
 const QuoteForm = () => {
-  const {user, useB2Bcart, closeModal, setActive, supplierDetails} = useGlobalState();
+  const {user, useB2Bcart, closeModal, setActive, supplierDetails, editQuote, setEditQuote} = useGlobalState();
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+
+    
+  }, [editQuote?.id])
+  
+
   
 
   const {
@@ -120,6 +127,8 @@ const QuoteForm = () => {
         console.log("createQuoteRequest API  response:", response);
         setSuccess('Quote resquest was successfull.')
         toast.success('Quote resquest was successfull.')
+        setQuoteName('')
+        clearCart()
         setTimeout(() => {
           router.push('/vendorb2b/workspace/forcasted-quotes')
         }, 1000);
@@ -134,18 +143,40 @@ const QuoteForm = () => {
       toast.error('Server error.')
     } finally{
       setErrors('');
-      setQuoteName('')
-      clearCart()
       setLoading(false)
     }    
   };
 
+  const [popup, setPopup] = useState(false)
 
   return (
   
       <div className="mx-auto relative w-full h-[95vh]  overflow-auto rounded-md py-8 px-4 bg-light100 grid lg:grid-cols-2 gap-4">
-       <FaTimes size={14} onClick={closeModal} className="absolute right-6 top-6 z-50   hover:scale-105 duration-300 cursor-pointer" />
-       <div> 
+
+       <FaTimes size={14} onClick={()=>{
+        if(editQuote?.id){
+          setPopup(true)
+       } else {
+        closeModal()
+       }
+       }} className="absolute right-6 top-6 z-50   hover:scale-105 duration-300 cursor-pointer" />
+
+       {popup && <div className="z-50 w-60 p-4 rounded bg-light200 shadow text text-center absolute right-6 top-14">
+            <p>Do you want to discard quote?</p>  
+            <div className='pt-4 flex justify-center items-center gap-2'>
+                <button className="px-2 hover-blue">No</button>   
+
+                <button onClick={
+                  ()=>{
+                  closeModal()
+                  setEditQuote({})
+                  clearCart()
+                }} className="px-2 hover-red">Yes</button>   
+            </div>      
+            </div>} 
+
+
+       <div>
             <div className="flex px-4 justify-between items-center text-xl font-semibold pb-4">
               <h4>Quote Request</h4>
               <p className="text-sm text-blue-400">{supplierDetails?.name}</p>

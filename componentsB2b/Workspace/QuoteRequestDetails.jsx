@@ -12,12 +12,12 @@ export const DisabledBtn = ({ control, route, quoteData }) => {
   const router = useRouter();
   const { setCheckoutData, useB2Bcart:{} } = useGlobalState();
   const buttonClass = control
-    ? 'bg-blue-300 cursor-not-allowed'
+    ? 'disable'
     : 'hover-blue';
 
   return (
     <button 
-      className={`rounded text-white py-2 px-8 ${buttonClass}`}
+      className={`rounded py-3 px-8 ${buttonClass}`}
       disabled={control}
       onClick={()=>{
         setCheckoutData(quoteData)
@@ -32,7 +32,7 @@ export const DisabledBtn = ({ control, route, quoteData }) => {
 const QuoteRequestDetails = ({ content, data }) => {
   console.log('FETCHED QUOTE DATA=', data);
 
-  const {useB2Bcart:{quoteCartcalculator}} = useGlobalState()
+  const {openModal, editQuote, setEditQuote, useB2Bcart:{quoteCartcalculator}} = useGlobalState()
  
 
   const [quoteData, setQuoteData] = useState(data);
@@ -42,8 +42,6 @@ const QuoteRequestDetails = ({ content, data }) => {
   const [quoteProducts, setQuoteProducts] = useState([])
   const [calculatedSubtotal, setSubtotal] = useState(0)
   const [quoteQuantity, setQty] = useState(0)
-
- 
 
   useEffect(() => {
     if (data) {
@@ -73,35 +71,48 @@ const QuoteRequestDetails = ({ content, data }) => {
     <div className='pb-20 px-4 space-y-8'>
         {/* <ProductDetailsModal isOpen={isOpen} closeModal={()=>setIsOpen(false)}  product={eachProduct}/> */}
       <div>
-        <DashboardHeading>Request details for {quoteData?.quote_number}</DashboardHeading>
+        <DashboardHeading>Quote Request Details</DashboardHeading>
+
+          <p className='text- pb-2'>Quote Number: <span className='text-dark100 font-medium capitalize'> {quoteData?.quote?.quote_number}</span></p>
         <div className="flex pb-2 gap-2 justify-between items-center flex-wrap">
-          <p className='text-lg'>Quote Name: <span className='text-blue-600 font-medium capitalize'>{quoteData?.quote?.quote_name}</span></p>
-          <p className='text-lg capitalize'>Shop: <span className='text-blue-600 font-medium'>{quoteData?.quote?.shop_name}</span></p>
+          <p className='text- '>Quote Name: <span className='text-dark100 font-medium capitalize'>{quoteData?.quote?.quote_name}</span></p>
+          <p className='text-  capitalize'>Shop: <span className='text-dark100 font-medium'>{quoteData?.quote?.shop_name}</span></p>
         </div>
+
         <div className="flex pb-3 gap-2 justify-between items-center flex-wrap">
-          <p className='text-lg'>Status: <span className='text-blue font-'>{quoteData?.quote?.status}</span></p>
-          {quoteData?.quote?.updated_at && <p className='text-lg'>Updated at: <span className='text-blue-600 font-'>{formatDate(new Date(quoteData?.quote.updated_at))}</span></p>}
-          <p className='text-lg'>Created at: <span className='text-blue-600 font-'>{  formatDate(new Date(quoteData?.quote?.created_at))}</span></p>
+          <p className='text-'>Status: <span className='text-dark100 font-'>{quoteData?.quote?.status}</span></p>
+          {quoteData?.quote?.updated_at && <p className='text-'>Updated at: <span className='text-dark100 font-'>{formatDate(new Date(quoteData?.quote.updated_at))}</span></p>}
+          <p className='text-'>Created at: <span className='text-dark100 font-'>{  formatDate(new Date(quoteData?.quote?.created_at))}</span></p>
         </div>
 
         <div className="flex justify-end border-t pt-3 items-center gap-6 flex-wrap">
           <div className="flex gap-6 items-center justify-end">
-          <div className="flex gap-1 items-center">
+
+          {quoteData?.quote.status !=='SENT' && <button onClick={()=>{
+                openModal('quoteform')
+                setEditQuote(quoteData?.quote)
+                }}
+                className=" text-hover-blue flex gap-1 items-center"
+                >
               <FaFile />
-              <button>Edit</button >
-            </div>
-            <div className="flex gap-1 items-center">
+              <p className='' > Edit Quote </p >
+            </button>}
+
+            {/* <div className="flex gap-1 items-center">
               <FaTrashAlt />
               <button >Delete</button >
-            </div>
-            <div className="flex gap-1 items-center">
+            </div> */}
+
+            <button className="flex gap-1 items-center">
               <FaPrint />
-              <p>Print</p>
-            </div>
-            <div className="flex gap-1 items-center">
+              <p>Print Quote</p>
+            </button>
+
+            <button className="flex gap-1 items-center">
               <FaRedo />
-              <p>Refund</p>
-            </div>
+              <p>Refresh Quote</p>
+            </button>
+
             {/* <div className="flex gap-3 items-center">
               <p>More action</p>
               <FaEllipsisV/>
@@ -163,8 +174,9 @@ const QuoteRequestDetails = ({ content, data }) => {
           </div>
         </div>
 
-        <div className="lg:col-span-1">
-          <div className="w-full bg-light200 px-6 py-8 rounded-lg ">
+        <div className="lg:col-span-1 mb-4">
+
+          <div className="w-full shadow-sm bg-light200 px-6 py-8 rounded-lg ">
             <h4 className="font-medium text-lg pb-6">Summary</h4>
             <div className="grid gap-3 py-4 border-y">
               {  summaryItems.map((item, index) => (
@@ -179,7 +191,27 @@ const QuoteRequestDetails = ({ content, data }) => {
               <p>${total}</p>
             </div>
           </div>
+
+          <div className="mt-8 shadow-sm">
+            <div className=' col-span-1 bg-light200 rounded-lg w-full px-6 py-8 space-y-3'>
+              <ChangeQuoteStatusForm
+                status={quoteData?.quote?.status} quoteData={quoteData} quoteQuantity={quoteQuantity} reason={quoteData?.quote?.reason}  setQuoteData={setQuoteData}
+              />
+              <DisabledBtn control={quoteData?.quote?.status !== 'ACCEPTED'} route={'/vendorb2b/workspace/invoices'} 
+              quoteData={
+                { 
+                  calculatedSubtotal, 
+                  quoteName: quoteData?.quote?.quote_name, 
+                  quoteId: quoteData?.quote?.id, 
+                  quoteNumber: quoteData?.quote?.quote_number, 
+                  quantity: quoteData?.quote?.quantity,  
+                }
+                } />
+            </div>
         </div>
+
+        </div>
+
       </div>
 
       <div className="flex flex-col-reverse md:grid grid-cols-2 lg:grid-cols-3 gap-8">
@@ -187,6 +219,7 @@ const QuoteRequestDetails = ({ content, data }) => {
           <div className="sm:grid-cols-2 md:grid-cols-1 lg:col-span-2 grid gap-6 lg:grid-cols-2">
             <div className="grid gap-4">
               <h4 className="text-lg font-medium">Billing Details</h4>
+              
               {content.billingDetails.map(({ title, value, icon }, i) => (
                 <div key={i} className="flex gap-2 items-center">
                   <div className="pt-1">{icon}</div>
@@ -196,6 +229,7 @@ const QuoteRequestDetails = ({ content, data }) => {
                   </div>
                 </div>
               ))}
+
             </div>
             <div className="grid gap-4">
               <h4 className="text-lg font-medium">Shipping Details</h4>
@@ -210,40 +244,10 @@ const QuoteRequestDetails = ({ content, data }) => {
               ))}
             </div>
           </div>
-          {/* <div className="col-span-1 w-full grid gap-4">
-            <h4 className="text-lg font-medium">Other Details</h4>
-            {content.otherDetails.map(({ title, value, icon }, i) => (
-              <div key={i} className="flex gap-2 items-center">
-                <div className="pt-1">{icon}</div>
-                <div>
-                  <h5 className='font-medium pb-2'>{title}</h5>
-                  <p className='text-blue-600 text-[11px]'>{value}</p>
-                </div>
-              </div>
-            ))}
-          </div> */}
+          
         </div>
-        <div className="">
-          <div className=' col-span-1 bg-light200 rounded-lg w-full px-6 py-8 space-y-3'>
-            
-          <ChangeQuoteStatusForm
-              status={quoteData?.quote?.status} quoteData={quoteData} quoteQuantity={quoteQuantity} reason={quoteData?.quote?.reason}  setQuoteData={setQuoteData}
-             />
 
-
-
-            <DisabledBtn control={quoteData?.quote?.status !== 'ACCEPTED'} route={'/vendorb2b/workspace/invoices'} 
-            quoteData={
-              { 
-                calculatedSubtotal, 
-                quoteName: quoteData?.quote?.quote_name, 
-                quoteId: quoteData?.quote?.id, 
-                quoteNumber: quoteData?.quote?.quote_number, 
-                quantity: quoteData?.quote?.quantity,  
-              }
-              } />
-          </div>
-        </div>
+       
       </div>
     </div>
   );

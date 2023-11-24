@@ -39,6 +39,8 @@ const Accounting = () => {
     "my/transactions",
     fetcher
   );
+  if (!AccountingData) return 'loading...'
+
   console.log(AccountingData.data.transactions, error)
   return (
     <section>

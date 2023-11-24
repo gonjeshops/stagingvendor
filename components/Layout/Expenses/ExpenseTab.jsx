@@ -1,6 +1,8 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import useSWR from 'swr'
+
+
+///////////////
+import {fetcher} from '@/fetcher'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RequestTable } from "./RequestTable";
 import { productColumns } from "./columns";
@@ -127,7 +129,11 @@ const ExpenseTabs = () => {
       paymentMethod: "Debit Card",
     },
   ];
-
+  const { data:RequestData, error:RequestDataError, isLoading } = useSWR(
+    "view/vendor/products",
+    fetcher
+  );
+  console.log(RequestData, RequestDataError)
   return (
     <Tabs defaultValue="request" className="">
       <TabsList className="grid max-w-lg grid-cols-2 bg-white rounded-md h-16 mx-auto">

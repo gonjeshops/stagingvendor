@@ -102,8 +102,8 @@ export default Sales;
 
 const NumberCards = () => {
   return (
-    <div className="w-[330px] md:w-[300px] px-10 py-12 bg-white shadow rounded-md">
-      <div className="flex flex-col items-center justify-center text-xl font-semibold space-y-4">
+    <div className="w-[330px] md:w-[280px] px-10 py-12 bg-white shadow rounded-md">
+      <div className="flex flex-col items-center justify-center text-lg font-semibold space-y-4">
         <h2>Projected Revenue</h2>
         <div className="bg-gonje rounded-full h-20 w-20 flex items-center justify-center">
           <p>2133</p>

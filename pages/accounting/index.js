@@ -3,10 +3,10 @@ import {
   columns,
   AccountingType,
 } from "@/components/Layout/Accounting/columns";
-import React from "react";
-
+import useSWR from 'swr'
+import {fetcher} from '@/fetcher'
 const Accounting = () => {
-  const AccountingData = [
+  const AccountingDataTest = [
     {
       transactionId: "1",
       invoiceId: "INV-001",
@@ -35,10 +35,16 @@ const Accounting = () => {
       paymentMethod: "Credit Card",
     },
   ];
+  const { data:AccountingData, error, isLoading } = useSWR(
+    "my/transactions",
+    fetcher
+  );
+  if (!AccountingData) return 'loading...'
 
+  console.log(AccountingData.data.transactions, error)
   return (
     <section>
-      <DataTable columns={columns} data={AccountingData} />
+      <DataTable columns={columns} data={AccountingData.data.transactions} />
     </section>
   );
 };

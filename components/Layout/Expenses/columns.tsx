@@ -64,7 +64,7 @@ export const productColumns: ColumnDef<ProductType>[] = [
       const { productName } = row.original;
       return (
         <div>
-          <RequestModal />
+          <RequestModal/>
         </div>
       );
     },

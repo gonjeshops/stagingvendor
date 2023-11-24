@@ -33,9 +33,7 @@ export const RequestModal = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="p-3  bg-gonje-green capitalize">
-          Request for Quote
-        </Button>
+        <Button className="p-3  bg-gonje-green capitalize">Request</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -66,6 +64,17 @@ export const RequestModal = () => {
               <SelectItem value="system">Bags</SelectItem>
             </SelectContent>
           </Select>
+          <Input
+            id="delivery_date"
+            className="bg-gonje h-12"
+            placeholder="Delivery Date"
+          />
+          <Input
+            id="email"
+            className="bg-gonje h-12"
+            placeholder="Email Address"
+          />
+          <Input id="Amount" className="bg-gonje h-12" placeholder="Amount" />
         </div>
         <DialogFooter>
           <Button type="submit" className="bg-gonje-green text-white w-full">

@@ -77,7 +77,7 @@ const UploadImages = ({
               <div {...getRootProps()}>
                 <input {...getInputProps()} />
                 <p>{subTitle}</p>
-                <div className="upload">
+                <div className="m-6 rounded border border-dashed border-[#ccc] py-12 flex flex-col items-center ">
                   <Image src={UploadSvg} alt="" height={50} width={50} />
                   <p>
                     <span>Upload an image </span> Or Drag and drop

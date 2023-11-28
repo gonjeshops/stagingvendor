@@ -151,7 +151,7 @@ const QuoteForm = () => {
 
   return (
   
-      <div className="mx-auto relative w-full h-[95vh]  overflow-auto rounded-md py-8 px-4 bg-light100 grid lg:grid-cols-2 gap-4">
+      <div className="mx-auto relative w-full h-screen lg:h-[95vh]  overflow-auto rounded-md py-8 px-4 bg-light100 grid lg:grid-cols-2 gap-4">
 
        <FaTimes size={14} onClick={()=>{
         if(editQuote?.id){

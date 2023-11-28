@@ -1,5 +1,6 @@
 import { fetchQuoteDetails } from '@/componentsB2b/Api2';
 import InvoiceDetails from '@/componentsB2b/Invoices/InvoiceDetails';
+import LoadingTimeout from '@/componentsB2b/Loader/LoadingTimeout';
 import { PageLoading } from '@/componentsB2b/Loader/Spinner/PageLoading';
 import Workspace from '@/componentsB2b/Workspace/Workspace';
 import { useRouter } from 'next/router';
@@ -52,31 +53,16 @@ const InvoiceDetailsPage = ({ invoiceId }) => {
     }, [invoiceId]);
 
 
-    if (!invoiceId) {
-        return (
-          <Workspace>
-            <div className="absolute inset-0 flex items-center justify-center">
-              Error: There's an error feedback from the server. Refresh the page or consult the developer.
-            </div>
-          </Workspace>
-        );
-      }
+
+
       if (loadingTimeout) {
         return (
           <Workspace>
-                <div className='absolute inset-0 flex flex-col gap-4 items-center justify-center text-center'>
-                  { console.log('loadingTimeout==', loadingTimeout)}
-                    <p className="text-lg font-semibold">
-                    Server is not responding. Please choose an action:
-                    </p>
-                    <div className="flex items-center gap-4">
-                      <button className='hover-blue rounded py-2 px-4' onClick={() => router.back()}>Go Back</button>
-                      <button className='hover-blue rounded py-2 px-4' onClick={() => window.location.reload()}>Reload</button>
-                    </div>
-                </div>
+                <LoadingTimeout/>
           </Workspace>
         );
       }
+
       if (apiError) {
         return (
           <Workspace>

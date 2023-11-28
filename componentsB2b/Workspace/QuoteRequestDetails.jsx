@@ -6,6 +6,7 @@ import { useGlobalState } from '@/context/GlobalStateContext';
 import { truncateText } from '@/lib/truncateText';
 import { formatDate } from '@/lib/formatDate';
 import ChangeQuoteStatusForm from '../forms/ChangeQuoteStatusForm';
+import { AddressDetails } from '../Order/OrderDetails';
 
 
 export const DisabledBtn = ({ control, route, quoteData }) => {
@@ -66,6 +67,10 @@ const QuoteRequestDetails = ({ content, data }) => {
 
   const [isOpen, setIsOpen] = useState(false)
   const [eachProduct, setEachProduct] = useState('')
+
+  const address = data?.quote?.shipping_details;
+  const billing = data?.quote?.billing_details;
+
 
   return (
     <div className='pb-20 px-4 space-y-8'>
@@ -217,32 +222,17 @@ const QuoteRequestDetails = ({ content, data }) => {
       <div className="flex flex-col-reverse md:grid grid-cols-2 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 grid">
           <div className="sm:grid-cols-2 md:grid-cols-1 lg:col-span-2 grid gap-6 lg:grid-cols-2">
-            <div className="grid gap-4">
+            
+          <div className="">
               <h4 className="text-lg font-medium">Billing Details</h4>
-              
-              {content.billingDetails.map(({ title, value, icon }, i) => (
-                <div key={i} className="flex gap-2 items-center">
-                  <div className="pt-1">{icon}</div>
-                  <div>
-                    <h5 className='font-medium pb-2'>{title}</h5>
-                    <p className='text-blue-600 text-[11px]'>{value}</p>
-                  </div>
-                </div>
-              ))}
-
+              <AddressDetails address={billing}/>
             </div>
-            <div className="grid gap-4">
+            <div className="">
               <h4 className="text-lg font-medium">Shipping Details</h4>
-              {content.shippingDetails.map(({ title, value, icon }, i) => (
-                <div key={i} className="flex gap-2 items-center">
-                  <div className="pt-1">{icon}</div>
-                  <div>
-                    <h5 className='font-medium pb-2'>{title}</h5>
-                    <p className='text-blue-600 text-[11px]'>{value}</p>
-                  </div>
-                </div>
-              ))}
+              <AddressDetails address={address}/>
             </div>
+            
+
           </div>
           
         </div>

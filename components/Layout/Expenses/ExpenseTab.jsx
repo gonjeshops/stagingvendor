@@ -133,7 +133,8 @@ const ExpenseTabs = () => {
     "view/vendor/products",
     fetcher
   );
-  console.log(RequestData, RequestDataError)
+  if (!RequestData) return 'loading...'
+  // console.log(RequestData, RequestDataError)
   return (
     <Tabs defaultValue="request" className="">
       <TabsList className="grid max-w-lg grid-cols-2 bg-white rounded-md h-16 mx-auto">
@@ -145,7 +146,7 @@ const ExpenseTabs = () => {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="request">
-        <RequestTable columns={productColumns} data={dummyProducts} />
+        <RequestTable columns={productColumns} data={RequestData.data.products} />
       </TabsContent>
       <TabsContent value="receivedRequest">
         <ReceivedTable columns={ReceivedColumns} data={InvoicingData} />

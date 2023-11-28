@@ -1,4 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
+import Image from "next/image";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -20,8 +21,79 @@ import { ColumnDef } from "@tanstack/react-table";
 //   "created_at": "2023-10-23 15:24:16",
 //   "updated_at": "2023-11-02 06:27:17"
 // }
+
+function getCreditCardLogo(name) {
+  switch (name) {
+    case "Klarna":
+      return (
+        <Image
+          src="/credit-cards/klarna.png"
+          alt="Klarna Logo"
+          fill={true}
+          className="object-contain"
+        />
+      );
+    case "Stripe":
+      return (
+        <Image
+          src="/credit-cards/stripe.png"
+          alt="Stripe Logo"
+          fill={true}
+          className="object-contain"
+        />
+      );
+    case "apple pay":
+      return (
+        <Image
+          src="/credit-cards/applepay.png"
+          alt="Apple Pay Logo"
+          fill={true}
+          className="object-contain"
+        />
+      );
+    case "zip pay":
+      return (
+        <Image
+          src="/credit-cards/zippay.png"
+          alt="Zip Pay Logo"
+          fill={true}
+          className="object-contain"
+        />
+      );
+    case "paypal":
+      return (
+        <Image
+          src="/credit-cards/paypal.png"
+          alt="PayPal Logo"
+          fill={true}
+          className="object-contain"
+        />
+      );
+    case "afterpay":
+      return (
+        <Image
+          src="/credit-cards/afterpay.png"
+          alt="Afterpay Logo"
+          fill={true}
+          className="object-contain"
+        />
+      );
+    case "google pay":
+      return (
+        <Image
+          src="/credit-cards/googlepay.png"
+          alt="Google Pay Logo"
+          fill={true}
+          className="object-contain"
+        />
+      );
+    default:
+      return null;
+  }
+}
+
 export type AccountingType = {
-  transactionId: string;
+  transaction_id: string;
   // invoiceId: string;
   // orderId: string;
   customer_name: string;
@@ -31,7 +103,7 @@ export type AccountingType = {
 };
 export const columns: ColumnDef<AccountingType>[] = [
   {
-    accessorKey: "transactionId",
+    accessorKey: "transaction_id",
     header: "Transaction ID",
   },
   // {
@@ -49,6 +121,14 @@ export const columns: ColumnDef<AccountingType>[] = [
   {
     accessorKey: "amount",
     header: "Amount",
+    cell: ({ row }) => {
+      const amount = parseFloat(row.getValue("amount"));
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "aud",
+      }).format(amount);
+      return <p className="font-medium">{formatted}</p>;
+    },
   },
   {
     accessorKey: "transaction_date",
@@ -57,5 +137,16 @@ export const columns: ColumnDef<AccountingType>[] = [
   {
     accessorKey: "payment_method",
     header: "Payment Method",
-  }
+    cell: ({ row }) => {
+      const { payment_method } = row.original;
+      return (
+        <div className="flex items-center gap-x-4">
+          <p className="font-medium">{payment_method}</p>
+          <div className="w-12 h-12 relative">
+            {getCreditCardLogo(payment_method)}
+          </div>
+        </div>
+      );
+    },
+  },
 ];

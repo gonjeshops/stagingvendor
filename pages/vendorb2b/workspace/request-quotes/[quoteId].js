@@ -1,5 +1,6 @@
-
 import { fetchQuoteDetails } from '@/componentsB2b/Api2';
+import { PageLoading } from '@/componentsB2b/Loader/Spinner/PageLoading';
+import Pagination from '@/componentsB2b/Pagination';
 import QuoteRequestDetails from '@/componentsB2b/Workspace/QuoteRequestDetails';
 import Workspace from '@/componentsB2b/Workspace/Workspace';
 import { useRouter } from 'next/router';
@@ -16,38 +17,37 @@ console.log(error)
     const [quoteData, setQuoteData] = useState(null);
     const [apiError, setApiError] = useState(null);
     const [loadingTimeout, setLoadingTimeout] = useState(false);
+    const [loading, setLoading] = useState(false)
   
+    const [refresh, setRefresh] = useState(null)
   
     useEffect(() => {
-      // Set a loading timeout of 8 seconds (8000 milliseconds)
       const timeoutId = setTimeout(() => {
         setLoadingTimeout(true);
       }, 8000);
+      setLoading(true)
   
       const fetchData = async () => {
         try {
           const response = await fetchQuoteDetails(quoteId);
-  
           if (response.status === 200) {
-            console.log("API response:", response);
             setQuoteData(response?.data);
           } else {
             setApiError("Something went wrong. Try again or consult a developer.");
           }
-          clearTimeout(timeoutId); // Clear the loading timeout
-  
         } catch (error) {
           console.error("Catch error:", error);
           setApiError("Server is not available. Try again or consult a developer.");
-          clearTimeout(timeoutId); // Clear the loading timeout
+        } finally{
+          clearTimeout(timeoutId);
+          setLoading(false)
         }
       };
   
       fetchData();
   
-      // Cleanup the timeout when the component unmounts
       return () => clearTimeout(timeoutId);
-    }, [quoteId]);
+    }, [quoteId, refresh]);
 
 
     if (!quoteId) {
@@ -78,101 +78,26 @@ console.log(error)
         );
       }
 
-
-    // =================================
-
-
-    const quoteDetails = 
-        {
-            quoteId: quoteId,
-            customerId: 2362847,
-            product: [
-                {
-                    imageUrl: 1,
-                    details: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam illum natus dolorem eius quaerat beatae eos consequuntur ipsum? Sed autem recusandae sunt magni nemo expedita omnis ducimus voluptates similique.`,
-                    price: 0.60,
-                    quantity: 2,
-                },
-                {
-                    imageUrl: 2,
-                    details: `Description2 Lorem ipsum dolor  similique.`,
-                    price: 9.99,
-                    quantity: 1,
-                },
-            ],
-            itemsSubtotal: 11.19,
-            billingDetails: [
-                {title: 'Customer', value: quoteData?.quote?.user_name, icon: <FaUser/> },
-                {title: 'Email', value: quoteData?.quote?.billing_details?.email, icon: <FaEnvelope/> },
-                {title: 'Phone', value: quoteData?.quote?.billing_details?.phone, icon: <FaPhone/> },
-                {title: 'Post code', value: quoteData?.quote?.billing_details?.postcode, icon: <FaPhone/> },
-                {title: 'Address', value: quoteData?.quote?.billing_details?.address, icon: <FaMapMarkerAlt/> },
-            ],
-            shippingDetails: [
-                {title: 'Email', value: quoteData?.quote?.shipping_details?.email, icon: <FaEnvelope/> },
-                {title: 'Phone', value: quoteData?.quote?.shipping_details?.phone, icon: <FaPhone/> },
-                {title: 'Shippping Date', value: quoteData?.quote?.shipping_details?.date, icon: <FaCalendarAlt/> },
-                {title: 'Address', value: quoteData?.quote?.shipping_details?.address, icon: <FaMapMarkerAlt/> },
-            ],
-            otherDetails: [
-                {title: 'Gift Order', value: `Yes`, icon: <FaGift/> },
-                {title: 'Wrapping', value: `Magic wrapper`, icon: <FaBox/> },
-                {title: 'Shippping Date', value: `12 APril 2023`, icon: <FaCalendarAlt/> },
-                {title: 'Gift Messsage', value: `Happy birthday message Shinya, Lots of love`,  icon: <FaComment/> },
-            ],
-            summary: [
-                {
-                    title: `Items Subtotal:`,
-                    value: 691
-                },
-                {
-                    title: `Discount:`,
-                    value: 59
-                },
-                {
-                    title: `Tax:`,
-                    value: 126
-                },
-                {
-                    title: `Subtotal:`,
-                    value: 740
-                },
-                {
-                    title: `Shipping Cost:`,
-                    value: 30
-                },
-            ],
-            status: ['Draft', '', '']
-        }
-    
-
   if (router.isFallback) {
-    return <div>Loading...</div>;
+    return <div><PageLoading/></div>;
   }
 
-//   if (!quote || undefined) {
-//     return <div>Course not found</div>;
-//   }
-
   return (
-
         <Workspace>
-            <QuoteRequestDetails content={quoteDetails} data={quoteData}/>
+            {!loading ? 
+              <QuoteRequestDetails data={quoteData} setRefresh={setRefresh}/> : 
+              <div className="absolute inset-0 flex items-center justify-center">
+                  <PageLoading/>
+              </div>
+            }
         </Workspace>
-
-
-
   )
 };
 
 export async function getServerSideProps({params}) {
     try {
       const { quoteId} = params;
-      
-  
-    //   if (!quoteId || isNaN(quoteId) ) {
-    //     throw new Error("Invalid quoteId.");
-    //   }
+
   
       return { props: { quoteId: parseInt(quoteId) } };
     } catch (error) {

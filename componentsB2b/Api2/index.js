@@ -274,9 +274,15 @@ export const updateQuoteRequest = (values, quoteId) => {
     headers: authHeader(),
     url: url + `update/quote/request/${quoteId}`,
     data: {
-      status: values.status,
-      quantity: values.quantity,
-      reason: values.reason,
+      "status": values?.status,
+      "reason": values?.reason,
+      "cart_items": values?.cart_items,
+      "quote_name": values?.quote_name,
+      "subtotal": values?.subtotal,
+      "quantity": values?.quantity,
+      "shop_name": values?.shop_name,
+      "user_name": values?.user_name,
+      "user_id": values?.user_id,
     },
   })
     .then((response) => {

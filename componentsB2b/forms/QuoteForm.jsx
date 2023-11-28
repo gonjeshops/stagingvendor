@@ -18,20 +18,12 @@ const QuoteForm = () => {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-
-    
-  }, [editQuote?.id])
-  
-
-  
-
   const {
     cartItems,
     totalPrice,
     totalQuantities,clearCart,
     toggleCartItemQuanitity,
-    onRemove, quoteName, setQuoteName, shopName, } = useB2Bcart
+    onRemove, quoteName, setQuoteName, shopName, shop} = useB2Bcart
 
   const [success, setSuccess] = useState('')
   const [reqError, setReqError] = useState('')
@@ -147,38 +139,17 @@ const QuoteForm = () => {
     }    
   };
 
-  const [popup, setPopup] = useState(false)
 
   return (
   
       <div className="mx-auto relative w-full h-screen lg:h-[95vh]  overflow-auto rounded-md py-8 px-4 bg-light100 grid lg:grid-cols-2 gap-4">
 
-       <FaTimes size={14} onClick={()=>{
-        if(editQuote?.id){
-          setPopup(true)
-       } else {
-        closeModal()
-       }
-       }} className="absolute right-6 top-6 z-50   hover:scale-105 duration-300 cursor-pointer" />
-
-       {popup && <div className="z-50 w-60 p-4 rounded bg-light200 shadow text text-center absolute right-6 top-14">
-            <p>Do you want to discard quote?</p>  
-            <div className='pt-4 flex justify-center items-center gap-2'>
-                <button className="px-2 hover-blue">No</button>   
-
-                <button onClick={
-                  ()=>{
-                  closeModal()
-                  setEditQuote({})
-                  clearCart()
-                }} className="px-2 hover-red">Yes</button>   
-            </div>      
-            </div>} 
-
+       <FaTimes size={14} onClick={()=>closeModal()}
+        className="absolute right-6 top-6 z-50   hover:scale-105 duration-300 cursor-pointer" />
 
        <div>
             <div className="flex px-4 justify-between items-center text-xl font-semibold pb-4">
-              <h4>Quote Request</h4>
+              <h4>Create Quote Request</h4>
               <p className="text-sm text-blue-400">{supplierDetails?.name}</p>
               
             </div>
@@ -191,16 +162,19 @@ const QuoteForm = () => {
 
               <div className="mb-4 h-20">
                 <label htmlFor="name" className="block font-medium mb-2">
-                  Create a new quote or Select a quote
+                  Quote name
                 </label>
                 <input
                   placeholder='Select or enter quote name'
                   value={quoteName}
                   name='quoteName'
-                  onChange={(e)=> {
-                    setQuoteName(e.target.value) 
+                  onClick={()=>{
                     setReqError('')
                     setErrors('')
+                  }}
+                  onChange={(e)=> {
+                    setQuoteName(e.target.value) 
+                   
                   }
                   }
                   className="bg-light100  w-full p-2 rounded border focus:outline-none focus:ring focus:border-blue-300"
@@ -276,7 +250,7 @@ const QuoteForm = () => {
         </div>
 
         <div className="relative">
-          <SimilarProducts small={true} shop={cartItems[0]?.shop}/>
+          <SimilarProducts small={true} shopOwnerId={shop?.ownerId} shopId={shop?.id} />
         </div>
 
       </div>

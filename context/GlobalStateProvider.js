@@ -15,6 +15,7 @@ const GlobalStateProvider = ({ children }) => {
   const [user, setUser] = useState('')
   const [checkoutData, setCheckoutData] = useState('')
   const [supplierDetails, setSupplierDetails] = useState('')
+  const [editQuote, setEditQuote] = useState(null)
 
   // Function to retrieve "user-details" from local storage
   useEffect(() => {
@@ -47,7 +48,7 @@ const GlobalStateProvider = ({ children }) => {
   }, [])
 
   // Create quote or cart functionality
-  const useB2Bcart = useCartB2B(user)
+  const useB2Bcart = useCartB2B(user, editQuote, setEditQuote)
 
   // Use useEffect for initial setup when the component mounts
   useEffect(() => {
@@ -100,7 +101,7 @@ const GlobalStateProvider = ({ children }) => {
     useCart, // This line might not be necessary. Make sure it's intended.
     checkoutData, setCheckoutData,
     supplierDetails, setSupplierDetails,
-    active, setActive,
+    active, setActive,editQuote, setEditQuote,
   };
 
   return (

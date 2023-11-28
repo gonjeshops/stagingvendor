@@ -5,12 +5,12 @@ import { viewSupplierShopProducts } from '../Api2';
 import { PageLoading } from '../Loader/Spinner/PageLoading';
 import { useGlobalState } from '@/context/GlobalStateContext';
 import Pagination from '../Pagination';
+import ProductCard3 from '../card/ProductCard3';
 
 
 
-const SimilarProducts = ({small, }) => {
+const SimilarProducts = ({small, shopOwnerId, shopId, }) => {
     const router = useRouter();
-    const {supplierDetails, useB2Bcart:{shop} } = useGlobalState()
 
     const [supplierProducts, setSupplierProducts] = useState(null);
     const [apiError, setApiError] = useState(null);
@@ -18,7 +18,7 @@ const SimilarProducts = ({small, }) => {
     const [loading, setLoading] = useState(false);
 
 
-    const userId = router?.query?.userId, shopId = router?.query?.shopId
+    const userId = router?.query?.userId, shopIdr = router?.query?.shopId
 
     let limit = 12;
     const [page, setPage] = useState(1);
@@ -38,9 +38,9 @@ const SimilarProducts = ({small, }) => {
       const fetchData = async () => {
           try {
             setLoading(true)
-            const response = await viewSupplierShopProducts(shop?.ownerId || userId, shop?.id || shopId,  page, limit);
+            const response = await viewSupplierShopProducts(shopOwnerId || userId, shopId || shopIdr,  page, limit);
 
-            console.log('=s', shop?.ownerId, '=' ,shop?.id, '=',  page, '=', limit, '=', shop)
+            console.log('=s===================','=s', shopOwnerId, '=' ,shopId, '=',  page, '=', limit, '=', )
     
             if (response?.status === 200) {
               console.log("API Similar products response:", response?.data?.data?.products);
@@ -65,7 +65,7 @@ const SimilarProducts = ({small, }) => {
      
       fetchData();  
       return () => clearTimeout(timeoutId);
-    }, [page, shop?.ownerId]);
+    }, [page, shopOwnerId]);
   
   
     if (loadingTimeout) {
@@ -103,11 +103,11 @@ const SimilarProducts = ({small, }) => {
                 { !loading ?
                 <div className={small ? 'w-full h-[83vh]  grid  overflow-hidden border gap-8 p-2' : ' min-h-96 w-full grid gap-8 overflow-hidden p-2 border'}>
                       {/* product listing */}
-                      <div className={small ? 'w-full h-[100%] grid sm:grid-cols-2  overflow-auto  rounded-lg  2:grid-cols-3   gap-4' : ' h-[100%] w-full grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-4'}>
+                      <div className={small ? 'w-full h-[100%] grid overflow-auto  rounded-lg  grid-cols-2 md:grid-cols-3 xl:grid-cols-4   gap-4' : ' h-[100%] w-full grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4  gap-4'}>
                         {
                           supplierProducts?.map((item, i)=>(
                             <div key={item?.id}>
-                                <ProductCard2 product={item} userId={shop?.ownerId} shopId={shop?.id} targetId={'top'}/>
+                                <ProductCard3 product={item} userId={shopOwnerId} shopId={shopId} targetId={'top'}/>
                             </div>
                             )) 
                         }

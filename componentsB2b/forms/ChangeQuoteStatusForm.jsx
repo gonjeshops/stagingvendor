@@ -4,7 +4,6 @@ import { updateQuoteRequest } from '../Api2';
 import { BtnSpinner } from '../Loader/Spinner/BtnSpinner';
 
 const ChangeQuoteStatusForm = ({status, quoteData,quoteQuantity,  setQuoteData, reason}) => {
-  console.log('=========', status, quoteData, reason)
   const [show, setShow] = useState(false);
   const [selected, setSelected] = useState(null); // Initialize with null
   const [formData, setFormData] = useState({

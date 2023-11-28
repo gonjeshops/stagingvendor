@@ -7,14 +7,12 @@ const Breadcrumb = () => {
   const [breadcrumb, setBreadcrumb] = useState([]);
 
   useEffect(() => {
-    // Extract the path segments from the location
     const pathSegments = router.pathname.split('/').filter(segment => segment !== '');
 
-    // Create breadcrumb items from the path segments
     const breadcrumbItems = pathSegments.map((segment, index) => ({
       id: index,
       label: segment,
-      path: `/${pathSegments.slice(0, index + 1).join('/')}`, // Build the path for the link
+      path: `/${pathSegments.slice(0, index + 1).join('/')}`,
     }));
 
     setBreadcrumb(breadcrumbItems);
@@ -23,22 +21,31 @@ const Breadcrumb = () => {
   return (
     <div className="flex items-center flex-wrap">
       {breadcrumb.map((item, index) => (
-        <div key={item.id} className="">
+        <div key={item.id} className="" style={{ textTransform: 'capitalize' }}>
           {index !== 0 && <span className="mx-2">{`>`}</span>}
           {item.path ? (
-            // Check if there's a path (i.e., a link) and add hover classes
-            <Link href={item.path} className="capitalize hover:text-blue-500 hover:underline">
+            <Link href={item.path} as={item.path} passHref className={router.pathname === item.path ? 'active-link' : 'hover-link'}>
                 {item.label.startsWith('[') && item.label.endsWith(']') ? 
                   router.query[item.label.slice(1, -1)] :
                   item.label
                 }
-           
+            
             </Link>
           ) : (
-            <span className="capitalize">{item.label}</span>
+            <span>{item.label}</span>
           )}
         </div>
       ))}
+      <style jsx>{`
+        .hover-link:hover {
+          color: #3182ce; /* Change to your desired hover color */
+          text-decoration: underline;
+        }
+        .active-link {
+          color: #3182ce; /* Change to your desired active color */
+          text-decoration: underline;
+        }
+      `}</style>
     </div>
   );
 };

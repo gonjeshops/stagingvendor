@@ -75,7 +75,7 @@ const InvoiceDetailsPage = ({ invoiceId }) => {
         return (
           <Workspace>
             <div className="absolute inset-0 flex items-center justify-center">
-              Error: The URL should contain a valid shop Id and a valid user Id.
+              Error: The URL should contain a valid invoice Id.
             </div>
           </Workspace>
         );
@@ -98,7 +98,7 @@ const InvoiceDetailsPage = ({ invoiceId }) => {
   return (
   
       <Workspace>
-        { !quoteData ? <div className='absolute inset-0 flex items-center justify-center'><PageLoading/></div>  :
+        { loading ? <div className='absolute inset-0 flex items-center justify-center'><PageLoading/></div>  :
           <InvoiceDetails invoiceId={invoiceId} fakeData={''} data={quoteData}/>}
       </Workspace>
 

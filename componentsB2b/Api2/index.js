@@ -29,33 +29,26 @@ export const viewSupplierShopProducts = async (userId, shopId, page, limit) => {
       return Promise.reject(new Error('Invalid input data.'));
     }
 
-    console.log('API SHOP DETAILS Request Params:', { userId, shopId, page, limit });
-
     const response = await axios({
       method: 'get',
       headers: authHeader(),
       url: `${url}suppliers/${userId}/shop/${shopId}/products?page=${page}&limit=${limit}`,
     });
 
-    console.log('API SHOP DETAILS Response:', response);
-
     if (response?.status === 200) {
       console.log("API Similar products response:", response?.data?.data?.products);
-      console.log('API SHOP DETAILS Request Params:', { userId, shopId, page, limit });
       return response;
     } else {
       console.error("API Error: Something went wrong.", response);
       throw new Error(`Something went wrong. Server responded with ${response?.status}`);
     }
   } catch (error) {
-    console.log('API SHOP DETAILS Request Params:', { userId, shopId, page, limit });
     console.error('Error in viewSupplierShopProducts API:', error);
 
     // Handle specific axios errors
     if (axios.isAxiosError(error)) {
       // Handle different axios error statuses
       if (error.response) {
-        console.log('API SHOP DETAILS Request Params:', { userId, shopId, page, limit });
         console.error('Server responded with:', error.response.status, error.response.data, '==', userId, '==', shopId);
         return Promise.reject(new Error(`Server responded with ${error.response.status}: ${error.response.data}`));
       } else if (error.request) {
@@ -67,7 +60,6 @@ export const viewSupplierShopProducts = async (userId, shopId, page, limit) => {
       }
     }
 
-    console.error('An unexpected error occurred:', error);
     return Promise.reject(new Error('An unexpected error occurred.'));
   }
 };
@@ -252,7 +244,7 @@ export const createQuoteWithSendStatus = (values, ) => {
       return response;
     })
     .catch((error) => {
-      console.error('Error in createQuoteWithSendStatus API:', error);
+      console.error('Error in createQuoteWithSendStatus API:', error, '====values====', values);
       return error.response?.data || error.message || 'An unexpected error occurred.';
     });
 } catch (error) {

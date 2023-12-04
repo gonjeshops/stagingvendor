@@ -69,13 +69,13 @@ const QuoteForm = () => {
           }, 1000);
         } else {
           console.log("Quote resquest API response error:", response);
-          toast.error(response || 'Error submitting the form. Please try again.');
-          setReqError( response?.message || 'Error submitting the form. Please try again.');
+          toast.error(response?.error  || response?.message || 'Error submitting the form. Please try again.');
+          setReqError( response?.error || response?.message || 'Error submitting the form. Please try again.');
         }
       } catch (error) {
         console.error("Catching Quote resquest Catch error:", error);
-        setReqError( error || 'An error occurred. Please try again later.');
-        toast.error(err || 'An error occurred. Please try again later.')
+        setReqError( 'An error occurred. Please try again later.');
+        toast.error('An error occurred. Please try again later.')
       } finally{
         setErrors('');
         setQuoteName('')

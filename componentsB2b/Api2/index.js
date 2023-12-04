@@ -584,3 +584,17 @@ export const  updateProduct = (values) => {
 };
 
 
+// Products catalogu
+export const fetchProductsCatalogue = (page, limit) => {
+  return axios({
+    method: "get",
+    headers: authHeader(),
+    url: url + `view/products/catalogue?page=${page}&limit=${limit}`,
+  })
+    .then((response) =>{ 
+      console.log('API fetchProductsCatalogue====', response)
+      return response})
+    .catch((error) => {
+      console.log("Error in fetchProductsCatalogue api", error);
+    });
+};

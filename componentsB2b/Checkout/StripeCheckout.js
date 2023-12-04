@@ -4,8 +4,8 @@ import { useGlobalState } from '@/context/GlobalStateContext';
 import { FaCreditCard } from 'react-icons/fa';
 import { BtnSpinner } from '../Loader/Spinner/BtnSpinner';
 
-const StripeCheckout = () => {
-  const{checkoutData, user}=useGlobalState()
+const StripeCheckout = ({checkoutData}) => {
+  const{user}=useGlobalState()
   console.log('STRIPECHECKOUT==', checkoutData)
   const items = [
     {

@@ -1,12 +1,16 @@
-import {useState} from 'react'
+import {useRef, useState} from 'react'
 import DashboardHeading from '../Workspace/DashboardHeading'
 import { FaAngleDown, FaFileExport } from 'react-icons/fa';
 import OrderTbale from './OrderTable';
+import generatePDF from 'react-to-pdf';
 import AddOrderForm from '../forms/AddOrderForm';
 
-const Order = ({orders}) => {
+const Order = ({orders, orderlist}) => {
     const {category , orderData} = orders;
     const [show, setShow] = useState('')
+    console.log('ordelist', orderlist)
+
+    const downloadOrderRef = useRef()
 
   return (
     < > 
@@ -47,19 +51,19 @@ const Order = ({orders}) => {
             </div>
 
             <div className="flex gap-12 items-center">
-                <button className="flex items-center gap-4">
+                <button className="flex items-center gap-2 border border-gray-500 p-2">
                     <FaFileExport/>
-                    <p>Export</p>
+                    <div onClick={() => generatePDF(downloadOrderRef, {filename: `${orderlist[0]?.user_name}'s order.pdf`})} className="">Export Order List</div>
                 </button>
-                <button onClick={()=>setShow('dashboard')} className="flex hover-blue py-3 px-8 rounded-sm items-center gap-4">
+                {/* <button onClick={()=>setShow('dashboard')} className="flex hover-blue py-3 px-8 rounded-sm items-center gap-4">
                     <p>{'+'}</p>
                     <p>Add Order</p>
-                </button>
+                </button> */}
             </div>
         </div>
 
-        <div className="orders bg-light100 h-screen pl-4">
-            <OrderTbale data={orderData}/>
+        <div ref={downloadOrderRef} className="orders bg-light100 h-screen pl-4">
+            <OrderTbale data={orderData} orderlist={orderlist}/>
 
 
         </div>

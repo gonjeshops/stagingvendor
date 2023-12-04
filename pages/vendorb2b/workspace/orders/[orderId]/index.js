@@ -1,31 +1,58 @@
+import { fetchQuoteDetails } from '@/componentsB2b/Api2';
+import LoadingTimeout from '@/componentsB2b/Loader/LoadingTimeout';
+import { PageLoading } from '@/componentsB2b/Loader/Spinner/PageLoading';
 import OrderDetails from '@/componentsB2b/Order/OrderDetails';
 import Workspace from '@/componentsB2b/Workspace/Workspace';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 
 import { FaAddressBook,FaMapMarkerAlt,FaGift, FaComment,FaBox, FaCalendarAlt, FaEnvelope,FaPhone, FaUser } from 'react-icons/fa';
 
 
-// Simulated data fetching function
-const fetchOrderDetails = async (orderId) => {
-  // Fetch order details from your API using orderId
-  const response = await fetch(`/api/orders/${orderId}`);
-  const orderDetails = await response.json();
-  return orderDetails;
-};
-
-export async function getServerSideProps({ params }) {
-  const { orderId } = params;
-//   const orderDetails = await fetchOrderDetails(orderId);
-
-  return {
-    props: {
-    //   orderDetails
-    orderId
-    }
-  };
-}
-
 const OrderDetailsPage = ({ orderId }) => {
+    const router = useRouter();
+
+    const [orderData, setOrderData] = useState(null);
+    const [apiError, setApiError] = useState(null);
+    const [loadingTimeout, setLoadingTimeout] = useState(false);
+    const [loading, setLoading] = useState(false);
+    
+  
+    useEffect(() => {
+
+      const timeoutId = setTimeout(() => {
+        setLoadingTimeout(true);
+      }, 8000);
+  
+      const fetchData = async () => {
+        try {
+        setLoading(true)
+
+          const response = await fetchQuoteDetails(orderId);
+  
+          if (response?.status === 200) {
+            console.log("API response:", response);
+            setOrderData(response?.data);
+          } else {
+            setApiError("Something went wrong. Try again or consult a developer.");
+          }
+        } catch (error) {
+          console.error("Catch error:", error);
+          setApiError("Server is not available. Try again or consult a developer.");
+        } finally {
+          clearTimeout(timeoutId); 
+          setLoading(false)
+        }
+      };
+  
+      fetchData();
+  
+      // Cleanup the timeout when the component unmounts
+      return () => clearTimeout(timeoutId);
+    }, [orderId]);
+
+
 
     const quoteDetails = 
     {
@@ -89,14 +116,70 @@ const OrderDetailsPage = ({ orderId }) => {
         status: ['Draft', '', '']
     }
 
+
+      
+      if (loadingTimeout) {
+        return (
+          <Workspace>
+                <LoadingTimeout/>
+          </Workspace>
+        );
+      }
+
+      if (apiError) {
+        return (
+          <Workspace>
+            <div className="absolute inset-0 flex items-center justify-center">{apiError}</div>
+          </Workspace>
+        );
+      }
+    
+      if (!orderId || isNaN(orderId)) {
+        return (
+          <Workspace>
+            <div className="absolute inset-0 flex items-center justify-center">
+              Error: The URL should contain a valid order Id.
+            </div>
+          </Workspace>
+        );
+      }
+
+   
+
+        // If the data is not yet available (during static generation), return loading state
+      if (router.isFallback) {
+        return <div className='inset-0 flex justify-center items-center'><PageLoading/></div>;
+      }
+
+      // If orderData is not found, render a 404 page
+      if (!orderData) {
+        return <div className='inset-0 flex justify-center items-center'>Page not found</div>;
+      }
+
   return (
 
-
     <Workspace>
-        <OrderDetails order={orderId} fakeData={quoteDetails}/>
+         { loading ? <div className='absolute inset-0 flex items-center justify-center'><PageLoading/></div>  :
+        <OrderDetails order={orderId} fakeData={quoteDetails} data={orderData} />}
     </Workspace>
 
   );
 };
 
 export default OrderDetailsPage;
+
+
+
+
+export async function getServerSideProps({ params }) {
+    const { orderId } = params;
+  //   const orderDetails = await fetchOrderDetails(orderId);
+  
+    return {
+      props: {
+      //   orderDetails
+      orderId
+      }
+    };
+  }
+  

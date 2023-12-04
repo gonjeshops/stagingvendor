@@ -1,7 +1,6 @@
 import {useRef, useState} from 'react'
 import DashboardHeading from '../Workspace/DashboardHeading'
 import { FaAngleDown, FaFileExport } from 'react-icons/fa';
-import InvoiceTable from './InvoiceTable';
 import AddOrderForm from '../forms/AddOrderForm';
 import InvoiceTable2 from './InvoiceTbale2';
 import generatePDF from 'react-to-pdf';

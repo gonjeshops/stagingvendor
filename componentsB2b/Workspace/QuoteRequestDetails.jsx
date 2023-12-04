@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FaPrint, FaRedo, FaFile, FaTrashAlt } from 'react-icons/fa';
 import DashboardHeading from './DashboardHeading';
 import { useRouter } from 'next/router';
@@ -6,6 +6,9 @@ import { useGlobalState } from '@/context/GlobalStateContext';
 import { truncateText } from '@/lib/truncateText';
 import { formatDate } from '@/lib/formatDate';
 import ChangeQuoteStatusForm from '../forms/ChangeQuoteStatusForm';
+import { AddressDetails } from '../Order/OrderDetails';
+import EditQuoteForm from '../forms/EditQuoteForm';
+import generatePDF from 'react-to-pdf';
 
 
 export const DisabledBtn = ({ control, route, quoteData }) => {
@@ -29,8 +32,8 @@ export const DisabledBtn = ({ control, route, quoteData }) => {
   );
 };
 
-const QuoteRequestDetails = ({ content, data }) => {
-  console.log('FETCHED QUOTE DATA=', data);
+const QuoteRequestDetails = ({ setRefresh, data }) => {
+  const downloadQuoteRef = useRef()
 
   const {openModal, editQuote, setEditQuote, useB2Bcart:{quoteCartcalculator}} = useGlobalState()
  
@@ -42,6 +45,7 @@ const QuoteRequestDetails = ({ content, data }) => {
   const [quoteProducts, setQuoteProducts] = useState([])
   const [calculatedSubtotal, setSubtotal] = useState(0)
   const [quoteQuantity, setQty] = useState(0)
+  
 
   useEffect(() => {
     if (data) {
@@ -54,7 +58,7 @@ const QuoteRequestDetails = ({ content, data }) => {
       setSummarySubtotal(calculatedSubtotal - (quoteProducts[0]?.product?.is_taxable || 0) - (data?.products?.discount || 0));
       setTotal(calculatedSubtotal + (data?.products?.shipping_class_id || 0) - (data?.products?.is_taxable || 0) - (data?.products?.discount || 0) );
     }
-  }, [data]);
+  }, [data,]);
 
   const summaryItems = [
     { title: 'Items Subtotal:', value: calculatedSubtotal },
@@ -64,16 +68,19 @@ const QuoteRequestDetails = ({ content, data }) => {
     { title: 'Shipping Cost:', value: data?.products?.shipping_class_id || 0 },
   ];
 
-  const [isOpen, setIsOpen] = useState(false)
-  const [eachProduct, setEachProduct] = useState('')
+
+  const address = data?.quote?.shipping_details;
+  const billing = data?.quote?.billing_details;
+
 
   return (
     <div className='pb-20 px-4 space-y-8'>
-        {/* <ProductDetailsModal isOpen={isOpen} closeModal={()=>setIsOpen(false)}  product={eachProduct}/> */}
-      <div>
-        <DashboardHeading>Quote Request Details</DashboardHeading>
+      <EditQuoteForm setRefresh={setRefresh}/>
+      
+      <DashboardHeading>Quote Request Details</DashboardHeading>
 
-          <p className='text- pb-2'>Quote Number: <span className='text-dark100 font-medium capitalize'> {quoteData?.quote?.quote_number}</span></p>
+      <div ref={downloadQuoteRef}>
+        <p className='text- pb-2'>Quote Number: <span className='text-dark100 font-medium capitalize'> {quoteData?.quote?.quote_number}</span></p>
         <div className="flex pb-2 gap-2 justify-between items-center flex-wrap">
           <p className='text- '>Quote Name: <span className='text-dark100 font-medium capitalize'>{quoteData?.quote?.quote_name}</span></p>
           <p className='text-  capitalize'>Shop: <span className='text-dark100 font-medium'>{quoteData?.quote?.shop_name}</span></p>
@@ -89,8 +96,8 @@ const QuoteRequestDetails = ({ content, data }) => {
           <div className="flex gap-6 items-center justify-end">
 
           {quoteData?.quote.status !=='SENT' && <button onClick={()=>{
-                openModal('quoteform')
-                setEditQuote(quoteData?.quote)
+                openModal('editquote')
+                setEditQuote(data?.quote)
                 }}
                 className=" text-hover-blue flex gap-1 items-center"
                 >
@@ -98,25 +105,19 @@ const QuoteRequestDetails = ({ content, data }) => {
               <p className='' > Edit Quote </p >
             </button>}
 
-            {/* <div className="flex gap-1 items-center">
-              <FaTrashAlt />
-              <button >Delete</button >
-            </div> */}
+ 
 
-            <button className="flex gap-1 items-center">
+            <button onClick={() => generatePDF(downloadQuoteRef, {filename: `${data?.quote?.quote_name}.pdf`})}  className="flex gap-1 items-center">
               <FaPrint />
               <p>Print Quote</p>
             </button>
 
-            <button className="flex gap-1 items-center">
+            <button onClick={()=>setRefresh(new Date().toISOString())} className="flex gap-1 items-center">
               <FaRedo />
               <p>Refresh Quote</p>
             </button>
 
-            {/* <div className="flex gap-3 items-center">
-              <p>More action</p>
-              <FaEllipsisV/>
-            </div> */}
+      
           </div>
         </div>
       </div>
@@ -217,32 +218,17 @@ const QuoteRequestDetails = ({ content, data }) => {
       <div className="flex flex-col-reverse md:grid grid-cols-2 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 grid">
           <div className="sm:grid-cols-2 md:grid-cols-1 lg:col-span-2 grid gap-6 lg:grid-cols-2">
-            <div className="grid gap-4">
+            
+          <div className="">
               <h4 className="text-lg font-medium">Billing Details</h4>
-              
-              {content.billingDetails.map(({ title, value, icon }, i) => (
-                <div key={i} className="flex gap-2 items-center">
-                  <div className="pt-1">{icon}</div>
-                  <div>
-                    <h5 className='font-medium pb-2'>{title}</h5>
-                    <p className='text-blue-600 text-[11px]'>{value}</p>
-                  </div>
-                </div>
-              ))}
-
+              <AddressDetails address={billing}/>
             </div>
-            <div className="grid gap-4">
+            <div className="">
               <h4 className="text-lg font-medium">Shipping Details</h4>
-              {content.shippingDetails.map(({ title, value, icon }, i) => (
-                <div key={i} className="flex gap-2 items-center">
-                  <div className="pt-1">{icon}</div>
-                  <div>
-                    <h5 className='font-medium pb-2'>{title}</h5>
-                    <p className='text-blue-600 text-[11px]'>{value}</p>
-                  </div>
-                </div>
-              ))}
+              <AddressDetails address={address}/>
             </div>
+            
+
           </div>
           
         </div>

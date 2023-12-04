@@ -3,13 +3,22 @@ import ImgCard from '../card/ImgCard'
 import ProductCard2 from '../card/productCard2'
 import Image from 'next/image'
 import { FaExternalLinkAlt, FaFacebook, FaImage } from 'react-icons/fa'
+import DashboardHeading from '../Workspace/DashboardHeading'
 
 const SuppliersDetails = ({supplierData, userId, shopId, }) => {
     const {products=[]} = supplierData
     const supplierDetails = supplierData?.shop
   
     return (
-    <div className='space-y-4'>
+        <>
+
+        <div className="lg:hidden">
+            <DashboardHeading></DashboardHeading>
+        </div>
+        
+
+
+        <div className='space-y-4'>
         <div className="w-full relative rounded-xl h-60 bg-light300">
            
             <div className="w-full h-full overflow-hidden rounded-xl">
@@ -83,7 +92,11 @@ const SuppliersDetails = ({supplierData, userId, shopId, }) => {
 
 
         
-    </div>
+        </div>
+        
+        
+        </>
+    
   )
 }
 

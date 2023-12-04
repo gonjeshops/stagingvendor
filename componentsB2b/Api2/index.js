@@ -29,33 +29,26 @@ export const viewSupplierShopProducts = async (userId, shopId, page, limit) => {
       return Promise.reject(new Error('Invalid input data.'));
     }
 
-    console.log('API SHOP DETAILS Request Params:', { userId, shopId, page, limit });
-
     const response = await axios({
       method: 'get',
       headers: authHeader(),
       url: `${url}suppliers/${userId}/shop/${shopId}/products?page=${page}&limit=${limit}`,
     });
 
-    console.log('API SHOP DETAILS Response:', response);
-
     if (response?.status === 200) {
       console.log("API Similar products response:", response?.data?.data?.products);
-      console.log('API SHOP DETAILS Request Params:', { userId, shopId, page, limit });
       return response;
     } else {
       console.error("API Error: Something went wrong.", response);
       throw new Error(`Something went wrong. Server responded with ${response?.status}`);
     }
   } catch (error) {
-    console.log('API SHOP DETAILS Request Params:', { userId, shopId, page, limit });
     console.error('Error in viewSupplierShopProducts API:', error);
 
     // Handle specific axios errors
     if (axios.isAxiosError(error)) {
       // Handle different axios error statuses
       if (error.response) {
-        console.log('API SHOP DETAILS Request Params:', { userId, shopId, page, limit });
         console.error('Server responded with:', error.response.status, error.response.data, '==', userId, '==', shopId);
         return Promise.reject(new Error(`Server responded with ${error.response.status}: ${error.response.data}`));
       } else if (error.request) {
@@ -67,7 +60,6 @@ export const viewSupplierShopProducts = async (userId, shopId, page, limit) => {
       }
     }
 
-    console.error('An unexpected error occurred:', error);
     return Promise.reject(new Error('An unexpected error occurred.'));
   }
 };
@@ -252,7 +244,7 @@ export const createQuoteWithSendStatus = (values, ) => {
       return response;
     })
     .catch((error) => {
-      console.error('Error in createQuoteWithSendStatus API:', error);
+      console.error('Error in createQuoteWithSendStatus API:', error, '====values====', values);
       return error.response?.data || error.message || 'An unexpected error occurred.';
     });
 } catch (error) {
@@ -274,9 +266,15 @@ export const updateQuoteRequest = (values, quoteId) => {
     headers: authHeader(),
     url: url + `update/quote/request/${quoteId}`,
     data: {
-      status: values.status,
-      quantity: values.quantity,
-      reason: values.reason,
+      "status": values?.status,
+      "reason": values?.reason,
+      "cart_items": values?.cart_items,
+      "quote_name": values?.quote_name,
+      "subtotal": values?.subtotal,
+      "quantity": values?.quantity,
+      "shop_name": values?.shop_name,
+      "user_name": values?.user_name,
+      "user_id": values?.user_id,
     },
   })
     .then((response) => {
@@ -290,6 +288,7 @@ export const updateQuoteRequest = (values, quoteId) => {
 };
 
 
+
 //  ============= INVOICE ============
 // Create quote request
 export const fetchVendorInvoice = (page, limit) => {
@@ -297,7 +296,6 @@ export const fetchVendorInvoice = (page, limit) => {
     method: "get",
     headers: authHeader(),
     url: url + `my/transactions?page=${page}&limit=${limit}`,
-    // url: url + `my/transactions?page=${page}&limit=${limit}`,
   })
     .then((response) => response)
     .catch((error) => {
@@ -341,7 +339,7 @@ if (type===`vendor/my/stats`) {
 }
 
 
-
+// Not in use
   if (type===`vendor/quotes/count`) {
     return axios({
       method: "get",
@@ -369,13 +367,6 @@ if (type===`vendor/my/stats`) {
         console.log("VENDOR Error in orders counts api", error,  'type==', type);
       });
   }
-
-  
-
-
-
-
-  // supplier ===
 
   if (type===`supplier/quotes/count`) {
     return axios({
@@ -447,9 +438,53 @@ if (type===`vendor/my/stats`) {
       });
   }
 
-  
-  
 };
+
+
+  
+// orders
+// /vendor/b2b/my/orders
+export const fetchOrders = (page, limit) => {
+  try {
+    // Validate inputs
+    if (!page || !limit) {
+      console.error('Invalid input data. Please provide valid values and productId.');
+      return Promise.reject(new Error('Invalid input data.'));
+    }
+    
+    return axios({
+      method: 'get',
+      headers: authHeader(),
+      url: `${url}vendor/quotes?page=${page}&limit=${limit}`,
+      // url: `${url}vendor/b2b/my/orders?page=${page}&limit=${limit}`,
+    })
+    .then((response) => {
+      console.log('fetchOrders API successful:', response);
+      return response;
+    })
+    .catch((error) => {
+      console.error('Error in fetchOrders API:', error);
+        // Handle specific axios errors
+        if (axios.isAxiosError(error)) {
+          // Handle different axios error statuses
+          if (error.response) {
+            console.error('Server responded with:', error.response.status, error.response.data);
+          } else if (error.request) {
+            console.error('No response received from the server.');
+          } else {
+            console.error('Error setting up the request:', error.message);
+          }
+          return Promise.reject(error);
+        }
+      return error.response?.data || error.message || 'An unexpected error occurred. ';
+  
+    });
+  } catch (error) {
+    console.error('An unexpected error occurred: catch', error);
+    return Promise.reject(error);
+  }
+};
+
 
 
 

@@ -13,7 +13,7 @@ export const DisabledBtn = ({ control, route, quoteData }) => {
   const { setCheckoutData, useB2Bcart:{} } = useGlobalState();
   const buttonClass = control
     ? 'disable'
-    : 'hover-blue';
+    : 'hover-blue'; 
 
   return (
     <button 

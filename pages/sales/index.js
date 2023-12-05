@@ -11,6 +11,8 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
+import { SalesTable } from "@/components/Layout/Sales/SalesTable";
+import { discountColumns } from "@/components/Layout/Sales/SalesColumns";
 const Sales = () => {
   const data = [
     { month: "sun", products: 400, earning: 320 },
@@ -27,11 +29,78 @@ const Sales = () => {
     { month: "fri", products: 460, earning: 200 },
     { month: "sat", products: 700, earning: 200 },
   ];
+  const discountData =[
+    {
+      image: {
+        id: "1",
+        original: "original_image_1.jpg",
+        thumbnail: "thumbnail_image_1.jpg",
+      },
+      name: "Product 1",
+      start_offer: "2023-11-01",
+      end_offer: "2023-11-30",
+      price: 50,
+      discount: 10,
+      offered_price: 45,
+    },
+    {
+      image: {
+        id: "2",
+        original: "original_image_2.jpg",
+        thumbnail: "thumbnail_image_2.jpg",
+      },
+      name: "Product 2",
+      start_offer: "2023-11-05",
+      end_offer: "2023-12-05",
+      price: 80,
+      discount: 15,
+      offered_price: 68,
+    },
+    {
+      image: {
+        id: "3",
+        original: "original_image_3.jpg",
+        thumbnail: "thumbnail_image_3.jpg",
+      },
+      name: "Product 3",
+      start_offer: "2023-11-10",
+      end_offer: "2023-12-10",
+      price: 65,
+      discount: 20,
+      offered_price: 52,
+    },
+    {
+      image: {
+        id: "4",
+        original: "original_image_4.jpg",
+        thumbnail: "thumbnail_image_4.jpg",
+      },
+      name: "Product 4",
+      start_offer: "2023-11-15",
+      end_offer: "2023-12-15",
+      price: 90,
+      discount: 25,
+      offered_price: 67.5,
+    },
+    {
+      image: {
+        id: "5",
+        original: "original_image_5.jpg",
+        thumbnail: "thumbnail_image_5.jpg",
+      },
+      name: "Product 5",
+      start_offer: "2023-11-20",
+      end_offer: "2023-12-20",
+      price: 75,
+      discount: 30,
+      offered_price: 52.5,
+    },
+  ];
   return (
     <section>
       <section className="container space-y-10">
-        <div className="flex flex-col lg:flex-row justify-between">
-          <div className="bg-white md:w-[425px] px-4 py-8 rounded-md">
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 grid-auto-rows-1/3 gap-x-8 gap-y-4 justify-between">
+          <div className="bg-white xl:w-[410px] px-4 py-8 rounded-md">
             <div>
               <h2 className="font-semibold text-xl capitalize">
                 Products Sold
@@ -39,7 +108,7 @@ const Sales = () => {
               <p className="text-gray-400 font-medium">900 products</p>
             </div>
             <BarChart
-              width={300}
+              width={250}
               height={300}
               data={data}
               className="profit_bar"
@@ -66,14 +135,16 @@ const Sales = () => {
           <NumberCards />
           <NumberCards />
         </div>
-        <div>
-        <div className="bg-white md:w-[725px] px-4 py-8 rounded-md">
+        <div className="flex flex-col xl:flex-row justify-between gap-x-6 gap-y-4">
+          <div className="bg-white xl:w-[750px] px-4 py-8 rounded-md">
             <div>
-              <h2 className="font-semibold text-xl capitalize">Products Sold</h2>
+              <h2 className="font-semibold text-xl capitalize">
+                Products Sold
+              </h2>
               <p className="text-gray-400 font-medium">900 products</p>
             </div>
             <BarChart
-              width={700}
+              width={550}
               height={300}
               data={data2}
               className="profit_bar"
@@ -91,8 +162,23 @@ const Sales = () => {
               <Tooltip />
             </BarChart>
           </div>
-
+          <div className="bg-white xl:w-[750px] px-4 py-8 rounded-md">
+            <div>
+              <h2 className="font-semibold text-xl capitalize mb-12">
+                Top Countries by Sale
+              </h2>
+              {/* <p className="text-gray-400 font-medium">900 products</p> */}
+            </div>
+            <div className="space-y-4">
+              <p className="text-lg font-medium">Australia</p>
+              <p className="text-lg font-medium">United Kingdom</p>
+              <p className="text-lg font-medium">United States of America</p>
+              <p className="text-lg font-medium">France</p>
+              <p className="text-lg font-medium">Italy</p>
+            </div>
+          </div>
         </div>
+        <SalesTable columns={discountColumns} data={discountData}/>
       </section>
     </section>
   );
@@ -114,7 +200,7 @@ const NumberCards = () => {
 };
 const TopProducts = () => {
   return (
-    <div className="bg-white md:w-[425px] px-4 py-8 rounded-md">
+    <div className="bg-white xl:w-[410px] px-4 py-8 rounded-md">
       <div>
         <div className="flex justify-between items-center mb-4">
           <div>
@@ -150,7 +236,7 @@ const TopProducts = () => {
 };
 const TopSales = () => {
   return (
-    <div className="bg-white md:w-[425px] px-4 py-8 rounded-md min">
+    <div className="bg-white xl:w-[410px] px-4 py-8 rounded-md min">
       <div>
         <div className="flex justify-between items-center mb-4">
           <div>

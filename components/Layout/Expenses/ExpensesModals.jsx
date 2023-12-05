@@ -96,15 +96,17 @@ export const AcceptQuote = () => {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </AlertDialogDescription>
+          <AlertDialogTitle className="font-normal">
+            Are you absolutely sure?
+          </AlertDialogTitle>
         </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+        <AlertDialogFooter className="flex justify-center items-center gap-x-4 w-full">
+          <AlertDialogCancel className="bg-red-700 text-white">
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction className="bg-gonje-green">
+            Continue
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
@@ -120,15 +122,17 @@ export const DeleteQuote = () => {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </AlertDialogDescription>
+          <AlertDialogTitle className="font-normal">
+            Are you absolutely sure?
+          </AlertDialogTitle>
         </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+        <AlertDialogFooter className="flex justify-center items-center gap-x-4 w-full">
+          <AlertDialogCancel className="bg-red-700 text-white">
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction className="bg-gonje-green">
+            Continue
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

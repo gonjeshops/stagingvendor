@@ -41,7 +41,7 @@ const Accounting = () => {
   );
   if (!AccountingData) return 'loading...'
 
-  console.log(AccountingData.data.transactions, error)
+  // console.log(AccountingData.data.transactions, error)
   return (
     <section>
       <DataTable columns={columns} data={AccountingData.data.transactions} />

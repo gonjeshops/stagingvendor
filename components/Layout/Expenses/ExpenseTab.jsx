@@ -8,6 +8,8 @@ import { RequestTable } from "./RequestTable";
 import { productColumns } from "./columns";
 import { ReceivedTable } from "./ReceivedTable";
 import { ReceivedColumns } from "./RecievedColumns";
+import FetchDataAndRenderPageB2C from '@/components/FetchDataAndRenderPageB2C';
+import { fetchProducts } from '@/componentsB2b/Api2';
 
 const ExpenseTabs = () => {
   const dummyProducts = [
@@ -133,10 +135,23 @@ const ExpenseTabs = () => {
     "view/vendor/products",
     fetcher
   );
-  if (!RequestData) return 'loading...'
+
+  // if (!RequestData) return 'loading...'
   // console.log(RequestData, RequestDataError)
+
+  const renderRequestTable = (response) =>  (
+    response?.data?.data?.products?.length ?
+    <RequestTable columns={productColumns} data={response?.data?.data?.products} />
+    :
+    <div className="absolute text-semibold inset-0 flex items-center justify-center text-center">
+      <p>No Products found.</p>
+    </div>
+)
+
+
   return (
     <Tabs defaultValue="request" className="">
+
       <TabsList className="grid max-w-lg grid-cols-2 bg-white rounded-md h-16 mx-auto">
         <TabsTrigger value="request" className="py-2">
           Request for Quote
@@ -145,9 +160,17 @@ const ExpenseTabs = () => {
           Received Request
         </TabsTrigger>
       </TabsList>
+
       <TabsContent value="request">
-        <RequestTable columns={productColumns} data={RequestData.data.products} />
+        {/* <RequestTable columns={productColumns} data={RequestData.data.products} /> */}
+        <FetchDataAndRenderPageB2C
+          fetchDataFunction={fetchProducts}
+          renderComponent={renderRequestTable}
+          pageLimit = {8}
+          loadingTimeoutDuration = {8000}
+          />
       </TabsContent>
+
       <TabsContent value="receivedRequest">
         <ReceivedTable columns={ReceivedColumns} data={InvoicingData} />
       </TabsContent>

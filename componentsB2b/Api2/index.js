@@ -18,6 +18,34 @@ export const fetchSuppliersByPagination = (page, limit) => {
     });
 };
 
+// B2C
+export const fetchAccounting = (page, limit) => {
+  return axios({
+    method: "get",
+    headers: authHeader(),
+    url: url + `my/transactions?page=${page}&limit=${limit}`,
+  })
+    .then((response) =>{ 
+      console.log('API fetchAccounting response', response)
+      return response})
+    .catch((error) => {
+      console.log("Error in fetchAccounting api", error);
+    });
+};
+
+export const fetchProducts = (page, limit) => {
+  return axios({
+    method: "get",
+    headers: authHeader(),
+    url: url + `view/vendor/products?page=${page}&limit=${limit}`,
+  })
+    .then((response) =>{ 
+      console.log('API fetchProducts response', response)
+      return response})
+    .catch((error) => {
+      console.log("Error in fetchProducts api", error);
+    });
+};
 
 
 // View a supplier shop's products.  usage - /suppliers/[supplierId]

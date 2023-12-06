@@ -32,9 +32,11 @@ import {
 export const RequestModal = () => {
   return (
     <Dialog>
+
       <DialogTrigger asChild>
-        <Button className="p-3  bg-gonje-green capitalize">Request</Button>
+        <Button  className="p-3  bg-gonje-green capitalize">Request</Button>
       </DialogTrigger>
+
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle> Request for Quote</DialogTitle>
@@ -46,7 +48,7 @@ export const RequestModal = () => {
           <Input
             id="name"
             className="bg-gonje h-12"
-            placeholder="Product Name"
+            placeholder="Quote Name"
           />
           <Input id="name" className="bg-gonje h-12" placeholder="Size" />
           <Input
@@ -54,7 +56,7 @@ export const RequestModal = () => {
             className="bg-gonje h-12"
             placeholder="Vendor Name"
           />
-          <Select>
+          {/* <Select>
             <SelectTrigger className="bg-gonje">
               <SelectValue placeholder="Type" />
             </SelectTrigger>
@@ -63,22 +65,22 @@ export const RequestModal = () => {
               <SelectItem value="dark">Cloth</SelectItem>
               <SelectItem value="system">Bags</SelectItem>
             </SelectContent>
-          </Select>
-          <Input
+          </Select> */}
+          {/* <Input
             id="delivery_date"
             className="bg-gonje h-12"
             placeholder="Delivery Date"
-          />
-          <Input
+          /> */}
+          {/* <Input
             id="email"
             className="bg-gonje h-12"
             placeholder="Email Address"
-          />
+          /> */}
           <Input id="Amount" className="bg-gonje h-12" placeholder="Amount" />
         </div>
         <DialogFooter>
           <Button type="submit" className="bg-gonje-green text-white w-full">
-            Save changes
+            Send Quote
           </Button>
         </DialogFooter>
       </DialogContent>

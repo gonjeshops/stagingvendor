@@ -689,4 +689,38 @@ export const fetchB2cReceivedQuotes = (page, limit) => {
         return error
       });
   };
+
+
+    // Update quote request
+export const updateB2cQuoteRequest = (values, quoteId) => {
+  // Validate inputs
+  if (!values || !quoteId) {
+    return Promise.reject(new Error("Invalid input data."));
+  }
+
+  return axios({
+    method: "put",
+    headers: authHeader(),
+    url: url + `update/b2c/quote/request/${quoteId}`,
+    data: {
+      "status": values?.status,
+      "reason": values?.reason,
+      "cart_items": values?.cart_items,
+      "quote_name": values?.quote_name,
+      "subtotal": values?.subtotal,
+      "quantity": values?.quantity,
+      "shop_name": values?.shop_name,
+      "user_name": values?.user_name,
+      "user_id": values?.user_id,
+    },
+  })
+    .then((response) => {
+      console.log("updateB2cQuoteRequest API successful:", response);
+      return response
+    })
+    .catch((error) => {
+      console.error("Error in updateB2cQuoteRequest API:", error);
+      return Promise.reject(error); // Propagate the error.
+    });
+};
 // ==========B2C============

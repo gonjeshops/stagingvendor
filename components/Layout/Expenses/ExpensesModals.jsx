@@ -39,7 +39,7 @@ import GetQuoteProductCard from "@/componentsB2b/card/GetQuoteProductCard";
 import { AiOutlineShopping } from "react-icons/ai";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { createB2cQuoteRequest, createQuoteRequest, createQuoteWithSendStatus } from "@/componentsB2b/Api2";
+import { createB2cQuoteRequest, } from "@/componentsB2b/Api2";
 
 export const RequestModal = ({item}) => {
   const router = useRouter()
@@ -284,7 +284,7 @@ export const RequestModal = ({item}) => {
   );
 };
 
-export const AcceptQuote = () => {
+export const AcceptQuote = ({item}) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -311,7 +311,7 @@ export const AcceptQuote = () => {
   );
 };
 
-export const DeleteQuote = () => {
+export const DeleteQuote = ({item}) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import GlobalStateContext from './GlobalStateContext';
 import { useCart } from '@/lib/useCart';
 import { useCartB2B } from '@/lib/useCartB2B';
+import { useCartB2C } from '@/lib/useCartB2C';
 
 const GlobalStateProvider = ({ children }) => {
   const router = useRouter();
@@ -49,6 +50,7 @@ const GlobalStateProvider = ({ children }) => {
 
   // Create quote or cart functionality
   const useB2Bcart = useCartB2B(user, editQuote, setEditQuote)
+  const useB2Ccart = useCartB2C(user,)
 
   // Use useEffect for initial setup when the component mounts
   useEffect(() => {
@@ -89,7 +91,7 @@ const GlobalStateProvider = ({ children }) => {
     logout,
     module,setModule,
     fetchUser,
-    useB2Bcart,
+    useB2Bcart,useB2Ccart,
     showSidebar,
     setShowSidebar,
     openModal,

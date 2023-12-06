@@ -21,6 +21,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 
+import { useGlobalState } from "@/context/GlobalStateContext";
+
 interface RequestTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -30,8 +32,12 @@ export function RequestTable<TData, TValue>({
   columns,
   data,
 }: RequestTableProps<TData, TValue>) {
+
+  const {useB2Ccart:{onAdd}}=useGlobalState()
+
   //state for table filtering
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
   const table = useReactTable({
     data,
     columns,
@@ -42,6 +48,7 @@ export function RequestTable<TData, TValue>({
       columnFilters,
     },
   });
+
   return (
     <section>
       <section className="flex justify-between py-1 px-4 items-center bg-white my-12">
@@ -87,13 +94,16 @@ export function RequestTable<TData, TValue>({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody className="divide-y-2 divide-gray-400">
+
+
+          <TableBody className="divide-y-2 divide-gray-400" >
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                   className="border-b border-black"
+                  // 
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className="font-medium">
@@ -116,6 +126,8 @@ export function RequestTable<TData, TValue>({
               </TableRow>
             )}
           </TableBody>
+
+
         </Table>
       </div>
     </section>

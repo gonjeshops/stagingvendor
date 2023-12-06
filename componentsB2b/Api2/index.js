@@ -18,35 +18,6 @@ export const fetchSuppliersByPagination = (page, limit) => {
     });
 };
 
-// B2C
-export const fetchAccounting = (page, limit) => {
-  return axios({
-    method: "get",
-    headers: authHeader(),
-    url: url + `my/transactions?page=${page}&limit=${limit}`,
-  })
-    .then((response) =>{ 
-      console.log('API fetchAccounting response', response)
-      return response})
-    .catch((error) => {
-      console.log("Error in fetchAccounting api", error);
-    });
-};
-
-export const fetchProducts = (page, limit) => {
-  return axios({
-    method: "get",
-    headers: authHeader(),
-    url: url + `view/vendor/products?page=${page}&limit=${limit}`,
-  })
-    .then((response) =>{ 
-      console.log('API fetchProducts response', response)
-      return response})
-    .catch((error) => {
-      console.log("Error in fetchProducts api", error);
-    });
-};
-
 
 // View a supplier shop's products.  usage - /suppliers/[supplierId]
 export const viewSupplierShopProducts = async (userId, shopId, page, limit) => {
@@ -93,9 +64,6 @@ export const viewSupplierShopProducts = async (userId, shopId, page, limit) => {
 };
 
 
-
-
-
 // View Supplier Product Details
 export const viewSupplierShopProductDetails = (userId, productId, shopId) => {
   return axios({
@@ -111,7 +79,6 @@ export const viewSupplierShopProductDetails = (userId, productId, shopId) => {
     });
 };
 
-
   
 // View supplier products
 export const viewSupplierProducts = (userId) => {
@@ -126,8 +93,6 @@ export const viewSupplierProducts = (userId) => {
         console.log("Error in viewSupplierProducts api", error);
       });
   };
-  
-
 
 // ========= Quotes ===============
 
@@ -181,8 +146,7 @@ export const fetchQuoteDetails = (quoteId) => {
       });
   };
 
-
-  export const fetchSupplierQuoteDetails = (quoteId) => {
+export const fetchSupplierQuoteDetails = (quoteId) => {
     return axios({
       method: "get",
       headers: authHeader(),
@@ -195,8 +159,6 @@ export const fetchQuoteDetails = (quoteId) => {
         return error
       });
   };
-
-
 
 // Get quote request from vendors with "SENT" status  supplier/quotes
 export const fetchQuotesWIthSentStatus = (page, limit) => {
@@ -243,7 +205,6 @@ export const createQuoteRequest = (values, ) => {
       });
   };
 
-  
   // Create quote request with SEND status
 export const createQuoteWithSendStatus = (values, ) => {
   try {
@@ -281,7 +242,6 @@ export const createQuoteWithSendStatus = (values, ) => {
 }
 };
 
-
   // Update quote request
 export const updateQuoteRequest = (values, quoteId) => {
   // Validate inputs
@@ -316,7 +276,6 @@ export const updateQuoteRequest = (values, quoteId) => {
 };
 
 
-
 //  ============= INVOICE ============
 // Create quote request
 export const fetchVendorInvoice = (page, limit) => {
@@ -330,8 +289,6 @@ export const fetchVendorInvoice = (page, limit) => {
       console.log("Error in fetchVendorInvoice api", error, page, limit);
     });
 };
-
-
 
 // ======= // getNotification?limit=15 =====
 export const fetchNotifications = (limit, page) => {
@@ -468,7 +425,6 @@ if (type===`vendor/my/stats`) {
 
 };
 
-
   
 // orders
 // /vendor/b2b/my/orders
@@ -512,9 +468,6 @@ export const fetchOrders = (page, limit) => {
     return Promise.reject(error);
   }
 };
-
-
-
 
 // Add products
 export const  createProduct = (values) => {
@@ -626,3 +579,114 @@ export const fetchProductsCatalogue = (page, limit) => {
       console.log("Error in fetchProductsCatalogue api", error);
     });
 };
+
+
+
+// ==========B2C============
+export const fetchAccounting = (page, limit) => {
+  return axios({
+    method: "get",
+    headers: authHeader(),
+    url: url + `my/transactions?page=${page}&limit=${limit}`,
+  })
+    .then((response) =>{ 
+      console.log('API fetchAccounting response', response)
+      return response})
+    .catch((error) => {
+      console.log("Error in fetchAccounting api", error);
+    });
+};
+
+export const fetchProducts = (page, limit) => {
+  return axios({
+    method: "get",
+    headers: authHeader(),
+    url: url + `view/vendor/products?page=${page}&limit=${limit}`,
+  })
+    .then((response) =>{ 
+      console.log('API fetchProducts response', response)
+      return response})
+    .catch((error) => {
+      console.log("Error in fetchProducts api", error);
+    });
+};
+
+
+// The ones are for the recieved request
+//GET - https://backendapi.gonje.com/vendor/b2c/quote/{quoteId}
+// GET -https://backendapi.gonje.com/vendor/b2c/quotes
+
+// this one is for the invoice table
+// GET -  https://backendapi.gonje.com/supplier/b2c/quotes
+// GET - https://backendapi.gonje.com/supplier/b2c/quote/{quoteId}
+
+// this one is for the request modal in the expense page
+// PUT - https://backendapi.gonje.com/update/b2c/quote/request/{quoteId}
+// POST - https://backendapi.gonje.com/create/b2c/quote/request 
+
+
+// Create quote request as PENDING
+export const createB2cQuoteRequest = (values, ) => {
+  console.log('values===', values)
+    return axios({
+      method: "post",
+      headers: authHeader(),
+      url: url + `create/b2c/quote/request`,
+      data: {
+        "cart_items": values.cart_items,
+        "quote_name": values.quote_name,
+        "subtotal": values.subtotal,
+        "quantity": values.quantity,
+        "shop_name": values.shop_name,
+        "user_name": values.user_name,
+        "user_id": values.user_id,
+      },
+    })
+      .then((response) => {
+        console.log("createB2cQuoteRequest api response", response,values);
+      return response})
+      .catch((error) => {
+        console.log("Error in createB2cQuoteRequest api", error, values, );
+        return error
+        
+      });
+  }
+
+// fetch received quotes for b2c  vendor/b2c/quotes
+export const fetchB2cSentQuotes = (page, limit) => {
+  if (!page || !limit) {
+    return Promise.reject(new Error("Invalid input data."));
+  }
+    return axios({
+      method: "get",
+      headers: authHeader(),
+      url: url + `vendor/b2c/quotes?page=${page}&limit=${limit}`,
+    })
+    .then((response) => {
+      console.log("fetchB2cSentQuotes api response", response);
+    return response})
+      .catch((error) => {
+        console.log("Error in fetchB2cSentQuotes api", error);
+        return error
+      });
+  };
+
+  // fetch sent quotes for b2c supplier/b2c/quotes
+export const fetchB2cReceivedQuotes = (page, limit) => {
+  if (!page || !limit) {
+    return Promise.reject(new Error("Invalid input data."));
+  }
+    return axios({
+      method: "get",
+      headers: authHeader(),
+      url: url + `supplier/b2c/quotes?page=${page}&limit=${limit}`,
+    })
+    .then((response) => {
+      console.log("fetchB2cReceivedQuotes api response", response);
+    return response})
+      .catch((error) => {
+        console.log("Error in fetchB2cReceivedQuotes api", error);
+        return error
+      });
+  };
+// ==========B2C============

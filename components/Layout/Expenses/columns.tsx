@@ -81,10 +81,11 @@ export const productColumns: ColumnDef<ProductType>[] = [
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      const { name } = row.original;
+      const item = row.original;
+      // console.log('it', item)
       return (
-        <div>
-          <RequestModal />
+        <div >
+          <RequestModal item={item}/>
         </div>
       );
     },

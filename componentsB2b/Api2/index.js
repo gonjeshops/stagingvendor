@@ -597,14 +597,20 @@ export const fetchAccounting = (page, limit) => {
     });
 };
 
-export const fetchProducts = (page, limit) => {
+
+export const fetchProducts = (search, page, limit) => {
+  console.log('=========================', url + `view/vendor/products?search=${search}&page=${page}&limit=${limit}`,)
+  // Validate inputs
+  // if (!search || !values || !quoteId) {
+  //   return Promise.reject(new Error("Invalid input data."));
+  // }
   return axios({
     method: "get",
     headers: authHeader(),
-    url: url + `view/vendor/products?page=${page}&limit=${limit}`,
+    url: url + `view/vendor/products?search=${search}&page=${page}&limit=${limit}`,
   })
     .then((response) =>{ 
-      console.log('API fetchProducts response', response)
+      console.log('API fetchProducts response', response, search, page, limit)
       return response})
     .catch((error) => {
       console.log("Error in fetchProducts api", error);
@@ -624,6 +630,9 @@ export const fetchProducts = (page, limit) => {
 // PUT - https://backendapi.gonje.com/update/b2c/quote/request/{quoteId}
 // POST - https://backendapi.gonje.com/create/b2c/quote/request 
 
+
+// search products
+// https://backendapi.gonje.com/view/vendor/products?search=ap
 
 // Create quote request as PENDING
 export const createB2cQuoteRequest = (values, ) => {
@@ -654,28 +663,32 @@ export const createB2cQuoteRequest = (values, ) => {
 
 // fetch received quotes for b2c  vendor/b2c/quotes
 export const fetchB2cSentQuotes = (page, limit) => {
-  if (!page || !limit) {
-    return Promise.reject(new Error("Invalid input data."));
-  }
+  // if (!page || !limit) {
+  //   return Promise.reject(new Error("Invalid input data."));
+  // }
     return axios({
       method: "get",
       headers: authHeader(),
       url: url + `vendor/b2c/quotes?page=${page}&limit=${limit}`,
     })
     .then((response) => {
-      console.log("fetchB2cSentQuotes api response", response);
+      console.log("fetchB2cSentQuotes api response", response, page, limit );
     return response})
       .catch((error) => {
-        console.log("Error in fetchB2cSentQuotes api", error);
+        console.log("Error in fetchB2cSentQuotes api", error, page, limit);
         return error
       });
   };
 
+  
+
+
+
   // fetch sent quotes for b2c supplier/b2c/quotes
 export const fetchB2cReceivedQuotes = (page, limit) => {
-  if (!page || !limit) {
-    return Promise.reject(new Error("Invalid input data."));
-  }
+  // if (!page || !limit) {
+  //   return Promise.reject(new Error("Invalid input data."));
+  // }
     return axios({
       method: "get",
       headers: authHeader(),
@@ -723,4 +736,9 @@ export const updateB2cQuoteRequest = (values, quoteId) => {
       return Promise.reject(error); // Propagate the error.
     });
 };
+
+
+
+
+
 // ==========B2C============

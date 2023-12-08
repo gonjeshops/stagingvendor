@@ -22,6 +22,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 
 import { useGlobalState } from "@/context/GlobalStateContext";
+import { FaSearch } from "react-icons/fa";
 
 interface RequestTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -31,9 +32,11 @@ interface RequestTableProps<TData, TValue> {
 export function RequestTable<TData, TValue>({
   columns,
   data,
+  setSearch,
 }: RequestTableProps<TData, TValue>) {
 
   const {useB2Ccart:{onAdd}}=useGlobalState()
+  const [input, setInput] = useState('')
 
   //state for table filtering
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -55,22 +58,16 @@ export function RequestTable<TData, TValue>({
         <div>
           <h3 className="text-xl font-semibold capitalize">Request for quotes</h3>
         </div>
-        <div className="flex items-center py-4">
+        <div className="flex relative items-center py-4 gap-2">
           <Input
-            //@ts-ignore
             placeholder="Filter Product Type"
-            //@ts-ignore
-            value={
-              (table.getColumn("productType")?.getFilterValue() as string) ??
-              ""
-            }
-            onChange={(event) =>
-              table
-                .getColumn("productType")
-                ?.setFilterValue(event.target.value)
-            }
+            value={input}
+            onChange={(event)=>setInput(event.target.value)}
             className="w-[300px] py-4"
           />
+          <button onClick={()=>setSearch(input)} type="button" className="bg-gonje-green h-full flex justify-center items-center w-12 p-3 rounded-sm text-white"><FaSearch/></button>
+
+
         </div>
       </section>
 

@@ -10,18 +10,24 @@ import { ReceivedTable } from "./ReceivedTable";
 import { ReceivedColumns } from "./RecievedColumns";
 import FetchDataAndRenderPageB2C from '@/components/FetchDataAndRenderPageB2C';
 import { fetchB2cQuotes, fetchB2cReceivedQuotes, fetchB2cSentQuotes, fetchProducts } from '@/componentsB2b/Api2';
+import { useState } from 'react';
 
 const ExpenseTabs = () => {
 
+  // filtering products
+  const [search, setSearch] = useState('')
+
+  // display products
 const renderRequestTable = (response) =>  (
     response?.data?.data?.products?.length ?
-    <RequestTable columns={productColumns} data={response?.data?.data?.products} />
+    <RequestTable setSearch={setSearch} columns={productColumns} data={response?.data?.data?.products} />
     :
     <div className="absolute text-semibold inset-0 flex items-center justify-center text-center">
       <p>No Products found.</p>
     </div>
 )
 
+// display received quotes
 const renderReceivedTable = (response) =>  (
   response?.data?.data?.quotes?.length ?
   <ReceivedTable columns={ReceivedColumns} data={response?.data?.data?.quotes} />
@@ -31,6 +37,8 @@ const renderReceivedTable = (response) =>  (
   </div>
 )
 
+
+// display sent quotes
 const renderSentRequestTable = (response) =>  (
   response?.data?.data?.quotes?.length ?
   <ReceivedTable columns={ReceivedColumns} data={response?.data?.data?.quotes} />
@@ -64,6 +72,7 @@ const renderSentRequestTable = (response) =>  (
           renderComponent={renderRequestTable}
           pageLimit = {8}
           loadingTimeoutDuration = {8000}
+          search={search}
           />
       </TabsContent>
 

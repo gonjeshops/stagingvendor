@@ -38,30 +38,49 @@ export const productColumns: ColumnDef<ProductType>[] = [
     accessorKey: "name",
     header: "Product Name",
   },
+ 
   {
-    accessorKey: "product_type",
-    header: "Product Type",
-  },
-  {
-    accessorKey: "shop_name",
+    accessorKey: "name_of_shop",
     header: "Shop Name",
   },
   {
     accessorKey: "price",
     header: "Price",
+    cell: ({ row }) => {
+      return (
+        <p className="font-medium ">
+          AUD {row.getValue("price")}
+        </p>
+      );
+    },
+  },
+  {
+    accessorKey: "discount",
+    header: "Discount", 
+    cell: ({ row }) => {
+      return (
+        <p className="font-medium ">
+          {row.getValue("discount")}%
+        </p>
+      );
+    },
   },
   {
     accessorKey: "sale_price",
     header: "Sale Price",
+    cell: ({ row }) => {
+      return (
+        <p className="font-medium ">
+          AUD {row.getValue("sale_price") || row.getValue("price")}
+        </p>
+      );
+    },
   },
   {
     accessorKey: "quantity",
     header: "Quantity",
   },
-  {
-    accessorKey: "in_stock",
-    header: "In Stock",
-  },
+
   {
     accessorKey: "status",
     header: "Status",
@@ -73,10 +92,7 @@ export const productColumns: ColumnDef<ProductType>[] = [
       );
     },
   },
-  {
-    accessorKey: "receivedQuoteAction",
-    header: "Received Quote Action",
-  },
+
   {
     id: "actions",
     header: "Actions",

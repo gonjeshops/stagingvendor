@@ -21,7 +21,8 @@ module.exports = {
       colors: {
         gonje: {
           DEFAULT: "#f7d594",
-          green:"#7cb340"
+          green:"#7cb340",
+          yellow: "",
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

@@ -16,7 +16,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   };
 
   return (
-    <div className="flex items-center justify-center space-x-4 my-6">
+    <div className="flex items-center justify-center space-x-4 py-8">
       <button
         className={`h-8 w-8 flex justify-center items-center rounded-full ${
           currentPage === 1 ? 'bg-light300 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700 text-white'

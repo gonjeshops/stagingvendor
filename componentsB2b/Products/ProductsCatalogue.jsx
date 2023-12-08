@@ -2,7 +2,7 @@ import {useState} from 'react'
 
 import { productsData } from '@/data/productsData'
 import ProductCard from '../card/ProductCard'
-import ProductsSearchBar from './ProductsSearchBar'
+import ProductsSearchBar from '../../components/Layout/Expenses/ProductsSearchBarB2C'
 import DashboardHeading from '../Workspace/DashboardHeading'
 
 const ProductsCatalogue = ({productsList}) => {

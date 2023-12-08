@@ -79,8 +79,8 @@ const ChangeQuoteStatusForm = ({status, item}) => {
           type="button" // Use type="button" for buttons that don't submit the form
           disabled={isLoading || show || status==='ACCEPTED'}
           className={`${
-             show || item?.status==='ACCEPTED' ? 'disable' : 'hover-blue'
-          } rounded text-center w-full py- px-2`}
+             show || item?.status==='ACCEPTED' ? 'disable' : 'bg-gonje-green'
+          } rounded text-center w-full py-2 text-white px-2`}
         >
            {isLoading==='accept' ? <BtnSpinner/> : 'ACCEPT'}
         </button>

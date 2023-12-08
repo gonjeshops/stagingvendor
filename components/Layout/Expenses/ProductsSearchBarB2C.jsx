@@ -1,8 +1,9 @@
 import {useState} from 'react'
+import { FaSearch } from 'react-icons/fa';
 import Select from 'react-select';
 
 
-const ProductsSearchBar = () => {
+const ProductsSearchBarB2C = ({setSearch}) => {
     const [input, setInput] = useState('') 
     const [supplierName, setSupplierNAme] = useState(null);
     const [category, setCategory] = useState(null);
@@ -33,20 +34,26 @@ const ProductsSearchBar = () => {
       {value: 'Supplier 7', label: 'Supplier 7'},
   ]
   return (
-    <form onSubmit={handleSubmit} className='py-2 w-full flex gap-4 flex-wrap' >
+    <form onSubmit={handleSubmit} className='py-2 w-full flex  justify-between gap-4 flex-wrap' >
+       
+        <div className="relative bg-dark100 border  w-80 flex rounded-md ">
         <input type="text" name="supplierSearch" id="supplierSearch" 
-            className=' p-2 bg-dark100 border  rounded-md '
-            placeholder='Search for suppliers...'
+            className='w-80 p-2   '
+            placeholder='Search product'
             value={input}
             onChange={(e)=>setInput(e.target.value)}
         />
+        <button onClick={()=>setSearch(input)}
+        className='px-3 border-l bg-gonje-green text-white duration-300'><FaSearch/></button>
+
+        </div>
 
           <Select
               value={supplierName}
               onChange={handleSuppler}
               options={options}
-              className="min-w-96 bg-light100  text-black focus:outline-none focus:ring focus:border-blue-300"
-              placeholder="Search by supplier name"
+              className="w-80 bg-light100  text-black focus:outline-none focus:ring focus:border-green-300"
+              placeholder="Search shop name"
               isMulti
             />
 
@@ -54,8 +61,8 @@ const ProductsSearchBar = () => {
             value={category}
             onChange={handleCategory}
             options={options}
-            className="min-w-96 bg-light100  text-black focus:outline-none focus:ring focus:border-blue-300"
-            placeholder="Search by supplier category"
+            className="w-80 bg-light100  text-black focus:outline-none focus:ring focus:border-green-300"
+            placeholder="Search product category"
             isMulti
           />
 
@@ -63,4 +70,4 @@ const ProductsSearchBar = () => {
   )
 }
 
-export default ProductsSearchBar
+export default ProductsSearchBarB2C

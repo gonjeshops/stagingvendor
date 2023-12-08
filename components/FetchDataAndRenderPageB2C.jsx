@@ -8,6 +8,7 @@ const FetchDataAndRenderPageB2C = ({
   renderComponent,
   pageLimit = 8,
   loadingTimeoutDuration = 8000,
+  search,
 }) => {
   const router = useRouter();
   const page = parseInt(router.query.page) || 1;
@@ -30,14 +31,27 @@ const FetchDataAndRenderPageB2C = ({
     const fetchData = async () => {
       try {
         setPageLoading(true)
-        const response = await fetchDataFunction(page, pageLimit);
-console.log('API RESPONSES', response?.data?.data?.products)
-        if (response.status === 200) {
-          setData(response);
-          setTotalPages(response?.data?.data?.total_pages);
+        if(search) {
+          const response = await fetchDataFunction(search, 1, 1000);
+            console.log('SEARCH API RESPONSES', response?.data?.data?.products)
+            if (response?.status === 200) {
+              setData(response);
+              setTotalPages(response?.data?.data?.total_pages);
+            } else {
+              setError('Something went wrong. Try again');
+            }
         } else {
-          setError('Something went wrong. Try again');
-        }
+            const response = await fetchDataFunction(search, page, pageLimit);
+            console.log('API RESPONSES', response?.data?.data?.products)
+            if (response?.status === 200) {
+              setData(response);
+              setTotalPages(response?.data?.data?.total_pages);
+            } else {
+              setError('Something went wrong. Try again');
+            }
+
+          }
+        
       } catch (error) {
         setError('Server is not available. Refer to developer');
         console.error('Catch error=', error);
@@ -49,7 +63,7 @@ console.log('API RESPONSES', response?.data?.data?.products)
 
     fetchData();
     return () => clearTimeout(timeoutId);
-  }, [page, fetchDataFunction, pageLimit, loadingTimeoutDuration]);
+  }, [page, search, fetchDataFunction, pageLimit, loadingTimeoutDuration]);
 
   if (loadingTimeout) {
     return (
@@ -83,12 +97,12 @@ console.log('API RESPONSES', response?.data?.data?.products)
 
   return (
  
-      <div className="space-y-12 h-full">
-        <div className="pb-28">
+      <div className=" ">
+        <div className=" h-[90vh] overflow-auto">
           {renderComponent(data)}
         </div>
 
-        <div className="absolute -bottom-2 bg-light100 left-0 w-full">
+        <div className="  bg-light100 w-full">
           <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />
         </div>
       </div>

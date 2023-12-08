@@ -6,11 +6,11 @@ COPY package.json .
 COPY . .
 
 # Install dependencies
-RUN npm install
+RUN yarn 
 
 # Build the Next.js application
-RUN npm run build
+RUN yarn build
 
 EXPOSE 3004
 
-CMD ["npm", "start"]
+CMD ["yarn", "start"]

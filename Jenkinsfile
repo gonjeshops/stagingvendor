@@ -32,7 +32,7 @@ pipeline {
                     // Change directory to your Node.js application's directory
                     dir('./') {
                         // Install dependencies and build the application
-                        sh 'npm install'  
+                        sh 'yarn'  
                         // Add any additional build steps if necessary
                     }
                 }

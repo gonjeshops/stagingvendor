@@ -285,13 +285,16 @@ export const RequestModal = ({item}) => {
 };
 
 export const AcceptQuote = ({item}) => {
+
   return (
     <AlertDialog>
+      
       <AlertDialogTrigger asChild>
         <Button className="p-3 bg-gonje-green text-white capitalize">
           Accept
         </Button>
       </AlertDialogTrigger>
+
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle className="font-normal">

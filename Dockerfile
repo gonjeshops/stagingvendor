@@ -8,7 +8,7 @@ COPY . .
 # Install dependencies
 RUN npm install
 
-Build the Next.js application
+# Build the Next.js application
 RUN npm run build
 
 EXPOSE 3004

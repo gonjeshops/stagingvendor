@@ -19,7 +19,7 @@ const DashboardHeading = ({children}) => {
         <Breadcrumb/>
       </div>   
 
-      <div className="relative flex justify-end right-0">
+      <div className=" flex justify-end right-0">
           <CurrentDate/>
       </div>
 

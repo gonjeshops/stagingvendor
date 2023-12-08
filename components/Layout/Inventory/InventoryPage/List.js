@@ -47,7 +47,7 @@ const List = ({
                     ) : null}
                   </th>
                   <td>{item.name}</td>
-                  <td>{item.type.name}</td>
+                  {/* <td>{item.type.name}</td> */}
                   <td>{item.product_type}</td>
                   <td>{item.price}</td>
                   <td>{item.sale_price}</td>

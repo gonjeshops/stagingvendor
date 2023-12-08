@@ -23,7 +23,7 @@ const ReQuestQuotes = () => {
   }
   
 
-  const limit = 8;
+  const limit = 84;
   const page = parseInt(router.query.page) || 1;
 
   const [quotes, setQuotes] = useState([])
@@ -46,7 +46,8 @@ const ReQuestQuotes = () => {
           const response = await fetchQuotesWithPendingStatus(page, limit);
   
           if (response.status === 200) {
-              setQuotes(response?.data?.data?.quotes);
+            setQuotes(response?.data?.data?.quotes.filter(item => !['PAID', 'PENDING', ].includes(item.status)));
+          // setQuotes(response?.data?.data?.quotes);
               setTotalPages(response?.data?.data?.total_pages);
 
               // toast.success('Updated quote requests')
@@ -100,7 +101,7 @@ const ReQuestQuotes = () => {
 
         <Workspace>
             <div className="pb-28">
-                <RequestQuotes quotes={quotes}/>
+            <RequestQuotes quotes={quotes} heading={'Manage Qoutes'} description={'Manage Sent Quotes'}/>
             </div>
 
         <div className="absolute bottom-0 bg-light100 pb-4  left-0 w-full">

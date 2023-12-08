@@ -4,7 +4,6 @@ import { updateQuoteRequest } from '../Api2';
 import { BtnSpinner } from '../Loader/Spinner/BtnSpinner';
 
 const ChangeQuoteStatusForm = ({status, quoteData,quoteQuantity,  setQuoteData, reason}) => {
-  console.log('=========', status, quoteData, reason)
   const [show, setShow] = useState(false);
   const [selected, setSelected] = useState(null); // Initialize with null
   const [formData, setFormData] = useState({
@@ -82,7 +81,7 @@ const ChangeQuoteStatusForm = ({status, quoteData,quoteQuantity,  setQuoteData, 
         type="button"
         disabled={show || status === 'ACCEPTED' || isLoading} // Disable when loading
         className={`${
-          (show || status === 'ACCEPTED' || status === 'SENT' || isLoading) ? 'bg-blue-300 cursor-not-allowed' : 'hover-blue'
+          (show || status === 'ACCEPTED' || status === 'SENT' || isLoading) ? 'disable' : 'hover-blue'
         } rounded text-center w-full py-3`}
       >
         {isLoading ? <BtnSpinner/>  : (status === 'CANCELLED' ? 'RESEND QUOTE' : status === 'SENT' ? 'QUOTE SENT' : 'SEND QUOTE')}
@@ -92,9 +91,9 @@ const ChangeQuoteStatusForm = ({status, quoteData,quoteQuantity,  setQuoteData, 
         onClick={() => setShow(true)}
         type="button"
         className={`${
-          show ? 'bg-red-300 cursor-not-allowed' : 'hover-red'
+          show  || status==='SENT' ? 'disable' : 'hover-red'
         } rounded text-center w-full py-3`}
-        disabled={isLoading} // Disable when loading
+        disabled={isLoading || status==='SENT' } // Disable when loading
       >
         {status==='CANCELLED' ? 'UPDATE REASON':'CANCEL QUOTE'}
       </button>

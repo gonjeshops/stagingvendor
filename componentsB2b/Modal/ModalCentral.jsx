@@ -1,6 +1,8 @@
+import { useGlobalState } from "@/context/GlobalStateContext";
 
-const ModalCentral = ({ children, isOpen, closeModal }) => {
+const ModalCentral = ({ children, type }) => {
     
+  const {modalType, closeModal} = useGlobalState()
  
     const stopPropagation = (e) => {
         e.stopPropagation();
@@ -8,9 +10,8 @@ const ModalCentral = ({ children, isOpen, closeModal }) => {
 
   return (
 
-    <div  onClick={closeModal} className={`${isOpen ? 'opacity-100 scale-100' : 'opacity-50 scale-0' } transition-transform transform duration-500  ${isOpen==='dashboard' ? 'fixed' : 'absolute'} inset-0 flex justify-center items-center bg-opacity-50 bg-black z-50 `}
+    <div  onClick={closeModal} className={`${modalType===type ? 'opacity-100 scale-100' : 'opacity-50 scale-0' } transition-transform transform duration-500 absolute inset-0  bg-opacity-50 bg-black flex items-center justify-center z-50 p-4`}
     >
-          
             <div className=""  onClick={stopPropagation}>
                 {children}
             </div>

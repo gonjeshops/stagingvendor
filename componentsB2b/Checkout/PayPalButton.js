@@ -11,9 +11,9 @@ import { useRouter } from "next/router";
 
 
 
-export default function PayPal({}) {
+export default function PayPal({checkoutData}) {
     const router = useRouter()
-    const {checkoutData} = useGlobalState()
+    const {user} = useGlobalState()
     const [paidFor, setPaidFor] = useState(false)
     const [error, setError] = useState(false)
     const [currency, setCurrency] = useState('AUD')
@@ -36,6 +36,7 @@ export default function PayPal({}) {
 
         // if response is success
         setPaidFor(true);
+        router.push('/vendorb2b/workspace/invoices')
         toast.success('Thank you for your purchase!')
 
         // Refresh the user account or subscription status.

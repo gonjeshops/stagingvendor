@@ -66,7 +66,7 @@ const GetQuoteProductCard = ({ item, toggleCartItemQuanitity, onRemove}) => {
           </div>
 
           <div className="price">
-            <h5 className="text font-medium mb-2">Price/1</h5>
+            <h5 className="text font-medium mb-2">Price</h5>
             <h3 className="text-xl sm:text-2xl font-semibold">${item?.price}</h3>
           </div>
 

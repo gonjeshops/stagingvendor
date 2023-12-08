@@ -15,7 +15,7 @@ const Invoice = () => {
 
   const router = useRouter();
   if (router.query?.stripe_status === 'success') {
-    // toast.success('Stripe payment was successful');
+    toast.success('Stripe payment was successful');
   } else if (router.query?.stripe_status === 'cancelled') {
     toast.error('Stripe payment was cancelled');
   }
@@ -46,14 +46,13 @@ const Invoice = () => {
       // const response = await fetchVendorInvoice(page, limit);
 
       if (response.status === 200) {
-          // setInvoices(response?.data?.data?.transactions);
-          // setInvoices(response?.data?.data?.quotes);
+        
           setInvoices(response?.data?.data?.quotes.filter(item => !['PENDING', 'SENT', 'REJECTED', 'CANCELLED'].includes(item.status)));
           setTotalPages(response?.data?.data?.total_pages);
 
-          toast.success(response?.data?.message)
+          // toast.success(response?.data?.message)
     console.log('Fetch all invoices response=== ',response?.data?.data?.quotes)
-    // console.log('Fetch all invoices response=== ',response?.data?.data?.transactions)
+
 
       } else {
         setError('Something went wrong. Refresh page');
@@ -75,18 +74,7 @@ const Invoice = () => {
 }, [page]);
 
  
-  const invoice = {
-
-    // page: 'Invoices',
-    // tableHeader: ['TRANSACTION ID', 'INVOICE ID', 'ORDER ID', 'AMOUNT', 'BUYER NAME', 'PAYMENT STATUS', 'PAYMENT METHOD', 'DATE'],
-    // category: [
-    //   {title: 'All', value: '187'},
-    //   {title: 'Pending payment', value: '67'},
-    //   {title: 'Unfufilled', value: '87'},
-    //   {title: 'Completed', value: '56'},
-    //   {title: 'Refunded', value: '109'},
-    //   {title: 'Failed', value: '6'},
-    // ],
+  const invoiceHeading = {
 
     page: 'Invoices',
     tableHeader: ['QUOTE ID', 'INVOICE ID', 'QUOTE NAME', 'SHOP NAME','BUYER NAME', 'ITEMS',  'AMOUNT', 'STATUS', 'DATE'],
@@ -139,7 +127,7 @@ const Invoice = () => {
   return (
     <Workspace>
         <div className="pb-28">
-            <Invoices invoices={invoice} invoicess={invoices}/>
+            <Invoices invoiceHeading={invoiceHeading} invoices={invoices}/>
         </div>
 
         <div className="absolute bottom-0 bg-light100 pb-4  left-0 w-full">

@@ -3,13 +3,22 @@ import ImgCard from '../card/ImgCard'
 import ProductCard2 from '../card/productCard2'
 import Image from 'next/image'
 import { FaExternalLinkAlt, FaFacebook, FaImage } from 'react-icons/fa'
+import DashboardHeading from '../Workspace/DashboardHeading'
 
 const SuppliersDetails = ({supplierData, userId, shopId, }) => {
     const {products=[]} = supplierData
     const supplierDetails = supplierData?.shop
   
     return (
-    <div className='space-y-4'>
+        <>
+
+        <div className="lg:hidden">
+            <DashboardHeading></DashboardHeading>
+        </div>
+        
+
+
+        <div className='space-y-4'>
         <div className="w-full relative rounded-xl h-60 bg-light300">
            
             <div className="w-full h-full overflow-hidden rounded-xl">
@@ -69,7 +78,7 @@ const SuppliersDetails = ({supplierData, userId, shopId, }) => {
             <div className='min-h-96 w-full grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-4'>
                 {
                     products ? products?.map((item, i)=>(
-                        <ProductCard2 key={item.id} product={item} userId={userId} shopId={shopId} shopName={supplierData?.shop?.name}/>
+                        <ProductCard2 key={item.id} product={item} userId={supplierDetails?.owner_id} shopId={supplierDetails?.id} shopName={supplierData?.shop?.name}/>
                     )) 
                     : 
                     <div className='flex justify-center items-center w-full font-medium text-lg'>
@@ -83,7 +92,11 @@ const SuppliersDetails = ({supplierData, userId, shopId, }) => {
 
 
         
-    </div>
+        </div>
+        
+        
+        </>
+    
   )
 }
 

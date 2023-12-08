@@ -1,42 +1,37 @@
 
 import { FaClock, FaShoppingCart, FaFax, FaFileExport, FaFolder, FaStoreAlt } from "react-icons/fa"
 import SearchBar from "../Navigation/SearchBar"
-import Link from "next/link"
 import { useRouter } from "next/router"
-import RequestQuoteForm from "../forms/RequestQuoteForm"
 import DashboardHeading from './DashboardHeading'
 import { useGlobalState } from "@/context/GlobalStateContext"
-import { useState } from "react"
+import CreateQuoteBtn from "../btn/CreateQuoteBtn"
 
 
-const RequestQuotes = ({quotes}) => {
+const RequestQuotes = ({quotes, heading, description}) => {
     const router = useRouter()
 
     console.log('QUOTES DATA=', quotes)
 
-    const [show, setShow] = useState('')
-    const {useB2Bcart:{quoteCartcalculator}} = useGlobalState()
-
 return (
 
 <>
-
-    <RequestQuoteForm  closeModal={()=>setShow('')} isModalOpen={show} />
-
-
     <div className="">
-        <div className=" border-b border-light300 mb-4 pb-4 ">
+        <div className=" border-b mb-4 pb-4 ">
           
-            <DashboardHeading>Request Quotes</DashboardHeading>
+            <DashboardHeading>
+                {heading}
+            </DashboardHeading>
+            <p className="text-lg font-medium">{description}</p>
 
-            {/* <div className="grid  sm:flex justify-between items-center">
+            <div className="grid pt-4 sm:flex justify-between items-center">
                 <div className="">
                     <div className="flex gap-4 items-center  font-medium">
 
-                        <div onClick={()=>setShow('dashboard')} className="bg-blue-600 mb-2 cursor-pointer sm:mb-0 px-4 py-2 rounded hover:bg-blue-700 duration-300 text-white">{`+ Create Request`}</div>
-                        <Link href={'#'} className="flex  px-4 py-2 hover:bg-zinc-300 duration-300 gap-2 rounded items-center">
+                        <CreateQuoteBtn/>
+
+                        {/* <Link href={'#'} className="flex  px-4 py-2 hover:bg-zinc-300 duration-300 gap-2 rounded items-center">
                             <FaFileExport/> <p>Export</p>
-                        </Link>
+                        </Link> */}
                     </div>
                    
 
@@ -46,7 +41,7 @@ return (
                         <SearchBar/>
                     </div>
                 </div>
-            </div> */}
+            </div>
         </div>
 
         {/* cards */}

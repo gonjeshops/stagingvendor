@@ -25,7 +25,7 @@ const ExampleChart = ({type, heading, description }) => {
         ],
         borderColor: "black",
         borderWidth: 0,
-       
+      //  height: '100%',
       }
     ]
   });
@@ -34,7 +34,7 @@ const ExampleChart = ({type, heading, description }) => {
  
 
   return (
-    <div className='flex flex-col h-full justify-between gap-8 '>
+    <div className='flex flex-col sm:w-[400px] sm:h-full justify-between gap-8 '>
       <div className="">
         <h2 className='text-lg font-medium'>{heading}</h2>
         <p>{description}</p>

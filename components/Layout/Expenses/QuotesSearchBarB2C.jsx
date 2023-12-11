@@ -1,9 +1,10 @@
+import { Button } from '@/components/ui/button';
 import {useState} from 'react'
 import { FaSearch } from 'react-icons/fa';
 import Select from 'react-select';
 
 
-const ProductsSearchBarB2C = ({setSearch}) => {
+const QuotesSearchBarB2c = ({setSearch, type}) => {
     const [input, setInput] = useState('') 
     const [supplierName, setSupplierNAme] = useState(null);
     const [category, setCategory] = useState(null);
@@ -25,21 +26,23 @@ const ProductsSearchBarB2C = ({setSearch}) => {
     }
 
     const options = [
-      {value: 'Product 1', label: 'Product 1'},
-      {value: 'Product 2', label: 'Productr 2'},
-      {value: 'Product 3', label: 'Product  3'},
-      {value: 'Supplier 4', label: 'Supplier 4'},
-      {value: 'Supplier 5', label: 'Supplier 5'},
-      {value: 'Supplier 6', label: 'Supplier 6'},
-      {value: 'Supplier 7', label: 'Supplier 7'},
-  ]
+      {value: 'PENDING', label: 'PENDING'},
+      {value: 'SENT', label: 'SENT'},
+      {value: 'ACCEPTED', label: 'ACCEPTED'},
+      {value: 'REJECTED', label: 'REJECTED'},
+      {value: 'CANDELED', label: 'CANDELED'},
+      {value: 'PAID', label: 'PAID'},
+      {value: 'COMPLETED', label: 'COMPLETED'},
+    ]
+
+
   return (
     <form onSubmit={handleSubmit} className='py-2 w-full flex  justify-between gap-4 flex-wrap' >
        
         <div className="relative bg-dark100 border  w-80 flex rounded-md ">
         <input type="text" name="supplierSearch" id="supplierSearch" 
             className='w-80 p-2   '
-            placeholder='Search product'
+            placeholder='Search quotes'
             value={input}
             onChange={(e)=>setInput(e.target.value)}
         />
@@ -48,25 +51,24 @@ const ProductsSearchBarB2C = ({setSearch}) => {
 
         </div>
 
-          <Select
-              value={supplierName}
-              onChange={handleSuppler}
-              options={options}
-              className="w-80 bg-light100  text-black focus:outline-none focus:ring focus:border-green-300"
-              placeholder="Search shop name"
-            />
 
-            <Select
+          <Select
             value={category}
             onChange={handleCategory}
             options={options}
             className="w-80 bg-light100  text-black focus:outline-none focus:ring focus:border-green-300"
-            placeholder="Search product category"
+            placeholder="Select Quotes Status"
             // isMulti
           />
 
+         {type === 'sent' &&  <div className="flex flex-wrap gap-2 items-center">
+            <Button className='bg-gonje-green text-md '>Pending Quotes</Button>
+            <Button className='bg-gonje-green text-lg '>Sent Quotes</Button>
+            </div>}
+
+            
     </form>
   )
 }
 
-export default ProductsSearchBarB2C
+export default QuotesSearchBarB2c

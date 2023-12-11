@@ -36,7 +36,7 @@ export default function PayPal({checkoutData}) {
 
         // if response is success
         setPaidFor(true);
-        router.push('/vendorb2b/workspace/invoices')
+        router.push('/invoicing/received_invoice')
         toast.success('Thank you for your purchase!')
 
         // Refresh the user account or subscription status.

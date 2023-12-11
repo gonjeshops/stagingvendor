@@ -33,11 +33,11 @@ export const SideTabs = {
         },
         {
           name: "Invoicing",
-          url: "/invoicing",
+          url: "/invoicing/received_invoice",
         },
         {
-          name: "Expenses",
-          url: "/expenses",
+          name: "Quotes",
+          url: "/quotes/products",
         }
       ],
     },

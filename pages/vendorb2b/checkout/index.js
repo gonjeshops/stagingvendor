@@ -1,4 +1,4 @@
-import Checkout from '@/componentsB2b/Checkout/Checkout'
+import Checkout from '@/components/Checkout'
 import { fetchQuoteDetails } from '@/componentsB2b/Api2';
 import LoadingTimeout from '@/componentsB2b/Loader/LoadingTimeout';
 import { PageLoading } from '@/componentsB2b/Loader/Spinner/PageLoading';

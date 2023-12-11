@@ -36,8 +36,8 @@ console.log('STIPE SESSION===========', req.body)
         { shipping_rate: 'shr_1NTtXGCQ7rc17Weigz5iCMyC' },
       ],
       line_items: lineItems,
-      success_url: `${req.headers.origin}/vendorb2b/workspace/invoices?stripe_status=success`,
-      cancel_url: `${req.headers.origin}/vendorb2b/workspace/request-quotes?stripe_status=cancelled`,  
+      success_url: `${req.headers.origin}/invoicing/received_invoice?status=success`,
+      cancel_url: `${req.headers.origin}/invoicing/received_invoice?status=cancelled`,  
       metadata: {
         user_token: user.token,
         quote_id: checkoutData?.quote_id || 0,

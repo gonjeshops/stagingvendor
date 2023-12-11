@@ -10,6 +10,7 @@ import { PageLoading } from "@/componentsB2b/Loader/Spinner/PageLoading";
 import { useEffect } from "react";
 import { fetchAccounting } from "@/componentsB2b/Api2";
 import FetchDataAndRenderPageB2C from "@/components/FetchDataAndRenderPageB2C";
+
 const Accounting = () => {
   const AccountingDataTest = [
     {
@@ -41,7 +42,6 @@ const Accounting = () => {
     },
   ];
 
-  // if (!AccountingData) return <div className="absolute inset-0 flex w-full justify-center items-center"><PageLoading/></div>
 
   const renderTransactions = (response) =>  (
         response?.data?.data?.transactions?.length ?
@@ -58,14 +58,10 @@ const Accounting = () => {
     renderComponent={renderTransactions}
     pageLimit = {8}
     loadingTimeoutDuration = {8000}
+    search=''
     />
   )
 
-  // return (
-  //   <section>
-  //     {/* <DataTable columns={columns} data={AccountingData.data.transactions} /> */}
-  //   </section>
-  // );
 };
 
 export default Accounting;

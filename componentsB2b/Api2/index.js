@@ -583,11 +583,11 @@ export const fetchProductsCatalogue = (page, limit) => {
 
 
 // ==========B2C============
-export const fetchAccounting = (page, limit) => {
+export const fetchAccounting = (page, limit, search) => {
   return axios({
     method: "get",
     headers: authHeader(),
-    url: url + `my/transactions?page=${page}&limit=${limit}`,
+    url: url + `my/transactions?page=${page}&limit=${limit}&search=${search}`,
   })
     .then((response) =>{ 
       console.log('API fetchAccounting response', response)
@@ -598,8 +598,7 @@ export const fetchAccounting = (page, limit) => {
 };
 
 
-export const fetchProducts = (search, page, limit) => {
-  console.log('=========================', url + `view/vendor/products?search=${search}&page=${page}&limit=${limit}`,)
+export const fetchProducts = ( page, limit, search) => {
   // Validate inputs
   // if (!search || !values || !quoteId) {
   //   return Promise.reject(new Error("Invalid input data."));
@@ -607,13 +606,13 @@ export const fetchProducts = (search, page, limit) => {
   return axios({
     method: "get",
     headers: authHeader(),
-    url: url + `view/vendor/products?search=${search}&page=${page}&limit=${limit}`,
+    url: url + `view/vendor/products?page=${page}&limit=${limit}&search=${search}`,
   })
     .then((response) =>{ 
       console.log('API fetchProducts response', response, search, page, limit)
       return response})
     .catch((error) => {
-      console.log("Error in fetchProducts api", error);
+      console.log("Error in fetchProducts api", error, '==',  search, page, limit);
     });
 };
 
@@ -642,13 +641,14 @@ export const createB2cQuoteRequest = (values, ) => {
       headers: authHeader(),
       url: url + `create/b2c/quote/request`,
       data: {
-        "cart_items": values.cart_items,
-        "quote_name": values.quote_name,
+        "cart_items": values?.cart_items,
+        "quote_name": values?.quote_name,
         "subtotal": values.subtotal,
-        "quantity": values.quantity,
-        "shop_name": values.shop_name,
-        "user_name": values.user_name,
-        "user_id": values.user_id,
+        "quantity": values?.quantity,
+        "shop_name": values?.shop_name,
+        "user_name": values?.user_name,
+        "user_id": values?.user_id,
+        "status": values?.status,
       },
     })
       .then((response) => {
@@ -657,19 +657,45 @@ export const createB2cQuoteRequest = (values, ) => {
       .catch((error) => {
         console.log("Error in createB2cQuoteRequest api", error, values, );
         return error
-        
       });
   }
 
-// fetch received quotes for b2c  vendor/b2c/quotes
-export const fetchB2cSentQuotes = (page, limit) => {
+  // http://backendapi.gonje.com/send/b2c/quote/request
+  export const SendB2cQuoteRequest = (values, ) => {
+    console.log('values===', values)
+      return axios({
+        method: "post",
+        headers: authHeader(),
+        url: url + `send/b2c/quote/request`,
+        data: {
+          "cart_items": values?.cart_items,
+          "quote_name": values?.quote_name,
+          "subtotal": values.subtotal,
+          "quantity": values?.quantity,
+          "shop_name": values?.shop_name,
+          "user_name": values?.user_name,
+          "user_id": values?.user_id,
+        },
+      })
+        .then((response) => {
+          console.log("SendB2cQuoteRequest api response", response,values);
+        return response})
+        .catch((error) => {
+          console.log("Error in SendB2cQuoteRequest api", error, values, );
+          return error
+        });
+    }
+
+// fetch received quotes for b2c vendor/b2c/quotes
+// https://backendapi.gonje.com/supplier/vendor/b2c/quote/{quoteId} - GET
+export const fetchB2cSentQuotes = (page, limit, search) => {
   // if (!page || !limit) {
   //   return Promise.reject(new Error("Invalid input data."));
   // }
     return axios({
       method: "get",
       headers: authHeader(),
-      url: url + `vendor/b2c/quotes?page=${page}&limit=${limit}`,
+      url: url + `vendor/b2c/quotes?page=${page}&limit=${limit}&search=${search}`,
     })
     .then((response) => {
       console.log("fetchB2cSentQuotes api response", response, page, limit );
@@ -680,19 +706,35 @@ export const fetchB2cSentQuotes = (page, limit) => {
       });
   };
 
-  
-
-
+// https://backendapi.gonje.com/vendor/b2c/quote/{quoteId}
+export const fetchB2CQuoteDetails = (quoteId) => {
+  if (!quoteId) {
+    return Promise.reject(new Error("Invalid input data."));
+  }
+    return axios({
+      method: "get",
+      headers: authHeader(),
+      url: url + `supplier/b2c/quote/${quoteId}`,
+    })
+    .then((response) => {
+      console.log("fetchB2CQuoteDetails api response", response,  );
+    return response})
+      .catch((error) => {
+        console.log("Error in fetchB2CQuoteDetails api", error,);
+        return error
+      });
+  };
 
   // fetch sent quotes for b2c supplier/b2c/quotes
-export const fetchB2cReceivedQuotes = (page, limit) => {
+// https://backendapi.gonje.com/vendor/b2c/quote/{quoteId} - GET
+export const fetchB2cReceivedQuotes = (page, limit, search) => {
   // if (!page || !limit) {
   //   return Promise.reject(new Error("Invalid input data."));
   // }
     return axios({
       method: "get",
       headers: authHeader(),
-      url: url + `supplier/b2c/quotes?page=${page}&limit=${limit}`,
+      url: url + `supplier/b2c/quotes?page=${page}&limit=${limit}&search=${search}`,
     })
     .then((response) => {
       console.log("fetchB2cReceivedQuotes api response", response);
@@ -738,6 +780,84 @@ export const updateB2cQuoteRequest = (values, quoteId) => {
 };
 
 
+
+  // GET - https://backendapi.gonje.com/vendor/b2c/invoices
+  // https://backendapi.gonje.com/single/vendor/b2c/invoice/invoiceId
+// GET - https://backendapi.gonje.com/supplier/b2c/invoices
+// https://backendapi.gonje.com/single/supplier/b2c/invoice/{invoiceId}
+  // fetch sent quotes for b2c supplier/b2c/quotes
+  export const fetchReceivedInvoices = (page, limit, search) => {
+    // if (!page || !limit) {
+    //   return Promise.reject(new Error("Invalid input data."));
+    // }
+      return axios({
+        method: "get",
+        headers: authHeader(),
+        url: url + `vendor/b2c/invoices?page=${page}&limit=${limit}&search=${search}`,
+      })
+      .then((response) => {
+        console.log("fetchReceivedInvoices api response", response);
+      return response})
+        .catch((error) => {
+          console.log("Error in fetchReceivedInvoices api", error);
+          return error
+        });
+    };
+
+    export const fetchReceivedInvoicesDetails = (invoiceId) => {
+      // if (!page || !limit) {
+      //   return Promise.reject(new Error("Invalid input data."));
+      // }
+        return axios({
+          method: "get",
+          headers: authHeader(),
+          url: url + `single/vendor/b2c/invoice/${invoiceId}`,
+        })
+        .then((response) => {
+          console.log("fetchReceivedInvoices api response", response);
+        return response})
+          .catch((error) => {
+            console.log("Error in fetchReceivedInvoices api", error);
+            return error
+          });
+      };
+
+    // fetch sent quotes for b2c supplier/b2c/quotes
+    export const fetchSentInvoices = (page, limit, search) => {
+      // if (!page || !limit) {
+      //   return Promise.reject(new Error("Invalid input data."));
+      // }
+        return axios({
+          method: "get",
+          headers: authHeader(),
+          url: url + `supplier/b2c/invoices?page=${page}&limit=${limit}&search=${search}`,
+        })
+        .then((response) => {
+          console.log("fetchSentInvoices api response", response);
+        return response})
+          .catch((error) => {
+            console.log("Error in fetchSentInvoices api", error);
+            return error
+          });
+      };
+
+      export const fetchSentInvoicesDetails = (invoiceId) => {
+        // if (!page || !limit) {
+        //   return Promise.reject(new Error("Invalid input data."));
+        // }
+          return axios({
+            method: "get",
+            headers: authHeader(),
+            url: url + `single/supplier/b2c/invoices/${invoiceId}`,
+          })
+          .then((response) => {
+            console.log("fetchReceivedInvoices api response", response);
+          return response})
+            .catch((error) => {
+              console.log("Error in fetchReceivedInvoices api", error);
+              return error
+            });
+        };
 
 
 

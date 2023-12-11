@@ -4,8 +4,8 @@ import ProductsSearchBarB2C from '@/components/Layout/Expenses/ProductsSearchBar
 import ProductsTableRow from '@/components/Layout/Expenses/ProductsTableRow'
 import QuotesLayout from '@/components/Layout/Expenses/QuotesLayout'
 import TableLayout from '@/components/Layout/Expenses/TableLayout'
-import { fetchProducts } from '@/componentsB2b/Api2'
 import { useState } from 'react'
+import { fetchProducts } from '../../componentsB2b/Api2'
 
 const products = () => {
     const header = ['Image',	'Product Name',	'Shop Name',	'Price',	'Discount',	'Sale Price',	'Quantity',	'Status',	'Actions']
@@ -13,8 +13,10 @@ const products = () => {
   const [search, setSearch] = useState('')
 
     const renderRequestTable = (response) =>  (
+        
         response?.data?.data?.products?.length ?
         <TableLayout header={header}>
+            {console.log('PRODUCTS=', response)}
             <ProductsTableRow  data={response?.data?.data?.products} />
         </TableLayout>
         :

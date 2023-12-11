@@ -6,9 +6,11 @@ import { PageLoading } from '@/componentsB2b/Loader/Spinner/PageLoading';
 const FetchDataAndRenderPageB2C = ({
   fetchDataFunction,
   renderComponent,
-  pageLimit = 8,
+  pageLimit = 12,
   loadingTimeoutDuration = 8000,
   search,
+  refresh,
+  id,
 }) => {
   const router = useRouter();
   const page = parseInt(router.query.page) || 1;
@@ -31,27 +33,35 @@ const FetchDataAndRenderPageB2C = ({
     const fetchData = async () => {
       try {
         setPageLoading(true)
-        if(search) {
-          const response = await fetchDataFunction(search, 1, 1000);
-            console.log('SEARCH API RESPONSES', response?.data?.data?.products)
+        if(id) {
+          const response = await fetchDataFunction(id);
+            console.log('Item details', response)
             if (response?.status === 200) {
               setData(response);
-              setTotalPages(response?.data?.data?.total_pages);
             } else {
               setError('Something went wrong. Try again');
             }
         } else {
-            const response = await fetchDataFunction(search, page, pageLimit);
-            console.log('API RESPONSES', response?.data?.data?.products)
-            if (response?.status === 200) {
-              setData(response);
-              setTotalPages(response?.data?.data?.total_pages);
+            if(search) {
+              const response = await fetchDataFunction( page, pageLimit, search);
+                console.log('SEARCH API RESPONSES', response)
+                if (response?.status === 200) {
+                  setData(response);
+                  setTotalPages(response?.data?.data?.total_pages);
+                } else {
+                  setError('Something went wrong. Try again');
+                }
             } else {
-              setError('Something went wrong. Try again');
-            }
-
-          }
-        
+                const response = await fetchDataFunction(page, pageLimit, search);
+                console.log('API RESPONSES', response)
+                if (response?.status === 200) {
+                  setData(response);
+                  setTotalPages(response?.data?.data?.total_pages);
+                } else {
+                  setError('Something went wrong. Try again', response?.status);
+                }
+              }
+        }
       } catch (error) {
         setError('Server is not available. Refer to developer');
         console.error('Catch error=', error);
@@ -63,7 +73,7 @@ const FetchDataAndRenderPageB2C = ({
 
     fetchData();
     return () => clearTimeout(timeoutId);
-  }, [page, search, fetchDataFunction, pageLimit, loadingTimeoutDuration]);
+  }, [page,refresh, id, search, fetchDataFunction, pageLimit, loadingTimeoutDuration]);
 
   if (loadingTimeout) {
     return (
@@ -81,11 +91,9 @@ const FetchDataAndRenderPageB2C = ({
 
   if (pageLoading) {
     return (
-    
         <div className='absolute inset-0 flex items-center justify-center'>
           <PageLoading/>
         </div>
-
     );
   }
 
@@ -96,15 +104,13 @@ const FetchDataAndRenderPageB2C = ({
   }
 
   return (
- 
-      <div className=" ">
-        <div className=" h-[90vh] overflow-auto">
+      <div className=" " >
+        <div className="h-[90vh] overflow-auto relative ">
           {renderComponent(data)}
         </div>
-
-        <div className="  bg-light100 w-full">
+        {!id && totalPages && <div className="  bg-light100 w-full">
           <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />
-        </div>
+        </div>}
       </div>
 
   );

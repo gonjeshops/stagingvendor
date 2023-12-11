@@ -39,7 +39,7 @@ import GetQuoteProductCard from "@/componentsB2b/card/GetQuoteProductCard";
 import { AiOutlineShopping } from "react-icons/ai";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { createB2cQuoteRequest, } from "@/componentsB2b/Api2";
+import { SendB2cQuoteRequest, createB2cQuoteRequest, } from "@/componentsB2b/Api2";
 
 export const RequestModal = ({item}) => {
   const router = useRouter()
@@ -76,6 +76,7 @@ export const RequestModal = ({item}) => {
         try {
           const newFormData = {
             quote_name: quoteName,
+            status: 'SENT',
             subtotal: totalPrice,
             quantity: totalQuantities,
             cart_items: cartItems,
@@ -84,14 +85,12 @@ export const RequestModal = ({item}) => {
             user_name: `${user?.user_name} ${user?.user_lastname}`,
           }
   
-          const response = await createB2cQuoteRequest(newFormData);
+          const response = await SendB2cQuoteRequest(newFormData);
           if (response?.status === 200) {
             console.log("createQuoteRequest API  response:", response);
             setSuccess('Quote resquest was successfull.')
             toast.success('Quote resquest was successfull.')
-            setTimeout(() => {
-              // router.push('/vendorb2b/workspace/request-quotes')
-            }, 1000);
+            
           } else {
             console.log("Quote resquest API response error:", response);
             toast.error(response?.error  || response?.message || 'Error submitting the form. Please try again.');
@@ -130,6 +129,7 @@ export const RequestModal = ({item}) => {
       try {
         const newFormData = {
           quote_name: quoteName,
+          status: 'PENDING',
           subtotal: totalPrice,
           quantity: totalQuantities,
           cart_items: cartItems,
@@ -216,14 +216,6 @@ export const RequestModal = ({item}) => {
               <div className="flex flex-col gap-4 py-4 w-full justify-center items-center">
               <AiOutlineShopping size={60} />
               <h3>Your shopping bag is empty</h3>
-              {/* <div className="flex justify-center text-center">
-                <div
-                  // onClick={() => closeModal()}
-                  className="text-blue-hover py-3 px-4 rounded w-full font-semibold cursor-pointer "
-                >
-                  Continue Shopping
-                </div>
-              </div> */}
             </div>
             ) : 
             <> 

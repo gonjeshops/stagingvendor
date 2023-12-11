@@ -54,16 +54,13 @@ const Invoices = ({invoiceHeading, invoices}) => {
                     <div onClick={() => generatePDF(downloadInvoiceRef, {filename: `${invoices[0]?.user_name}'s invoice.pdf`})} className="">Export invoice</div>
                         
                 </button>
-                {/* <button onClick={()=>setShow('dashboard')} className="flex hover-blue py-3 px-8 rounded-sm items-center gap-4">
-                    <p>{'+'}</p>
-                    <p>Add Order</p>
-                </button> */}
+
             </div>
         </div>
 
         <div ref={downloadInvoiceRef} className="orders bg-light100 pl-4">
             <InvoiceTable2 data={invoiceData} invoices={invoices} tableHeader={tableHeader}/>
-            {/* <InvoiceTable data={invoiceData} invoices={invoices} tableHeader={tableHeader}/> */}
+
         </div>
     </>
   )

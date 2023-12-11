@@ -31,10 +31,6 @@ const ChangeQuoteStatusForm = ({status, quoteData,quoteQuantity,  setQuoteData, 
   const handleSubmit = async (param) => {
     setIsLoading(true);
     try {
-      console.log('New Form Data:', {
-        status: param,
-        reason: formData?.reason,
-      });
       
       const response = await updateQuoteRequest({
         status: param,

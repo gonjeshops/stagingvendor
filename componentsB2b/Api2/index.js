@@ -860,5 +860,41 @@ export const updateB2cQuoteRequest = (values, quoteId) => {
         };
 
 
+// https://backendapi.gonje.com/view/vendor/b2c/shops?search=bak
+
+export const fetchB2cShops = (page, limit, search) => {
+    return axios({
+      method: "get",
+      headers: authHeader(),
+      url: url + `view/vendor/b2c/shops?page=${page}&limit=${limit}&search=${search}`,
+    })
+    .then((response) => {
+      console.log("fetchB2cShops api response", response);
+    return response})
+      .catch((error) => {
+        console.log("Error in fetchB2cShops api", error);
+        return error
+      });
+  };
+
+  // https://backendapi.gonje.com/view/vendor/shop/%7BuserId%7D/products/%7BshopId%7D
+  // https://backendapi.gonje.com/view/vendor/shop/8/products/5?page=3&limit=3
+  export const fetchShopDetailsAndProducts = (userId, shopId, page, limit, search) => {
+    if (!userId || !shopId) {
+      return Promise.reject(new Error("Invalid input data."));
+    }
+      return axios({
+        method: "get",
+        headers: authHeader(),
+        url: url + `view/vendor/shop/${userId}/products/${shopId}?page=${page}&limit=${limit}`,
+      })
+      .then((response) => {
+        console.log("fetchReceivedInvoices api response", response, '===', userId, shopId);
+      return response})
+        .catch((error) => {
+          console.log("Error in fetchReceivedInvoices api", error, '===', userId, shopId);
+          return error
+        });
+    };
 
 // ==========B2C============

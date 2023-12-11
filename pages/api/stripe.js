@@ -43,7 +43,10 @@ console.log('STIPE SESSION===========', req.body)
         quote_id: checkoutData?.quote_id || 0,
         quote_number: checkoutData?.quote_number || 0,
         quote_name: checkoutData?.quote_name || 'no name',
-        user_email: user?.user_email || 'noemail@email.com'
+        user_email: user?.user_email || 'noemail@email.com',
+        transaction_type:"Do you mean Product purchase?",
+        transaction_description:"What description do you want?",
+        transaction_title:"I don't get."
       },  
       customer_email: user?.user_email || 'noemail@email.com'
     };

@@ -5,6 +5,7 @@ import { PageLoading } from '@/componentsB2b/Loader/Spinner/PageLoading';
 
 const FetchDataAndRenderPageB2C = ({
   fetchDataFunction,
+  fetchDataByIdFunction,
   renderComponent,
   pageLimit = 12,
   loadingTimeoutDuration = 8000,
@@ -42,9 +43,9 @@ const FetchDataAndRenderPageB2C = ({
               setError('Something went wrong. Try again');
             }
         } else {
-            if(search) {
-              const response = await fetchDataFunction( page, pageLimit, search);
-                console.log('SEARCH API RESPONSES', response)
+            if(search.userId) {
+              const response = await fetchDataByIdFunction(search?.userId, search?.shopId, page, pageLimit, '');
+                console.log('fetch 1 shop products API RESPONSES', response)
                 if (response?.status === 200) {
                   setData(response);
                   setTotalPages(response?.data?.data?.total_pages);

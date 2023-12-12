@@ -844,11 +844,11 @@ export const updateB2cQuoteRequest = (values, quoteId) => {
       export const fetchSentInvoicesDetails = (invoiceId) => {
         // if (!page || !limit) {
         //   return Promise.reject(new Error("Invalid input data."));
-        // }
+        // } https://backendapi.gonje.com/single/vendor/b2c/invoice/
           return axios({
             method: "get",
             headers: authHeader(),
-            url: url + `single/vendor/b2c/invoices/${invoiceId}`,
+            url: url + `single/vendor/b2c/invoice/${invoiceId}`,
           })
           .then((response) => {
             console.log("fetchReceivedInvoices api response", response);

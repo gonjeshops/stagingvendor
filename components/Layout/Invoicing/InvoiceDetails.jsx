@@ -9,7 +9,7 @@ import DashboardHeading from '@/componentsB2b/Workspace/DashboardHeading'
 import { AddressDetails } from '@/componentsB2b/Order/OrderDetails'
 import { Button } from '@/components/ui/button'
 
-const InvoiceDetails = ({ data, type}) => {
+const InvoiceDetails = ({ data, path}) => {
     const downloadInvoiceRef = useRef()
     const router = useRouter()
     const { setCheckoutData} = useGlobalState();
@@ -26,7 +26,7 @@ const InvoiceDetails = ({ data, type}) => {
             </DashboardHeading>
             <div className="flex justify-between font-semibold gap-3">
                 <div className="flex items-center gap-4">
-                {data?.status === 'PAID' || type==='view' ? null : <Button onClick={()=>{
+                {data?.status === 'PAID' || path==='received' ? null : <Button onClick={()=>{
                     router.push(`/checkout?invoiceId=${data?.id}`)
                 }}
                 className='hover-blue rounded px-6 py-2'>Checkout
@@ -99,7 +99,7 @@ const InvoiceDetails = ({ data, type}) => {
                     <p className="space-x-1 col-span-1 text-end">Subtotal</p>
                 </div>
 
-                {data?.cart_items?.map((item, i) => (
+                {JSON.parse(data?.cart_items)?.map((item, i) => (
                 <div key={item?.id} 
 
                 className="py-6 px-4 border-b border-light300 grid grid-cols-8 gap-3 items-center text-[10px] sm:text-sm md:text-md md:overflow-hidden">
@@ -152,7 +152,7 @@ const InvoiceDetails = ({ data, type}) => {
         </div>
 
         <div className='py-16'>
-        {data?.status === 'PAID' ? null : <Button onClick={()=>{
+        {data?.status === 'PAID' || path==='received' ? null : <Button onClick={()=>{
                     router.push(`/checkout?invoiceId=${data?.id}`)
                 }}
                 className='hover-blue rounded px-6 py-2'>Checkout

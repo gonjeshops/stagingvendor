@@ -148,8 +148,8 @@ export const RequestModal = ({item, }) => {
           setQuoteName('')
           clearCart()
           setTimeout(() => {
-            // router.push('/vendorb2b/workspace/forcasted-quotes')
-          }, 1000);
+            router.push(`/quotes/sent_quotes`)
+          }, 500);
         } else {
           console.log("Quote resquest API response error:", response);
           toast.error('Server error.')

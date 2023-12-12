@@ -1,21 +1,12 @@
-import {useState} from 'react'
-import RadioBtn from '../componentsB2b/btn/RadioBtn';
-import SelectInput from '../componentsB2b/btn/SelectInput';
-import CheckoutForm from '../componentsB2b/Checkout/CheckoutForm';
-import { FaUser, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
 import DashboardHeading from '../componentsB2b/Workspace/DashboardHeading';
 import StripeCheckout from '../componentsB2b/Checkout/StripeCheckout';
 import PayPal from '../componentsB2b/Checkout/PayPalButton';
-import { useRouter } from 'next/router';
 import { AddressDetails } from '../componentsB2b/Order/OrderDetails';
-import { truncateText } from '@/lib/truncateText';
-import { useGlobalState } from '@/context/GlobalStateContext';
+
 
 
 const Checkout = ({ checkoutData}) => {
 
-    const { query } = useRouter();
-console.log('==================', checkoutData)
     const address = checkoutData?.shipping_details;
     const billing = checkoutData?.billing_details;
 
@@ -42,7 +33,7 @@ console.log('==================', checkoutData)
                     <p className="space-x-1 col-span-1 text-end">Subtotal</p>
                 </div>
 
-                {checkoutData?.cart_items?.map((item, i) => (
+                {JSON.parse(checkoutData?.cart_items)?.map((item, i) => (
                     <div key={item?.id} 
 
                     className="py-6 border-b border-light300 grid grid-cols-7 gap-3 items-center  md:overflow-hidden">

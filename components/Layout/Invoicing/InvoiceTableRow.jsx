@@ -4,10 +4,11 @@ import { updateB2cQuoteRequest } from '@/componentsB2b/Api2';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { useGlobalState } from '@/context/GlobalStateContext';
+import { Button } from '@/components/ui/button';
 
 
 
-const InvoiceTableRow = ({ data, type, setRefresh }) => {
+const InvoiceTableRow = ({ data, path, setRefresh }) => {
   const router = useRouter()
   const {setCheckoutData} = useGlobalState()
 
@@ -48,21 +49,26 @@ const InvoiceTableRow = ({ data, type, setRefresh }) => {
           {renderTextCell(item?.status)}
           {renderTextCell(new Date(item?.created_at).toDateString())}
           <td className="px-2 pt- text-sm">
-            {type === 'sent' ? (
-               <div className=" px-2 text-sm text-center">
-                  <button 
-                  onClick={()=>router.push(`/invoicing/${item.id}?t=pay`)}
-                  disabled={item?.status==='PAID'}  
-                  className={ `${item?.status==='PAID' ? 'disable ' : 'hover-blue text-white'} px-2  text-center py-2    rounded` }>
-                    {loading===item?.id ? <BtnSpinner/> : 'Checkout'}
-                  </button>
+            {path === 'sent' ? (
+               <div className="flex gap-2  px-2 text-sm text-center">
+                  <Button 
+                      onClick={()=>router.push(`/checkout?invoiceId=${item?.id}`)}
+                      disabled={item?.status==='PAID'}  
+                      className={ `${item?.status==='PAID' ? 'disable  ' : 'hover-blue text-white'} px-2  text-center py-2 rounded` }>
+                        {loading===item?.id ? <BtnSpinner/> : 'Checkout'}
+                  </Button>
+                  <Button 
+                      onClick={()=>router.push(`/invoicing/${item.id}?path=${path}`)}
+                      className={ `${'bg-gonje-green text-white'} px-3  text-center py-2    rounded` }>
+                      {loading===item?.id ? <BtnSpinner/> : 'Veiw'}
+                  </Button>
                 </div>
             ) : (
-              <button 
-              onClick={()=>router.push(`/invoicing/${item.id}?t=view`)}
-              className={ `${item?.status==='PAID' ? 'disable ' : 'bg-gonje-green text-white'} px-3  text-center py-2    rounded` }>
+              <Button 
+              onClick={()=>router.push(`/invoicing/${item.id}?path=${path}`)}
+              className={ `${'bg-gonje-green text-white'} px-3  text-center py-2 rounded` }>
                 {loading===item?.id ? <BtnSpinner/> : 'Veiw'}
-              </button>
+              </Button>
             )}
           </td>
         </tr>

@@ -17,7 +17,7 @@ const  ReceivedInvoicePage = () => {
         response?.data?.data?.quotes?.length ?
         <TableLayout header={header}>
           {console.log(response?.data?.data?.quotes)}
-            <InvoiceTableRow type='received'  data={response?.data?.data?.quotes} setRefresh={setRefresh}/>
+            <InvoiceTableRow path='received'  data={response?.data?.data?.quotes} setRefresh={setRefresh}/>
         </TableLayout>
         :
         <div className="absolute text-semibold inset-0 flex items-center justify-center text-center">

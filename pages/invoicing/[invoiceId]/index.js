@@ -1,18 +1,18 @@
 import FetchDataAndRenderPageB2C from '@/components/FetchDataAndRenderPageB2C'
 import InvoiceDetails from '@/components/Layout/Invoicing/InvoiceDetails'
-import { fetchB2CQuoteDetails, fetchQuoteDetails, fetchReceivedInvoicesDetails } from '@/componentsB2b/Api2'
+import { fetchB2CQuoteDetails, fetchQuoteDetails, fetchReceivedInvoicesDetails, fetchSentInvoicesDetails } from '@/componentsB2b/Api2'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 
 const InvoiceDetailsPage = ({invoiceId}) => {
 
-    const [search, setSearch] = useState('')
+  const [search, setSearch] = useState('')
   const [refresh, setRefresh] = useState(false)
-  const {query}=useRouter()
+  const { query}=useRouter()
 
     const renderInvoice = (response, ) =>  (
-        response?.data?.quote ?
-            <InvoiceDetails type={query.t}  data={response?.data?.quote} setRefresh={setRefresh}/>
+        response?.data?.data ?
+            <InvoiceDetails path={query.path}  data={response?.data?.data} setRefresh={setRefresh}/>
         :
         <div className="absolute text-semibold inset-0 flex items-center justify-center text-center">
           <p>No Invoice found.</p>
@@ -21,7 +21,7 @@ const InvoiceDetailsPage = ({invoiceId}) => {
 
   return (
     <FetchDataAndRenderPageB2C
-          fetchDataFunction={fetchB2CQuoteDetails}
+          fetchDataFunction={query?.path === 'sent' ? fetchSentInvoicesDetails : fetchReceivedInvoicesDetails }
           renderComponent={renderInvoice}
           pageLimit = {20}
           loadingTimeoutDuration = {10000}

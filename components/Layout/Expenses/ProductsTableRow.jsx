@@ -2,14 +2,13 @@ import Image from 'next/image'
 import React from 'react'
 import { RequestModal } from './ExpensesModals'
 
-const ProductsTableRow = ({data}) => {
+const ProductsTableRow = ({data, }) => {
     console.log('PRODUCTS===',data)
 
   return (
     <>
          {data?.map((item,i ) => {
              return ( <tr key={item?.id} className='border-b   border-light300 bg-hover300  duration-300' 
-            // onClick={()=>router.push(`/vendorb2b/workspace/invoices/${item?.id}`)} 
             >
               <td className="p-2 cursor-pointer">
                 <div className='w-full h-14 border rounded shrink-0 cursor-pointer overflow-hidden'>
@@ -45,7 +44,7 @@ const ProductsTableRow = ({data}) => {
                 {item?.status}
               </td>
               <td className='px-2 cursor-pointer'>
-              <RequestModal item={item}/>
+              <RequestModal item={item} />
               </td>
             </tr>
              )

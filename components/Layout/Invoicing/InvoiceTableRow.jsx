@@ -35,9 +35,9 @@ const InvoiceTableRow = ({ data, type, setRefresh }) => {
 
   
   return (
-    <>
+    <tbody className='text-sm'>
       {data?.map((item, i) => (
-        <tr key={item?.id} className="px-4 relative border-b border-light300 bg-hover300 duration-300">
+        <tr key={item?.id} className="px-6 relative border-b border-light300 bg-hover300 duration-300">
           {renderTextCell(item?.id)}
           {renderTextCell('INV'+item?.id)}
           {renderTextCell(`${item?.quote_name}`)}
@@ -49,32 +49,25 @@ const InvoiceTableRow = ({ data, type, setRefresh }) => {
           {renderTextCell(new Date(item?.created_at).toDateString())}
           <td className="px-2 pt- text-sm">
             {type === 'sent' ? (
+               <div className=" px-2 text-sm text-center">
+                  <button 
+                  onClick={()=>router.push(`/invoicing/${item.id}?t=pay`)}
+                  disabled={item?.status==='PAID'}  
+                  className={ `${item?.status==='PAID' ? 'disable ' : 'hover-blue text-white'} px-2  text-center py-2    rounded` }>
+                    {loading===item?.id ? <BtnSpinner/> : 'Checkout'}
+                  </button>
+                </div>
+            ) : (
               <button 
               onClick={()=>router.push(`/invoicing/${item.id}?t=view`)}
-              // onClick={()=>{
-              //   router.push(`/checkout?invoiceId=${item.id}`)
-              //   setCheckoutData(item)}}
-                // disabled={item?.status==='PAID'}  
               className={ `${item?.status==='PAID' ? 'disable ' : 'bg-gonje-green text-white'} px-3  text-center py-2    rounded` }>
                 {loading===item?.id ? <BtnSpinner/> : 'Veiw'}
               </button>
-            ) : (
-              <div className=" px-2 text-sm text-center">
-                <button 
-                onClick={()=>router.push(`/invoicing/${item.id}?t=pay`)}
-                // onClick={()=>{
-                //   router.push(`/checkout?invoiceId=${item.id}`)
-                //   setCheckoutData(item)}}
-                disabled={item?.status==='PAID'}  
-                className={ `${item?.status==='PAID' ? 'disable ' : 'hover-blue text-white'} px-2  text-center py-2    rounded` }>
-                  {loading===item?.id ? <BtnSpinner/> : 'Checkout'}
-                </button>
-              </div>
             )}
           </td>
         </tr>
       ))}
-    </>
+   </tbody>
   );
 };
 

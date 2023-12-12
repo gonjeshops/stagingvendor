@@ -12,12 +12,13 @@ const received_quotes = () => {
   
   const header = ['Quote Number',"Quote Name","Item","Amount", "Quantity", "Issued Date", "Due Date","Status","Actions" ]
 
+  const [refresh, setRefresh] = useState(false)
   const [search, setSearch] = useState('')
 
     const renderSentRequestTable = (response) =>  (
         response?.data?.data?.quotes?.length ?
         <TableLayout header={header}>
-            <QuotesTableRow type='received' data={response?.data?.data?.quotes} />
+            <QuotesTableRow type='received' data={response?.data?.data?.quotes} setRefresh={setRefresh} />
         </TableLayout>
         :
         <div className="absolute text-semibold inset-0 flex items-center justify-center text-center">
@@ -30,18 +31,21 @@ const received_quotes = () => {
 
   return (
     <QuotesLayout>
-    <div className="rounded-lg overflow-hidden bg-white  w-full mt-10 space-y-6">
-        <div className='py-4 w-full px-4'>
+    <div className="rounded-lg overflow-hidden  w-full mt-10 space-y-6">
+        <div className='py-4 w-full px-4 bg-white  rounded-lg'>
             <QuotesSearchBarB2c setSearch={setSearch} type='received'/>
         </div>
-       
-        <FetchDataAndRenderPageB2C
+       <div className="rounded-lg mt-8 bg-white py-4">
+       <FetchDataAndRenderPageB2C
                 fetchDataFunction={fetchB2cReceivedQuotes}
                 renderComponent={renderSentRequestTable}
                 pageLimit = {20}
                 loadingTimeoutDuration = {8000}
                 search={search}
+                refresh={refresh}
             />
+       </div>
+        
   
             
     </div>

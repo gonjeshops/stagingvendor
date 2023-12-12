@@ -5,10 +5,10 @@ const TableLayout = ({children, header,}) => {
         e.stopPropagation();
       };
   return (
-    <div className="overflow-x-auto lg:overflow-visible">
-      <table className="w-full table-auto ">
+   
+      <table className="w-full table-auto overflow-x-auto ">
         <thead>
-          <tr className='border-y  capitalize font-normal  px-4'>
+          <tr className='border-y  capitalize font-normal  px-8'>
            {
             (header || [1,2,3,4,5,6,7,8])?.map((item, i )=>(
                 <th key={i} className={`px-2 py-3 capitalize font-normal text-sm center`} >
@@ -19,13 +19,13 @@ const TableLayout = ({children, header,}) => {
           </tr>
         </thead>
 
-        <tbody className='text-sm'>
+        
           {
             children
           }        
-        </tbody>
+        
       </table>     
-    </div>
+ 
   )
 }
 

@@ -10,7 +10,8 @@ import { Button } from '@/components/ui/button'
 const Products = () => {
     const header = ['Image', 'Product Name', 'Shop Name', 'Price', 'Discount', 'Sale Price', 'Quantity', 'Status', 'Actions'];
   
-    const [search, setSearch] = useState('');
+
+  const [search, setSearch] = useState('');
     const [shop, setShop] = useState('');
    
     const renderProductTable = ({ data }) => {
@@ -54,6 +55,7 @@ const Products = () => {
             pageLimit={20}
             loadingTimeoutDuration={8000}
             search={search}
+
           />
         </div>
       </QuotesLayout>

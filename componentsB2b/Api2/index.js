@@ -793,7 +793,7 @@ export const updateB2cQuoteRequest = (values, quoteId) => {
       return axios({
         method: "get",
         headers: authHeader(),
-        url: url + `vendor/b2c/invoices?page=${page}&limit=${limit}&search=${search}`,
+        url: url + `supplier/b2c/invoices?page=${page}&limit=${limit}&search=${search}`,
       })
       .then((response) => {
         console.log("fetchReceivedInvoices api response", response);
@@ -811,7 +811,7 @@ export const updateB2cQuoteRequest = (values, quoteId) => {
         return axios({
           method: "get",
           headers: authHeader(),
-          url: url + `single/vendor/b2c/invoice/${invoiceId}`,
+          url: url + `single/supplier/b2c/invoice/${invoiceId}`,
         })
         .then((response) => {
           console.log("fetchReceivedInvoices api response", response);
@@ -830,7 +830,7 @@ export const updateB2cQuoteRequest = (values, quoteId) => {
         return axios({
           method: "get",
           headers: authHeader(),
-          url: url + `supplier/b2c/invoices?page=${page}&limit=${limit}&search=${search}`,
+          url: url + `vendor/b2c/invoices?page=${page}&limit=${limit}&search=${search}`,
         })
         .then((response) => {
           console.log("fetchSentInvoices api response", response);
@@ -848,7 +848,7 @@ export const updateB2cQuoteRequest = (values, quoteId) => {
           return axios({
             method: "get",
             headers: authHeader(),
-            url: url + `single/supplier/b2c/invoices/${invoiceId}`,
+            url: url + `single/vendor/b2c/invoices/${invoiceId}`,
           })
           .then((response) => {
             console.log("fetchReceivedInvoices api response", response);

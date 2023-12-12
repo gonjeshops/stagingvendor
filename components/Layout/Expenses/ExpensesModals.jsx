@@ -41,7 +41,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { SendB2cQuoteRequest, createB2cQuoteRequest, } from "@/componentsB2b/Api2";
 
-export const RequestModal = ({item}) => {
+export const RequestModal = ({item, }) => {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
 
@@ -90,6 +90,9 @@ export const RequestModal = ({item}) => {
             console.log("createQuoteRequest API  response:", response);
             setSuccess('Quote resquest was successfull.')
             toast.success('Quote resquest was successfull.')
+            setTimeout(() => {
+              router.push(`/quotes/sent_quotes`)
+            }, 500);
             
           } else {
             console.log("Quote resquest API response error:", response);

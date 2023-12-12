@@ -27,7 +27,9 @@ const  ReceivedInvoicePage = () => {
 
 
   return (
-    <InvoiceLayout searchBar={<InvoiceSearchBar setSearch={setSearch}/>}>
+    <InvoiceLayout 
+      searchBar={<InvoiceSearchBar setSearch={setSearch}/>}
+      >
       <FetchDataAndRenderPageB2C
           fetchDataFunction={fetchReceivedInvoices}
           renderComponent={renderReceivedInvoicesTable}

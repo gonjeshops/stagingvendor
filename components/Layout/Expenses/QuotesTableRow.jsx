@@ -59,8 +59,8 @@ const QuotesTableRow = ({ data, type, setRefresh }) => {
 
   return (
     <>
-      {data?.map((item, i) => (
-        <tr key={item?.id} className="relative border-b border-light300 bg-hover300 duration-300">
+      {data?.map((item, i) => ( 
+        <tr key={item?.id} className="relative border-b border-light300 bg-hover300 duration-300 px-4 text-sm">
           {renderTextCell(item?.quote_number)}
           {renderTextCell(item?.quote_name)}
           {renderImageCell(item)}

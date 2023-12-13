@@ -63,22 +63,13 @@ const OrderTableRow = ({data,path}) => {
             <td className="px-2 pt- text-sm">
             {path === 'outgoing' ? (
                 <div className="flex gap-2  px-2 text-sm text-center">
-                    {/* outgoing or seller or received quote/invoice */}
+                    {/*  received quote/invoice - outgoing order - seller - supplier api*/}
                     <Button 
                         // onClick={()=>router.push(`/checkout?invoiceId=${item?.id}`)}
                         disabled={item?.status==='COMPLETED'}  
                         className={ `${item?.status==='COMPLETED' ? 'disable  ' : 'hover-blue text-white'} px-2  text-center py-2 rounded` }>
                         {loading===item?.id ? <BtnSpinner/> : 'Add +'}
                     </Button>
-                    <Button 
-                        onClick={()=>router.push(`/orders_vendors/${item.id}?path=${path}`)}
-                        className={ `${'bg-gonje-green text-white'} px-3  text-center py-2    rounded` }>
-                        {loading===item?.id ? <BtnSpinner/> : 'Veiw'}
-                    </Button>
-                </div>
-            ) : (
-                <div className="flex gap-2  px-2 text-sm text-center">
-                    {/* incoming or buyer or sent quote/invoice */}
                     <Button 
                         // onClick={()=>router.push(`/checkout?invoiceId=${item?.id}`)}
                         disabled={item?.status==='COMPLETED'}  
@@ -91,7 +82,16 @@ const OrderTableRow = ({data,path}) => {
                         {loading===item?.id ? <BtnSpinner/> : 'Veiw'}
                     </Button>
                 </div>
-                
+            ) : (
+                <div className="flex gap-2  px-2 text-sm text-center">
+                    {/* sent quote/invoice - incoming order - buyer  - vendor api
+                    */}
+                    <Button 
+                        onClick={()=>router.push(`/orders_vendors/${item.id}?path=${path}`)}
+                        className={ `${'bg-gonje-green text-white'} px-3  text-center py-2    rounded` }>
+                        {loading===item?.id ? <BtnSpinner/> : 'Veiw'}
+                    </Button>
+                </div>
             )}
             </td>
         </tr>

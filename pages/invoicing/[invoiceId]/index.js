@@ -38,7 +38,7 @@ export async function getServerSideProps({ params }) {
     const { invoiceId } = params;
     return {
       props: {
-      invoiceId
+      invoiceId: invoiceId || null
       }
     };
   }

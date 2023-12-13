@@ -897,4 +897,109 @@ export const fetchB2cShops = (page, limit, search) => {
         });
     };
 
+
+// ORDERS VENDORS 2 VENDORS
+      // / This stores a new delivery company.
+      // /add/delivery/company
+      // URL: backendapi.gonje.com/add/delivery/company
+      // request data
+      // {
+      // "company_name":"company123abc",
+      // "aadress":"address123abc"
+      // }
+
+      // // This gets the list of your delivery companies
+      // GET - /my/delivery/company/list
+      // URL: backendapi.gonje.com/my/delivery/company/list
+
+      // // This assigns a delivery company to an order
+      // URL: backendapi.gonje.com/assign/delivery/company/b2c/{id}
+      // POST - /assign/delivery/company/b2b/{id}
+      // Request data
+      // {
+      // "delivery_company_id": 5,
+      // "delivery_company_name": "abcde deliveries"
+      // }
+
+//       GET - baseurl/vendor/b2c/orders
+// GET - baseurl/supplier/b2c/orders
+// get a single order
+// GET - baseurl/vendor/b2c/order/{invoiceId}
+// GET - baseurl/supplier/b2c/order/{invoiceId}
+export const fetchIncomingOrders = (page, limit, search) => {
+  if (!page || !limit) {
+    return Promise.reject(new Error("Invalid input data."));
+  }
+  return axios({
+    method: "get",
+    headers: authHeader(),
+    url: url + `supplier/b2c/orders?page=${page}&limit=${limit}&search=${search}`,
+  })
+  .then((response) => {
+    console.log("fetchIncomingOrders api response", response);
+  return response})
+    .catch((error) => {
+      console.log("Error in fetchIncomingOrders api", error);
+      return error
+    });
+};
+
+export const fetchIncomingOrdersDetails = (id) => {
+  if (!id) {
+    return Promise.reject(new Error("Invalid input data."));
+  }
+    return axios({
+      method: "get",
+      headers: authHeader(),
+      url: url + `supplier/b2c/order${id}`,
+    })
+    .then((response) => {
+      console.log("fetchReceivedInvoices api response", response);
+    return response})
+      .catch((error) => {
+        console.log("Error in fetchReceivedInvoices api", error);
+        return error
+      });
+  };
+
+  export const fetchOutgoingOrders = (page, limit, search) => {
+    if (!page || !limit) {
+      return Promise.reject(new Error("Invalid input data."));
+    }
+    return axios({
+      method: "get",
+      headers: authHeader(),
+      url: url + `vendor/b2c/orders?page=${page}&limit=${limit}&search=${search}`,
+    })
+    .then((response) => {
+      console.log("fetchIncomingOrders api response", response);
+    return response})
+      .catch((error) => {
+        console.log("Error in fetchIncomingOrders api", error);
+        return error
+      });
+  };
+  
+  export const fetchOutgoingOrdersDetails = (id) => {
+    if (!id) {
+      return Promise.reject(new Error("Invalid input data."));
+    }
+      return axios({
+        method: "get",
+        headers: authHeader(),
+        url: url + `vendor/b2c/order${id}`,
+      })
+      .then((response) => {
+        console.log("fetchReceivedInvoices api response", response);
+      return response})
+        .catch((error) => {
+          console.log("Error in fetchReceivedInvoices api", error);
+          return error
+        });
+    };
+  
+
+
+  
+
 // ==========B2C============

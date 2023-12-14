@@ -10,7 +10,7 @@ import { useState } from 'react'
 
 const received_quotes = () => {
   
-  const header = ['Quote Number',"Quote Name","Item","Amount", "Quantity", "Issued Date", "Due Date","Status","Actions" ]
+  const header = ['Quote Number',"Quote Name","Item","Amount", "Quantity", "Issued Date", "Due Date","Status", ]
 
   const [refresh, setRefresh] = useState(false)
   const [search, setSearch] = useState('')

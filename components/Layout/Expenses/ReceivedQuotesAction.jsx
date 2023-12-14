@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import CreatableSelect from 'react-select/creatable'
 import { BtnSpinner } from '@/componentsB2b/Loader/Spinner/BtnSpinner';
 import { updateB2cQuoteRequest } from '@/componentsB2b/Api2';
+import { Button } from '@/components/ui/button';
 
 const ReceivedQuotesAction = ({status, item, setRefresh}) => {
   const [show, setShow] = useState(false);
@@ -57,8 +58,8 @@ const ReceivedQuotesAction = ({status, item, setRefresh}) => {
   };
 
   return (
-    <form onSubmit={(e) => e.preventDefault()} className="">
-      <div className="flex gap-2 pb-3 text-sm">
+    <form onSubmit={(e) => e.preventDefault()} className="border-none">
+      <div className="flex gap-2 pb-3 text-sm ">
         <button
           onClick={() => {
             handleSubmit('ACCEPTED');
@@ -67,12 +68,12 @@ const ReceivedQuotesAction = ({status, item, setRefresh}) => {
             setSelected(null); // Clear the selected option
           }}
           type="button" // Use type="button" for buttons that don't submit the form
-          disabled={isLoading || show || status==='ACCEPTED'}
+          disabled={isLoading || show || item?.status==='ACCEPTED' || item?.status==='PAID' || item?.status==='COMPLETED'}
           className={`${
-             show || item?.status==='ACCEPTED' ? 'disable' : 'bg-gonje-green'
-          } rounded text-center w-full py-2 text-white px-2`}
+             show || item?.status==='ACCEPTED' || item?.status==='PAID' || item?.status==='COMPLETED' ? 'disable' : 'bg-gonje-green text-white'
+          } rounded text-center font-medium w-full px-2 py-2`}
         >
-           {isLoading==='accept' ? <BtnSpinner/> : 'ACCEPT'}
+           {isLoading==='accept' ? <BtnSpinner/> : 'Accept'}
         </button>
         <button
           onClick={() => {
@@ -82,14 +83,14 @@ const ReceivedQuotesAction = ({status, item, setRefresh}) => {
           type="button" 
           disabled={isLoading || show || status==='ACCEPTED' || status==='REJECTED'}
           className={`${
-             show || status==='ACCEPTED' || status==='REJECTED'  ? 'disable' : 'hover-red'
-          } rounded text-center w-full px-2 py-1`}
+             show || status==='ACCEPTED' || status==='REJECTED' || status==='PAID' || status==='COMPLETED'  ? 'disable' : 'hover-red'
+          } rounded text-center font-medium w-full px-2 py-2`}
         >
-          REJECT
+          Reject
         </button>
       </div>
 
-      <div className={`${show ? ' absolute top-16 right-0 max-w-96 z-20 p-4 rounded bg-light300' : 'hidden'} `}>
+      <div className={`${show ? ' absolute top-16 right-0 max-w-96 z-20 p-4 rounded bg-light300' : 'hidden'} border-none`}>
 
         <CreatableSelect
           value={selected}
@@ -100,22 +101,22 @@ const ReceivedQuotesAction = ({status, item, setRefresh}) => {
         />
 
        <div className="flex gap-2 ">
-       <button
+       <Button
           onClick={() => {
             handleSubmit('REJECTED')  
             setIsLoading('submit')}}
           type="button" // Use type="button"
           className="rounded hover-blue text-center w-full py-2"
         >
-          {isLoading==='submit' ? <BtnSpinner/> : 'SUBMIT'}
-        </button>
-        <button
+          {isLoading==='submit' ? <BtnSpinner/> : 'Submit'}
+        </Button>
+        <Button
           onClick={() => setShow(false)}
           type="button" // Use type="button"
           className="rounded hover-red text-center w-full py-2"
         >
-          {'CANCEL'}
-        </button>
+          {'Cancel'}
+        </Button>
        </div>
 
       </div>

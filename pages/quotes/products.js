@@ -8,7 +8,7 @@ import { fetchProducts, fetchShopDetailsAndProducts } from '../../componentsB2b/
 import { Button } from '@/components/ui/button'
 
 const Products = () => {
-    const header = ['Image', 'Product Name', 'Shop Name', 'Price', 'Discount', 'Sale Price', 'Quantity', 'Status', 'Actions'];
+    const header = ['Image', 'Product Name', 'Shop Name', 'Price', 'Discount', 'Sale Price', 'Quantity', 'Status', ];
   
 
   const [search, setSearch] = useState('');

@@ -8,7 +8,7 @@ import { useState } from 'react'
 
 const  ReceivedInvoicePage = () => {
 
-  const header = ['QUOTE ID', 'INVOICE ID', 'QUOTE NAME', 'SHOP NAME','BUYER NAME', 'ITEMS',  'AMOUNT', 'STATUS', 'DATE', 'ACTIONS']
+  const header = ['QUOTE ID', 'INVOICE ID', 'QUOTE NAME', 'SHOP NAME','BUYER NAME', 'ITEMS',  'AMOUNT', 'STATUS', 'DATE',]
 
   const [search, setSearch] = useState('')
   const [refresh, setRefresh] = useState(false)

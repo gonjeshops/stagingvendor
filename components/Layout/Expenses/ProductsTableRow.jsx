@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 import { RequestModal } from './ExpensesModals'
+import { currency } from '@/lib/currency'
 
 const ProductsTableRow = ({data, }) => {
     console.log('PRODUCTS===',data)
@@ -8,44 +9,44 @@ const ProductsTableRow = ({data, }) => {
   return (
     <>
          {data?.map((item,i ) => {
-             return ( <tr key={item?.id} className='border-b   border-light300 bg-hover300  duration-300' 
+             return ( <tr key={item?.id} className='border-b border-light300  bg-hover300  duration-300' 
             >
-              <td className="p-2 cursor-pointer">
-                <div className='w-full h-14 border rounded shrink-0 cursor-pointer overflow-hidden'>
+              <td className=" ">
+                <div className='w-20 h-20 border rounded shrink-0 overflow-hidden'>
                     <Image width={100} height={100} src={item?.image?.thumbnail} alt={'product'+i} className='object-cover w-full h-full '/>
                 </div>
               </td>
 
-              <td className="px-2 cursor-pointer">
-                <p className="text-">{item?.name}</p>
+              <td>
+               {item?.name}
               </td>
 
-              <td className="px-2 cursor-pointer">
-                <p className="text-">{item?.name_of_shop}</p>
+              <td>
+                {item?.name_of_shop}
               </td>
 
-              <td className="px-2 cursor-pointer">
-                <p className="text-">AUD{item?.price}</p>
+              <td>
+                {item?.price&& currency() + item?.price}
               </td>
 
-              <td className="px-2 cursor-pointer">
-                <p className="text-">{item?.discount}%</p>
+              <td>
+                {item?.discount}%
               </td>
 
-              <td className="px-2  " >
-                <p className="text-">AUD{item?.sale_price}</p>
+              <td>
+               {item?.sale_price && currency() + item?.sale_price}
               </td>
 
-              <td className='px-2 cursor-pointer'>
+              <td>
                 ${item?.quantity}
               </td>
 
-              <td className='px-2 cursor-pointer uppercase'>
+              <td className='  uppercase'>
                 {item?.status}
               </td>
-              <td className='px-2 cursor-pointer'>
+              <th className='px-2   bg-light100'>
               <RequestModal item={item} />
-              </td>
+              </th>
             </tr>
              )
            })}

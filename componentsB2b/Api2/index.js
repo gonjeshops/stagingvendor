@@ -933,7 +933,7 @@ export const fetchIncomingOrders = (page, limit, search) => {
   return axios({
     method: "get",
     headers: authHeader(),
-    url: url + `supplier/b2c/orders?page=${page}&limit=${limit}&search=${search}`,
+    url: url + `vendor/b2c/orders?page=${page}&limit=${limit}&search=${search}`,
   })
   .then((response) => {
     console.log("fetchIncomingOrders api response", response);
@@ -951,7 +951,7 @@ export const fetchIncomingOrdersDetails = (id) => {
     return axios({
       method: "get",
       headers: authHeader(),
-      url: url + `supplier/b2c/order${id}`,
+      url: url + `vendor/b2c/order${id}`,
     })
     .then((response) => {
       console.log("fetchReceivedInvoices api response", response);
@@ -969,7 +969,7 @@ export const fetchIncomingOrdersDetails = (id) => {
     return axios({
       method: "get",
       headers: authHeader(),
-      url: url + `vendor/b2c/orders?page=${page}&limit=${limit}&search=${search}`,
+      url: url + `supplier/b2c/orders?page=${page}&limit=${limit}&search=${search}`,
     })
     .then((response) => {
       console.log("fetchIncomingOrders api response", response);
@@ -987,7 +987,7 @@ export const fetchIncomingOrdersDetails = (id) => {
       return axios({
         method: "get",
         headers: authHeader(),
-        url: url + `vendor/b2c/order${id}`,
+        url: url + `supplier/b2c/order${id}`,
       })
       .then((response) => {
         console.log("fetchReceivedInvoices api response", response);

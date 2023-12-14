@@ -22,15 +22,15 @@ const OrderSearchBar = ({setSearch}) => {
     return (
     <div className="px-4 flex justify-between items-center gap-4">
 
-        <div className="relative bg-dark100   flex rounded-md ">
-            <input type="text" name="supplierSearch" id="supplierSearch" 
-                className='w-80 p-2 border  '
+        <div className="relative   flex gap-1 ">
+            <Input type="text" name="supplierSearch" id="supplierSearch" 
+                className='w-80 px-3 py-3 '
                 placeholder='Search order listing'
                 value={input}
                 onChange={(e)=>setInput(e.target.value)}
             />
             <button onClick={()=>setSearch(input)}
-            className='px-3 border-l bg-gonje-green text-white duration-300'><FaSearch/></button>
+            className='px-3 bg-gonje-green rounded-md text-white '><FaSearch/></button>
         </div>
 
         <Select

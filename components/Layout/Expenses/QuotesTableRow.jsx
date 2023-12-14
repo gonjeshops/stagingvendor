@@ -9,20 +9,20 @@ import ReceivedQuotesAction from './ReceivedQuotesAction';
 const renderImageCell = (item) => {
   const product = JSON.parse(item.cart_items)[0].product;
   return (
-    <td className="px-2 cursor-pointer">
-      <div className="flex gap-2 text-[10px] items-center">
-        <div className="h-10 w-10 shrink-0 overflow-hidden border rounded">
+    <td className="flex gap-2 text-[10px] items-center text-sm">
+     
+        <div className="h-14 w-14 shrink-0 overflow-hidden border rounded">
           <img src={product.image.thumbnail} alt={item.id} className="object-cover w-full h-full" />
         </div>
-        <p className="text-sm">{product.name}</p>
-      </div>
+        {product.name}
+    
     </td>
   );
 };
 
 const renderTextCell = (text) => (
-  <td className="px-2 cursor-pointer">
-    <p className="text-">{text}</p>
+  <td className="">
+   {text}
   </td>
 );
 
@@ -69,21 +69,21 @@ const QuotesTableRow = ({ data, type, setRefresh }) => {
           {renderTextCell(new Date(item?.created_at).toDateString())}
           {renderTextCell(item?.due_date)}
           {renderTextCell(item?.status)}
-          <td className="px-2 cursor-pointer pt-3">
+          <th className="bg-light100 px-2 cursor-pointer pt-3">
             {type === 'received' ? (
-              <ReceivedQuotesAction item={item} setRefresh={setRefresh}/>
+              <ReceivedQuotesAction item={item} setRefresh={setRefresh} status={item?.status}/>
             ) : (
-              <div className="flex gap-2 pb-3 text-sm text-center">
+              <div className="flex gap-2 pb-3 text-sm text-center border-none">
                 <button 
                 onClick={()=>handleSend(item)}
-                disabled={item?.status==='ACCEPTED'}  
-                className={ `${item?.status==='ACCEPTED' ? 'disable ' : 'bg-gonje-green text-white'} px-2 w-16 text-center py-2    rounded` }>
+                disabled={item?.status==='ACCEPTED'  || item?.status==='SENT' || item?.status==='REJECTED' || item?.status==='PAID'}  
+                className={ `${item?.status==='ACCEPTED' || item?.status==='SENT' || item?.status==='REJECTED' || item?.status==='PAID' ? 'disable ' : 'bg-gonje-green text-white'} px-2 w-16 text-center py-2 rounded` }>
                   {loading===item?.id ? <BtnSpinner/> : 'Send'}
                 </button>
                 <EditB2cQuotes quotes={item} setRefresh={setRefresh} setQuotes={setQuotes}/>
               </div>
             )}
-          </td>
+          </th>
         </tr>
       ))}
     </>

@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {useState} from 'react'
 import { FaSearch } from 'react-icons/fa';
 import Select from 'react-select';
@@ -8,8 +9,6 @@ const QuotesSearchBarB2c = ({setSearch, type}) => {
     const [input, setInput] = useState('') 
     const [supplierName, setSupplierNAme] = useState(null);
     const [category, setCategory] = useState(null);
-
-
 
     const handleSuppler = (selected) => {
       setSupplierNAme(selected);
@@ -39,16 +38,15 @@ const QuotesSearchBarB2c = ({setSearch, type}) => {
   return (
     <form onSubmit={handleSubmit} className='py-2 w-full flex  justify-between gap-4 flex-wrap' >
        
-        <div className="relative bg-dark100 border  w-80 flex rounded-md ">
-        <input type="text" name="supplierSearch" id="supplierSearch" 
-            className='w-80 p-2   '
-            placeholder='Search quotes'
-            value={input}
-            onChange={(e)=>setInput(e.target.value)}
-        />
-        <button onClick={()=>setSearch(input)}
-        className='px-3 border-l bg-gonje-green text-white duration-300'><FaSearch/></button>
-
+       <div className="relative   flex gap-1 ">
+            <Input type="text" name="supplierSearch" id="supplierSearch" 
+                className='w-80 px-3 py-4 '
+                placeholder='Search order listing'
+                value={input}
+                onChange={(e)=>setInput(e.target.value)}
+            />
+            <button onClick={()=>setSearch(input)}
+            className='px-3 bg-gonje-green rounded-md text-white '><FaSearch/></button>
         </div>
 
 

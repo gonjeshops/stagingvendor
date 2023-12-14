@@ -9,7 +9,7 @@ import OrderTableRow from './OrderTableRow'
 
 const OutgoingOrders = () => {
 
-    const header = ['ORDER ID', 'TOTAL', 'CUSTOMER', 'ORDER STATUS',  'FULFILMENT STATUS', 'DELIVERY TYPE', 'TRACKING NUMBER', 'ITEMS', 'DATE', 'SHIPPING DETAILS']
+    const header = ['ORDER ID', 'TOTAL', 'BUYER', 'ITEMS', 'ORDER STATUS', 'DATE', 'TRACKING NUMBER', 'CONSIGNMENT NUMBER', 'DELIVERY COMPANY', 'QUOTE NAME', 'SHOP',  'SHIPPING DETAILS']
 
     const [search, setSearch] = useState('')
     const [refresh, setRefresh] = useState(false)

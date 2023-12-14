@@ -171,9 +171,12 @@ export const RequestModal = ({item, }) => {
     <Dialog>
 
       <DialogTrigger asChild >
-        <Button 
+        <div 
         onClick={()=>onAdd(item, 1, item?.shop_name, item?.owner_id, item?.shop_id)}
-        className="p-3  bg-gonje-green capitalize">Request</Button>
+        className="border-none"
+       >
+          <Button  className="p-2 border-none bg-gonje-green capitalize">Request</Button>
+        </div>
       </DialogTrigger>
 
       <DialogContent className="max-w-3xl">
@@ -224,7 +227,6 @@ export const RequestModal = ({item, }) => {
             <> 
               <div className="">
                   {
-                
                     cartItems?.map((item, idx) => (
                       <GetQuoteProductCard key={item?.id} item={item} toggleCartItemQuanitity={toggleCartItemQuanitity} onRemove={onRemove}/>
                     ))

@@ -50,24 +50,26 @@ const OrderTableRow = ({data,path}) => {
         {data?.map((item, i) => (
         <tr key={item?.id} className="px-6 relative border-b border-light300 bg-hover300 duration-300">
             {renderTextCell('ORDER'+item?.id)}
-            {renderTextCell(currency + item?.subtotal)}
+            {renderTextCell(currency() + item?.subtotal)}
+            {renderTextCell(item?.user_name)}
             {renderNameCell(item)}
             {renderTextCell(item?.order_status)}
-            {renderTextCell(item?.status)}
-            {renderTextCell('-')}
-            {renderTextCell(item?.track_number)}
-            {renderImageCell(item)}
             {renderTextCell(new Date(item?.created_at).toDateString())}
+            {renderTextCell(item?.track_number)}
+            {renderTextCell(item?.consignment_number)}
+            {renderTextCell(item?.delivery_company_name)}
+            {renderTextCell(item?.quote_name)}
+            {renderTextCell(item?.shop_name)}
             {renderTextCell(addressLine(item))}
 
-            <td className="px-2 pt- text-sm">
+            <th className="bg-white p-2 pt- text-sm">
             {path === 'outgoing' ? (
                 <div className="flex gap-2  px-2 text-sm text-center">
                     {/*  received quote/invoice - outgoing order - seller - supplier api*/}
                     <Button 
                         // onClick={()=>router.push(`/checkout?invoiceId=${item?.id}`)}
                         disabled={item?.status==='COMPLETED'}  
-                        className={ `${item?.status==='COMPLETED' ? 'disable  ' : 'hover-blue text-white'} px-2  text-center py-2 rounded` }>
+                        className={ `${item?.status==='COMPLETED' ? 'disable  ' : 'hover-blue text-white'} px-2 shrink-0 text-center py-2 rounded` }>
                         {loading===item?.id ? <BtnSpinner/> : 'Add +'}
                     </Button>
                     <Button 
@@ -93,7 +95,7 @@ const OrderTableRow = ({data,path}) => {
                     </Button>
                 </div>
             )}
-            </td>
+            </th>
         </tr>
         ))}
     </tbody>

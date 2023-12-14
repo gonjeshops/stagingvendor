@@ -17,7 +17,7 @@ const InvoiceTableRow = ({ data, path, setRefresh }) => {
     return (
       <td className="px-2 space-y-2 h-full">
         {products.map((product, i)=><div key={i} className="flex gap-2 text-[10px] items-center">
-          <div className="h-10 w-10 shrink-0 overflow-hidden border rounded">
+          <div className="h-14 w-14 shrink-0 overflow-hidden border rounded">
             <img src={product.product.image.thumbnail} alt={item.id} className="object-cover w-full h-full" />
           </div>
           <p className="text-sm">{product.product.name}</p>
@@ -48,9 +48,9 @@ const InvoiceTableRow = ({ data, path, setRefresh }) => {
           {renderTextCell('AUD'+item?.subtotal)}
           {renderTextCell(item?.status)}
           {renderTextCell(new Date(item?.created_at).toDateString())}
-          <td className="px-2 pt- text-sm">
+          <th className="bg-light100 p-2 pt- text-sm">
             {path === 'sent' ? (
-               <div className="flex gap-2  px-2 text-sm text-center">
+               <div className="flex gap-2 text-sm text-center">
                   <Button 
                       onClick={()=>router.push(`/checkout?invoiceId=${item?.id}`)}
                       disabled={item?.status==='PAID'}  
@@ -70,7 +70,7 @@ const InvoiceTableRow = ({ data, path, setRefresh }) => {
                 {loading===item?.id ? <BtnSpinner/> : 'Veiw'}
               </Button>
             )}
-          </td>
+          </th>
         </tr>
       ))}
    </tbody>

@@ -13,6 +13,7 @@ import {
 } from "recharts";
 import { SalesTable } from "@/components/Layout/Sales/SalesTable";
 import { discountColumns } from "@/components/Layout/Sales/SalesColumns";
+import Dashboard from "@/components/Layout/Dashboard/Chart";
 const Sales = () => {
   const data = [
     { month: "sun", products: 400, earning: 320 },
@@ -99,6 +100,7 @@ const Sales = () => {
   return (
     <section>
       <section className="container space-y-10">
+        <Dashboard/>
         <div className="grid md:grid-cols-2 xl:grid-cols-3 grid-auto-rows-1/3 gap-x-8 gap-y-4 justify-between">
           <div className="bg-white xl:w-[410px] px-4 py-8 rounded-md">
             <div>

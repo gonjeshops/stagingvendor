@@ -3,8 +3,9 @@ import { BtnSpinner } from '@/componentsB2b/Loader/Spinner/BtnSpinner';
 import { useRouter } from 'next/router';
 import { Button } from '@/components/ui/button';
 import { currency } from '@/lib/currency';
+import OrderTableRowActions from './OrderTableRowActions';
 
-const OrderTableRow = ({data,path}) => {
+const OrderTableRow = ({data,path, setRefresh}) => {
     const router = useRouter()
 
     const renderImageCell = (item) => {
@@ -46,9 +47,9 @@ const OrderTableRow = ({data,path}) => {
     };
 
     return (
-    <tbody className='text-sm'>
+    <tbody className='text-sm '>
         {data?.map((item, i) => (
-        <tr key={item?.id} className="px-6 relative border-b border-light300 bg-hover300 duration-300">
+        <tr key={item?.id} className=" px-6  border-b border-light300 bg-hover300 duration-300">
             {renderTextCell('ORDER'+item?.id)}
             {renderTextCell(currency() + item?.subtotal)}
             {renderTextCell(item?.user_name)}
@@ -62,39 +63,8 @@ const OrderTableRow = ({data,path}) => {
             {renderTextCell(item?.shop_name)}
             {renderTextCell(addressLine(item))}
 
-            <th className="bg-white p-2 pt- text-sm">
-            {path === 'outgoing' ? (
-                <div className="flex gap-2  px-2 text-sm text-center">
-                    {/*  received quote/invoice - outgoing order - seller - supplier api*/}
-                    <Button 
-                        // onClick={()=>router.push(`/checkout?invoiceId=${item?.id}`)}
-                        disabled={item?.status==='COMPLETED'}  
-                        className={ `${item?.status==='COMPLETED' ? 'disable  ' : 'hover-blue text-white'} px-2 shrink-0 text-center py-2 rounded` }>
-                        {loading===item?.id ? <BtnSpinner/> : 'Add +'}
-                    </Button>
-                    <Button 
-                        // onClick={()=>router.push(`/checkout?invoiceId=${item?.id}`)}
-                        disabled={item?.status==='COMPLETED'}  
-                        className={ `${item?.status==='COMPLETED' ? 'disable  ' : 'hover-blue text-white'} px-2  text-center py-2 rounded` }>
-                        {loading===item?.id ? <BtnSpinner/> : 'Assign'}
-                    </Button>
-                    <Button 
-                        onClick={()=>router.push(`/orders_vendors/${item.id}?path=${path}`)}
-                        className={ `${'bg-gonje-green text-white'} px-3  text-center py-2    rounded` }>
-                        {loading===item?.id ? <BtnSpinner/> : 'Veiw'}
-                    </Button>
-                </div>
-            ) : (
-                <div className="flex gap-2  px-2 text-sm text-center">
-                    {/* sent quote/invoice - incoming order - buyer  - vendor api
-                    */}
-                    <Button 
-                        onClick={()=>router.push(`/orders_vendors/${item.id}?path=${path}`)}
-                        className={ `${'bg-gonje-green text-white'} px-3  text-center py-2    rounded` }>
-                        {loading===item?.id ? <BtnSpinner/> : 'Veiw'}
-                    </Button>
-                </div>
-            )}
+            <th className="  bg-white p-2 pt- text-sm z-30">
+                <OrderTableRowActions item={item} path={path} setRefresh={setRefresh} />
             </th>
         </tr>
         ))}

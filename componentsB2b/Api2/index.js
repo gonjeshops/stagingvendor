@@ -899,28 +899,6 @@ export const fetchB2cShops = (page, limit, search) => {
 
 
 // ORDERS VENDORS 2 VENDORS
-      // / This stores a new delivery company.
-      // /add/delivery/company
-      // URL: backendapi.gonje.com/add/delivery/company
-      // request data
-      // {
-      // "company_name":"company123abc",
-      // "aadress":"address123abc"
-      // }
-
-      // // This gets the list of your delivery companies
-      // GET - /my/delivery/company/list
-      // URL: backendapi.gonje.com/my/delivery/company/list
-
-      // // This assigns a delivery company to an order
-      // URL: backendapi.gonje.com/assign/delivery/company/b2c/{id}
-      // POST - /assign/delivery/company/b2b/{id}
-      // Request data
-      // {
-      // "delivery_company_id": 5,
-      // "delivery_company_name": "abcde deliveries"
-      // }
-
 //       GET - baseurl/vendor/b2c/orders
 // GET - baseurl/supplier/b2c/orders
 // get a single order
@@ -999,7 +977,128 @@ export const fetchIncomingOrdersDetails = (id) => {
     };
   
 
+      // / This stores a new delivery company.
+      // /add/delivery/company
+      // URL: backendapi.gonje.com/add/delivery/company
+      // request data
+      // {
+      // "company_name":"company123abc",
+      // "aadress":"address123abc"
+      // }
+export const addDeliveryCompany = (values) => {
+  if (!values) {
+    return Promise.reject(new Error("Invalid input data."));
+  }
+  return axios({
+    method: "post",
+    headers: authHeader(),
+    url: url + `add/delivery/company`,
+    data: {
+      "company_name": values?.name,
+      "aadress": values?.adress
+      }
+  })
+    .then((response) => {
+      console.log("addDeliveryCompany API successful:", response);
+      return response
+    })
+    .catch((error) => {
+      console.error("Error in addDeliveryCompany API:", error);
+      return Promise.reject(error); // Propagate the error.
+    });
+};
 
+export const assignDeliveryCompany = (values, id) => {
+  if (!values) {
+    return Promise.reject(new Error("Invalid input data."));
+  }
+  return axios({
+    method: "post",
+    headers: authHeader(),
+    url: url + `assign/delivery/company/b2b/${id}`,
+    data: {
+      "delivery_company_id": values?.id,
+      "delivery_company_name": values?.name
+      }
+  })
+    .then((response) => {
+      console.log("assignDeliveryCompany API successful:", response);
+      return response
+    })
+    .catch((error) => {
+      console.error("Error in assignDeliveryCompany API:", error);
+      return Promise.reject(error); // Propagate the error.
+    });
+};
+
+export const assignDeliveryCompanyCustomer = (values, id) => {
+  if (!values) {
+    return Promise.reject(new Error("Invalid input data."));
+  }
+  return axios({
+    method: "post",
+    headers: authHeader(),
+    url: url + `assign/delivery/company/${id}`,
+    data: {
+      "delivery_company_id": values?.id,
+      "delivery_company_name": values?.name
+      }
+  })
+    .then((response) => {
+      console.log("assignDeliveryCompanyCustomer API successful:", response);
+      return response
+    })
+    .catch((error) => {
+      console.error("Error in assignDeliveryCompanyCustomer API:", error);
+      return Promise.reject(error); // Propagate the error.
+    });
+};
+
+export const fetchDeliveryCompanies = () => {
+  return axios({
+    method: "get",
+    headers: authHeader(),
+    url: url + `my/delivery/company/list`,
+  })
+  .then((response) => {
+    console.log("fetchDeliveryCompanies api response", response);
+  return response})
+    .catch((error) => {
+      console.log("Error in fetchDeliveryCompanies api", error);
+      return error
+    });
+};
+      // // This gets the list of your delivery companies
+      // GET - /my/delivery/company/list
+      // URL: backendapi.gonje.com/my/delivery/company/list
+
+      // // This assigns a delivery company to an order
+      // URL: backendapi.gonje.com/assign/delivery/company/b2c/{id}
+      // POST - /assign/delivery/company/b2b/{id}
+      // Request data
+      // {
+      // "delivery_company_id": 5,
+      // "delivery_company_name": "abcde deliveries"
+      // }
   
 
+
+      // DASHBOARD
+      // /my/sales/analytics
+      export const fetchStats = () => {
+        return axios({
+          method: "get",
+          headers: authHeader(),
+          url: url + `my/sales/analytics`,
+        })
+        .then((response) => {
+          console.log("fetchDeliveryCompanies api response", response);
+        return response})
+          .catch((error) => {
+            console.log("Error in fetchDeliveryCompanies api", error);
+            return error
+          });
+      };
+
+      
 // ==========B2C============

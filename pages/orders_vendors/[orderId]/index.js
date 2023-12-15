@@ -5,7 +5,6 @@ import { useRouter } from 'next/router'
 import  { useState } from 'react'
 
 const OrderDetailsPage = ({orderId}) => {
-  console.log('id======', orderId)
 
 
   const [search, setSearch] = useState('')

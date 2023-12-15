@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input';
 import {useState} from 'react'
 import { FaSearch } from 'react-icons/fa';
 import Select from 'react-select';
+import AddDeliveryCompanyBtn from './AddDeliveryCompanyBtn';
 
 
 const OrderSearchBar = ({setSearch}) => {
@@ -20,7 +21,7 @@ const OrderSearchBar = ({setSearch}) => {
     ]
 
     return (
-    <div className="px-4 flex justify-between items-center gap-4">
+    <div className="px-4 flex justify-between items-center gap-4 flex-wrap">
 
         <div className="relative   flex gap-1 ">
             <Input type="text" name="supplierSearch" id="supplierSearch" 
@@ -39,7 +40,9 @@ const OrderSearchBar = ({setSearch}) => {
             options={options}
             className="w-80 bg-light100  text-black focus:outline-none focus:ring focus:border-green-300"
             placeholder="Filter with Order Status"
-        />            
+        />      
+
+        <AddDeliveryCompanyBtn/>      
     </div>
     )
 }

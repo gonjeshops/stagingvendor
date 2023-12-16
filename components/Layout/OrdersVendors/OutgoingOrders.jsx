@@ -29,7 +29,7 @@ const OutgoingOrders = () => {
     return (
     <VendorPageLayout 
         navs={[{link: 'incoming', title: 'Incoming Orders', type: 'BUYING'}, {link: 'outgoing', title: 'Outgoing Orders', type: 'SELLING'},]}
-        searchBar={<OrderSearchBar setSearch={setSearch}/>}
+        searchBar={<OrderSearchBar setSearch={setSearch} setRefresh={setRefresh}/>}
         >
         <FetchDataAndRenderPageB2C
             fetchDataFunction={fetchOutgoingOrders}

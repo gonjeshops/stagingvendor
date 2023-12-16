@@ -6,7 +6,7 @@ import { BtnSpinner } from '@/componentsB2b/Loader/Spinner/BtnSpinner'
 import { toast } from 'react-toastify'
 import { FaRegTimesCircle } from 'react-icons/fa'
 
-const AddDeliveryCompanyBtn = () => {
+const AddDeliveryCompanyBtn = ({setRefresh}) => {
     const [formData, setFormData] = useState({
         name: '',
         adress: ''
@@ -25,6 +25,8 @@ const AddDeliveryCompanyBtn = () => {
           if (response?.status === 200) {
             console.log('deleivery companies data ===', response?.data);
             toast.success('Added delivery company.');
+            setRefresh(p=>!p)
+            setAction('')
             // TODO: Notification - notify vendor seller that delivery is assigned
             // TODO: Add to log
           } else {
@@ -42,9 +44,9 @@ const AddDeliveryCompanyBtn = () => {
 
   return (
     <div className='relative w-80'>
-        <Button onClick={ ()=>setAction('add')}>Add +</Button>
+        <Button onClick={ ()=>setAction('add')} className='w-40 text-center'>Add +</Button>
 
-        {action && <form onSubmit={add} className='absolute z-50 top-12 border right-0 bg-white p-4 shadow-xl rounded-md '>
+        {action && <form onSubmit={add} className='absolute z-50 top-12 border left-0 w-80 bg-white p-4 shadow-xl rounded-md '>
             <div className='flex justify-end'> <FaRegTimesCircle onClick={()=>setAction('')}/> </div>
             <div className="pb-4">Add a delivery company</div>
 
@@ -67,7 +69,7 @@ const AddDeliveryCompanyBtn = () => {
             />
 
             <div className="pt-4 flex gap-4 items-center ">
-                <Button className='bg-gonje-green' type='submit' > {loading ? <BtnSpinner/> : 'Submit'} </Button>
+                <Button className='bg-gonje-green w-40 text-center' type='submit' > {loading ? <BtnSpinner/> : 'Submit'} </Button>
             </div>
         </form >}
     </div >

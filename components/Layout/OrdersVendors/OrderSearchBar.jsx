@@ -6,7 +6,7 @@ import Select from 'react-select';
 import AddDeliveryCompanyBtn from './AddDeliveryCompanyBtn';
 
 
-const OrderSearchBar = ({setSearch}) => {
+const OrderSearchBar = ({setSearch, setRefresh}) => {
 
     const [input, setInput] = useState('') 
     const [category, setCategory] = useState(null);
@@ -42,7 +42,7 @@ const OrderSearchBar = ({setSearch}) => {
             placeholder="Filter with Order Status"
         />      
 
-        <AddDeliveryCompanyBtn/>      
+        <AddDeliveryCompanyBtn setRefresh={setRefresh}/>      
     </div>
     )
 }

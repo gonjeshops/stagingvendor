@@ -56,7 +56,7 @@ const OrderTableRow = ({data,path, setRefresh}) => {
             {renderNameCell(item)}
             {renderTextCell(item?.order_status)}
             {renderTextCell(new Date(item?.created_at).toDateString())}
-            {renderTextCell(item?.track_number)}
+            {renderTextCell(item?.tracking_number)}
             {renderTextCell(item?.consignment_number)}
             {renderTextCell(item?.delivery_company_name)}
             {renderTextCell(item?.quote_name)}

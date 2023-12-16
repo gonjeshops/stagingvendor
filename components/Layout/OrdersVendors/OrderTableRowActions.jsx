@@ -5,6 +5,7 @@ import { useGlobalState } from '@/context/GlobalStateContext';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { assignDeliveryCompany, fetchDeliveryCompanies } from '@/componentsB2b/Api2';
+import { data } from 'autoprefixer';
 
 
 const OrderTableRowActions = ({item,path,setRefresh }) => {
@@ -16,6 +17,7 @@ const OrderTableRowActions = ({item,path,setRefresh }) => {
     const [action, setAction] = useState('')
     const [select, setSelect] = useState('')
     const [deliveryCompanies, setDeliveryCompanies] = useState([])
+    const [orderId, setOrderId] = useState('')
 
     // fetch delivery companies
     useEffect(() => {
@@ -24,8 +26,16 @@ const OrderTableRowActions = ({item,path,setRefresh }) => {
                 const res = await fetchDeliveryCompanies()
                 console.log('deleivery companies', res)
                 if (res?.status === 200) {
-                    console.log('deleivery companies data ===', res?.data);
-                    setDeliveryCompanies(res?.data?.data?.data)
+                    const options = res?.data?.data?.data?.map(({company_name,id}) => {
+                        return {
+                          value: {
+                            name: company_name,
+                            id: id
+                          },
+                          label: company_name
+                        }
+                      })
+                    setDeliveryCompanies(options)
                   }else {
                     console.log('Api Error res===', res);
                   }
@@ -35,19 +45,13 @@ const OrderTableRowActions = ({item,path,setRefresh }) => {
         }
         fetchData()
     }, [])
- 
 
     // assign data
-    const fetchData = async () => {
+    const assignDelivery = async (selected) => {
         try {
             setIsLoading('assign')
-            const newFormData = {
-                ...select,
-                id: select.delivery_company_id,
-                name: select.delivery_company_name,
-                }
-
-            const res = await assignDeliveryCompany(newFormData, user?.id)
+            console.log('selected', selected,  '==select', select, "orderId", orderId)
+            const res = await assignDeliveryCompany(selected?.value, orderId)
             console.log('assignDeliveryCompany', res)
             if (res?.status === 200) {
                 console.log('assignDeliveryCompany data ===', res?.data);
@@ -70,7 +74,7 @@ const OrderTableRowActions = ({item,path,setRefresh }) => {
 
     const handleSelect = (selected) => {
         setSelect(selected);
-        fetchData()
+        assignDelivery(selected)
     };
 
     const options = [
@@ -100,9 +104,12 @@ const OrderTableRowActions = ({item,path,setRefresh }) => {
                     {/*  received quote/invoice - outgoing order - seller - supplier api*/}
                     
                     <Button 
-                        onClick={()=>setAction(prev=> prev===item?.id ? '' : item?.id)}
+                        onClick={()=>{
+                            setAction(prev=> prev===item?.id ? '' : item?.id)
+                            setOrderId(item?.id)
+                        }}
                         disabled={item?.status==='COMPLETED'}  
-                        className={ `${item?.status==='COMPLETED' ? 'disable  ' : 'hover-blue text-white'} px-2  text-center py-2 rounded` }>
+                        className={ `${item?.status==='COMPLETED' ? 'disable  ' : 'hover-blue text-white'} w-20 px-2  text-center py-2 rounded` }>
                             {action ? 'Close' : 'Assign'}
                     </Button>
                     <Button 

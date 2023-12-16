@@ -34,7 +34,7 @@ const TableLayout = ({children, header,}) => {
                 </th>
               ))
             }
-           <th className={'bg-light100 font-medium '}>Actions</th> 
+           <th className={'bg-white font-medium '}>ACTIONS</th> 
           </tr>
         </tfoot>
                   

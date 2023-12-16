@@ -5,10 +5,10 @@ import { fetchStatss } from './fetchStats';
 const Dashboard = ({  }) => {
     const {data} = fetchStatss()
   const totalSalesData = {
-    labels: data?.transactionsForLast12Months.map(item => item.month),
+    labels: data?.transactionsForLast12Months?.map(item => item.month),
     datasets: [{
       label: 'Total Sales',
-      data: data?.transactionsForLast12Months.map(item => item.total_revenue),
+      data: data?.transactionsForLast12Months?.map(item => item.total_revenue),
       borderColor: 'blue',
       borderWidth: 2,
       fill: false
@@ -16,10 +16,10 @@ const Dashboard = ({  }) => {
   };
 
   const transactionsData = {
-    labels: data?.transactionsForLast12Months.map(item => item.month),
+    labels: data?.transactionsForLast12Months?.map(item => item.month),
     datasets: [{
       label: 'Total Revenue',
-      data: data?.transactionsForLast12Months.map(item => item.total_revenue),
+      data: data?.transactionsForLast12Months?.map(item => item.total_revenue),
       borderColor: 'green',
       borderWidth: 2,
       fill: false,
@@ -28,10 +28,10 @@ const Dashboard = ({  }) => {
   };
 
   const topSellingProductsData = {
-    labels: data?.topSellingProducts.map(product => product.name),
+    labels: data?.topSellingProducts?.map(product => product.name),
     datasets: [{
       label: 'Total Quantity Sold',
-      data: data?.topSellingProducts.map(product => product.total_quantity),
+      data: data?.topSellingProducts?.map(product => product.total_quantity),
       backgroundColor: ['bg-red-500', 'bg-orange-500', 'bg-yellow-500'], // Customize colors as needed
       borderWidth: 1
     }]

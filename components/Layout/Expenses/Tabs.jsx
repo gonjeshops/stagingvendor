@@ -7,7 +7,7 @@ const Tabs = ({navs, }) => {
     
   return (
 
-    <div className={`max-w-3xl mx-auto   rounded-lg grid gap-2 sm:flex`}>
+    <div className={`max-w-3xl mx-auto rounded-lg grid gap-2 sm:flex`}>
         {
             navs?.map(({title, link},i)=>(
                 <button key={i} 

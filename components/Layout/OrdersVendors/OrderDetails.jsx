@@ -1,7 +1,8 @@
 
 const OrderDetails = ({path, data}) => {
+
   return (
-    <div>OrderDetails {path}</div>
+    <div>{path} OrderDetails id: {data?.id},  Assigned Delivery Company:  {data?.delivery_company_name} </div>
   )
 }
 

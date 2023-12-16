@@ -965,7 +965,7 @@ export const fetchIncomingOrdersDetails = (id) => {
       return axios({
         method: "get",
         headers: authHeader(),
-        url: url + `supplier/b2c/order${id}`,
+        url: url + `supplier/b2c/order/${id}`,
       })
       .then((response) => {
         console.log("fetchReceivedInvoices api response", response);
@@ -990,12 +990,12 @@ export const addDeliveryCompany = (values) => {
     return Promise.reject(new Error("Invalid input data."));
   }
   return axios({
-    method: "post",
+    method: "put",
     headers: authHeader(),
     url: url + `add/delivery/company`,
     data: {
       "company_name": values?.name,
-      "aadress": values?.adress
+      "address": values?.adress
       }
   })
     .then((response) => {
@@ -1013,7 +1013,7 @@ export const assignDeliveryCompany = (values, id) => {
     return Promise.reject(new Error("Invalid input data."));
   }
   return axios({
-    method: "post",
+    method: "put",
     headers: authHeader(),
     url: url + `assign/delivery/company/b2b/${id}`,
     data: {
@@ -1031,14 +1031,14 @@ export const assignDeliveryCompany = (values, id) => {
     });
 };
 
-export const assignDeliveryCompanyCustomer = (values, id) => {
+export const assignDeliveryCompanyCustomer = (values, orderId) => {
   if (!values) {
     return Promise.reject(new Error("Invalid input data."));
   }
   return axios({
-    method: "post",
+    method: "put",
     headers: authHeader(),
-    url: url + `assign/delivery/company/${id}`,
+    url: url + `assign/delivery/company/${orderId}`,
     data: {
       "delivery_company_id": values?.id,
       "delivery_company_name": values?.name

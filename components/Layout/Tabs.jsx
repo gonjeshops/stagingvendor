@@ -13,10 +13,11 @@ const Tabs = ({navs, }) => {
             navs?.map(({title,type, link},i)=>(
                 <Button key={i} 
                 onClick={()=>router.push(link)} 
-                className={`grid gap-2 h-16 text-base text-black  px-4 hover:shadow-lg duration-300   w-full text-center ${router.pathname.includes(link) ? 'bg-gonje-green text-white' : 'bg-white rounded'}`}
+                className={`${type ? 'h-20' : 'h-16' }  text-base text-black  px-4 hover:shadow-lg duration-300   w-full text-center ${router.pathname.includes(link) ? 'bg-gonje-green text-white' : 'bg-white rounded'}`}
                 >
-                    <h6>{title}</h6>
-                    <p className='text-sm'>{type}</p>
+                   <div> {title}
+                    <p className='text-[10px]'>{type}</p>
+                    </div>
                 </Button>
             ))
         }        

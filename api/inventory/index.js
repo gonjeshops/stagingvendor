@@ -1,3 +1,4 @@
+import authHeader from "@/componentsB2b/Api/auth-header";
 import {
   addProductUrl,
   attachments,
@@ -17,7 +18,7 @@ export const getInventoryList = (values) => {
     },
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+      Authorization:authHeader(),
     },
   });
 };
@@ -28,7 +29,7 @@ export const deleteInventoryItem = (id) => {
     url: `${inventory_List}/${id}`,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+      Authorization: authHeader(),
     },
   });
 };
@@ -42,7 +43,7 @@ export const getInventoryGroups = (shop_id) => {
     },
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+      Authorization:authHeader(),
     },
   });
 };
@@ -56,7 +57,7 @@ export const getInventoryCategories = (type_id) => {
     },
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+      Authorization: authHeader(),
     },
   });
 };
@@ -70,7 +71,7 @@ export const getAttributes = (shop_id) => {
     },
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+      Authorization: authHeader(),
     },
   });
 };
@@ -81,7 +82,7 @@ export const addAttachments = (values) => {
     url: attachments,
     body: values,
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+      Authorization: authHeader(),
     },
   });
 };
@@ -95,7 +96,7 @@ export const addNewInventory = (values) => {
     },
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+      Authorization: authHeader(),
     },
   });
 };
@@ -109,7 +110,7 @@ export const updateInventory = (values) => {
     },
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+      Authorization: authHeader(),
     },
   });
 };
@@ -121,7 +122,7 @@ export const getSingleInventory = (product_slug)=>{
     url: `${inventory_List}/${product_slug}`,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+      Authorization: authHeader(),
     },
   });
 }

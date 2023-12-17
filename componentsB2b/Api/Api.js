@@ -31,7 +31,6 @@ export const register = (values) => {
     },
   })
     .then((response) => {
-      console.log('API SUCCESSFUL, RESPONSE: ', response)
       return response.data
     })
     .catch((error) => {
@@ -96,7 +95,7 @@ export const saveCard = (values) => {
   data.append("card", values.card);
   data.append("cvv", values.cvv);
   data.append("zip", values.zipcode);
-  data.append("customer_id", user_detail_obj.customer_id);
+  data.append("customer_id", user_detail_obj.user_id);
   return fetch(url + "registercard/", {
     method: "post",
     body: data,
@@ -121,6 +120,8 @@ export const phonenumberLogin = (values) => {
       console.log("error in api", error);
     });
 };
+
+// TODO: confirm location of "opt_verify"
 export const verifyOtp = (values) => {
   const opt_verify = localStorage.getItem("opt_verify");
   const opt_verify_obj = JSON.parse(opt_verify);
@@ -149,7 +150,7 @@ export const verifyOtp = (values) => {
         console.log("error in api", error);
       });
   } else {
-    data.append("user_id", user_detail_obj.customer_id);
+    data.append("user_id", user_detail_obj.user_id);
     return fetch(url + "update-contact/", {
       method: "post",
       body: data,
@@ -166,7 +167,7 @@ export const ShippingAddress = (values) => {
   const user_detail_obj = JSON.parse(user_detail);
   localStorage.setItem("user_detail_postcode", values.postcode);
   const requestData = {
-    customer_id: user_detail_obj.customer_id,
+    customer_id: user_detail_obj.user_id,
     type: "shipping",
     address: {
       city: values.city || "",

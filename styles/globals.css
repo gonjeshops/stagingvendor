@@ -243,7 +243,14 @@ Link {
   @apply bg-light300 text-gray-500 cursor-not-allowed
 }
 
+thead th {
+  @apply text-black
+}
 
+input{
+  @apply bg-transparent
+
+}
 
 
 /* .bg-gonje-gradient {

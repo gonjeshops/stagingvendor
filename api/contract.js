@@ -1,3 +1,4 @@
+import authHeader from "@/componentsB2b/Api/auth-header";
 import { contractListUrl, fetchService, signContractUrl } from ".";
 
 export const contractList = () => {
@@ -20,7 +21,7 @@ export const signContract = (values) => {
     },
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+      Authorization: authHeader(),
     },
   });
 };

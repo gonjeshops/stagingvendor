@@ -1,3 +1,4 @@
+import authHeader from "@/componentsB2b/Api/auth-header";
 import { fetchService, vendor_Logout } from ".";
 
 export const logout_vendor = (values) => {
@@ -9,7 +10,7 @@ export const logout_vendor = (values) => {
     },
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+      Authorization: authHeader(),
     },
   });
 };

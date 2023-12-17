@@ -120,7 +120,7 @@ const UseProfile = ({
                 className="dropdown-item"
                 onClick={() => {
                   logoutVendor().then(() => {
-                    route.push("/login");
+                    route.push("/");
                     localStorage.clear();
                   });
                 }}

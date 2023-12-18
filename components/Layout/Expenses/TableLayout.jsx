@@ -6,7 +6,7 @@ const TableLayout = ({children, header,}) => {
       };
   return (
    
-    <div className="overflow-x-auto">
+    <div className="overflow-auto customScrollbar">
     <table className="table table- table-pin-rows  table-pin-cols">
       <thead className='bg-light100 text-gray-500'>
           <tr className='border-y  capitalize font-normal  px-8 bg-light100'>

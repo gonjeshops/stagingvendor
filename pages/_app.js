@@ -13,6 +13,7 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 import LayoutB2b from "../componentsB2b/LayoutB2b/LayoutB2b";
 import GlobalStateProvider from "@/context/GlobalStateProvider";
+import { pusher } from "@/configs/pusherConfig";
 
 function MyApp({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState);
@@ -47,6 +48,7 @@ function MyApp({ Component, pageProps }) {
     
   }, [router.asPath]);
 
+  
  
   return (
     <PayPalScriptProvider options={{"client_id": process.env.NEXT_PUBLIC_PAYPAL_ID_DEFAULT_APP}} >

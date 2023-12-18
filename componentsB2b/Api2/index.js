@@ -1100,5 +1100,20 @@ export const fetchDeliveryCompanies = () => {
           });
       };
 
-      
+      // b2c notifications
+      // GET - bakcendapi.gonje.com/my/b2c/notifications 
+      export const fetchb2cNotificications= (page, limit) => {
+        return axios({
+          method: "get",
+          headers: authHeader(),
+          url: url + `my/b2c/notifications?page=${page}&limit=${limit}`,
+        })
+        .then((response) => {
+          console.log("fetchb2cNotificications api response", response);
+        return response})
+          .catch((error) => {
+            console.log("Error in fetchb2cNotificications api", error);
+            return error
+          });
+      };
 // ==========B2C============

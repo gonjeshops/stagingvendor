@@ -8,6 +8,7 @@ import { logout } from "../../../redux/actions/auth";
 import { getUserDetail } from "../../../redux/actions/userDetail";
 import Notification from "./Notification";
 import UseProfile from "./UseProfile";
+import TopbarBtnModal from "./TopbarBtnModal";
 const TopBar = ({
   toggleSidebar,
   userDetail,
@@ -55,7 +56,8 @@ const TopBar = ({
         </div>
         <div className="wrapper d-flex justify-content-end">
           <div className="d-flex align-items-center">
-            <Notification />
+            <TopbarBtnModal/>
+            {/* <Notification /> */}
             {/* <div className="choose-lang">
                <select
                 className="form-select"

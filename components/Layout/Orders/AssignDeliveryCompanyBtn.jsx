@@ -6,9 +6,10 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { assignDeliveryCompany, fetchDeliveryCompanies } from '@/componentsB2b/Api2';
 import { data } from 'autoprefixer';
+import { FaTimes } from 'react-icons/fa';
 
 
-const OrderTableRowActions = ({item,path,setRefresh }) => {
+const AssignDeliveryCompanyBtn = ({item,path,setRefresh }) => {
 
     const router = useRouter();
 
@@ -77,14 +78,12 @@ const OrderTableRowActions = ({item,path,setRefresh }) => {
         assignDelivery(selected)
     };
 
-    const options = [
-        {value: 'PAID', label: 'PAID'},
-        {value: 'COMPLETED', label: 'COMPLETED'},
-    ]
+
 
     const DropdownMenu = () => {
         return (
-            <div  className={`p-10 rounded-lg bg-light100 border shadow-md `}>
+            <div onClick={e=>e.stopPropagation()} className={`relative p-10 rounded-lg bg-light100 border shadow-md `}>
+                <FaTimes className='absolute top-8 right-8' onClick={()=>setAction('')}/>
                 {isLoading && <p className='pb-2'>Updating...</p>}
                 <Select
                     value={select}
@@ -99,7 +98,7 @@ const OrderTableRowActions = ({item,path,setRefresh }) => {
     
   return (
     <div className=''> 
-    {path === 'outgoing' ? (
+   
                 <div className={`${action===item?.id ? 'z-1000  relative ' : ''} flex gap-2  px-2 text-sm text-center `} >
                     {/*  received quote/invoice - outgoing order - seller - supplier api*/}
                     
@@ -112,28 +111,13 @@ const OrderTableRowActions = ({item,path,setRefresh }) => {
                         className={ `${item?.status==='COMPLETED' ? 'disable  ' : 'hover-blue text-white'} w-20 px-2  text-center py-2 rounded` }>
                             {action ? 'Close' : 'Assign'}
                     </Button>
-                    <Button 
-                        onClick={()=>router.push(`/orders_vendors/${item.id}?path=${path}`)}
-                        className={ `${'bg-gonje-green text-white'} px-3  text-center py-2    rounded` }>
-                            View
-                    </Button>
 
-                    {action===item?.id && <div className="fixed inset-0 flex justify-center items-center bg-opacity-50 bg-black "><DropdownMenu/></div>}
+                    {action===item?.id && <div className="fixed inset-0 flex justify-center items-center bg-opacity-50 bg-black " onClick={()=>setAction('')} ><DropdownMenu/></div>}
 
                 </div>
-            ) : (
-                <div className="flex gap-2  px-2 text-sm text-center">
-                    {/* sent quote/invoice - incoming order - buyer  - vendor api
-                    */}
-                    <Button 
-                        onClick={()=>router.push(`/orders_vendors/${item.id}?path=${path}`)}
-                        className={ `${'bg-gonje-green text-white'} px-3  text-center py-2    rounded` }>
-                         Veiw
-                    </Button>
-                </div>
-            )}
+            
     </div>
   )
 }
 
-export default OrderTableRowActions
+export default AssignDeliveryCompanyBtn

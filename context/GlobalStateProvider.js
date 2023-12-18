@@ -17,6 +17,7 @@ const GlobalStateProvider = ({ children }) => {
   const [checkoutData, setCheckoutData] = useState('')
   const [supplierDetails, setSupplierDetails] = useState('')
   const [editQuote, setEditQuote] = useState(null)
+  
 
   // Function to retrieve "user-details" from local storage
   useEffect(() => {

@@ -3,11 +3,12 @@ import { useRouter } from "next/router";
 import React from "react";
 import Pagination from "react-js-pagination";
 import Countdown from "react-countdown";
+import AssignDeliveryCompanyBtn from "./AssignDeliveryCompanyBtn";
 export const Status = {
   accept: 12,
   reject: 11,
 };
-const List = ({ listData, onPageChange, onStatusChange }) => {
+const List = ({ listData, onPageChange, onStatusChange, setRefresh }) => {
   const route = useRouter();
   return (
     <div className="order-table">
@@ -63,6 +64,7 @@ const List = ({ listData, onPageChange, onStatusChange }) => {
                     {item.status.name}
                   </td>
                   <td className="actions">
+                    <AssignDeliveryCompanyBtn item={item} setRefresh={setRefresh}/>
                     <button
                       type="button"
                       className="btn btn-warning"

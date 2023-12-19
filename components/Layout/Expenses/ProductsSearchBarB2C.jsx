@@ -71,38 +71,38 @@ const ProductsSearchBarB2C = ({setSearch, setShop }) => {
     }
 
 
-    useEffect(() => {
-      const channel = vendorShopChannel('5')
-      channel.bind('eventType', function (data) {
-        console.log('Event pusher notification======', data.message);
-      });
-    }, [])
+    // useEffect(() => {
+    //   const channel = vendorShopChannel('5')
+    //   channel.bind('eventType', function (data) {
+    //     console.log('Event pusher notification======', data.message);
+    //   });
+    // }, [])
     
-    const triggers = async () => {
-      try {
-        const res = await axios.post('/api/notifications', {shopId: '5', eventType: 'eventType', message: "Shopping from me now.", data: {
-          "id": 333,
-          "shop_id": 5,
-          "user_id": 8,
-          "order_id": null,
-          "title": "Page Request",
-          "message": "Product supplied successfully",
-          "module": "B2C",
-          "status": 0,
-          "read_at": null,
-          "created_at": "2023-12-14 12:01:57",
-          "updated_at": "2023-12-14 12:01:57"
-      }, }
-        )
-      } catch (error) {
-        console.log('errrrr', error)
-      }
-    }
+    // const triggers = async () => {
+    //   try {
+    //     const res = await axios.post('/api/notifications', {shopId: '5', eventType: 'eventType', message: "Shopping from me now.", data: {
+    //       "id": 333,
+    //       "shop_id": 5,
+    //       "user_id": 8,
+    //       "order_id": null,
+    //       "title": "Page Request",
+    //       "message": "Product supplied successfully",
+    //       "module": "B2C",
+    //       "status": 0,
+    //       "read_at": null,
+    //       "created_at": "2023-12-14 12:01:57",
+    //       "updated_at": "2023-12-14 12:01:57"
+    //   }, }
+    //     )
+    //   } catch (error) {
+    //     console.log('errrrr', error)
+    //   }
+    // }
     
 
   return (
     <>
-    <button className="w-80 btn" onClick={()=>triggers()}>Trigger</button>
+    {/* <button className="w-80 btn" onClick={()=>triggers()}>Trigger</button> */}
 
     <form onSubmit={handleSubmit} className='py-2 w-full flex  justify-between gap-4 flex-wrap' >
 

@@ -16,19 +16,12 @@ const AddDeliveryCompanyBtn = ({setRefresh}) => {
 
     const add = async (e) => {
         e.preventDefault(); 
-
         try {
           setLoading(true);
           const response = await addDeliveryCompany(formData);
-          console.log('addDeliveryCompany =', response);
-      
           if (response?.status === 200) {
-            console.log('deleivery companies data ===', response?.data);
             toast.success('Added delivery company.');
-            setRefresh(p=>!p)
             setAction('')
-            // TODO: Notification - notify vendor seller that delivery is assigned
-            // TODO: Add to log
           } else {
             console.log('Api Error res===', response);
             toast.error('Action Unsuccessful');

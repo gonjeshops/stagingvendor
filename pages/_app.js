@@ -7,9 +7,9 @@ import Layout from "../components/Layout";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import '@stripe/stripe-js'
-// import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import TawkMessengerReact from '@tawk.to/tawk-messenger-react';
 
 import LayoutB2b from "../componentsB2b/LayoutB2b/LayoutB2b";
 import GlobalStateProvider from "@/context/GlobalStateProvider";
@@ -48,6 +48,7 @@ function MyApp({ Component, pageProps }) {
     
   }, [router.asPath]);
 
+
   
  
   return (
@@ -55,7 +56,10 @@ function MyApp({ Component, pageProps }) {
         <Provider store={store}>
         <GlobalStateProvider>
         
-
+        <TawkMessengerReact
+            propertyId={process.env.NEXT_PUBLIC_TAWKTO_PROPERTY_ID}
+            widgetId="default"
+          />
         {!(router.asPath === "/contractPolicy") &&
         !(router.asPath === "/vendor") &&
         !(router.asPath === "/payment") &&

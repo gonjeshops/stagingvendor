@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { assignDeliveryCompany, fetchDeliveryCompanies } from '@/componentsB2b/Api2';
 import { data } from 'autoprefixer';
+import { FaTimes } from 'react-icons/fa';
 
 
 const OrderTableRowActions = ({item,path,setRefresh }) => {
@@ -77,14 +78,13 @@ const OrderTableRowActions = ({item,path,setRefresh }) => {
         assignDelivery(selected)
     };
 
-    const options = [
-        {value: 'PAID', label: 'PAID'},
-        {value: 'COMPLETED', label: 'COMPLETED'},
-    ]
+
 
     const DropdownMenu = () => {
         return (
-            <div  className={`p-10 rounded-lg bg-light100 border shadow-md `}>
+            <div  className={`relative p-12 rounded-lg bg-light100 border shadow-md `}>
+                <FaTimes className='absolute top-6 right-6' onClick={()=>setAction('')}/>
+                <p className="text-lg pb-4 ">Select a delivery company</p>
                 {isLoading && <p className='pb-2'>Updating...</p>}
                 <Select
                     value={select}
@@ -118,7 +118,7 @@ const OrderTableRowActions = ({item,path,setRefresh }) => {
                             View
                     </Button>
 
-                    {action===item?.id && <div className="fixed inset-0 flex justify-center items-center bg-opacity-50 bg-black "><DropdownMenu/></div>}
+                    {action===item?.id && <div className="fixed inset-0 flex justify-center items-center bg-opacity-50 bg-black z-50"><DropdownMenu/></div>}
 
                 </div>
             ) : (

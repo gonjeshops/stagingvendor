@@ -23,6 +23,7 @@
     "@stripe/react-stripe-js": "^1.16.5",
     "@stripe/stripe-js": "^1.54.2",
     "@tanstack/react-table": "^8.10.7",
+    "@tawk.to/tawk-messenger-react": "^2.0.2",
     "axios": "^0.24.0",
     "babel-loader": "^8.3.0",
     "chart.js": "^4.3.3",

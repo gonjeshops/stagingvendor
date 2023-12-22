@@ -17,11 +17,12 @@ const Header = ({
 }) => {
   const [toggle, setToggle] = useState(false);
   const route = useRouter();
+
+  
   return (
-    <div className="graphs reports d-flex justify-content-between inventory_header">
-      <h3>Inventory</h3>
-      <div className="search-filter inventory-date-filters">
-        <div className="d-flex align-items-center w-75">
+    <div className="graphs reports d-flex justify-content-between inventory_header max-w-6xl  mx-auto">
+      <div className="search-filter inventory-date-filters gap-2">
+        <div className="d-flex align-items-center w-full ">
           <Image src={FilterSearch} alt="" />
           <input
             type="text"
@@ -35,7 +36,7 @@ const Header = ({
         </div>
         <button
           type="button"
-          className="btn btn-outline-primary"
+          className="btn btn-outline-primary bg-background"
           data-bs-toggle="dropdown"
           aria-expanded="false"
           onClick={() => {

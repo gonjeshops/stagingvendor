@@ -1,5 +1,7 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
 
+// npm install --save react-places-autocomplete
+
 import React from 'react';
 import PlacesAutocomplete, {
   geocodeByAddress,
@@ -66,5 +68,3 @@ class LocationSearchInput extends React.Component {
     );
   }
 }
-
-// npm install --save react-places-autocomplete

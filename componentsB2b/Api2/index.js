@@ -18,6 +18,89 @@ export const fetchSuppliersByPagination = (page, limit) => {
     });
 };
 
+// STALE ...
+export const uploadImages = (values) => {
+  console.log('data', values)
+  try {
+    // Validate inputs
+    if (!values || !values.attachment || !values.id || !values.type) {
+      console.error('Invalid input data. Please provide valid values, attachment, id, and type.');
+      return Promise.reject(new Error('Invalid input data.'));
+    }
+
+    // Make the API request
+    return axios({
+      method: 'post',
+      headers: {
+        ...authHeader(),
+        'Content-Type': 'multipart/form-data', // Set Content-Type for file uploads
+      },
+      url: `${url}attachments`,
+      data: {values},
+    })
+      .then((response) => {
+        console.log('uploadImages API successful:', response);
+        return response; // Assuming you want to return the response data
+      })
+      .catch((error) => {
+        console.log('uploadImages API error:', error, 'values===', {values});
+
+        // Handle specific axios errors
+        if (axios.isAxiosError(error)) {
+          // Handle different axios error statuses
+          if (error.response) {
+            console.error('Server responded with:', error.response.status, error.response.data);
+          } else if (error.request) {
+            console.error('No response received from the server.');
+          } else {
+            console.error('Error setting up the request:', error.message);
+          }
+        }
+
+        return Promise.reject(error);
+      });
+  } catch (error) {
+    console.error('An unexpected error occurred:', error, 'values===2', {values});
+    return Promise.reject(error);
+  }
+};
+
+export const uploadImagesFetch = (formData) => {
+  return fetch(`${url}attachments`, {
+    method: 'POST',
+    body: formData,
+    headers: authHeader()
+  })
+    .then(response => {
+      if (!response.ok) {
+        return response.clone().json().catch(() => {
+          return response.clone().text().then(nonJSONResponse => {
+            const error = new Error(`Network response was not ok. Status: ${response.status}. Non-JSON response received. Response body: ${nonJSONResponse}`);
+            error.status = response.status;
+            error.response = nonJSONResponse;
+            throw error;
+          });
+        });
+      }
+
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        return response.json();
+      } else {
+        const error = new Error('Unexpected response type');
+        error.status = response.status;
+        throw error;
+      }
+    })
+    .then(data => {
+      console.log('API call successful:', data);
+      return data; 
+    })
+    .catch(error => {
+      console.error('Fetch error:', error);
+      return Promise.reject(error); 
+    });
+}
 
 // View a supplier shop's products.  usage - /suppliers/[supplierId]
 export const viewSupplierShopProducts = async (userId, shopId, page, limit) => {

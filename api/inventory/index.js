@@ -77,6 +77,7 @@ export const getAttributes = (shop_id) => {
 };
 
 export const addAttachments = (values) => {
+  console.log('Data', values)
   return fetchService({
     method: "POST",
     url: attachments,

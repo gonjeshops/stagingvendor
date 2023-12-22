@@ -2,18 +2,18 @@ import { Provider } from "react-redux";
 import { useStore } from "../redux/store";
 import { useRouter } from "next/router";
 import "../styles/globals.css";
-import { useEffect, useState } from "react";
+import { useEffect,  } from "react";
 import Layout from "../components/Layout";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import '@stripe/stripe-js'
 
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import { PayPalScriptProvider,  } from "@paypal/react-paypal-js";
 import TawkMessengerReact from '@tawk.to/tawk-messenger-react';
 
 import LayoutB2b from "../componentsB2b/LayoutB2b/LayoutB2b";
 import GlobalStateProvider from "@/context/GlobalStateProvider";
-import { pusher } from "@/configs/pusherConfig";
+
 
 function MyApp({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState);

@@ -1,6 +1,5 @@
 
-import FilterCollection from './FilterCollection'
-import TableLayout from './TableLayout'
+
 import Tabs from './Tabs'
 
 const QuotesLayout = ({children, header}) => {

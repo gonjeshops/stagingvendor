@@ -5,6 +5,12 @@ import {
 } from "@/components/Layout/Accounting/columns";
 import useSWR from 'swr'
 import {fetcher} from '@/fetcher'
+import { BtnSpinner } from "@/componentsB2b/Loader/Spinner/BtnSpinner";
+import { PageLoading } from "@/componentsB2b/Loader/Spinner/PageLoading";
+import { useEffect } from "react";
+import { fetchAccounting } from "@/componentsB2b/Api2";
+import FetchDataAndRenderPageB2C from "@/components/FetchDataAndRenderPageB2C";
+
 const Accounting = () => {
   const AccountingDataTest = [
     {
@@ -35,18 +41,27 @@ const Accounting = () => {
       paymentMethod: "Credit Card",
     },
   ];
-  const { data:AccountingData, error, isLoading } = useSWR(
-    "my/transactions",
-    fetcher
-  );
-  if (!AccountingData) return 'loading...'
 
-  console.log(AccountingData.data.transactions, error)
-  return (
-    <section>
-      <DataTable columns={columns} data={AccountingData.data.transactions} />
-    </section>
-  );
+
+  const renderTransactions = (response) =>  (
+        response?.data?.data?.transactions?.length ?
+        <section><DataTable columns={columns} data={response?.data?.data?.transactions} /> </section>
+        :
+        <div className="absolute text-semibold inset-0 flex items-center justify-center text-center">
+          <p>No transactions found.</p>
+        </div>
+    )
+
+  return(
+    <FetchDataAndRenderPageB2C
+    fetchDataFunction={fetchAccounting}
+    renderComponent={renderTransactions}
+    pageLimit = {8}
+    loadingTimeoutDuration = {8000}
+    search=''
+    />
+  )
+
 };
 
 export default Accounting;

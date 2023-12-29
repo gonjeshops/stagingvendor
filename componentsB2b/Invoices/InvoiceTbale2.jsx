@@ -15,13 +15,6 @@ const InvoiceTable2 = ({data, invoices, tableHeader}) => {
 
     const [selectedOption, setSelectedOption] = useState('');
 
-    const handleRadioBtn = (event) => {
-        const newValue = event.target.value;
-        setSelectedOption((prevValue) => (prevValue === newValue ? '' : newValue)); 
-    };
-
-    const handleChange= () => {}
-
     // displaying product
     const [selectedProduct, setSelectedProduct] = useState(invoices[0]);
     const [isModalOpen, setIsModalOpen] = useState(false);

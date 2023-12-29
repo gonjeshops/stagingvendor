@@ -23,22 +23,28 @@ export const SideTabs = {
       image: Shipping,
     },
     finance: {
-      name: "Finance",
+      // name: "Finance",
+      name: "Vendo To Vendor",
       image: HRMSvg,
       isCollapsable: true,
       innerTabs: [
         {
-          name: "Accounting",
-          url: "/accounting",
+          name: "Quotes",
+          url: "/quotes/products",
         },
         {
           name: "Invoicing",
-          url: "/invoicing",
+          url: "/invoicing/received_invoice",
         },
         {
-          name: "Expenses",
-          url: "/expenses",
-        }
+          name: "Orders",
+          url: "/orders_vendors/incoming",
+        },
+        {
+          name: "Accounting",
+          url: "/accounting",
+        },
+
       ],
     },
     hrm: {

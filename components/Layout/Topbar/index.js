@@ -8,6 +8,8 @@ import { logout } from "../../../redux/actions/auth";
 import { getUserDetail } from "../../../redux/actions/userDetail";
 import Notification from "./Notification";
 import UseProfile from "./UseProfile";
+import TopbarBtnModal from "./TopbarBtnModal";
+import Alert from "@/components/ui/Alert";
 const TopBar = ({
   toggleSidebar,
   userDetail,
@@ -34,13 +36,14 @@ const TopBar = ({
 
   return (
     <>
-      <div className="top-head home d-block vendor-top-head">
+      <div className="pl-4 flex gap-4 h-24 bg-white items-center justify-between">
         {isOpenProfile && (
           <div className="profile_dropdown_overlay" onClick={toggleProfile} />
         )}
+
         <div className="menu">
           <div className="sm-logo">
-            <Image src={SignUpLogo} alt="" />
+            <Image src={SignUpLogo} alt="aaaaa" />
           </div>
           <button id="menu-toggle" onClick={toggleSidebar}>
             <svg
@@ -53,9 +56,14 @@ const TopBar = ({
             </svg>
           </button>
         </div>
-        <div className="wrapper d-flex justify-content-end">
-          <div className="d-flex align-items-center">
-            <Notification />
+
+        <div className="wrapper flex w-full flex-1 justify-end sm:justify-between gap-8 items-center">
+          <div className="hidden sm:block">
+            <Alert children={'You have pending task.'}/>
+          </div>
+          <div className="d-flex align-items-center gap-83">
+            <TopbarBtnModal/>
+            {/* <Notification /> */}
             {/* <div className="choose-lang">
                <select
                 className="form-select"

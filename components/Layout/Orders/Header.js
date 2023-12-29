@@ -6,6 +6,7 @@ import React from "react";
 import { FilterSearch } from "../../../assets";
 import Select from "react-select";
 import moment from "moment";
+import AddDeliveryCompanyBtn from "../OrdersVendors/AddDeliveryCompanyBtn";
 
 const Header = ({
   onSearch,
@@ -88,7 +89,7 @@ const Header = ({
         </div>
       </div>
 
-      <div className="inventory-filter order_filters row d-flex">
+      <div className="inventory-filter order_filters row d-flex justify-between items-center">
         <div className="col-xl-6 pe-0">
           <p className="mb-0">Filter by status</p>
           <Select
@@ -108,7 +109,10 @@ const Header = ({
             }}
           />
         </div>
+      <AddDeliveryCompanyBtn/>
+
       </div>
+
     </div>
   );
 };

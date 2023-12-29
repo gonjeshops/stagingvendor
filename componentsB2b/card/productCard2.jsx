@@ -57,7 +57,7 @@ return (
                     <div className="text-3xl font-bold ">${price}</div>
             </div>
 
-                <button className="rounded hover-grey border py-1  px-2"
+                <button disabled className=" rounded hover-grey border py-1  px-2"
                 onClick={() => {
                     closeModal()
                     router.push(`/vendorb2b/products/${slug}?shopId=${shopId || shop?.id}&userId=${userId || shop?.owner_id}&productId=${id}&shop_name=${product?.shop_name}`)

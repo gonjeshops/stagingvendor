@@ -10,7 +10,9 @@ pipeline {
     }
 
     tools {
+
         nodejs "nodejs" // name in "" should be similar to the name used for installer in the global tool configuration.
+
     }  
 
     stages {
@@ -25,6 +27,7 @@ pipeline {
                 git credentialsId: 'github', url: 'https://github.com/gonjeshops/vendor-frontend.git', branch: 'cicd'
             }
         }
+
 
         // stage('Build App') {
         //     steps {

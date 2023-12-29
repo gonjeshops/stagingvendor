@@ -18,7 +18,6 @@ const InvoiceDetailsPage = ({ invoiceId }) => {
     
   
     useEffect(() => {
-      // Set a loading timeout of 8 seconds (8000 milliseconds)
       const timeoutId = setTimeout(() => {
         setLoadingTimeout(true);
       }, 8000);
@@ -26,29 +25,23 @@ const InvoiceDetailsPage = ({ invoiceId }) => {
       const fetchData = async () => {
         try {
         setLoading(true)
-
           const response = await fetchQuoteDetails(invoiceId);
-  
           if (response?.status === 200) {
             console.log("API response:", response);
             setQuoteData(response?.data);
           } else {
             setApiError("Something went wrong. Try again or consult a developer.");
           }
-          clearTimeout(timeoutId); // Clear the loading timeout
-  
+          clearTimeout(timeoutId); 
         } catch (error) {
           console.error("Catch error:", error);
           setApiError("Server is not available. Try again or consult a developer.");
-          clearTimeout(timeoutId); // Clear the loading timeout
+          clearTimeout(timeoutId);
         } finally {
           setLoading(false)
         }
       };
-  
       fetchData();
-  
-      // Cleanup the timeout when the component unmounts
       return () => clearTimeout(timeoutId);
     }, [invoiceId]);
 
@@ -109,11 +102,8 @@ export default InvoiceDetailsPage;
 
 export async function getServerSideProps({ params }) {
   const { invoiceId } = params;
-//   const orderDetails = await fetchOrderDetails(invoiceId);
-
   return {
     props: {
-    //   orderDetails
     invoiceId
     }
   };

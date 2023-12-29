@@ -1,7 +1,7 @@
-import { MdKeyboardArrowRight, MdKeyboardArrowLeft, MdFastForward, MdFastRewind } from 'react-icons/md';
+import { MdKeyboardArrowRight, MdKeyboardArrowLeft, MdFastForward, MdFastRewind, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from 'react-icons/md';
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-  const pagesToShow = 6; // Number of page toggle buttons to display
+  const pagesToShow = 5; // Number of page toggle buttons to display
 
   const getPageNumbers = () => {
     const pageNumbers = [];
@@ -16,7 +16,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   };
 
   return (
-    <div className="flex items-center justify-center space-x-4 mt-8">
+    <div className="flex items-center justify-center space-x-4 py-8">
       <button
         className={`h-8 w-8 flex justify-center items-center rounded-full ${
           currentPage === 1 ? 'bg-light300 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700 text-white'
@@ -24,7 +24,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         onClick={() => onPageChange(1)}
         disabled={currentPage === 1}
       >
-        <MdFastRewind size={20} />
+        <MdKeyboardDoubleArrowLeft size={20} />
       </button>
 
       <button
@@ -66,7 +66,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         onClick={() => onPageChange(totalPages)}
         disabled={currentPage === totalPages}
       >
-        <MdFastForward size={20} />
+        <MdKeyboardDoubleArrowRight size={20} />
       </button>
     </div>
   );

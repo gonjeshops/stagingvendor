@@ -33,7 +33,7 @@ const OrdersPage = ({
     setLoading(true);
     getOrderList({
       ...filters,
-      shop_id: localStorage.getItem("shop_id"),
+      shop_id: JSON.parse(localStorage.getItem("user_detail"))?.shop_id,
     }).then(() => {
       setLoading(false);
     });

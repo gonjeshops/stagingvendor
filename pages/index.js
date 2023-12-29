@@ -10,10 +10,13 @@ const RootPage = () => {
   // }, []);
   return (
     <>
+
+
       <GifLoader>
           <div className="grid justify-center gap-4 text-center">
-
-          <h3 className="font-bold text-5xl">Superlanding</h3>
+          <ChristmasCard/>
+            
+          {/* <h3 className="font-bold text-5xl">Superlanding</h3> */}
           <Link href={'/signin'} className="hover-green rounded-full px-8 py-3 text-lg font-medium">Login</Link>
           </div>
 
@@ -27,3 +30,23 @@ const RootPage = () => {
 };
 
 export default RootPage;
+
+
+
+export const ChristmasCard = () => {
+  return (
+    <div className="
+   ">
+     <iframe
+      src="https://assets.pinterest.com/ext/embed.html?id=629518854191572720"
+      height="295"
+      width="345"
+      frameBorder="0"
+      scrolling="no"
+      title="Pinterest Embed"
+    ></iframe>
+  </div>
+  );
+};
+
+

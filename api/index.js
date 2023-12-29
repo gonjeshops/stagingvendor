@@ -1,3 +1,4 @@
+import authHeader from "@/componentsB2b/Api/auth-header";
 import axios from "axios";
 
 // const baseUrl =  process.env.GONJE_APP_BASE_URL
@@ -46,16 +47,18 @@ export const fetchService = async ({ method, url, body, headers, params }) =>
     url: url,
     method,
     params,
-    headers: { "Content-Type": "application/json", ...headers },
+    // headers: { "Content-Type": "application/json", ...headers },
+    headers: authHeader(),
     data: body,
   })
     .then((response) => {
+      console.log('=api response=',response)
       if (response.status && response.status === 200) {
         return response;
       }
       throw response;
     })
     .catch((error) => {
-      console.log("@fetchService error =>", { url, error });
+      console.log("@fetchService error =>", { url, error }, 'values==', body);
       throw error;
     });

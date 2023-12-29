@@ -64,6 +64,7 @@ const Invoicing = () => {
     }
   ];
   
+  
   return (
     <section>
       <DataTable columns={columns} data={InvoicingData} />

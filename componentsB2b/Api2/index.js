@@ -20,7 +20,44 @@ export const fetchSuppliersByPagination = (page, limit) => {
 
 
 
-// View a supplier shop's products.  usage - /suppliers/[supplierId]
+export const uploadImagesFetch = (formData) => {
+  return fetch(`${url}attachments`, {
+    method: 'POST',
+    body: formData,
+    headers: authHeader()
+  })
+    .then(response => {
+      if (!response.ok) {
+        return response.clone().json().catch(() => {
+          return response.clone().text().then(nonJSONResponse => {
+            const error = new Error(`Network response was not ok. Status: ${response.status}. Non-JSON response received. Response body: ${nonJSONResponse}`);
+            error.status = response.status;
+            error.response = nonJSONResponse;
+            throw error;
+          });
+        });
+      }
+
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        return response.json();
+      } else {
+        const error = new Error('Unexpected response type');
+        error.status = response.status;
+        throw error;
+      }
+    })
+    .then(data => {
+      console.log('API call successful:', data);
+      return data; 
+    })
+    .catch(error => {
+      console.error('Fetch error:', error);
+      return Promise.reject(error); 
+    });
+}
+
+
 export const viewSupplierShopProducts = async (userId, shopId, page, limit) => {
   try {
     // Validate inputs
@@ -65,9 +102,6 @@ export const viewSupplierShopProducts = async (userId, shopId, page, limit) => {
 };
 
 
-
-
-
 // View Supplier Product Details
 export const viewSupplierShopProductDetails = (userId, productId, shopId) => {
   return axios({
@@ -83,7 +117,6 @@ export const viewSupplierShopProductDetails = (userId, productId, shopId) => {
     });
 };
 
-
   
 // View supplier products
 export const viewSupplierProducts = (userId) => {
@@ -98,8 +131,6 @@ export const viewSupplierProducts = (userId) => {
         console.log("Error in viewSupplierProducts api", error);
       });
   };
-  
-
 
 // ========= Quotes ===============
 
@@ -153,8 +184,7 @@ export const fetchQuoteDetails = (quoteId) => {
       });
   };
 
-
-  export const fetchSupplierQuoteDetails = (quoteId) => {
+export const fetchSupplierQuoteDetails = (quoteId) => {
     return axios({
       method: "get",
       headers: authHeader(),
@@ -167,8 +197,6 @@ export const fetchQuoteDetails = (quoteId) => {
         return error
       });
   };
-
-
 
 // Get quote request from vendors with "SENT" status  supplier/quotes
 export const fetchQuotesWIthSentStatus = (page, limit) => {
@@ -215,7 +243,6 @@ export const createQuoteRequest = (values, ) => {
       });
   };
 
-  
   // Create quote request with SEND status
 export const createQuoteWithSendStatus = (values, ) => {
   try {
@@ -253,7 +280,6 @@ export const createQuoteWithSendStatus = (values, ) => {
 }
 };
 
-
   // Update quote request
 export const updateQuoteRequest = (values, quoteId) => {
   // Validate inputs
@@ -288,7 +314,6 @@ export const updateQuoteRequest = (values, quoteId) => {
 };
 
 
-
 //  ============= INVOICE ============
 // Create quote request
 export const fetchVendorInvoice = (page, limit) => {
@@ -302,8 +327,6 @@ export const fetchVendorInvoice = (page, limit) => {
       console.log("Error in fetchVendorInvoice api", error, page, limit);
     });
 };
-
-
 
 // ======= // getNotification?limit=15 =====
 export const fetchNotifications = (limit, page) => {
@@ -440,7 +463,6 @@ if (type===`vendor/my/stats`) {
 
 };
 
-
   
 // orders
 // /vendor/b2b/my/orders
@@ -484,9 +506,6 @@ export const fetchOrders = (page, limit) => {
     return Promise.reject(error);
   }
 };
-
-
-
 
 // Add products
 export const  createProduct = (values) => {
@@ -598,3 +617,524 @@ export const fetchProductsCatalogue = (page, limit) => {
       console.log("Error in fetchProductsCatalogue api", error);
     });
 };
+
+
+
+// ==========B2C============
+export const fetchAccounting = (page, limit, search) => {
+  return axios({
+    method: "get",
+    headers: authHeader(),
+    url: url + `my/transactions?page=${page}&limit=${limit}&search=${search}`,
+  })
+    .then((response) =>{ 
+      console.log('API fetchAccounting response', response)
+      return response})
+    .catch((error) => {
+      console.log("Error in fetchAccounting api", error);
+    });
+};
+
+
+export const fetchProducts = ( page, limit, search) => {
+  // Validate inputs
+  // if (!search || !values || !quoteId) {
+  //   return Promise.reject(new Error("Invalid input data."));
+  // }
+  return axios({
+    method: "get",
+    headers: authHeader(),
+    url: url + `view/vendor/products?page=${page}&limit=${limit}&search=${search}`,
+  })
+    .then((response) =>{ 
+      console.log('API fetchProducts response', response, search, page, limit)
+      return response})
+    .catch((error) => {
+      console.log("Error in fetchProducts api", error, '==',  search, page, limit);
+    });
+};
+
+
+// The ones are for the recieved request
+//GET - https://backendapi.gonje.com/vendor/b2c/quote/{quoteId}
+// GET -https://backendapi.gonje.com/vendor/b2c/quotes
+
+// this one is for the invoice table
+// GET -  https://backendapi.gonje.com/supplier/b2c/quotes
+// GET - https://backendapi.gonje.com/supplier/b2c/quote/{quoteId}
+
+// this one is for the request modal in the expense page
+// PUT - https://backendapi.gonje.com/update/b2c/quote/request/{quoteId}
+// POST - https://backendapi.gonje.com/create/b2c/quote/request 
+
+
+// search products
+// https://backendapi.gonje.com/view/vendor/products?search=ap
+
+// Create quote request as PENDING
+export const createB2cQuoteRequest = (values, ) => {
+  console.log('values===', values)
+    return axios({
+      method: "post",
+      headers: authHeader(),
+      url: url + `create/b2c/quote/request`,
+      data: {
+        "cart_items": values?.cart_items,
+        "quote_name": values?.quote_name,
+        "subtotal": values.subtotal,
+        "quantity": values?.quantity,
+        "shop_name": values?.shop_name,
+        "user_name": values?.user_name,
+        "user_id": values?.user_id,
+        "status": values?.status,
+      },
+    })
+      .then((response) => {
+        console.log("createB2cQuoteRequest api response", response,values);
+      return response})
+      .catch((error) => {
+        console.log("Error in createB2cQuoteRequest api", error, values, );
+        return error
+      });
+  }
+
+  // http://backendapi.gonje.com/send/b2c/quote/request
+  export const SendB2cQuoteRequest = (values, ) => {
+    console.log('values===', values)
+      return axios({
+        method: "post",
+        headers: authHeader(),
+        url: url + `send/b2c/quote/request`,
+        data: {
+          "cart_items": values?.cart_items,
+          "quote_name": values?.quote_name,
+          "subtotal": values.subtotal,
+          "quantity": values?.quantity,
+          "shop_name": values?.shop_name,
+          "user_name": values?.user_name,
+          "user_id": values?.user_id,
+        },
+      })
+        .then((response) => {
+          console.log("SendB2cQuoteRequest api response", response,values);
+        return response})
+        .catch((error) => {
+          console.log("Error in SendB2cQuoteRequest api", error, values, );
+          return error
+        });
+    }
+
+// fetch received quotes for b2c vendor/b2c/quotes
+// https://backendapi.gonje.com/supplier/vendor/b2c/quote/{quoteId} - GET
+export const fetchB2cSentQuotes = (page, limit, search) => {
+  // if (!page || !limit) {
+  //   return Promise.reject(new Error("Invalid input data."));
+  // }
+    return axios({
+      method: "get",
+      headers: authHeader(),
+      url: url + `vendor/b2c/quotes?page=${page}&limit=${limit}&search=${search}`,
+    })
+    .then((response) => {
+      console.log("fetchB2cSentQuotes api response", response, page, limit );
+    return response})
+      .catch((error) => {
+        console.log("Error in fetchB2cSentQuotes api", error, page, limit);
+        return error
+      });
+  };
+
+// https://backendapi.gonje.com/vendor/b2c/quote/{quoteId}
+export const fetchB2CQuoteDetails = (quoteId) => {
+  if (!quoteId) {
+    return Promise.reject(new Error("Invalid input data."));
+  }
+    return axios({
+      method: "get",
+      headers: authHeader(),
+      url: url + `supplier/b2c/quote/${quoteId}`,
+    })
+    .then((response) => {
+      console.log("fetchB2CQuoteDetails api response", response,  );
+    return response})
+      .catch((error) => {
+        console.log("Error in fetchB2CQuoteDetails api", error,);
+        return error
+      });
+  };
+
+  // fetch sent quotes for b2c supplier/b2c/quotes
+// https://backendapi.gonje.com/vendor/b2c/quote/{quoteId} - GET
+export const fetchB2cReceivedQuotes = (page, limit, search) => {
+  // if (!page || !limit) {
+  //   return Promise.reject(new Error("Invalid input data."));
+  // }
+    return axios({
+      method: "get",
+      headers: authHeader(),
+      url: url + `supplier/b2c/quotes?page=${page}&limit=${limit}&search=${search}`,
+    })
+    .then((response) => {
+      console.log("fetchB2cReceivedQuotes api response", response);
+    return response})
+      .catch((error) => {
+        console.log("Error in fetchB2cReceivedQuotes api", error);
+        return error
+      });
+  };
+
+
+    // Update quote request
+export const updateB2cQuoteRequest = (values, quoteId) => {
+  // Validate inputs
+  if (!values || !quoteId) {
+    return Promise.reject(new Error("Invalid input data."));
+  }
+
+  return axios({
+    method: "put",
+    headers: authHeader(),
+    url: url + `update/b2c/quote/request/${quoteId}`,
+    data: {
+      "status": values?.status,
+      "reason": values?.reason,
+      "cart_items": values?.cart_items,
+      "quote_name": values?.quote_name,
+      "subtotal": values?.subtotal,
+      "quantity": values?.quantity,
+      "shop_name": values?.shop_name,
+      "user_name": values?.user_name,
+      "user_id": values?.user_id,
+    },
+  })
+    .then((response) => {
+      console.log("updateB2cQuoteRequest API successful:", response);
+      return response
+    })
+    .catch((error) => {
+      console.error("Error in updateB2cQuoteRequest API:", error);
+      return Promise.reject(error); // Propagate the error.
+    });
+};
+
+
+
+  // GET - https://backendapi.gonje.com/vendor/b2c/invoices
+  // https://backendapi.gonje.com/single/vendor/b2c/invoice/invoiceId
+// GET - https://backendapi.gonje.com/supplier/b2c/invoices
+// https://backendapi.gonje.com/single/supplier/b2c/invoice/{invoiceId}
+  // fetch sent quotes for b2c supplier/b2c/quotes
+  export const fetchReceivedInvoices = (page, limit, search) => {
+    // if (!page || !limit) {
+    //   return Promise.reject(new Error("Invalid input data."));
+    // }
+      return axios({
+        method: "get",
+        headers: authHeader(),
+        url: url + `supplier/b2c/invoices?page=${page}&limit=${limit}&search=${search}`,
+      })
+      .then((response) => {
+        console.log("fetchReceivedInvoices api response", response);
+      return response})
+        .catch((error) => {
+          console.log("Error in fetchReceivedInvoices api", error);
+          return error
+        });
+    };
+
+    export const fetchReceivedInvoicesDetails = (invoiceId) => {
+      // if (!page || !limit) {
+      //   return Promise.reject(new Error("Invalid input data."));
+      // }
+        return axios({
+          method: "get",
+          headers: authHeader(),
+          url: url + `single/supplier/b2c/invoice/${invoiceId}`,
+        })
+        .then((response) => {
+          console.log("fetchReceivedInvoices api response", response);
+        return response})
+          .catch((error) => {
+            console.log("Error in fetchReceivedInvoices api", error);
+            return error
+          });
+      };
+
+    // fetch sent quotes for b2c supplier/b2c/quotes
+    export const fetchSentInvoices = (page, limit, search) => {
+      // if (!page || !limit) {
+      //   return Promise.reject(new Error("Invalid input data."));
+      // }
+        return axios({
+          method: "get",
+          headers: authHeader(),
+          url: url + `vendor/b2c/invoices?page=${page}&limit=${limit}&search=${search}`,
+        })
+        .then((response) => {
+          console.log("fetchSentInvoices api response", response);
+        return response})
+          .catch((error) => {
+            console.log("Error in fetchSentInvoices api", error);
+            return error
+          });
+      };
+
+      export const fetchSentInvoicesDetails = (invoiceId) => {
+        // if (!page || !limit) {
+        //   return Promise.reject(new Error("Invalid input data."));
+        // } https://backendapi.gonje.com/single/vendor/b2c/invoice/
+          return axios({
+            method: "get",
+            headers: authHeader(),
+            url: url + `single/vendor/b2c/invoice/${invoiceId}`,
+          })
+          .then((response) => {
+            console.log("fetchReceivedInvoices api response", response);
+          return response})
+            .catch((error) => {
+              console.log("Error in fetchReceivedInvoices api", error);
+              return error
+            });
+        };
+
+
+// https://backendapi.gonje.com/view/vendor/b2c/shops?search=bak
+
+export const fetchB2cShops = (page, limit, search) => {
+    return axios({
+      method: "get",
+      headers: authHeader(),
+      url: url + `view/vendor/b2c/shops?page=${page}&limit=${limit}&search=${search}`,
+    })
+    .then((response) => {
+      console.log("fetchB2cShops api response", response);
+    return response})
+      .catch((error) => {
+        console.log("Error in fetchB2cShops api", error);
+        return error
+      });
+  };
+
+  // https://backendapi.gonje.com/view/vendor/shop/%7BuserId%7D/products/%7BshopId%7D
+  // https://backendapi.gonje.com/view/vendor/shop/8/products/5?page=3&limit=3
+  export const fetchShopDetailsAndProducts = (userId, shopId, page, limit, search) => {
+    if (!userId || !shopId) {
+      return Promise.reject(new Error("Invalid input data."));
+    }
+      return axios({
+        method: "get",
+        headers: authHeader(),
+        url: url + `view/vendor/shop/${userId}/products/${shopId}?page=${page}&limit=${limit}`,
+      })
+      .then((response) => {
+        console.log("fetchReceivedInvoices api response", response, '===', userId, shopId);
+      return response})
+        .catch((error) => {
+          console.log("Error in fetchReceivedInvoices api", error, '===', userId, shopId);
+          return error
+        });
+    };
+
+
+// ORDERS VENDORS 2 VENDORS
+//       GET - baseurl/vendor/b2c/orders
+// GET - baseurl/supplier/b2c/orders
+// get a single order
+// GET - baseurl/vendor/b2c/order/{invoiceId}
+// GET - baseurl/supplier/b2c/order/{invoiceId}
+export const fetchIncomingOrders = (page, limit, search) => {
+  if (!page || !limit) {
+    return Promise.reject(new Error("Invalid input data."));
+  }
+  return axios({
+    method: "get",
+    headers: authHeader(),
+    url: url + `vendor/b2c/orders?page=${page}&limit=${limit}&search=${search}`,
+  })
+  .then((response) => {
+    console.log("fetchIncomingOrders api response", response);
+  return response})
+    .catch((error) => {
+      console.log("Error in fetchIncomingOrders api", error);
+      return error
+    });
+};
+
+export const fetchIncomingOrdersDetails = (id) => {
+  if (!id) {
+    return Promise.reject(new Error("Invalid input data."));
+  }
+    return axios({
+      method: "get",
+      headers: authHeader(),
+      url: url + `vendor/b2c/order${id}`,
+    })
+    .then((response) => {
+      console.log("fetchReceivedInvoices api response", response);
+    return response})
+      .catch((error) => {
+        console.log("Error in fetchReceivedInvoices api", error);
+        return error
+      });
+  };
+
+  export const fetchOutgoingOrders = (page, limit, search) => {
+    if (!page || !limit) {
+      return Promise.reject(new Error("Invalid input data."));
+    }
+    return axios({
+      method: "get",
+      headers: authHeader(),
+      url: url + `supplier/b2c/orders?page=${page}&limit=${limit}&search=${search}`,
+    })
+    .then((response) => {
+      console.log("fetchIncomingOrders api response", response);
+    return response})
+      .catch((error) => {
+        console.log("Error in fetchIncomingOrders api", error);
+        return error
+      });
+  };
+  
+  export const fetchOutgoingOrdersDetails = (id) => {
+    if (!id) {
+      return Promise.reject(new Error("Invalid input data."));
+    }
+      return axios({
+        method: "get",
+        headers: authHeader(),
+        url: url + `supplier/b2c/order/${id}`,
+      })
+      .then((response) => {
+        console.log("fetchReceivedInvoices api response", response);
+      return response})
+        .catch((error) => {
+          console.log("Error in fetchReceivedInvoices api", error);
+          return error
+        });
+    };
+  
+
+      // / This stores a new delivery company.
+      // /add/delivery/company
+      // URL: backendapi.gonje.com/add/delivery/company
+      // request data
+      // {
+      // "company_name":"company123abc",
+      // "aadress":"address123abc"
+      // }
+export const addDeliveryCompany = (values) => {
+  if (!values) {
+    return Promise.reject(new Error("Invalid input data."));
+  }
+  return axios({
+    method: "post",
+    headers: authHeader(),
+    url: url + `add/delivery/company`,
+    data: {
+      "company_name": values?.name,
+      "address": values?.adress
+      }
+  })
+    .then((response) => {
+      return response
+    })
+    .catch((error) => {
+      console.error("Error in addDeliveryCompany API:", error);
+      return Promise.reject(error);
+    });
+};
+
+export const assignDeliveryCompany = (values, id) => {
+  if (!values) {
+    return Promise.reject(new Error("Invalid input data."));
+  }
+  return axios({
+    method: "put",
+    headers: authHeader(),
+    url: url + `assign/delivery/company/b2b/${id}`,
+    data: {
+      "delivery_company_id": values?.id,
+      "delivery_company_name": values?.name
+      }
+  })
+    .then((response) => {
+      return response
+    })
+    .catch((error) => {
+      console.error("Error in assignDeliveryCompany API:", error);
+      return Promise.reject(error); // Propagate the error.
+    });
+};
+
+export const assignDeliveryCompanyCustomer = (values, orderId) => {
+  if (!values) {
+    return Promise.reject(new Error("Invalid input data."));
+  }
+  return axios({
+    method: "put",
+    headers: authHeader(),
+    url: url + `assign/delivery/company/${orderId}`,
+    data: {
+      "delivery_company_id": values?.id,
+      "delivery_company_name": values?.name
+      }
+  })
+    .then((response) => {
+      return response
+    })
+    .catch((error) => {
+      console.error("Error in assignDeliveryCompanyCustomer API:", error);
+      return Promise.reject(error);
+    });
+};
+
+export const fetchDeliveryCompanies = () => {
+  return axios({
+    method: "get",
+    headers: authHeader(),
+    url: url + `my/delivery/company/list`,
+  })
+  .then((response) => {
+      return response
+    })
+    .catch((error) => {
+      console.log("Error in fetchDeliveryCompanies api", error);
+      return Promise.reject(error)
+    });
+};
+
+
+      // DASHBOARD
+      export const fetchStats = () => {
+        return axios({
+          method: "get",
+          headers: authHeader(),
+          url: url + `my/sales/analytics`,
+        })
+        .then((response) => {
+          console.log("fetchDeliveryCompanies api response", response);
+        return response})
+          .catch((error) => {
+            console.log("Error in fetchDeliveryCompanies api", error);
+            return error
+          });
+      };
+
+      // b2c notifications
+      // GET - bakcendapi.gonje.com/my/b2c/notifications 
+      export const fetchb2cNotificications= (page, limit) => {
+        return axios({
+          method: "get",
+          headers: authHeader(),
+          url: url + `my/b2c/notifications?page=${page}&limit=${limit}`,
+        })
+        .then((response) => {
+          console.log("fetchb2cNotificications api response", response);
+        return response})
+          .catch((error) => {
+            console.log("Error in fetchb2cNotificications api", error);
+            return error
+          });
+      };
+// ==========B2C============

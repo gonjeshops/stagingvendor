@@ -14,7 +14,7 @@ import { MdSendAndArchive } from 'react-icons/md';
 
 
 const QuoteForm = () => {
-  const {user, useB2Bcart, closeModal, setActive, supplierDetails, editQuote, setEditQuote} = useGlobalState();
+  const {user, useB2Bcart, closeModal, setActive, supplierDetails,} = useGlobalState();
   const router = useRouter()
   const [loading, setLoading] = useState(false)
 

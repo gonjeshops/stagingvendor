@@ -3,6 +3,7 @@ import { FaEnvelope, FaAngleDown } from 'react-icons/fa';
 import ImgCard from '../card/ImgCard';
 import Pagination from '../Pagination';
 import { useRouter } from 'next/router';
+import { currency } from '@/lib/currency';
 
 const OrderTbale = ({data, orderlist}) => {
     const router = useRouter()
@@ -80,14 +81,13 @@ const OrderTbale = ({data, orderlist}) => {
               </td>
 
               <td className="px-2">
-                <p className="text-">{subtotal}</p>
+                <p className="text-">{currency + subtotal}</p>
               </td>
 
               <td className="px-2  ">
                 <div className="flex gap-2 items-center">
                     <div className="overflow-hidden h-6 w-6 rounded-full flex-shrink-0 bg-blue-200">
                         <h4 className='flex items-center w-full h-full justify-center text-sm font-bold text-blue'>{user_name[0]}</h4>
-                        {/* <ImgCard/> */}
                     </div>
                     <p className="">{user_name}</p>
                 </div>

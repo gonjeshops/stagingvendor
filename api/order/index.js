@@ -1,6 +1,8 @@
+import authHeader from "@/componentsB2b/Api/auth-header";
 import { fetchService, orderListUrl, orderStatusUrl } from "..";
 
 export const getOrders = (values) => {
+  console.log('VALUES==',values)
   return fetchService({
     method: "GET",
     url: orderListUrl,
@@ -9,7 +11,7 @@ export const getOrders = (values) => {
     },
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+      Authorization:`Bearer ${localStorage.getItem("user_detail")?.token || ""}`,
     },
   });
 };
@@ -20,7 +22,7 @@ export const getSingleOrders = (id) => {
     url: `${orderListUrl}/${id}`,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+      Authorization: authHeader(),
     },
   });
 };
@@ -31,7 +33,7 @@ export const getOrderStatus = () => {
     url: `${orderStatusUrl}`,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+      Authorization: authHeader(),
     },
   });
 };
@@ -45,7 +47,7 @@ export const changeOrderStatus = (values) => {
     },
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+      Authorization: `Bearer ${localStorage.getItem("user_detail")?.token || ""}`,
     },
   });
 };

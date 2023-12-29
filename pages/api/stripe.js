@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
-console.log('STIPE SESSION===========', req.body)
+// console.log('STIPE SESSION===========', req.body)
   try {
     const {items, checkoutData, user} = req.body;
 
@@ -36,14 +36,17 @@ console.log('STIPE SESSION===========', req.body)
         { shipping_rate: 'shr_1NTtXGCQ7rc17Weigz5iCMyC' },
       ],
       line_items: lineItems,
-      success_url: `${req.headers.origin}/vendorb2b/workspace/invoices?stripe_status=success`,
-      cancel_url: `${req.headers.origin}/vendorb2b/workspace/request-quotes?stripe_status=cancelled`,  
+      success_url: `${req.headers.origin}/invoicing/sent_invoice?status=success`,
+      cancel_url: `${req.headers.origin}/invoicing/sent_invoice?status=cancelled`,  
       metadata: {
         user_token: user.token,
         quote_id: checkoutData?.quote_id || 0,
         quote_number: checkoutData?.quote_number || 0,
         quote_name: checkoutData?.quote_name || 'no name',
-        user_email: user?.user_email || 'noemail@email.com'
+        user_email: user?.user_email || 'noemail@email.com',
+        transaction_type:"Do you mean Product purchase?",
+        transaction_description:"What description do you want?",
+        transaction_title:"I don't get."
       },  
       customer_email: user?.user_email || 'noemail@email.com'
     };

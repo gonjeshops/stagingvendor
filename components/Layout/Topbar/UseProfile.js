@@ -12,6 +12,7 @@ import {
   WalletSvg,
   LogoutSvg,
 } from "../../../assets";
+import { useGlobalState } from "@/context/GlobalStateContext";
 
 const UseProfile = ({
   userData,
@@ -20,6 +21,7 @@ const UseProfile = ({
   logoutVendor,
 }) => {
   const route = useRouter();
+  const {user}=useGlobalState()
   return (
     <>
       <div className="profile">
@@ -35,7 +37,7 @@ const UseProfile = ({
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            {userData.name || ""} <Image src={UserSvg} />
+            {user?.user_name || ""} <Image src={UserSvg} />
           </a>
 
           <ul
@@ -120,7 +122,7 @@ const UseProfile = ({
                 className="dropdown-item"
                 onClick={() => {
                   logoutVendor().then(() => {
-                    route.push("/login");
+                    route.push("/");
                     localStorage.clear();
                   });
                 }}

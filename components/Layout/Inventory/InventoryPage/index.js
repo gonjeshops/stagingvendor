@@ -143,6 +143,10 @@ const InventoryPage = ({
   return (
     <>
       {isLoading && <Loader />}
+      <div className="create-inventory">
+      <div className="top-heading">
+          <h3>Inventory</h3>
+        </div>
       <Header
         isActiveSearch={searchActive}
         filters={filters}
@@ -171,6 +175,7 @@ const InventoryPage = ({
         }}
         onConfirmDelete={handleDelete}
       />
+      </div>
     </>
   );
 };

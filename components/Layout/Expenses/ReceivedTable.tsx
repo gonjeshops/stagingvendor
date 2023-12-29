@@ -94,7 +94,7 @@ export function ReceivedTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className="border-b border-black"
+                  className="border-b border-black relative"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className="font-medium">

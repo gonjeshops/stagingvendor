@@ -38,8 +38,8 @@ const ProductDetails = ({product, p}) => {
     <div className=' w-full ' id='top'>
 
        <div className="pb-"> 
-            <DashboardHeading><p  className=" text-blue-400 ">{`${ shop?.name} product details`}</p></DashboardHeading>
-            <Link  href={`/vendorb2b/suppliers/${shop?.slug}?userId=${shop?.owner_id}&shopId=${shop?.id}`}
+            <DashboardHeading><p  className=" text-blue-40 ">{`${ name} product details`}</p></DashboardHeading>
+            <Link  href={`/vendorb2b/suppliers/${shop[0]?.slug}?userId=${shop[0]?.owner_id}&shopId=${shop[0]?.id}`}
              className=" text-blue-600 hover:font-semibold duration-300">
                 {`< Go to Shop`}
             </Link>
@@ -117,7 +117,8 @@ const ProductDetails = ({product, p}) => {
             <div className="flex items-center">
             <BtnOrange link={'#'} >
                 <div onClick={ () => {
-                    onAdd(product, 1, product?.shop_name)
+                   
+                    onAdd(product, 1, product?.shop_name, shop[0]?.owner_id, shop[0]?.id)
                     openModal('quoteform')
                 }} className='flex items-center gap-3'>
                     <MdOutlineShoppingCart/>

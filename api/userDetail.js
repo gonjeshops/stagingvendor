@@ -1,3 +1,6 @@
+
+
+import authHeader from "@/componentsB2b/Api/auth-header";
 import { dashboard, fetchService, userDetailUrl } from ".";
 
 export const userDetail = () => {
@@ -6,7 +9,7 @@ export const userDetail = () => {
     url: userDetailUrl,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+      Authorization: authHeader(),
     },
   });
 };
@@ -20,7 +23,7 @@ export const userDashboard = (values) => {
     },
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+      Authorization: authHeader(),
     },
   });
 };

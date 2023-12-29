@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui/input';
 import { fetchB2cShops } from '@/componentsB2b/Api2';
-import { pusher, vendorShopChannel } from '@/configs/pusherConfig';
+// import { pusher, vendorShopChannel } from '@/configs/pusherConfig';
 import axios from 'axios';
 import {useEffect, useState} from 'react'
 import { FaSearch } from 'react-icons/fa';

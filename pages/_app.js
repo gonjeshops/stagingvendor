@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import '@stripe/stripe-js'
 
 import { PayPalScriptProvider,  } from "@paypal/react-paypal-js";
-import TawkMessengerReact from '@tawk.to/tawk-messenger-react';
+// import TawkMessengerReact from '@tawk.to/tawk-messenger-react';
 
 import LayoutB2b from "../componentsB2b/LayoutB2b/LayoutB2b";
 import GlobalStateProvider from "@/context/GlobalStateProvider";
@@ -48,18 +48,15 @@ function MyApp({ Component, pageProps }) {
     
   }, [router.asPath]);
 
-
-  
- 
   return (
     <PayPalScriptProvider options={{"client_id": process.env.NEXT_PUBLIC_PAYPAL_ID_DEFAULT_APP}} >
         <Provider store={store}>
         <GlobalStateProvider>
         
-        <TawkMessengerReact
+        {/* <TawkMessengerReact
             propertyId={process.env.NEXT_PUBLIC_TAWKTO_PROPERTY_ID}
             widgetId="default"
-          />
+          /> */}
         {!(router.asPath === "/contractPolicy") &&
         !(router.asPath === "/vendor") &&
         !(router.asPath === "/payment") &&

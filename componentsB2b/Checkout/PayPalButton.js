@@ -94,7 +94,7 @@ export default function PayPal({checkoutData}) {
                     onCancel={()=>{
                         // redirect user to checkout page
                         toast.warning('Purchase was canceled')
-                        router.push('/vendorb2b/checkout')
+                        router.push('/checkout')
                     }}
                     onError={err => {
                         setError(err)

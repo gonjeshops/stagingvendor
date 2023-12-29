@@ -18,52 +18,7 @@ export const fetchSuppliersByPagination = (page, limit) => {
     });
 };
 
-// STALE ...
-export const uploadImages = (values) => {
-  console.log('data', values)
-  try {
-    // Validate inputs
-    if (!values || !values.attachment || !values.id || !values.type) {
-      console.error('Invalid input data. Please provide valid values, attachment, id, and type.');
-      return Promise.reject(new Error('Invalid input data.'));
-    }
 
-    // Make the API request
-    return axios({
-      method: 'post',
-      headers: {
-        ...authHeader(),
-        'Content-Type': 'multipart/form-data', // Set Content-Type for file uploads
-      },
-      url: `${url}attachments`,
-      data: {values},
-    })
-      .then((response) => {
-        console.log('uploadImages API successful:', response);
-        return response; // Assuming you want to return the response data
-      })
-      .catch((error) => {
-        console.log('uploadImages API error:', error, 'values===', {values});
-
-        // Handle specific axios errors
-        if (axios.isAxiosError(error)) {
-          // Handle different axios error statuses
-          if (error.response) {
-            console.error('Server responded with:', error.response.status, error.response.data);
-          } else if (error.request) {
-            console.error('No response received from the server.');
-          } else {
-            console.error('Error setting up the request:', error.message);
-          }
-        }
-
-        return Promise.reject(error);
-      });
-  } catch (error) {
-    console.error('An unexpected error occurred:', error, 'values===2', {values});
-    return Promise.reject(error);
-  }
-};
 
 export const uploadImagesFetch = (formData) => {
   return fetch(`${url}attachments`, {
@@ -102,7 +57,7 @@ export const uploadImagesFetch = (formData) => {
     });
 }
 
-// View a supplier shop's products.  usage - /suppliers/[supplierId]
+
 export const viewSupplierShopProducts = async (userId, shopId, page, limit) => {
   try {
     // Validate inputs

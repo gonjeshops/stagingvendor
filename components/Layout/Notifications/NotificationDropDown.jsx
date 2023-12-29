@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import NotificationCard from './NotificationCard';
 import { BtnSpinner } from '@/componentsB2b/Loader/Spinner/BtnSpinner';
 import { fetchb2cNotificications } from '@/componentsB2b/Api2';
-import { vendorShopChannel } from '@/configs/pusherConfig';
+// import { vendorShopChannel } from '@/configs/pusherConfig';
 import { useGlobalState } from '@/context/GlobalStateContext';
 
 const NotificationDropdown = () => {
@@ -18,14 +18,14 @@ const NotificationDropdown = () => {
 
   const modalRef = useRef();
 
-  useEffect(() => {
-    const channel = vendorShopChannel(user?.shop_id)
-    channel.bind('eventType', function (data) {
-      console.log('Event pusher notification======', data.message);
-      // setNotifications(prev=>[...prev, data.message])
-      setPusherNotifications([data.message])
-    });
-  }, [])
+  // useEffect(() => {
+  //   const channel = vendorShopChannel(user?.shop_id)
+  //   channel.bind('eventType', function (data) {
+  //     console.log('Event pusher notification======', data.message);
+  //     // setNotifications(prev=>[...prev, data.message])
+  //     setPusherNotifications([data.message])
+  //   });
+  // }, [])
 
   useEffect(() => {
     const fetchData = async () => {

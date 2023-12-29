@@ -14,7 +14,33 @@ import {
 import { SalesTable } from "@/components/Layout/Sales/SalesTable";
 import { discountColumns } from "@/components/Layout/Sales/SalesColumns";
 import Dashboard from "@/components/Layout/Dashboard/Chart";
+import { fetchStatss } from "@/components/Layout/Dashboard/fetchStats";
+import { fetchStats } from "@/componentsB2b/Api2";
+import { useState, useEffect } from "react";
+
+
 const Sales = () => {
+  // const {apiData} = fetchStatss()
+  const [apiData, setData] = useState([])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await fetchStats()
+                console.log('fetchStats', res)
+                if (res?.status === 200) {
+                    console.log('fetchStats data ===', res?.data);
+                    setData(res?.data)
+                  }else {
+                    console.log('fetchStatsApi Error res===', res);
+                  }
+            } catch (error) {
+                console.log('fetchStats catch error', error)
+            } 
+        }
+        fetchData()
+    }, [])
+  // console.log('--data', apiData)
   const data = [
     { month: "sun", products: 400, earning: 320 },
     { month: "mon", products: 100, earning: 500 },
@@ -132,10 +158,12 @@ const Sales = () => {
           <TopProducts />
         </div>
         <div className="flex flex-wrap gap-y-4 justify-between">
-          <NumberCards />
-          <NumberCards />
-          <NumberCards />
-          <NumberCards />
+          <NumberCards item={{data: apiData?.$totalCustomerOrders, title: 'Total customer orders'}}/>
+          <NumberCards item={{data: parseInt(apiData?.averageOrderValue), title: 'Average order value'}}/>
+          <NumberCards item={{data: parseInt(apiData?.totalReceivedInvoices), title: 'Total received invoice'}}/>
+          <NumberCards item={{data: parseInt(apiData?. totalReceivedQuoteRequests
+), title: 'Total received quotes'}} />
+<NumberCards item={{data: '$'+parseInt(apiData?.totalSales), title: 'Total sales'}}/>
         </div>
         <div className="flex flex-col xl:flex-row justify-between gap-x-6 gap-y-4">
           <div className="bg-white xl:w-[750px] px-4 py-8 rounded-md">
@@ -164,22 +192,49 @@ const Sales = () => {
               <Tooltip />
             </BarChart>
           </div>
+
           <div className="bg-white xl:w-[750px] px-4 py-8 rounded-md">
             <div>
-              <h2 className="font-semibold text-xl capitalize mb-12">
-                Top Countries by Sale
+              <h2 className="font-semibold text-xl capitalize">
+                Transactions history
+              </h2>
+              {/* <p className="text-gray-400 font-medium">900 products</p> */}
+            </div>
+            <BarChart
+              width={550}
+              height={300}
+              data={apiData?.transactionsForLast12Months}
+              className="profit_bar text-[10px]"
+            >
+              <XAxis dataKey="month" angle={-15} minTickGap={0} interval={0} />
+              <YAxis  />
+              <Bar
+                stackId="a"
+                dataKey="products"
+                fill="#f7d594"
+                name="products"
+                className="rounded-md border-black border-4"
+              />
+              <Legend layout="horizontal" verticalAlign="top" align="right" />
+              <Tooltip />
+            </BarChart>
+          </div>
+        </div>
+        <div className="bg-white xl:w-[750px] px-4 py-8 rounded-md">
+            <div>
+              <h2 className="font-semibold text-xl capitalize mb-6">
+                {/* Top Countries by Sale */}
+                Top selling products
               </h2>
               {/* <p className="text-gray-400 font-medium">900 products</p> */}
             </div>
             <div className="space-y-4">
-              <p className="text-lg font-medium">Australia</p>
-              <p className="text-lg font-medium">United Kingdom</p>
-              <p className="text-lg font-medium">United States of America</p>
-              <p className="text-lg font-medium">France</p>
-              <p className="text-lg font-medium">Italy</p>
+              {
+                apiData?.topSellingProducts?.map((item, i)=>
+                <p key={i} className="text-lg font-medium">{item?.name}</p>)
+              }
             </div>
           </div>
-        </div>
         <SalesTable columns={discountColumns} data={discountData}/>
       </section>
     </section>
@@ -188,13 +243,13 @@ const Sales = () => {
 
 export default Sales;
 
-const NumberCards = () => {
+const NumberCards = ({item}) => {
   return (
     <div className="w-[330px] md:w-[280px] px-10 py-12 bg-white shadow rounded-md">
       <div className="flex flex-col items-center justify-center text-lg font-semibold space-y-4">
-        <h2>Projected Revenue</h2>
+        <h2>{item?.title}</h2>
         <div className="bg-gonje rounded-full h-20 w-20 flex items-center justify-center">
-          <p>2133</p>
+          <p>{item?.data}</p>
         </div>
       </div>
     </div>

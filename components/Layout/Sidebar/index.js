@@ -108,7 +108,7 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                                   className={`nav-link  ${
                                     route.asPath.includes(innerTab.url)
                                       ? "active"
-                                      : "text-white"
+                                      : "text-black"
                                   }`}
                                 >
                                   {innerTab.name}

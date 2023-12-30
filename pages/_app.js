@@ -2,18 +2,18 @@ import { Provider } from "react-redux";
 import { useStore } from "../redux/store";
 import { useRouter } from "next/router";
 import "../styles/globals.css";
-import { useEffect, useState } from "react";
+import { useEffect,  } from "react";
 import Layout from "../components/Layout";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import '@stripe/stripe-js'
-// import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
+import { PayPalScriptProvider,  } from "@paypal/react-paypal-js";
+// import TawkMessengerReact from '@tawk.to/tawk-messenger-react';
 
 import LayoutB2b from "../componentsB2b/LayoutB2b/LayoutB2b";
 import GlobalStateProvider from "@/context/GlobalStateProvider";
-import { pusher } from "@/configs/pusherConfig";
+
 
 function MyApp({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState);
@@ -48,14 +48,15 @@ function MyApp({ Component, pageProps }) {
     
   }, [router.asPath]);
 
-  
- 
   return (
     <PayPalScriptProvider options={{"client_id": process.env.NEXT_PUBLIC_PAYPAL_ID_DEFAULT_APP}} >
         <Provider store={store}>
         <GlobalStateProvider>
         
-
+        {/* <TawkMessengerReact
+            propertyId={process.env.NEXT_PUBLIC_TAWKTO_PROPERTY_ID}
+            widgetId="default"
+          /> */}
         {!(router.asPath === "/contractPolicy") &&
         !(router.asPath === "/vendor") &&
         !(router.asPath === "/payment") &&

@@ -36,47 +36,49 @@ const Dashboard = ({  }) => {
       borderWidth: 1
     }]
   };
-
+console.log('data', data)
   return (
-    <div className="container mx-auto my-8 p-8 bg-white rounded shadow-md">
-      <h1 className="text-3xl font-bold mb-8">Dashboard</h1>
+    <p>salessssss</p>
+    // <div className="container mx-auto my-8 p-8 bg-white rounded shadow-md">
+    //   <h1 className="text-3xl font-bold mb-8">Dashboard</h1>
 
-      <div className="flex gap-12 ">
-      <div className="mb-8 h-">
-        <h2 className="text-xl font-bold mb-4">Total Sales Over Time</h2>
-        <Line data={totalSalesData} />
-      </div>
-      <div className="mb-8">
-        <h2 className="text-xl font-bold mb-4">Top Selling Products</h2>
-        <Doughnut data={topSellingProductsData} />
-      </div>
+    //   <div className="flex gap-12 ">
+    //   <div className="mb-8 h-">
+    //     <h2 className="text-xl font-bold mb-4">Total Sales Over Time</h2>
+    //     <Line data={totalSalesData} />
+    //   </div>
+    //   <div className="mb-8">
+    //     <h2 className="text-xl font-bold mb-4">Top Selling Products</h2>
+    //     <Doughnut data={topSellingProductsData} />
+    //   </div>
 
-      </div>
+    //   </div>
 
      
 
-      <div className="mb-8">
-        <h2 className="text-xl font-bold mb-4">Total Customer Orders</h2>
-        <p className="text-lg">Number: {data?.$totalCustomerOrders}</p>
-      </div>
+    //   <div className="mb-8">
+    //     <h2 className="text-xl font-bold mb-4">Total Customer Orders</h2>
+    //     <p className="text-lg">Number: {data?.$totalCustomerOrders}</p>
+    //   </div>
 
-      <div className="mb-8">
-        <h2 className="text-xl font-bold mb-4">Average Order Value</h2>
-        <p className="text-lg">Value: ${data?.averageOrderValue}</p>
-      </div>
+    //   <div className="mb-8">
+    //     <h2 className="text-xl font-bold mb-4">Average Order Value</h2>
+    //     <p className="text-lg">Value: ${data?.averageOrderValue}</p>
+    //   </div>
 
     
 
-      <div className="mb-8">
-        <h2 className="text-xl font-bold mb-4">Total Received Quote Requests and Invoices</h2>
-        {/* Use two separate Bar charts here */}
-      </div>
+    //   <div className="mb-8">
+    //     <h2 className="text-xl font-bold mb-4">Total Received Quote Requests and Invoices</h2>
+    //     {/* Use two separate Bar charts here */}
+    //   </div>
 
-      <div>
-        <h2 className="text-xl font-bold mb-4">Transactions for Last 12 Months</h2>
-        <Bar data={transactionsData} />
-      </div>
-    </div>
+    //   <div>
+    //     <h2 className="text-xl font-bold mb-4">Transactions for Last 12 Months</h2>
+    //     <Bar data={transactionsData} />
+    //   </div>
+      
+    // </div>
   );
 };
 

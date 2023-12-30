@@ -44,9 +44,9 @@ console.log('STIPE SESSION===========', req.body)
         quote_number: checkoutData?.quote_number || 0,
         quote_name: checkoutData?.quote_name || 'no name',
         user_email: user?.user_email || 'noemail@email.com',
-        transaction_type:"Do you mean Product purchase?",
+        transaction_type:"vendor b2c checkout",
         transaction_description:"What description do you want?",
-        transaction_title:"I don't get."
+        transaction_title:"vendor b2c checkout"
       },  
       customer_email: user?.user_email || 'noemail@email.com'
     };

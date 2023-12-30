@@ -14,6 +14,7 @@ import {
 import { connect } from "react-redux";
 import { useRouter } from "next/router";
 import Loader from "../../../common/Loader";
+import { useGlobalState } from "@/context/GlobalStateContext";
 // import { route } from "next/dist/server/router";
 
 const productTypes = [
@@ -68,6 +69,7 @@ const AddInventory = ({
   const [isInitialSet, SetInitialSet] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const route = useRouter();
+  const {user}=useGlobalState()
 
   useEffect(() => {
     if (singleInventoryData && isEdit && isInitialSet) {
@@ -160,7 +162,7 @@ const AddInventory = ({
 
     data = {
       ...data,
-      shop_id: localStorage.getItem("shop_id"),
+      shop_id: user?.shop_id,
     };
     const error = handleValidateData(data);
     if (error) {
@@ -253,16 +255,8 @@ const AddInventory = ({
         </div>
         <div className="row mb-4 inventory_upload">
           <UploadImages
-            title="Featured Image"
-            multiple={false}
-            subTitle="Upload your product featured image here"
-            onChange={handleChange}
-            values={{ image: productData.image }}
-          />
-          <UploadImages
             title="Gallery"
-            values={{ gallery: productData.gallery }}
-            multiple={true}
+            productData={productData}
             onChange={handleChange}
             subTitle="Select product group and categories from here"
           />

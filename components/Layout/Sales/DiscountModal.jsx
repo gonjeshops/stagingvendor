@@ -10,6 +10,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import UpdateDiscountForm from "./UpdateDiscountForm";
 
 export const AcceptDiscount = () => {
     return (
@@ -47,6 +48,25 @@ export const AcceptDiscount = () => {
             <AlertDialogCancel className="bg-red-700 text-white">Cancel</AlertDialogCancel>
             <AlertDialogAction className="bg-gonje-green">Continue</AlertDialogAction>
           </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    );
+  };
+
+  export const UpdateDiscount = ({item}) => {
+    console.log('item==', item)
+    return (
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Button  className="p-3 capitalize ">
+            Update
+          </Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="font-normal">Set discount rate</AlertDialogTitle>
+          </AlertDialogHeader>
+          <UpdateDiscountForm item={item}/>
         </AlertDialogContent>
       </AlertDialog>
     );

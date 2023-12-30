@@ -40,7 +40,7 @@ import { AiOutlineShopping } from "react-icons/ai";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { SendB2cQuoteRequest, createB2cQuoteRequest, } from "@/componentsB2b/Api2";
-import { triggerNotification } from "@/configs/pusherConfig";
+// import { triggerNotification } from "@/configs/pusherConfig";
 
 export const RequestModal = ({item, }) => {
   const router = useRouter()
@@ -91,16 +91,16 @@ export const RequestModal = ({item, }) => {
             console.log("createQuoteRequest API  response:", response);
             setSuccess('Quote resquest was successfull.')
             toast.success('Quote resquest was successfull.')
-            triggerNotification(response?.data?.quote_request?.shop_id, 
-              {
-                shop_id: response?.data?.quote_request?.shop_id,
-                owner_id: response?.data?.quote_request?.owner_id,
-                shopName: shopName,
-                userId: user?.user_id,
-                title: 'Quote Request',
-                message: (user?.user_name || 'Client') + ' ' + ( user?.user_lastname || '') + ' created quote request from ' + shopName + '.',
-                status: 'active',
-            })
+            // triggerNotification(response?.data?.quote_request?.shop_id, 
+            //   {
+            //     shop_id: response?.data?.quote_request?.shop_id,
+            //     owner_id: response?.data?.quote_request?.owner_id,
+            //     shopName: shopName,
+            //     userId: user?.user_id,
+            //     title: 'Quote Request',
+            //     message: (user?.user_name || 'Client') + ' ' + ( user?.user_lastname || '') + ' created quote request from ' + shopName + '.',
+            //     status: 'active',
+            // })
             setTimeout(() => {
               router.push(`/quotes/sent_quotes`)
             }, 500);

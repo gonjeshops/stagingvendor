@@ -37,7 +37,7 @@ const UseProfile = ({
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            {user.user_name || ""} <Image src={UserSvg} />
+            {user?.user_name || ""} <Image src={UserSvg} />
           </a>
 
           <ul

@@ -33,7 +33,7 @@ const Checkout = ({ checkoutData}) => {
                     <p className="space-x-1 col-span-1 text-end">Subtotal</p>
                 </div>
 
-                {JSON.parse(checkoutData?.cart_items)?.map((item, i) => (
+                {checkoutData?.cart_items && JSON.parse(checkoutData?.cart_items)?.map((item, i) => (
                     <div key={item?.id} 
 
                     className="py-6 border-b border-light300 grid grid-cols-7 gap-3 items-center  md:overflow-hidden">

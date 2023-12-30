@@ -1,16 +1,14 @@
-import { Button } from '@/components/ui/button'
 import Select from 'react-select';
 import { useEffect, useState } from 'react'
 import { useGlobalState } from '@/context/GlobalStateContext';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-import { assignDeliveryCompany, fetchDeliveryCompanies } from '@/componentsB2b/Api2';
-import { data } from 'autoprefixer';
+import { assignDeliveryCompanyCustomer, fetchDeliveryCompanies } from '@/componentsB2b/Api2';
 import { FaTimes } from 'react-icons/fa';
+import { triggerNotification } from '@/configs/pusherConfig';
 
 
 const AssignDeliveryCompanyBtn = ({item,path,setRefresh }) => {
-
     const router = useRouter();
 
     const {user} = useGlobalState()
@@ -20,7 +18,7 @@ const AssignDeliveryCompanyBtn = ({item,path,setRefresh }) => {
     const [deliveryCompanies, setDeliveryCompanies] = useState([])
     const [orderId, setOrderId] = useState('')
 
-    // fetch delivery companies
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -51,15 +49,14 @@ const AssignDeliveryCompanyBtn = ({item,path,setRefresh }) => {
     const assignDelivery = async (selected) => {
         try {
             setIsLoading('assign')
-            console.log('selected', selected,  '==select', select, "orderId", orderId)
-            const res = await assignDeliveryCompany(selected?.value, orderId)
-            console.log('assignDeliveryCompany', res)
+            const res = await assignDeliveryCompanyCustomer(selected?.value, item?.id)
             if (res?.status === 200) {
-                console.log('assignDeliveryCompany data ===', res?.data);
-                setRefresh(prev=>!prev)
                 toast.success('Delivery company assigned')
-                // TODO: Notification - notify vendor buyer that delivery is assigned
-                // TODO: Add to log 
+                triggerNotification(user?.shop_id, {
+                    title: 'Assigned delivery company',
+                    message: `Delivery company has been assigned to the order ${item?.id}`,
+                    status: 0,
+                })
                 }else {
                 console.log('assignDeliveryCompany Api Error res===', res);
                 toast.error('Action Unsuccessfull')
@@ -78,12 +75,11 @@ const AssignDeliveryCompanyBtn = ({item,path,setRefresh }) => {
         assignDelivery(selected)
     };
 
-
-
     const DropdownMenu = () => {
         return (
-            <div onClick={e=>e.stopPropagation()} className={`relative p-10 rounded-lg bg-light100 border shadow-md `}>
-                <FaTimes className='absolute top-8 right-8' onClick={()=>setAction('')}/>
+            <div onClick={e=>e.stopPropagation()} className={`relative p-12 rounded-lg bg-light100 border shadow-md `}>
+                <FaTimes className='absolute top-6 right-6' onClick={()=>setAction('')}/>
+                <p className="text-lg pb-4 ">Select a delivery company</p>
                 {isLoading && <p className='pb-2'>Updating...</p>}
                 <Select
                     value={select}
@@ -102,20 +98,18 @@ const AssignDeliveryCompanyBtn = ({item,path,setRefresh }) => {
                 <div className={`${action===item?.id ? 'z-1000  relative ' : ''} flex gap-2  px-2 text-sm text-center `} >
                     {/*  received quote/invoice - outgoing order - seller - supplier api*/}
                     
-                    <Button 
+                    <button 
                         onClick={()=>{
                             setAction(prev=> prev===item?.id ? '' : item?.id)
                             setOrderId(item?.id)
                         }}
                         disabled={item?.status==='COMPLETED'}  
-                        className={ `${item?.status==='COMPLETED' ? 'disable  ' : 'hover-blue text-white'} w-20 px-2  text-center py-2 rounded` }>
+                        className={ `${item?.status==='COMPLETED' ? 'disable  ' : 'hover-blue '} btn btn-primary w-20   text-center rounded` }>
                             {action ? 'Close' : 'Assign'}
-                    </Button>
+                    </button>
 
                     {action===item?.id && <div className="fixed inset-0 flex justify-center items-center bg-opacity-50 bg-black " onClick={()=>setAction('')} ><DropdownMenu/></div>}
-
                 </div>
-            
     </div>
   )
 }

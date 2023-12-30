@@ -1,7 +1,5 @@
 import useSWR from 'swr'
 
-
-///////////////
 import {fetcher} from '@/fetcher'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RequestTable } from "./RequestTable";

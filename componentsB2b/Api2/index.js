@@ -19,7 +19,45 @@ export const fetchSuppliersByPagination = (page, limit) => {
 };
 
 
-// View a supplier shop's products.  usage - /suppliers/[supplierId]
+
+export const uploadImagesFetch = (formData) => {
+  return fetch(`${url}attachments`, {
+    method: 'POST',
+    body: formData,
+    headers: authHeader()
+  })
+    .then(response => {
+      if (!response.ok) {
+        return response.clone().json().catch(() => {
+          return response.clone().text().then(nonJSONResponse => {
+            const error = new Error(`Network response was not ok. Status: ${response.status}. Non-JSON response received. Response body: ${nonJSONResponse}`);
+            error.status = response.status;
+            error.response = nonJSONResponse;
+            throw error;
+          });
+        });
+      }
+
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        return response.json();
+      } else {
+        const error = new Error('Unexpected response type');
+        error.status = response.status;
+        throw error;
+      }
+    })
+    .then(data => {
+      console.log('API call successful:', data);
+      return data; 
+    })
+    .catch(error => {
+      console.error('Fetch error:', error);
+      return Promise.reject(error); 
+    });
+}
+
+
 export const viewSupplierShopProducts = async (userId, shopId, page, limit) => {
   try {
     // Validate inputs
@@ -990,7 +1028,7 @@ export const addDeliveryCompany = (values) => {
     return Promise.reject(new Error("Invalid input data."));
   }
   return axios({
-    method: "put",
+    method: "post",
     headers: authHeader(),
     url: url + `add/delivery/company`,
     data: {
@@ -999,12 +1037,11 @@ export const addDeliveryCompany = (values) => {
       }
   })
     .then((response) => {
-      console.log("addDeliveryCompany API successful:", response);
       return response
     })
     .catch((error) => {
       console.error("Error in addDeliveryCompany API:", error);
-      return Promise.reject(error); // Propagate the error.
+      return Promise.reject(error);
     });
 };
 
@@ -1022,7 +1059,6 @@ export const assignDeliveryCompany = (values, id) => {
       }
   })
     .then((response) => {
-      console.log("assignDeliveryCompany API successful:", response);
       return response
     })
     .catch((error) => {
@@ -1045,12 +1081,11 @@ export const assignDeliveryCompanyCustomer = (values, orderId) => {
       }
   })
     .then((response) => {
-      console.log("assignDeliveryCompanyCustomer API successful:", response);
       return response
     })
     .catch((error) => {
       console.error("Error in assignDeliveryCompanyCustomer API:", error);
-      return Promise.reject(error); // Propagate the error.
+      return Promise.reject(error);
     });
 };
 
@@ -1061,30 +1096,16 @@ export const fetchDeliveryCompanies = () => {
     url: url + `my/delivery/company/list`,
   })
   .then((response) => {
-    console.log("fetchDeliveryCompanies api response", response);
-  return response})
+      return response
+    })
     .catch((error) => {
       console.log("Error in fetchDeliveryCompanies api", error);
-      return error
+      return Promise.reject(error)
     });
 };
-      // // This gets the list of your delivery companies
-      // GET - /my/delivery/company/list
-      // URL: backendapi.gonje.com/my/delivery/company/list
-
-      // // This assigns a delivery company to an order
-      // URL: backendapi.gonje.com/assign/delivery/company/b2c/{id}
-      // POST - /assign/delivery/company/b2b/{id}
-      // Request data
-      // {
-      // "delivery_company_id": 5,
-      // "delivery_company_name": "abcde deliveries"
-      // }
-  
 
 
       // DASHBOARD
-      // /my/sales/analytics
       export const fetchStats = () => {
         return axios({
           method: "get",

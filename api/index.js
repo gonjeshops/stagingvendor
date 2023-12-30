@@ -52,13 +52,13 @@ export const fetchService = async ({ method, url, body, headers, params }) =>
     data: body,
   })
     .then((response) => {
-      console.log('AUTH=', authHeader())
+      console.log('=api response=',response)
       if (response.status && response.status === 200) {
         return response;
       }
       throw response;
     })
     .catch((error) => {
-      console.log("@fetchService error =>", { url, error });
+      console.log("@fetchService error =>", { url, error }, 'values==', body);
       throw error;
     });

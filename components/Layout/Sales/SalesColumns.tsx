@@ -1,6 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
-import { AcceptDiscount,DeleteDiscount } from "./DiscountModal";
+import { AcceptDiscount,DeleteDiscount, UpdateDiscount } from "./DiscountModal";
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type DicountType = {
@@ -54,6 +54,7 @@ export const discountColumns: ColumnDef<DicountType>[] = [
       return (
         <div className="flex gap-x-2">
           <AcceptDiscount/>
+          <UpdateDiscount item={row}/>
           <DeleteDiscount/>
         </div>
       );

@@ -41,9 +41,9 @@ const TopbarBtnModal = () => {
         <FaRegBell className='text-2xl' 
           onClick={()=>handleToggleDropdown('notification')}/>
         </div> */}
-        <span class="relative flex h-10 w-10 flex items-center justify-center">
-            <span class="animate-ping absolute inline-flex h-8 w-8 rounded-full bg-sky-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full p-2 bg-sky-500">
+        <span className="relative flex h-10 w-10 flex items-center justify-center">
+            <span className="animate-ping absolute inline-flex h-8 w-8 rounded-full bg-sky-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full p-2 bg-sky-500">
             <FaRegBell className='text-2xl' 
               onClick={()=>handleToggleDropdown('notification')}/>
             </span>

@@ -37,8 +37,6 @@
     "next": "^13.4.12",
     "next-redux-wrapper": "^7.0.5",
     "pspdfkit": "^2021.6.2",
-    "pusher": "^5.2.0",
-    "pusher-js": "^8.4.0-rc2",
     "rc-time-picker": "^3.7.3",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",

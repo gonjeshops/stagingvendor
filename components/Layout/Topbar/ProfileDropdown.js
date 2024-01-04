@@ -14,7 +14,7 @@ import {
 } from "../../../assets";
 import { useGlobalState } from "@/context/GlobalStateContext";
 
-const UseProfile = ({
+const ProfileDropdown = ({
   userData,
   isOpenProfile,
   toggleProfile,
@@ -24,9 +24,9 @@ const UseProfile = ({
   const {user}=useGlobalState()
   return (
     <>
-      <div className="profile">
-        <div className="dropdown d-flex">
-          <Image src={userData.profilePic || UserPng} alt="" />
+      <div className="profile ">
+        <div className="dropdown d-flex ">
+          {/* <Image src={userData.profilePic || UserPng} alt="" />
           <a
             className={`btn btn-secondary user-icon dropdown-toggle ${
               isOpenProfile ? "show" : ""
@@ -38,13 +38,12 @@ const UseProfile = ({
             aria-expanded="false"
           >
             {user?.user_name || ""} <Image src={UserSvg} />
-          </a>
+          </a> */}
 
           <ul
-            className={`dropdown-menu ${isOpenProfile ? "show" : ""} `}
-            aria-labelledby="dropdownMenuLink"
+            className={`w-full`}
           >
-            {/* <li>
+            <li>
             <a className="dropdown-item">
               <Image
                 className="me-2"
@@ -56,8 +55,8 @@ const UseProfile = ({
               />
               Upcoming box
             </a>
-          </li> */}
-            {/* <li>
+          </li> 
+          <li>
             <a className="dropdown-item">
               <Image
                 className="me-2"
@@ -68,8 +67,8 @@ const UseProfile = ({
               />{" "}
               My order
             </a>
-          </li> */}
-            {/* <li>
+          </li> 
+          {/* <li>
             <a className="dropdown-item">
               <Image
                 className="me-2"
@@ -80,9 +79,10 @@ const UseProfile = ({
               />
               My cart
             </a>
-          </li> */}
-            {/* <li>
-            <a className="dropdown-item">
+          </li>  */}
+          <li>
+            <a className="dropdown-item"
+            onClick={() => route.push("/manage_account")}>
               <Image
                 className="me-2"
                 src={ManageAccountSvg}
@@ -92,8 +92,8 @@ const UseProfile = ({
               />{" "}
               Manage Account
             </a>
-          </li> */}
-            {/* <li>
+          </li>
+          {/* <li>
             <a className="dropdown-item">
               <Image
                 className="me-2"
@@ -105,7 +105,7 @@ const UseProfile = ({
               Notifications
             </a>
           </li> */}
-            {/* <li>
+          <li>
             <a className="dropdown-item">
               <Image
                 className="me-2"
@@ -116,7 +116,7 @@ const UseProfile = ({
               />
               Wallet
             </a>
-          </li> */}
+          </li>
             <li>
               <a
                 className="dropdown-item"
@@ -144,4 +144,4 @@ const UseProfile = ({
   );
 };
 
-export default UseProfile;
+export default ProfileDropdown;

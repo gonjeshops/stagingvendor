@@ -4,7 +4,7 @@ import { FaUpload, FaImage } from 'react-icons/fa';
 import Select from 'react-select';
 
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
-import { LocationSearchInput } from '@/components/ui/GoogleAutoComplete';
+// import { LocationSearchInput } from '@/components/ui/GoogleAutoComplete';
 
 const VendorStage2 = ({ formData, setFormData, setisForm2Valid, path }) => {
   const options = [
@@ -255,7 +255,7 @@ const VendorStage2 = ({ formData, setFormData, setisForm2Valid, path }) => {
           {/* {errors.address && <p className="text-sm text-red-600">{errors.address}</p>} */}
         </div>
 
-        <LocationSearchInput/>
+        {/* <LocationSearchInput/> */}
 
         <div className="form-group">
             <label htmlFor="address" required className="block text-sm">

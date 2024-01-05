@@ -2,14 +2,12 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useMemo, useState } from "react";
 import { connect } from "react-redux";
-import { logout_vendor } from "../../../api/logout";
 import { SignUpLogo } from "../../../assets";
 import { logout } from "../../../redux/actions/auth";
 import { getUserDetail } from "../../../redux/actions/userDetail";
-import Notification from "./Notification";
-import UseProfile from "./UseProfile";
 import TopbarBtnModal from "./TopbarBtnModal";
 import Alert from "@/components/ui/Alert";
+
 const TopBar = ({
   toggleSidebar,
   userDetail,
@@ -35,16 +33,15 @@ const TopBar = ({
   };
 
   return (
-    <>
-      <div className="pl-4 flex gap-4 h-24 bg-white items-center justify-between">
+      <div className="px-4 flex gap-4 h-24 bg-white items-center justify-between ">
         {isOpenProfile && (
           <div className="profile_dropdown_overlay" onClick={toggleProfile} />
         )}
 
-        <div className="menu">
-          <div className="sm-logo">
-            <Image src={SignUpLogo} alt="aaaaa" />
-          </div>
+        <div className="menu sm:hidden">
+          {/* <div className="sm-logo">
+            <Image src={SignUpLogo} alt="a" />
+          </div> */}
           <button id="menu-toggle" onClick={toggleSidebar}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -61,30 +58,11 @@ const TopBar = ({
           <div className="hidden sm:block">
             <Alert children={'You have pending task.'}/>
           </div>
-          <div className="d-flex align-items-center gap-83">
-            <TopbarBtnModal/>
-            {/* <Notification /> */}
-            {/* <div className="choose-lang">
-               <select
-                className="form-select"
-                aria-label="Default select example"
-              >
-                <option selected>EN</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </div>  */}
-            <UseProfile
-              userData={userData}
-              isOpenProfile={isOpenProfile}
-              logoutVendor={logoutVendor}
-              toggleProfile={toggleProfile}
-            />
+          <div className="d-flex align-items-center ">
+            <TopbarBtnModal  userData={userData} logoutVendor={logoutVendor}/>
           </div>
         </div>
       </div>
-    </>
   );
 };
 

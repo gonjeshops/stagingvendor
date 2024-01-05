@@ -17,7 +17,9 @@ const Layout = ({ children }) => {
       <div className="side-body vender-side">
       {  isShowSideBar && <div className="main_overlay" onClick={toggleSidebar}/>}
         <TopBar toggleSidebar={toggleSidebar} />
-        <div className="graphs h-[97vh] inset-0 overflow-auto relative">{children}</div>
+        <div className="graphs h-[97vh]  inset-0 overflow-auto relative max-sm:pt-10">
+          {children}
+        </div>
       </div>
     </>
   );

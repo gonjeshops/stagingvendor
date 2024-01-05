@@ -14,6 +14,18 @@ export const userDetail = () => {
   });
 };
 
+export const updateUserDetail = (body) => {
+  return fetchService({
+    method: "PUT",
+    url: userDetailUrl,
+    body: body,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: authHeader(),
+    },
+  });
+};
+
 export const userDashboard = (values) => {
   return fetchService({
     method: "GET",

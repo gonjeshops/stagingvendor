@@ -557,7 +557,7 @@ hr.side-menu-divider {
   z-index: 0;
 }
 .top-heading {
-  box-shadow: 0px 2px 60px #00000014;
+  /* box-shadow: 0px 2px 60px #00000014; */
   padding: 40px;
   position: relative;
 }

@@ -8,6 +8,7 @@ import Image from 'next/image'
 import DashboardHeading from '@/componentsB2b/Workspace/DashboardHeading'
 import { AddressDetails } from '@/componentsB2b/Order/OrderDetails'
 import { Button } from '@/components/ui/button'
+import PackingSlip from '../PackingSlip'
 
 const InvoiceDetails = ({ data, path}) => {
     const downloadInvoiceRef = useRef()
@@ -17,9 +18,10 @@ const InvoiceDetails = ({ data, path}) => {
   const address = data?.shipping_details
   const billing = data?.billing_details;
 
+  const [showPackingslip, setShowPackingslip] = useState(0)
+
   return (
     <div className='pt-12 space-y-8 '>
-
         <div className="">
             <DashboardHeading>           
                 Invocie <span>INV-{data.id}</span>
@@ -43,6 +45,11 @@ const InvoiceDetails = ({ data, path}) => {
                         <FaSave/>
                        Download invoice
                     </Button>
+                    <Button onClick={() =>setShowPackingslip(1) } className=" text-black bg-light100 hover:shadow-md duration-500  flex px-4 py-3 border items-center gap-2">
+                        <FaPrint />
+                       Packing slip
+                    </Button>
+                    <PackingSlip showPackingslip={showPackingslip} setShowPackingslip={setShowPackingslip} orderDetails={data}/>
               
                 </div>
             </div>

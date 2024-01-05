@@ -261,7 +261,7 @@ const VendorStage2 = ({ formData, setFormData, setisForm2Valid, path }) => {
             <label htmlFor="address" required className="block text-sm">
               Business Address   {errors.address &&<span className="text-red-500">*</span>}
             </label>
-            <GooglePlacesAutocomplete 
+            <GooglePlacesAutocomplete  
             selectProps={{
               value: formData?.address,
               name: "address",

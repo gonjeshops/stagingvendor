@@ -1,12 +1,9 @@
 import authHeader from "@/componentsB2b/Api/auth-header";
 import axios from "axios";
-
 // const baseUrl =  process.env.GONJE_APP_BASE_URL
 const baseUrl = "https://backendapi.gonje.com/";
-// const baseUrl = "https://gonje.iapplabz.co.in/api/";
-export const GOOGLE_MAP_KEY =
-  "https://maps.googleapis.com/maps/api/js?key=AIzaSyCxMO0g5Vv0ZtSthhrrXMVOYVBcjf4G1hw";
-// const baseUrl = "http://192.168.1.71:8000/";
+export const GOOGLE_MAP_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY
+
 export const vender_SignUp = baseUrl + "register";
 export const add_Card = baseUrl + "addCard";
 export const vendor_Login = baseUrl + "token";

@@ -1,19 +1,11 @@
 import { useEffect, React, useState } from "react";
-import Calender from "./Calender";
-import ShippingAddress from "./ShippingAddress";
-// import BillingInfo from "./BillingInfo";
-// import Checkout from "./Checkout";
-// import UpdateCard from "../Card/UpdateCard";
-// import Wallet from "./Wallet";
 import Image from "next/image";
 import { userDetail } from "@/api/userDetail";
-import BusinessDetails from "./UserDetails";
 import ShippingDetails from "./ShippingDetails";
 import BillingDetails from "./BiilinDetails";
 import ShopDetails from "./ShopDetails";
 import { PageLoading } from "@/componentsB2b/Loader/Spinner/PageLoading";
 import UserDetails from "./UserDetails";
-// import UpdateCard from "@/components/Card/UpdateCard";
 
 export default function ManageAccount() {
   const [user, setUser] = useState({})

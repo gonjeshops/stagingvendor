@@ -25,7 +25,7 @@ const CartNotificationDropdown = () => {
         )}
       </button> */}
 
-      {totalItems > 0 ? (
+      {totalItems < 0 ? (
         <div className="w-full flex flex-col justify-between gap-6 h-full" role="menu" aria-orientation="vertical" aria-labelledby="cartButton" tabIndex="-1">
           <div className="space-y-4">
             {cartItems.map((item) => (
@@ -47,7 +47,7 @@ const CartNotificationDropdown = () => {
         </div>
       ) : (
         <div className="h-full w-full flex flex-col justify-center items-center gap-4" role="menu" aria-orientation="vertical" aria-labelledby="cartButton" tabIndex="-1">
-          <FaShoppingCart size={60} className={'text-gray-500'}/>
+          <FaShoppingCart size={60} className={'text-gray-200'}/>
           <div className="px-4 py-2 text-gray-500">Your cart is empty.</div>
         </div>
       )}

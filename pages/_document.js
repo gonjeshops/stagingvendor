@@ -3,7 +3,7 @@ import Document, { Html, Head, Main, NextScript } from "next/document";
 export default class CustomDocument extends Document {
   render() {
     return (
-      <Html>
+      <Html data-theme="cupcake">
         <Head>
           <meta charSet="utf-8" />
           <link

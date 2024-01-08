@@ -53,7 +53,7 @@ const OrderTableRow = ({data,path, setRefresh}) => {
             {renderTextCell('ORDER'+item?.id)}
             {renderTextCell(currency() + item?.subtotal)}
             {renderTextCell(item?.user_name)}
-            {renderNameCell(item)}
+            {renderImageCell(item)}
             {renderTextCell(item?.order_status)}
             {renderTextCell(new Date(item?.created_at).toDateString())}
             {renderTextCell(item?.tracking_number)}

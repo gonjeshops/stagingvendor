@@ -235,7 +235,7 @@ const Sales = () => {
               }
             </div>
           </div>
-        <SalesTable columns={discountColumns} data={discountData}/>
+        {/* <SalesTable columns={discountColumns} data={discountData}/> */}
       </section>
     </section>
   );

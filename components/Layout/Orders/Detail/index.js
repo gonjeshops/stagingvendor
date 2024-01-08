@@ -13,6 +13,7 @@ import moment from "moment";
 import Loader from "../../../common/Loader";
 import { Map_Marker_Svg } from "../../../../assets";
 import GoogleMapComponent from "./googlemap";
+import PackingSlip from "../../PackingSlip";
 
 const OrderDetailPage = ({
   getOrderDetail,
@@ -98,7 +99,7 @@ const OrderDetailPage = ({
 
       <div className="order-id-r  order-table">
         <div className="col-lg-9 col-md-12 mx-auto">
-          <div className="order-view d-flex row">
+          <div className="order-view d-flex row space-y-4">
             <div className="col-lg-5">
               <p className="mb-0">
                 Order Id. <span>{detail.id}</span>
@@ -128,9 +129,10 @@ const OrderDetailPage = ({
                 )}
               </strong>
             </div>
-            <div className="col-lg-7">
+            <div className="col-lg-7 flex gap-4 sm:flex-row flex-col">
+              <PackingSlip orderDetails={detail}/>
               <Select
-                className="basic-multi-select"
+                className="basic-multi-select w-full"
                 classNamePrefix="select"
                 options={statusOptions}
                 placeholder="Update Status"

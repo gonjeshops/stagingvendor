@@ -10,8 +10,9 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
   const activePath = route.asPath;
   const [toggleHrm, setHRMToggle] = useState(false);
   const [dropdownName, setDropdownName] = useState("");
-  const [sideTabs, setSideTabs] = useState(SideTabs.vendor); //changed the staff to vendor
+  const [sideTabs, setSideTabs] = useState(SideTabs.staff); 
   const [isVendor, setVendor] = useState(false);
+  const [activeNav, setActiveNav] = useState('Dashboard');
 
   useEffect(() => {
     const isLogin = localStorage.getItem("loginAs");
@@ -63,7 +64,7 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                       setHRMToggle(!toggleHrm);
                       setDropdownName(Tab.name);
                     }}
-                    className={`d-flex togg justify-content-between nav-link text-whitee `}
+                    className={`d-flex togg justify-content-between nav-link text-whitee`}
                     aria-current="page"
                   >
                     <div className="d-flex">
@@ -103,10 +104,11 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                               <Link
                                 href={innerTab.url}
                                 className="cursor-pointer"
+                                onClick={()=>setActiveNav(innerTab.name)}
                               >
                                 <div
                                   className={`nav-link  ${
-                                    route.asPath.includes(innerTab.url)
+                                    activeNav===innerTab.name
                                       ? "active"
                                       : "text-black"
                                   }`}
@@ -117,11 +119,12 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                             </li>
                           ) : route.asPath.includes(innerTab.url) ||
                             !isVendor ? (
-                            <li key={`key_${innerTab.name}`}>
+                            <li key={`key_${innerTab.name}`}
+                            onClick={()=>setActiveNav(innerTab.name)}>
                               <Link
                               href={innerTab.url}
                                 className={`nav-link  ${
-                                  route.asPath.includes(innerTab.url)
+                                  activeNav===innerTab.name
                                     ? "active"
                                     : "text-whitee"
                                 }`}
@@ -138,8 +141,9 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
               ) : (
                 <Link href={Tab.url}>
                   <div
+                  onClick={()=>setActiveNav(Tab.name)}
                     className={`d-flex nav-link ${
-                      route.asPath.includes(Tab.url) ? "active" : "text-whitee"
+                      activeNav===Tab.name? "active" : "text-whitee"
                     }`}
                     aria-current="page"
                   >

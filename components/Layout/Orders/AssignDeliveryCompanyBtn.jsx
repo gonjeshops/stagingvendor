@@ -23,7 +23,7 @@ const AssignDeliveryCompanyBtn = ({item,path,setRefresh }) => {
         const fetchData = async () => {
             try {
                 const res = await fetchDeliveryCompanies()
-                console.log('deleivery companies', res)
+                // console.log('deleivery companies', res)
                 if (res?.status === 200) {
                     const options = res?.data?.data?.data?.map(({company_name,id}) => {
                         return {
@@ -36,7 +36,8 @@ const AssignDeliveryCompanyBtn = ({item,path,setRefresh }) => {
                       })
                     setDeliveryCompanies(options)
                   }else {
-                    console.log('Api Error res===', res);
+                    // toast.error('data  available')
+                    // console.log('Api Error res===', res);
                   }
             } catch (error) {
                 console.log('deleivery companies catch error', error)
@@ -52,11 +53,11 @@ const AssignDeliveryCompanyBtn = ({item,path,setRefresh }) => {
             const res = await assignDeliveryCompanyCustomer(selected?.value, item?.id)
             if (res?.status === 200) {
                 toast.success('Delivery company assigned')
-                triggerNotification(user?.shop_id, {
-                    title: 'Assigned delivery company',
-                    message: `Delivery company has been assigned to the order ${item?.id}`,
-                    status: 0,
-                })
+                // triggerNotification(user?.shop_id, {
+                //     title: 'Assigned delivery company',
+                //     message: `Delivery company has been assigned to the order ${item?.id}`,
+                //     status: 0,
+                // })
                 }else {
                 console.log('assignDeliveryCompany Api Error res===', res);
                 toast.error('Action Unsuccessfull')

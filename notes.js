@@ -189,3 +189,17 @@
 //         }
 //     ]
 // }
+
+// [8:49 PM, 1/4/2024] Demola Rillwane: If you want to update the logo and cover_image for a shop use the attachment api
+// The request data should be 
+// id=shop_id // id of the shop to be updated
+// // for logo
+// type=logo
+// // for cover image
+// type=cover_image for cover image
+// [8:51 PM, 1/4/2024] Demola Rillwane: If you want to update the vendor profile_path use the same attachment api 
+
+// The request data should be 
+// id=user_id // id of the vendor to be updated
+
+// type=profile_path

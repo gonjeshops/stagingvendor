@@ -13,7 +13,7 @@ const OrderDetailsPage = ({orderId}) => {
 
     const renderOrder = (response, ) =>  (
         response?.data?.data ?
-            <OrderDetails path={query.path}  data={response?.data?.data} setRefresh={setRefresh}/>
+            <OrderDetails path={query.path}  dataObject={response?.data?.data} setRefresh={setRefresh}/>
         :
         <div className="absolute text-semibold inset-0 flex items-center justify-center text-center">
           <p>No Order Details found.</p>

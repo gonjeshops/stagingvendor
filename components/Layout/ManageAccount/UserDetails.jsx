@@ -12,18 +12,42 @@ const UserDetails = ({user, fetchProfile}) => {
   const [edit, setEdit] = useState(0)
 
   const initialFormData = {
-    business_name: (user?.name + ' ' + user?.last_name )|| "John Doe",
-    businessEmail: user?.email || "johndoe@example.com",
+    business_name: user?.name + ' ' + (user?.last_name ? user?.last_name : ''),
+    email: user?.email || "johndoe@example.com",
     business_number: user?.business_number || "(555) 123-4567",
     userAddress: user?.address?.length ? Object.values(user?.address).join(', ') : "789 User St, Villagetown, Country",
     longitude: "123.456789",
     latitude: "45.678901",
   };
 
+  // {
+  //   "business_number": "123456789",
+  //   "business_name": "ABC Company",
+  //   "contact_details": "123-456-7890",
+  //   "latitude": "40.7128",
+  //   "longitude": "-74.0060",
+  //   "shipping_address": {
+  //     "apt": "5",
+  //     "city": "Chandigarh",
+  //     "phone": "+918978907071",
+  //     "state": "Punjab",
+  //     "address": "Akoka, Yaba, Lagos Mainland",
+  //     "postcode": "69678971"
+  //   },
+  //   "billing_address": {
+  //     "apt": "5",
+  //     "city": "Chandigarh",
+  //     "phone": "+918978907071",
+  //     "state": "Punjab",
+  //     "address": "Akoka, Yaba, Lagos Mainland",
+  //     "postcode": "69678971"
+  //   }
+  // }
+
   const clearForm = () => {
     setFormData({
       business_name: '',
-      businessEmail: '',
+      email: '',
       business_number: '',
       userAddress: '',
       longitude: '',
@@ -43,8 +67,8 @@ const UserDetails = ({user, fetchProfile}) => {
     let isValid = true;
     const newErrors = {};
 
-    if (!formData.businessEmail.trim()) {
-      newErrors.businessEmail = 'Business Email is required';
+    if (!formData.email.trim()) {
+      newErrors.email = 'Business Email is required';
       isValid = false;
     }
 
@@ -72,12 +96,12 @@ const UserDetails = ({user, fetchProfile}) => {
     setLoading(true);
 
     try {
-      // const response= await fetchService({
-      //   url: vendorUrl,
-      //   method: 'PUT',
-      //   body: formData,
-      // })
-      const response= await updateUserDetail(formData)
+      const response= await fetchService({
+        url: vendorUrl,
+        method: 'PUT',
+        body: formData,
+      })
+      // const response= await updateUserDetail(formData)
       
       // if (data) {
       //   clearForm();
@@ -109,7 +133,7 @@ const UserDetails = ({user, fetchProfile}) => {
     });
   };
 
-  const inputControl = `mt-1 w-full ${ !edit ? 'disabled' : ''} input1 ${errors.businessEmail ? 'border-red-500' : ''}`
+  const inputControl = `mt-1 w-full ${ !edit ? 'disabled' : ''} input1 ${errors.email ? 'border-red-500' : ''}`
   const btnControl = edit ? 'btn2' : 'btn2 disabled' 
 
     return (
@@ -133,19 +157,19 @@ const UserDetails = ({user, fetchProfile}) => {
         <form onSubmit={handleSubmit}>
 
             <div className="mb-4 w-full">
-            <label htmlFor="businessEmail" className="block text-sm font-medium text-gray-600">
+            <label htmlFor="email" className="block text-sm font-medium text-gray-600">
                 User Email
             </label>
             <input
                 type="text"
-                id="businessEmail"
-                name="businessEmail"
-                value={formData.businessEmail || ''}
+                id="email"
+                name="email"
+                value={formData.email || ''}
                 onChange={handleInputChange}
                 disabled={!edit}
                 className={inputControl}
             />
-            {errors.businessEmail && <p className="text-red-500 text-xs mt-1">{errors.businessEmail}</p>}
+            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
             </div>
 
             <div className="grid sm:grid-cols-2 gap-4">

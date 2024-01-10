@@ -41,6 +41,8 @@ export const shopUrl = baseUrl + "update/b2c/shop";
 
 // dashboard
 export const dashboard = baseUrl + "vendorDashboard";
+export const salesStats = baseUrl + `my/sales/analytics`;
+
 // pending order status
 export const alert = baseUrl + "action/required";
 

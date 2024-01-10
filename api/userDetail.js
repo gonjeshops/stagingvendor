@@ -1,7 +1,7 @@
 
 
 import authHeader from "@/componentsB2b/Api/auth-header";
-import { dashboard, fetchService, userDetailUrl } from ".";
+import { dashboard, fetchService, salesStats, userDetailUrl } from ".";
 
 export const userDetail = () => {
   return fetchService({
@@ -29,7 +29,8 @@ export const updateUserDetail = (body) => {
 export const userDashboard = (values) => {
   return fetchService({
     method: "GET",
-    url: dashboard,
+    // url: dashboard,
+    url: salesStats,
     params: {
       ...values,
     },

@@ -30,22 +30,22 @@ const data = [
     color: "red",
   },
 ];
-const Earnings = () => {
+const Earnings = ({topProductsForPieChart}) => {
   return (
     <div className="order_graph mr-0">
       <div className="content">
-        <h2>Earning</h2>
+        <h2>Top Products For PieChart</h2>
         <p className="mb-0 mt-2">This Month</p>
-        <strong>$4055.55</strong>
-        <p>45.2% more then last month</p>
+        {/* <strong>$4055.55</strong>
+        <p>45.2% more then last month</p> */}
       </div>
       {/* <ResponsiveContainer width="100%" height="100%"> */}
       <PieChart width={200} height={200} className="profit_bar">
         <Pie
-          dataKey="earning"
+          dataKey="total_sold"    
           startAngle={360}
           endAngle={0}
-          data={data}
+          data={topProductsForPieChart}
           cx="50%"
           cy="50%"
           outerRadius={80}

@@ -33,7 +33,7 @@ export default function ManageAccount() {
     fetchProfile()
   }, [])
   
- 
+ console.log('user-obj', user)
 
   return (
     <>

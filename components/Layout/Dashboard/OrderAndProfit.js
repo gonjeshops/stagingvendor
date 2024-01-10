@@ -7,7 +7,7 @@ import {
   YAxis,
   Tooltip,
   LineChart,
-  Line,
+  Line,ReferenceLine,
   ResponsiveContainer,
   Legend,
   AreaChart,
@@ -28,7 +28,6 @@ const RawData = [
   { month: "dec", orders: 670 },
 ];
 
-// Sample Profit data
 const pdata = [
   {
     month: "jan",
@@ -72,13 +71,13 @@ const OrderAndProfit = ({ dashboardData }) => {
     <>
       <div className="col-xl-4 col-sm-6">
         <div className="order_graph">
-          <h2>Order</h2>
-          <strong>{dashboardData?.orders_count}</strong>
-          <BarChart className="profit_bar" width={450} height={200} data={data} >
+          <h2>Order -static data</h2>
+          <strong></strong>
+          <BarChart className="profit_bar" width={450} height={300} data={RawData} >
             <Bar
-              dataKey="totalorder"
+              dataKey="orders"
               fill="#8884d8"
-              // className="profit_bar_color"
+              className="profit_bar_color"
             />
             <XAxis dataKey="month" angle={-15} minTickGap={0} interval={0} />
             <YAxis />
@@ -86,17 +85,18 @@ const OrderAndProfit = ({ dashboardData }) => {
           </BarChart>
         </div>
       </div>
+
       <div className="col-xl-4 col-sm-6">
         <div className="order_graph">
-          <h2>Profit</h2>
-          <strong>6,24k</strong>
+          <h2>Total orders per month</h2>
+          {/* <strong>6,24k</strong> */}
           <ResponsiveContainer
             className="profit_bar"
             width="100%"
             // width={240}
-            height={200}
+            height={260}
           >
-            {/* <LineChart data={pdata}>
+            {/* <LineChart data={dashboardData?.totalOrdersPerMonth}>
               <XAxis dataKey="month" interval={"preserveStartEnd"} />
               <YAxis></YAxis>
 
@@ -105,23 +105,23 @@ const OrderAndProfit = ({ dashboardData }) => {
             </LineChart> */}
 
             <AreaChart
-              data={pdata}
-              // margin={{ top: 20, right: 30, left: 0, bottom: 0 }}
+              data={dashboardData?.totalOrdersPerMonth}
+              margin={{ top: 30, right: 40, left: 0, bottom: 0 }}
             >
               <XAxis dataKey="month" />
               <YAxis />
               <CartesianGrid strokeDasharray="3 3" />
               <Tooltip />
-              {/* <ReferenceLine x="Page C" stroke="green" label="Min PAGE" />
+              <ReferenceLine x="Page C" stroke="green" label="Min PAGE" />
               <ReferenceLine
                 y={4000}
                 label="Max"
                 stroke="red"
                 strokeDasharray="3 3"
-              /> */}
+              />
               <Area
                 type="monotone"
-                dataKey="profit"
+                dataKey="total_orders"
                 stroke="#8884d8"
                 // stroke="#82ca9d"
                 fill="#82ca9d"

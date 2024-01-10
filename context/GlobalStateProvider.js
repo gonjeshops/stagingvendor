@@ -32,7 +32,6 @@ const GlobalStateProvider = ({ children }) => {
       // Check if the parsing was successful
       if (userDetails && typeof userDetails === 'object') {
         setUser(userDetails);
-        console.log('User details retrieved:', userDetails);
 
       } else {
         // If the stored data is not valid JSON or an object, return null
@@ -45,9 +44,7 @@ const GlobalStateProvider = ({ children }) => {
     }
   }
   getUserDetailsFromLocalStorage()
-
-  
-  }, [])
+  }, [router?.pathname])
 
   // Create quote or cart functionality
   const useB2Bcart = useCartB2B(user, editQuote, setEditQuote)

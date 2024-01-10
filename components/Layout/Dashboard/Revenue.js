@@ -24,17 +24,17 @@ const data = [
   { month: "nov", expense: 320, earning: 800 },
   { month: "dec", expense: 400, earning: 100 },
 ];
-const RevenueReport = () => {
+const RevenueReport = ({transactionsForLast12Months}) => {
   return (
-    <div className="report w-100 revenue_graph">
-      <h4>Revenue Report</h4>
+    <div className="report revenue_graph">
+      <h4>Monthly Revenue</h4>
       {/* <ResponsiveContainer> */}
      <div className="rev-barchart">
-     <BarChart width={800} height={300} data={data} className="profit_bar">
+     <BarChart width={800} height={300} data={transactionsForLast12Months} className="profit_bar">
         <XAxis dataKey="month" angle={-15} minTickGap={0} interval={0} />
         <YAxis />
-        <Bar stackId="a" dataKey="earning" fill="#8884d8" name="expense" />
-        <Bar stackId="a" dataKey="expense" fill="#fbdda2" name="earning" />
+        <Bar stackId="a" dataKey="total_revenue" fill="#8884d8" name="expense" />
+        {/* <Bar stackId="a" dataKey="expense" fill="#fbdda2" name="earning" /> */}
         <Legend layout="horizontal" verticalAlign="top" align="right" />
         <Tooltip />
       </BarChart>

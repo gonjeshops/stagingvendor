@@ -7,6 +7,7 @@ import { logout } from "../../../redux/actions/auth";
 import { getUserDetail } from "../../../redux/actions/userDetail";
 import TopbarBtnModal from "./TopbarBtnModal";
 import Alert from "@/components/ui/Alert";
+import { alert, fetchService } from "@/api";
 
 const TopBar = ({
   toggleSidebar,
@@ -16,9 +17,17 @@ const TopBar = ({
 }) => {
   const route = useRouter();
   const [isOpenProfile, setOpenProfile] = useState(false);
+  const [alertUpdate, setAlertUpdate] = useState('');
 
   useEffect(() => {
     fetchUserDetail();
+    const alertStatus = async () => {
+      const fetchData = await fetchService({method: 'GET', url: alert,})
+      if (fetchData?.data) {
+        setAlertUpdate(fetchData?.data)
+      }
+      console.log('===alertUpdate', fetchData?.data, alertUpdate)
+    }
   }, []);
 
   const userData = useMemo(() => {
@@ -56,10 +65,10 @@ const TopBar = ({
 
         <div className="wrapper flex w-full flex-1 justify-end sm:justify-between gap-8 items-center">
           <div className="hidden sm:block">
-            <Alert children={'You have pending task.'}/>
+            {alertUpdate?.status ? <Alert children={'You have pending task.'}/> : ''}
           </div>
           <div className="d-flex align-items-center ">
-            <TopbarBtnModal  userData={userData} logoutVendor={logoutVendor}/>
+            <TopbarBtnModal alertUpdate={alertUpdate} userData={userData} logoutVendor={logoutVendor}/>
           </div>
         </div>
       </div>

@@ -36,8 +36,13 @@ export const contractListUrl = baseUrl + "display-contract";
 export const signContractUrl = baseUrl + "signContract";
 // user detail
 export const userDetailUrl = baseUrl + "me";
+export const vendorUrl = baseUrl + "update/vendor/details";
+export const shopUrl = baseUrl + "update/b2c/shop";
+
 // dashboard
 export const dashboard = baseUrl + "vendorDashboard";
+// pending order status
+export const alert = baseUrl + "action/required";
 
 export const fetchService = async ({ method, url, body, headers, params }) =>
   await axios({

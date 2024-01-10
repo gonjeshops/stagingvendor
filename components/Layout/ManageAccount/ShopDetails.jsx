@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { FaEdit } from 'react-icons/fa';
 
@@ -30,9 +30,13 @@ const ShopDetails = ({user, fetchProfile}) => {
     });
   };
 
-  const [formData, setFormData] = useState(initialFormData);
+  const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setFormData(initialFormData)
+  }, [])
 
   const validateForm = () => {
     let isValid = true;

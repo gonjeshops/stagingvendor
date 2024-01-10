@@ -46,10 +46,10 @@ export default function ManageAccount() {
         <div className="shop details space-y-14 relative">
           <div className="relative w-full sm:max-w-6xl mx-auto">
             <div className="w-full h-60  overflow-hidden rounded-lg relative">
-             {user && user.shops && user.shops[0] && user.shops[0].cover_image &&  <Image src={user?.shops[0]?.cover_image?.original} width={400} height={200} className="w-full h-full object-cover"/>}
+             {user && user.shops && user.shops[0] && user.shops[0].cover_image &&  <Image src={user?.shops[0]?.cover_image?.original} alt="cover_img" width={400} height={200} className="w-full h-full object-cover"/>}
             </div>
             <div className="absolute top-28 left-10 h-40 w-40 rounded-full overflow-hidden">
-                {user && user.shops && user.shops[0] && user.shops[0].logo &&  <Image src={user?.shops[0]?.logo?.original} width={150} height={150} className="w-full h-full object-cover"/>}
+                {user && user.shops && user.shops[0] && user.shops[0].logo &&  <Image src={user?.shops[0]?.logo?.original} alt="logo_img" width={150} height={150} className="w-full h-full object-cover"/>}
             </div>
           </div>
 

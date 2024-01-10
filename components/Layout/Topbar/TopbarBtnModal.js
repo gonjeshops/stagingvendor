@@ -19,7 +19,7 @@ import Image from 'next/image';
 import ProfileDropdown from './ProfileDropdown';
 import CartNotificationDropdown from "./CartNotificationDropdown"
 
-const TopbarBtnModal = ({userData, logoutVendor}) => {
+const TopbarBtnModal = ({userData,alertUpdate, logoutVendor}) => {
   const router = useRouter();
   const {user}=useGlobalState()
 
@@ -41,36 +41,30 @@ const TopbarBtnModal = ({userData, logoutVendor}) => {
   useClickOutside(dropdownRef, handleCloseDropdown)
   
   return (
-    <div className='relative flex gap-8 items-center z-50 '>
+    <div className='relative flex gap-6 items-center'>
 
       <div className=' relative z-50'>
         <FaCartArrowDown className=' text-2xl' 
           onClick={()=>handleToggleDropdown('cart')}/>
        
-        <div className='absolute w-5 h-5 flex justify-center items-centem text-[10px] bg-gonje-green rounded-full text-white -top-2 -right-3'></div>
+        {/* <div className='absolute w-5 h-5 flex justify-center items-centem text-[10px] bg-gonje-green rounded-full text-white -top-2 -right-3'></div> */}
         {show==='cart' && 
         <div ref={dropdownRef} className='absolute -right-44 z-50 mt-4 shadow-xl border border-gray-500 w-96 h-96 bg-background rounded-md p-4 overflow-auto text-sm '>
           <CartNotificationDropdown/>
         </div>}
       </div>
 
-      <div className=' relative z-50'>
-        {/* <div className='p-2 rounded-full border-2 border-red-500'>
-
-        <FaRegBell className='text-2xl' 
-          onClick={()=>handleToggleDropdown('notification')}/>
-        </div> */}
+      <div className=' relative '>
         <span className="relative flex h-10 w-10  items-center justify-center">
-            <span className="animate-ping absolute inline-flex h-8 w-8 rounded-full bg-sky-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full p-2 bg-sky-500">
+            <span className="relative inline-flex rounded-full p-2 ">
             <FaRegBell className='text-2xl' 
               onClick={()=>handleToggleDropdown('notification')}/>
             </span>
           </span>
 
-          <div className='absolute w-5 h-5 flex justify-center items-centem text-[10px] bg-red-500 rounded-full text-white -top-0 -right-0'></div>
-
-          
+          {alertUpdate ? <><div className='absolute w-5 h-5 flex justify-center items-centem text-[10px] animate-ping bg-red-500 rounded-full text-white -top-0 -right-0'>
+          </div>
+          <div className='absolute w-5 h-5 flex justify-center items-centem text-[10px]  bg-red-500 rounded-full text-white -top-0 -right-0'></div>  </>  : ''}
 
         {show==='notification' && 
         <div ref={dropdownRef} className='absolute -right-44 z-50 mt-4 shadow-xl border border-gray-500 w-96 rounded-md p-4 overflow-auto text-sm bg-white'>
@@ -79,7 +73,7 @@ const TopbarBtnModal = ({userData, logoutVendor}) => {
       </div>
 
 
-      <div className=' relative z-50'>
+      <div className=' relative '>
         <div onClick={()=>handleToggleDropdown('user')} className="flex gap-2 items-center">
             {user?.profilePic ? 
               <div className="w-16 h-16 overflow-hidden">

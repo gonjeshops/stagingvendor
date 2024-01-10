@@ -1,8 +1,10 @@
 
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { FaEdit } from 'react-icons/fa';
+import { fetchService, vendorUrl } from '@/api';
+import { updateUserDetail } from '@/api/userDetail';
 // import { toast } from "react-toastify";
 
 const UserDetails = ({user, fetchProfile}) => {
@@ -10,30 +12,32 @@ const UserDetails = ({user, fetchProfile}) => {
   const [edit, setEdit] = useState(0)
 
   const initialFormData = {
-    businessName: "ABC Corporation",
-    userName: "John Doe",
-    businessEmail: "johndoe@example.com",
-    businessPhoneNumber: "(555) 123-4567",
-    userAddress: "789 User St, Villagetown, Country",
+    business_name: (user?.name + ' ' + user?.last_name )|| "John Doe",
+    businessEmail: user?.email || "johndoe@example.com",
+    business_number: user?.business_number || "(555) 123-4567",
+    userAddress: user?.address?.length ? Object.values(user?.address).join(', ') : "789 User St, Villagetown, Country",
     longitude: "123.456789",
     latitude: "45.678901",
   };
 
   const clearForm = () => {
     setFormData({
-      businessName: '',
-      userName: '',
+      business_name: '',
       businessEmail: '',
-      businessPhoneNumber: '',
+      business_number: '',
       userAddress: '',
       longitude: '',
       latitude: '',
     });
   };
 
-  const [formData, setFormData] = useState(initialFormData);
+  const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setFormData(initialFormData)
+  }, [])
 
   const validateForm = () => {
     let isValid = true;
@@ -44,17 +48,15 @@ const UserDetails = ({user, fetchProfile}) => {
       isValid = false;
     }
 
-    if (!formData.businessPhoneNumber.trim()) {
-      newErrors.businessPhoneNumber = 'Business Phone Number is required';
+    if (!formData.business_number.trim()) {
+      newErrors.business_number = 'Business Phone Number is required';
       isValid = false;
     }
 
-    if (!formData.userName.trim()) {
-      newErrors.userName = 'User Name is required';
+    if (!formData.business_name.trim()) {
+      newErrors.business_name = 'User Name is required';
       isValid = false;
     }
-
-    // Additional validation rules can be added as needed
 
     setErrors(newErrors);
     return isValid;
@@ -70,19 +72,25 @@ const UserDetails = ({user, fetchProfile}) => {
     setLoading(true);
 
     try {
-    //   const { data, error } = await updateBusinessDetails('businesses', formData, 'id', 1);
-    //   if (data) {
-    //     clearForm();
-    //     setErrors({});
-    //     push('/dashboard');
-    //     toast.success('Registration successful');
-    //   } else {
-    //     console.log(error);
-    //     toast.error('Registration failed');
-    //   }
-    //   console.log({ data, error });
+      // const response= await fetchService({
+      //   url: vendorUrl,
+      //   method: 'PUT',
+      //   body: formData,
+      // })
+      const response= await updateUserDetail(formData)
+      
+      // if (data) {
+      //   clearForm();
+      //   setErrors({});
+      //   push('/dashboard');
+      //   toast.success('Registration successful');
+      // } else {
+      //   console.log(error);
+      //   toast.error('Registration failed');
+      // }
+      console.log('formRes=', response);
     } catch (error) {
-    //   console.error('Error submitting the form:', error);
+      console.error('Error submitting the form:', error);
     } finally {
       setLoading(false);
     }
@@ -143,36 +151,36 @@ const UserDetails = ({user, fetchProfile}) => {
             <div className="grid sm:grid-cols-2 gap-4">
             {/* Business Phone Number */}
             <div className="mb-4">
-            <label htmlFor="businessPhoneNumber" className="block text-sm font-medium text-gray-600">
+            <label htmlFor="business_number" className="block text-sm font-medium text-gray-600">
                 User Phone Number
             </label>
             <input
                 type="text"
-                id="businessPhoneNumber"
-                name="businessPhoneNumber"
-                value={formData.businessPhoneNumber || ''}
+                id="business_number"
+                name="business_number"
+                value={formData.business_number || ''}
                 onChange={handleInputChange}
                 disabled={!edit}
                 className={inputControl}
             />
-            {errors.businessPhoneNumber && <p className="text-red-500 text-xs mt-1">{errors.businessPhoneNumber}</p>}
+            {errors.business_number && <p className="text-red-500 text-xs mt-1">{errors.business_number}</p>}
             </div>
 
             {/* User Name */}
             <div className="mb-4">
-            <label htmlFor="userName" className="block text-sm font-medium text-gray-600">
+            <label htmlFor="business_name" className="block text-sm font-medium text-gray-600">
                 User Name
             </label>
             <input
                 type="text"
-                id="userName"
-                name="userName"
-                value={formData.userName || ''}
+                id="business_name"
+                name="business_name"
+                value={formData.business_name || ''}
                 onChange={handleInputChange}
                 disabled={!edit}
                 className={inputControl}
             />
-            {errors.userName && <p className="text-red-500 text-xs mt-1">{errors.userName}</p>}
+            {errors.business_name && <p className="text-red-500 text-xs mt-1">{errors.business_name}</p>}
             </div>
             </div>
 

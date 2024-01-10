@@ -5,44 +5,47 @@ import { useRouter } from 'next/router';
 import { FaEdit } from 'react-icons/fa';
 import { fetchService, vendorUrl } from '@/api';
 import { updateUserDetail } from '@/api/userDetail';
+import { toast } from 'react-toastify';
 // import { toast } from "react-toastify";
 
-const UserDetails = ({user, fetchProfile}) => {
-  const { push } = useRouter();
+const UserDetails = ({user, fetchProfile, }) => {
   const [edit, setEdit] = useState(0)
 
   const initialFormData = {
-    business_name: user?.name + ' ' + (user?.last_name ? user?.last_name : ''),
-    email: user?.email || "johndoe@example.com",
-    business_number: user?.business_number || "(555) 123-4567",
-    userAddress: user?.address?.length ? Object.values(user?.address).join(', ') : "789 User St, Villagetown, Country",
-    longitude: "123.456789",
-    latitude: "45.678901",
+    business_name: user?.name || '',
+    // email: user?.email || "",
+    business_number: user?.business_number  || "",
+    // userAddress: user?.address?.length ? Object.values(user?.address).join(', ') : "789 User St, Villagetown, Country",
+    longitude: user?.longitude || "",
+    last_name: "Emma",
+    email: "ad@ad.com",
+    latitude: user?.latitude ||"",
+    contact_details: user?.contact_details ||''
   };
 
-  // {
-  //   "business_number": "123456789",
-  //   "business_name": "ABC Company",
-  //   "contact_details": "123-456-7890",
-  //   "latitude": "40.7128",
-  //   "longitude": "-74.0060",
-  //   "shipping_address": {
-  //     "apt": "5",
-  //     "city": "Chandigarh",
-  //     "phone": "+918978907071",
-  //     "state": "Punjab",
-  //     "address": "Akoka, Yaba, Lagos Mainland",
-  //     "postcode": "69678971"
-  //   },
-  //   "billing_address": {
-  //     "apt": "5",
-  //     "city": "Chandigarh",
-  //     "phone": "+918978907071",
-  //     "state": "Punjab",
-  //     "address": "Akoka, Yaba, Lagos Mainland",
-  //     "postcode": "69678971"
-  //   }
-  // }
+const h = {
+  "business_number": "123456789",
+  "business_name": "ABC Company",
+  "contact_details": "123-456-7890",
+  "latitude": "40.7128",
+  "longitude": "-74.0060",
+  "shipping_address": {
+    "apt": "5",
+    "city": "Chandigarh",
+    "phone": "+918978907071",
+    "state": "Punjab",
+    "address": "Akoka, Yaba, Lagos Mainland",
+    "postcode": "69678971"
+  },
+  "billing_address": {
+    "apt": "5",
+    "city": "Chandigarh",
+    "phone": "+918978907071",
+    "state": "Punjab",
+    "address": "Akoka, Yaba, Lagos Mainland",
+    "postcode": "69678971"
+  }
+}
 
   const clearForm = () => {
     setFormData({
@@ -61,16 +64,16 @@ const UserDetails = ({user, fetchProfile}) => {
 
   useEffect(() => {
     setFormData(initialFormData)
-  }, [])
+  }, [user?.id])
 
   const validateForm = () => {
     let isValid = true;
     const newErrors = {};
 
-    if (!formData.email.trim()) {
-      newErrors.email = 'Business Email is required';
-      isValid = false;
-    }
+    // if (!formData.email.trim()) {
+    //   newErrors.email = 'Business Email is required';
+    //   isValid = false;
+    // }
 
     if (!formData.business_number.trim()) {
       newErrors.business_number = 'Business Phone Number is required';
@@ -101,18 +104,17 @@ const UserDetails = ({user, fetchProfile}) => {
         method: 'PUT',
         body: formData,
       })
-      // const response= await updateUserDetail(formData)
+      if (response?.status===200) {
+        // setUser(response?.data)
+        setErrors({});
+        setEdit(0)
+        console.log('formRes=', response);
+        toast.success('Registration successful');
+      } else {
+        console.log(error);
+        toast.error('Registration failed');
+      }
       
-      // if (data) {
-      //   clearForm();
-      //   setErrors({});
-      //   push('/dashboard');
-      //   toast.success('Registration successful');
-      // } else {
-      //   console.log(error);
-      //   toast.error('Registration failed');
-      // }
-      console.log('formRes=', response);
     } catch (error) {
       console.error('Error submitting the form:', error);
     } finally {
@@ -133,7 +135,7 @@ const UserDetails = ({user, fetchProfile}) => {
     });
   };
 
-  const inputControl = `mt-1 w-full ${ !edit ? 'disabled' : ''} input1 ${errors.email ? 'border-red-500' : ''}`
+  const inputControl = `mt-1 w-full ${ !edit ? 'disabled cursor-not-allowed' : ''} input1 ${errors.email ? 'border-red-500' : ''}`
   const btnControl = edit ? 'btn2' : 'btn2 disabled' 
 
     return (
@@ -156,7 +158,7 @@ const UserDetails = ({user, fetchProfile}) => {
             
         <form onSubmit={handleSubmit}>
 
-            <div className="mb-4 w-full">
+            {/* <div className="mb-4 w-full">
             <label htmlFor="email" className="block text-sm font-medium text-gray-600">
                 User Email
             </label>
@@ -170,13 +172,13 @@ const UserDetails = ({user, fetchProfile}) => {
                 className={inputControl}
             />
             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
-            </div>
+            </div> */}
 
             <div className="grid sm:grid-cols-2 gap-4">
             {/* Business Phone Number */}
             <div className="mb-4">
             <label htmlFor="business_number" className="block text-sm font-medium text-gray-600">
-                User Phone Number
+                Phone Number
             </label>
             <input
                 type="text"
@@ -193,7 +195,7 @@ const UserDetails = ({user, fetchProfile}) => {
             {/* User Name */}
             <div className="mb-4">
             <label htmlFor="business_name" className="block text-sm font-medium text-gray-600">
-                User Name
+                Name
             </label>
             <input
                 type="text"
@@ -209,8 +211,8 @@ const UserDetails = ({user, fetchProfile}) => {
             </div>
 
 
-            {/* User Address */}
-            <div className="mb-4">
+            {/*   User Address*/}
+            {/* <div className="mb-4">
             <label htmlFor="userAddress" className="block text-sm font-medium text-gray-600">
                 User Address
             </label>
@@ -223,7 +225,7 @@ const UserDetails = ({user, fetchProfile}) => {
                 disabled={!edit}
                 className={inputControl}
             />
-            </div>
+            </div> */}
 
             <div className="grid sm:grid-cols-2 gap-4">
 
@@ -258,6 +260,21 @@ const UserDetails = ({user, fetchProfile}) => {
                 className={inputControl}
             />
             </div>
+            </div>
+
+            <div className="m">
+            <label htmlFor="contact_details" className="block text-sm font-medium text-gray-600">
+                Contact Details
+            </label>
+            <input
+                type="text"
+                id="contact_details"
+                name="contact_details"
+                value={formData.contact_details || ''}
+                onChange={handleInputChange}
+                disabled={!edit}
+                className={inputControl}
+            />
             </div>
 
             <div className="mt-6">

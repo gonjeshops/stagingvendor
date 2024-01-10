@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { FaEdit } from 'react-icons/fa';
+import { toast } from 'react-toastify';
+import { fetchService, shopUrl } from '@/api';
 
 const ShopDetails = ({user, fetchProfile}) => {
   const { push } = useRouter();
@@ -9,13 +11,51 @@ const ShopDetails = ({user, fetchProfile}) => {
   const initialFormData = {
     businessEmail: "johndoe@example.com",
     businessPhoneNumber: "(555) 123-4567",
-    name: "Awesome Restaurant",
+    name: user?.shop?.name || "",
     description: "A trendy place with a diverse menu",
-    address: "123 Main Street, Cityville",
+    // address: "123 Main Street, Cityville",
     paymentType: "Credit Card",
     latitude: "40.7128",
     longitude: "-74.0060",
+
+    constact: "",
+    facebookLink: "",
+    website: ""
+
   };
+
+  let r= {
+    "name": "My Shop",
+    "description": "A wonderful shop",
+    "address": {
+      "zip": "6892",
+      "city": "Lincoln",
+      "state": "Illinois",
+      "country": "USA",
+      "street_address": "4885  Spring Street"
+    },
+    "settings": {
+      "contact": "21342121221",
+      "socials": [
+        {
+          "url": "https://www.instagram.com/",
+          "icon": "InstagramIcon"
+        }
+      ],
+      "website": "https://redq.io/",
+      "location": {
+        "lat": 40.757272,
+        "lng": -74.089508,
+        "city": "Kearny",
+        "state": "NJ",
+        "country": "United States",
+        "formattedAddress": "New Jersey Turnpike, Kearny, NJ, USA"
+      }
+    },
+    "payment_type": "Credit Card",
+    "latitude": "34.0522",
+    "longitude": "-118.2437"
+  }
 
   const clearForm = () => {
     setFormData({
@@ -36,7 +76,7 @@ const ShopDetails = ({user, fetchProfile}) => {
 
   useEffect(() => {
     setFormData(initialFormData)
-  }, [])
+  }, [user?.id])
 
   const validateForm = () => {
     let isValid = true;
@@ -52,8 +92,6 @@ const ShopDetails = ({user, fetchProfile}) => {
       isValid = false;
     }
 
-    // Additional validation rules can be added as needed
-
     setErrors(newErrors);
     return isValid;
   };
@@ -64,27 +102,31 @@ const ShopDetails = ({user, fetchProfile}) => {
     if (!validateForm()) {
       return;
     }
-
     setLoading(true);
-
     try {
-      //   const { data, error } = await updateItem('shop_details', formData, 'id', 1);
-      //   if (data) {
-      //     clearForm();
-      //     setErrors({});
-      //     push('/shop/dashboard');
-      //     toast.success('Shop details saved successfully');
-      //   } else {
-      //     console.log(error);
-      //     toast.error('Failed to save shop details');
-      //   }
-      //   console.log({ data, error });
+      const response= await fetchService({
+        url: shopUrl,
+        method: 'PUT',
+        body: formData,
+      })
+      if (response?.status===200) {
+        // setUser(response?.data)
+        setErrors({});
+        setEdit(0)
+        console.log('formRes=', response);
+        toast.success('Registration successful');
+      } else {
+        console.log(error);
+        toast.error('Registration failed');
+      }
+      
     } catch (error) {
-      //   console.error('Error submitting the form:', error);
+      console.error('Error submitting the form:', error);
     } finally {
       setLoading(false);
     }
   };
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

@@ -49,7 +49,6 @@ export const fetchService = async ({ method, url, body, headers, params }) =>
     data: body,
   })
     .then((response) => {
-      console.log('=api response=',response)
       if (response.status && response.status === 200) {
         return response;
       }

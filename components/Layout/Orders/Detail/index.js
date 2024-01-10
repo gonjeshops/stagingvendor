@@ -54,22 +54,28 @@ const OrderDetailPage = ({
       });
     });
   };
-
+console.log('ORDERDATA==', orderData)
   const detail = useMemo(() => {
     const { data } = orderData || {};
     return {
       id: data?.id || "",
-      status: data?.status || {},
-      products: data?.products || [],
+      status: data?.status || '',
+      shop: data?.shop || {},
+      order_status: data?.order_status || '',
+      barcode_number: data?.barcode_number || '',
+      tracking_number: data?.tracking_number || '',
+      consignment_number: data?.consignment_number || '',
+      products: data?.product || [],
       timer: data?.timer || "",
-      customer: data?.customer || {},
-      tax: data?.sales_tax || "0",
-      delivery_fee: data?.delivery_fee || "0",
-      discount: data?.discount || "0",
-      total: data?.paid_total || "0",
-      subtotal: data?.amount || "0",
-      billing_address: data?.billing_address,
-      shipping_address: data?.shipping_address,
+      buyer_details: data?.buyer_details || {},
+      tax: data?.sales_tax || 0,
+      delivery_fee: data?.delivery_fee || 0,
+      delivery_company_name: data?.delivery_company_name || '',
+      discount: data?.discount || 0,
+      total: (data?.subtotal || 0) + (data?.sales_tax || 0) + (data?.delivery_fee || 0) - ( data?.discount || 0) || 0,
+      subtotal: data?.subtotal || "0",
+      billing_address: data?.billing_address || "",
+      shipping_address: data?.shipping_address || "",
       origin: {
         latitude: parseFloat(data?.shop?.latitude) || "",
         longitude: parseFloat(data?.shop?.longitude) || "",
@@ -79,7 +85,7 @@ const OrderDetailPage = ({
         longitude: parseFloat(data?.longitude) || "",
       },
     };
-  }, [orderData]);
+  }, [orderData?.data]);
 
   const statusOptions = useMemo(() => {
     return (

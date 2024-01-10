@@ -62,53 +62,54 @@ const Slip = ({packingslipRef, orderDetails })=> {
       }
     const Barcodee = <Barcode value={orderDetails?.barcode_number || orderDetails?.tracking_number || 'Not available'} />
     const QRcodee = <div style={{ background: 'white', padding: '16px' }}>
-                        <QRCode value={orderDetails} className="w-20 h-20"/>
+    <QRCode value={orderDetails?.tracking_number} className="w-20 h-20"/>
                     </div>
 
     return (
-    <div ref={packingslipRef} className=" space-y-4 rounded-bg bg-white shadow-md p-8 w-96 sm:w-full  border ">
+    <div ref={packingslipRef} className="text-  rounded-bg bg-white shadow-md p-8 w-96 sm:w-[600px]  border ">
         <div className="overflow-auto">
 
-            <div className="flex justify-between gap-8">
-                <div className="">
-                    <h4>Gonje</h4>
-                    <p className="w-80 text-wrap text-[12px]">
-                        {orderDetails?.delivery_company_name} 
-                    </p>
+            <div className="flex mb-4 justify-between gap-8">
+                <div className="text">
+                    <div>Gonje</div>
+                    <div className="w-80 text-wrap ">
+                        {/* {orderDetails?.delivery_company_name}  */}
+                        Lorem ipsum dolor sit amet.
+                    </div>
                 </div>
 
                 <div className="">
-                    <h4>Shop:{orderDetails?.shop?.name }</h4>
-                    <p className="max-w-60 text-wrap text-sm">
+                    <div>Shop:{orderDetails?.shop?.name }</div>
+                    <div className="max-w-60 text-wrap text-sm">
                     {orderDetails?.shop?.address ? Object?.values(orderDetails?.shop?.address).join(', ') : 'no address'}
                     {orderDetails?.shop?.id}
-                    </p>
+                    </div>
                 </div>
             </div>
 
-            <div className="barcode text-sm">
+            <div className="barcode mb-4 backdrop:text-sm">
                 {Barcodee}
             </div>
 
-            <div className="flex justify-end gap-3 border-b-2 border-black">
+            {/* <div className="flex mb-4 justify-end gap-3 border-b-2 border-black">
                 <h3 className="text-4xl font-semibold">W54R </h3>
                 <h6 className="text-xl">W51</h6>
+            </div> */}
+
+            <div className=" mb-4 border-b border-black pb-2">
+                <div className="text-2xl font-semibold">{orderDetails?.customer?.name } {orderDetails?.buyer_details?.last_name }</div>
+                <div className="text-xl font-medium sm:w-96">  {orderDetails?.shipping_address&&Object.values(orderDetails?.shipping_address).join(', ')}</div>
             </div>
 
-            <div className="space-y-3 border-b border-black pb-2">
-                <h4 className="text-2xl font-semibold">{orderDetails?.custmer?.name } {orderDetails?.buyer_details?.last_name }</h4>
-                <h4 className="text-xl font-medium sm:w-96">  {orderDetails?.shipping_address&&Object.values(orderDetails?.shipping_address).join(', ')}</h4>
+            <div className="pt-6 mb-4 flex justify-end border-b border-black">
+                <div className="border p-1 mb-1 text-wrap  sm:w-96 text-[14px]">
+                    <div>{orderDetails?.customer?.name}</div>
+                    <div>{orderDetails?.billing_address&&Object.values(orderDetails?.billing_address).join(', ')}</div>
+                    </div>
             </div>
 
-            <div className="pt-6 flex justify-end border-b border-black">
-                <div className="border p-1 mb-1 text-wrap  sm:w-96 border-black text-[14px]">
-            {orderDetails?.customer?.name}<br/>
-                {orderDetails?.billing_address&&Object.values(orderDetails?.billing_address).join(', ')}
-                </div>
-            </div>
-
-            <div className="flex justify-between">
-                <h3 className="text-2xl font-semibold">{orderDetails?.tracking_number}</h3>
+            <div className="flex mb-4 justify-between">
+                <div className="text- pt-2 font-semibold">{orderDetails?.tracking_number}</div>
                 
                 {QRcodee}
             </div>

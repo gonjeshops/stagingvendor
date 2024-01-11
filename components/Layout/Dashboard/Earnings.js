@@ -34,7 +34,7 @@ const Earnings = ({topProductsForPieChart}) => {
   return (
     <div className="order_graph mr-0">
       <div className="content">
-        <h2>Top Products For PieChart</h2>
+        <h2>Top Products Comparison</h2>
         <p className="mb-0 mt-2">This Month</p>
         {/* <strong>$4055.55</strong>
         <p>45.2% more then last month</p> */}

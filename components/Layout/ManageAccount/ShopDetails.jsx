@@ -9,19 +9,23 @@ const ShopDetails = ({user, fetchProfile}) => {
   const [edit, setEdit] = useState(0);
 
   const initialFormData = {
-    businessEmail: "johndoe@example.com",
-    businessPhoneNumber: "(555) 123-4567",
     name: user?.shop?.name || "",
-    description: "A trendy place with a diverse menu",
-    // address: "123 Main Street, Cityville",
-    paymentType: "Credit Card",
-    latitude: "40.7128",
-    longitude: "-74.0060",
+    contact: user?.shop?.settings?.contact || "",
+    description: user?.shop?.description || "A trendy place with a diverse menu",
 
-    constact: "",
-    facebookLink: "",
-    website: ""
+    zip: user?.shop?.address?.zip || "6892",
+    city: user?.shop?.address?.zip || "Lincoln",
+    state: user?.shop?.address?.zip || "Illinois",
+    country: user?.shop?.address?.zip || "USA",
+    street_address: user?.shop?.address?.street_address || "4885  Spring Street",
 
+    latitude: user?.shop?.latitude || "40.7128",
+    longitude: user?.shop?.longitude || "-74.0060",
+    paymentType: user?.shop?.paymentType || "Credit Card",
+
+    
+    socials: user?.shop?.settings?.socials || [],
+    website: user?.shop?.settings?.website || "",
   };
 
   let r= {
@@ -57,19 +61,6 @@ const ShopDetails = ({user, fetchProfile}) => {
     "longitude": "-118.2437"
   }
 
-  const clearForm = () => {
-    setFormData({
-      businessEmail: "",
-      businessPhoneNumber: "",
-      name: '',
-      description: '',
-      address: '',
-      paymentType: '',
-      latitude: '',
-      longitude: '',
-    });
-  };
-
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -87,8 +78,33 @@ const ShopDetails = ({user, fetchProfile}) => {
       isValid = false;
     }
 
-    if (!formData.address.trim()) {
-      newErrors.address = 'Shop address is required';
+    if (!formData.descrition.trim()) {
+      newErrors.descrition = 'Shop descrition is required';
+      isValid = false;
+    }
+
+    if (!formData.contact) {
+      newErrors.contact = 'Shop contact is required';
+      isValid = false;
+    }
+
+    if (!formData.zip) {
+      newErrors.zip = 'Shop full address is required';
+      isValid = false;
+    }
+
+    if (!formData.street_address.trim()) {
+      newErrors.street_address = 'Shop full address is required';
+      isValid = false;
+    }
+
+    if (!formData.city.trim()) {
+      newErrors.city = 'Shop full address is required';
+      isValid = false;
+    }
+
+    if (!formData.state.trim()) {
+      newErrors.state = 'Shop full address is required';
       isValid = false;
     }
 
@@ -98,7 +114,6 @@ const ShopDetails = ({user, fetchProfile}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!validateForm()) {
       return;
     }
@@ -119,14 +134,12 @@ const ShopDetails = ({user, fetchProfile}) => {
         console.log(error);
         toast.error('Registration failed');
       }
-      
     } catch (error) {
       console.error('Error submitting the form:', error);
     } finally {
       setLoading(false);
     }
   };
-
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -169,77 +182,141 @@ const ShopDetails = ({user, fetchProfile}) => {
           </button>
         )}
       </div>
-      <form onSubmit={handleSubmit}>
 
-      <div className="grid grid-cols-2 gap-4">
-        <div className="mb-4">
-            <label htmlFor="businessEmail" className="block text-sm font-medium text-gray-600">
-                User Email
+      <form onSubmit={handleSubmit}>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="mb-4">
+            <label htmlFor="name" className="block text-sm font-medium text-gray-600">
+              Shop Name
             </label>
             <input
-                type="text"
-                id="businessEmail"
-                name="businessEmail"
-                value={formData.businessEmail || ''}
-                onChange={handleInputChange}
-                disabled={!edit}
-                className={inputControl}
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name || ''}
+              onChange={handleInputChange}
+              disabled={!edit}
+              className={inputControl}
             />
-            {errors.businessEmail && <p className="text-red-500 text-xs mt-1">{errors.businessEmail}</p>}
+            {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
           </div>
           <div className="mb-4">
-            <label htmlFor="businessPhoneNumber" className="block text-sm font-medium text-gray-600">
-                User Phone Number
+            <label htmlFor="contact" className="block text-sm font-medium text-gray-600">
+                Phone Number
             </label>
             <input
                 type="text"
-                id="businessPhoneNumber"
-                name="businessPhoneNumber"
-                value={formData.businessPhoneNumber || ''}
+                id="contact"
+                name="contact"
+                value={formData.contact || ''}
                 onChange={handleInputChange}
                 disabled={!edit}
                 className={inputControl}
             />
-            {errors.businessPhoneNumber && <p className="text-red-500 text-xs mt-1">{errors.businessPhoneNumber}</p>}
+            {errors.contact && <p className="text-red-500 text-xs mt-1">{errors.contact}</p>}
           </div>
         </div>
 
 
         {/* Shop Name */}
         <div className="mb-4">
-          <label htmlFor="name" className="block text-sm font-medium text-gray-600">
-            Shop Name
+          <label htmlFor="description" className="block text-sm font-medium text-gray-600">
+            Shop Description
           </label>
           <input
             type="text"
-            id="name"
-            name="name"
-            value={formData.name || ''}
+            id="description"
+            name="description"
+            value={formData.description || ''}
             onChange={handleInputChange}
             disabled={!edit}
             className={inputControl}
           />
-          {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
-        </div>
-
-        {/* Shop Address */}
-        <div className="mb-4">
-          <label htmlFor="address" className="block text-sm font-medium text-gray-600">
-            Shop Address
-          </label>
-          <input
-            type="text"
-            id="address"
-            name="address"
-            value={formData.address || ''}
-            onChange={handleInputChange}
-            disabled={!edit}
-            className={inputControl}
-          />
-          {errors.address && <p className="text-red-500 text-xs mt-1">{errors.address}</p>}
+          {errors.description && <p className="text-red-500 text-xs mt-1">{errors.description}</p>}
         </div>
 
         <div className="grid sm:grid-cols-2 gap-4">
+          <div className="mb-4">
+            <label htmlFor="street_address" className="block text-sm font-medium text-gray-600">
+              Street Address
+            </label>
+            <input
+              type="text"
+              id="street_address"
+              name="street_address"
+              value={formData.street_address || ''}
+              onChange={handleInputChange}
+              disabled={!edit}
+              className={inputControl}
+            />
+            {errors.street_address && <p className="text-red-500 text-xs mt-1">{errors.street_address}</p>}
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="zip" className="block text-sm font-medium text-gray-600">
+              zip
+            </label>
+            <input
+              type="text"
+              id="zip"
+              name="zip"
+              value={formData.zip || ''}
+              onChange={handleInputChange}
+              disabled={!edit}
+              className={inputControl}
+            />
+            {errors.zip && <p className="text-red-500 text-xs mt-1">{errors.zip}</p>}
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="city" className="block text-sm font-medium text-gray-600">
+              City
+            </label>
+            <input
+              type="text"
+              id="city"
+              name="city"
+              value={formData.city || ''}
+              onChange={handleInputChange}
+              disabled={!edit}
+              className={inputControl}
+            />
+            {errors.city && <p className="text-red-500 text-xs mt-1">{errors.city}</p>}
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="state" className="block text-sm font-medium text-gray-600">
+              State
+            </label>
+            <input
+              type="text"
+              id="state"
+              name="state"
+              value={formData.state || ''}
+              onChange={handleInputChange}
+              disabled={!edit}
+              className={inputControl}
+            />
+            {errors.state && <p className="text-red-500 text-xs mt-1">{errors.state}</p>}
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="country" className="block text-sm font-medium text-gray-600">
+              Country
+            </label>
+            <input
+              type="text"
+              id="country"
+              name="country"
+              value={formData.country || ''}
+              onChange={handleInputChange}
+              disabled={!edit}
+              className={inputControl}
+            />
+            {errors.country && <p className="text-red-500 text-xs mt-1">{errors.country}</p>}
+          </div>
+          
+
           {/* Latitude */}
           <div className="mb-4">
             <label htmlFor="latitude" className="block text-sm font-medium text-gray-600">
@@ -271,22 +348,22 @@ const ShopDetails = ({user, fetchProfile}) => {
               className={inputControl}
             />
           </div>
-        </div>
 
-        {/* Payment Type */}
-        <div className="mb-4">
-          <label htmlFor="paymentType" className="block text-sm font-medium text-gray-600">
-            Payment Type
-          </label>
-          <input
-            type="text"
-            id="paymentType"
-            name="paymentType"
-            value={formData.paymentType || ''}
-            onChange={handleInputChange}
-            disabled={!edit}
-            className={inputControl}
-          />
+          {/* Payment Type */}
+          <div className="mb-4">
+            <label htmlFor="paymentType" className="block text-sm font-medium text-gray-600">
+              Payment Type
+            </label>
+            <input
+              type="text"
+              id="paymentType"
+              name="paymentType"
+              value={formData.paymentType || ''}
+              onChange={handleInputChange}
+              disabled={!edit}
+              className={inputControl}
+            />
+          </div>
         </div>
 
         <div className="mt-6">

@@ -76,19 +76,15 @@ console.log(userDetail,   dashboardDetail)
             <div className="col-xl-4 col-sm-6">
               <Earnings topProductsForPieChart={dashboardDetail?.topProductsForPieChart}/>
             </div>
-            <div className="flex gap-6 items-start flex-wrap">
+            <div className="flex gap-6 items-start flex-wrap">  
               <ProjectedRevenue revenueData={dashboardDetail?.projectedRevenue}/>
               <ProductsoldPerDay productSold={dashboardDetail?.productsSoldPerDay} />
-              
               <SalesByCity salesData={dashboardDetail?.topCities}/>
-             
             </div>
             <div className="flex gap-6 items-start flex-wrap">
             <TopSellingProducts topSellingProducts={dashboardDetail?.topSellingProducts}/>
               <TopSalesofDay topSales={dashboardDetail?.topSalesOfDay} />
               </div>
-
-            
           </div>
         </div>
 

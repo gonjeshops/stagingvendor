@@ -32,6 +32,7 @@ const TopbarBtnModal = ({userData,alertUpdate, logoutVendor}) => {
     } else {
       setShow(type)
     }
+    console.log('lllllllllllllllllll')
   };
 
   const handleCloseDropdown = () => {
@@ -44,20 +45,20 @@ const TopbarBtnModal = ({userData,alertUpdate, logoutVendor}) => {
     <div className='relative flex gap-6 items-center'>
 
       <div className=' relative z-50'>
-        <FaCartArrowDown className=' text-2xl' 
+        <FaCartArrowDown className=' text-2xl cursor-pointer' 
           onClick={()=>handleToggleDropdown('cart')}/>
        
         {/* <div className='absolute w-5 h-5 flex justify-center items-centem text-[10px] bg-gonje-green rounded-full text-white -top-2 -right-3'></div> */}
         {show==='cart' && 
         <div ref={dropdownRef} className='absolute -right-44 z-50 mt-4 shadow-xl border border-gray-500 w-96 h-96 bg-background rounded-md p-4 overflow-auto text-sm '>
-          <CartNotificationDropdown/>
+          <CartNotificationDropdown setShow={setShow}/>
         </div>}
       </div>
 
       <div className=' relative '>
         <span className="relative flex h-10 w-10  items-center justify-center">
             <span className="relative inline-flex rounded-full p-2 ">
-            <FaRegBell className='text-2xl' 
+            <FaRegBell className='text-2xl cursor-pointer' 
               onClick={()=>handleToggleDropdown('notification')}/>
             </span>
           </span>
@@ -68,26 +69,28 @@ const TopbarBtnModal = ({userData,alertUpdate, logoutVendor}) => {
 
         {show==='notification' && 
         <div ref={dropdownRef} className='absolute -right-44 z-50 mt-4 shadow-xl border border-gray-500 w-96 rounded-md p-4 overflow-auto text-sm bg-white'>
-          <NotificationDropdown/>
+          <NotificationDropdown setShow={setShow}/>
         </div>}
       </div>
 
 
       <div className=' relative '>
-        <div onClick={()=>handleToggleDropdown('user')} className="flex gap-2 items-center">
+        <div className="flex gap-2 items-center">
             {user?.profilePic ? 
-              <div className="w-16 h-16 overflow-hidden">
-                <Image src={user?.profilePic} alt='user' width={100} height={100}/> 
+              <div className="w-16 h-16 overflow-hidden cursor-pointer">
+                <Image src={user?.profilePic} alt='user' width={100} height={100}
+                 onClick={()=>handleToggleDropdown('user')}/> 
               </div>
                 :
-              <FaRegUserCircle className='text-4xl text-gray-600'/>
+              <FaRegUserCircle className='text-4xl text-gray-600 cursor-pointer'
+              onClick={()=>handleToggleDropdown('user')}/>
             }
             <p className="">{user?.user_name}</p>
         </div>
 
         {show==='user' && 
-          <div ref={dropdownRef} className='absolute right-0 z-50 mt-2 shadow-xl border border-gray-500 w-96 h-96 rounded-md p-4 overflow-auto text-sm bg-background'>
-            <ProfileDropdown logoutVendor={logoutVendor}/>
+          <div ref={dropdownRef} className='absolute right-0  z-50 mt-2 shadow-xl border border-gray-500 w-96  rounded-md p-4 overflow-auto text-sm bg-background'>
+            <ProfileDropdown logoutVendor={logoutVendor} setShow={setShow}/>
           </div>
         }
       </div>

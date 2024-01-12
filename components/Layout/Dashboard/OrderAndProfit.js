@@ -68,14 +68,11 @@ const OrderAndProfit = ({ dashboardData }) => {
     };
   });
   return (
-    <>
-      <div className="col-xl-4 col-sm-6">
-        <div className="order_graph">
-          <h2>Order -static data</h2>
-          <strong></strong>
-          <BarChart className="profit_bar" width={450} height={300} data={RawData} >
+      <div className="cards">
+          <h4 className="cardh4">Total orders per month</h4>
+          <BarChart className="profit_bar" width={450} height={300} data={dashboardData?.totalOrdersPerMonth} >
             <Bar
-              dataKey="orders"
+              dataKey="total_orders"
               fill="#8884d8"
               className="profit_bar_color"
             />
@@ -83,54 +80,52 @@ const OrderAndProfit = ({ dashboardData }) => {
             <YAxis />
             <Tooltip />
           </BarChart>
-        </div>
       </div>
 
-      <div className="col-xl-4 col-sm-6">
-        <div className="order_graph">
-          <h2>Total orders per month</h2>
-          {/* <strong>6,24k</strong> */}
-          <ResponsiveContainer
-            className="profit_bar"
-            width="100%"
-            // width={240}
-            height={260}
-          >
-            {/* <LineChart data={dashboardData?.totalOrdersPerMonth}>
-              <XAxis dataKey="month" interval={"preserveStartEnd"} />
-              <YAxis></YAxis>
+      // <div className="col-xl-4 col-sm-6">
+      //   <div className="order_graph">
+      //     <h2>Total orders per month</h2>
+      //     {/* <strong>6,24k</strong> */}
+      //     <ResponsiveContainer
+      //       className="profit_bar"
+      //       width="100%"
+      //       // width={240}
+      //       height={260}
+      //     >
+      //       {/* <LineChart data={dashboardData?.totalOrdersPerMonth}>
+      //         <XAxis dataKey="month" interval={"preserveStartEnd"} />
+      //         <YAxis></YAxis>
 
-              <Tooltip />
-              <Line dataKey="profit" stroke="#8884d8" activeDot={{ r: 8 }} />
-            </LineChart> */}
+      //         <Tooltip />
+      //         <Line dataKey="profit" stroke="#8884d8" activeDot={{ r: 8 }} />
+      //       </LineChart> */}
 
-            <AreaChart
-              data={dashboardData?.totalOrdersPerMonth}
-              margin={{ top: 30, right: 40, left: 0, bottom: 0 }}
-            >
-              <XAxis dataKey="month" />
-              <YAxis />
-              <CartesianGrid strokeDasharray="3 3" />
-              <Tooltip />
-              <ReferenceLine x="Page C" stroke="green" label="Min PAGE" />
-              <ReferenceLine
-                y={4000}
-                label="Max"
-                stroke="red"
-                strokeDasharray="3 3"
-              />
-              <Area
-                type="monotone"
-                dataKey="total_orders"
-                stroke="#8884d8"
-                // stroke="#82ca9d"
-                fill="#82ca9d"
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-    </>
+      //       <AreaChart
+      //         data={dashboardData?.totalOrdersPerMonth}
+      //         margin={{ top: 30, right: 40, left: 0, bottom: 0 }}
+      //       >
+      //         <XAxis dataKey="month" />
+      //         <YAxis />
+      //         <CartesianGrid strokeDasharray="3 3" />
+      //         <Tooltip />
+      //         <ReferenceLine x="Page C" stroke="green" label="Min PAGE" />
+      //         <ReferenceLine
+      //           y={4000}
+      //           label="Max"
+      //           stroke="red"
+      //           strokeDasharray="3 3"
+      //         />
+      //         <Area
+      //           type="monotone"
+      //           dataKey="total_orders"
+      //           stroke="#8884d8"
+      //           // stroke="#82ca9d"
+      //           fill="#82ca9d"
+      //         />
+      //       </AreaChart>
+      //     </ResponsiveContainer>
+      //   </div>
+      // </div>
   );
 };
 

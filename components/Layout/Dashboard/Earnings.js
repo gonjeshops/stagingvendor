@@ -32,15 +32,15 @@ const data = [
 ];
 const Earnings = ({topProductsForPieChart}) => {
   return (
-    <div className="order_graph mr-0">
-      <div className="content">
-        <h2>Top Products Comparison</h2>
-        <p className="mb-0 mt-2">This Month</p>
+    <div className="cards">
+      <div className="">
+        <h2 className="cardh4">Top Products Comparison</h2>
+        <p className="mt-2">This Month</p>
         {/* <strong>$4055.55</strong>
         <p>45.2% more then last month</p> */}
       </div>
       {/* <ResponsiveContainer width="100%" height="100%"> */}
-      <PieChart width={200} height={200} className="profit_bar">
+      <PieChart width={320} height={200} className="profit_bar">
         <Pie
           dataKey="total_sold"    
           startAngle={360}

@@ -4,8 +4,8 @@ const ProjectedRevenue = ({ revenueData }) => {
   console.log('========', revenueData);
 
   return (
-    <div className="my-8 bg-white p-8 rounded-md shadow">
-      <h2 className="text-xl font-bold mb-4">Projected Revenue</h2>
+    <div className="cards flex-shrink-0">
+      <h2 className="cardh4 mb-4">Projected Revenue</h2>
       <table className="min-w-full border rounded-md">
         <thead>
           <tr>

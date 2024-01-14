@@ -1,20 +1,16 @@
 import Image from "next/image";
 import { ProductsSvg, RevenueSvg, SalesSvg } from "../../../assets";
 
-const NetSales = ({ userData, dashboardDetail }) => {
+const NetSales = ({ userData, totalSales }) => {
   return (
-    <div className="welcome ">
-      <div className="content mb-auto">
-        <h2>Welcome {userData.name} </h2>
-        {/* <p>You are the member of Gonje group now</p> */}
-      </div>
-      <div className="flex gap-6 items-center">
+    <div className="cards h-full flex-shrink-0">
+      <h4 className="cardh4">Welcome {userData.name} </h4>
+      <div className="flex gap-3 items-center">
         <Image src={SalesSvg} />
-        <div className="net-sale">
-          <strong>${Number(dashboardDetail?.totalSales)?.toLocaleString('en-US')}</strong>
+        <div className="">
+          <strong>${totalSales}</strong>
           <p>Net Sales</p>
         </div>
-        
       </div>
     </div>
   );

@@ -65,17 +65,25 @@ console.log('ORDERDATA==', orderData)
       barcode_number: data?.barcode_number || '',
       tracking_number: data?.tracking_number || '',
       consignment_number: data?.consignment_number || '',
-      products: data?.product || [],
+      products: data?.products || [],
       timer: data?.timer || "",
       buyer_details: data?.buyer_details || {},
       tax: data?.sales_tax || 0,
       delivery_fee: data?.delivery_fee || 0,
       delivery_company_name: data?.delivery_company_name || '',
+      
       discount: data?.discount || 0,
-      total: (data?.subtotal || 0) + (data?.sales_tax || 0) + (data?.delivery_fee || 0) - ( data?.discount || 0) || 0,
-      subtotal: data?.subtotal || "0",
+      payment_type: data?.payment_gateway || '',
+      paid_amount: data?.paid_total || '',
+      total: (data?.total || 0) + (data?.sales_tax || 0) + (data?.delivery_fee || 0) - ( data?.discount || 0) || 0,
+      subtotal: data?.total || "0",
       billing_address: data?.billing_address || "",
       shipping_address: data?.shipping_address || "",
+      // delivery_company_id: 0,
+      // delivery_company_name: null,
+      // delivery_date: null,
+      // delivery_fee: 0,
+      // delivery_time: "0",
       origin: {
         latitude: parseFloat(data?.shop?.latitude) || "",
         longitude: parseFloat(data?.shop?.longitude) || "",
@@ -178,8 +186,33 @@ console.log('ORDERDATA==', orderData)
                 })}
               </tbody>
             </table>
-            <div className="order-subtotal row">
-              <div className="col-lg-7" />
+            <div className="order-subtotal row max-lg:flex-col-reverse ">
+              <div className="col-lg-5">
+                <div className="cover">
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Paid amount</th>
+                        <th className="product-price" scope="col">
+                          ${detail?.paid_amount}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Payment Gateway</th>
+                        <td className="product-price">{detail?.payment_type}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="cover border-y mt-12 py-3 max-lg:mb-12">
+                  <p className="px-2 pb-2 font-bold">Delivery Company</p> 
+                  <p className="px-2 ">{detail?.delivery_company_name || 'No delivery company assigned'}</p> 
+                </div>
+              </div>
+              <div  className="col-lg-2" />
               <div className="col-lg-5">
                 <div className="cover">
                   <table className="table">
@@ -187,7 +220,7 @@ console.log('ORDERDATA==', orderData)
                       <tr>
                         <th scope="col">Sub total</th>
                         <th className="product-price" scope="col">
-                          {detail?.subtotal}
+                          ${detail?.subtotal}
                         </th>
                       </tr>
                     </thead>
@@ -209,7 +242,7 @@ console.log('ORDERDATA==', orderData)
                       </tr>
                       <tr>
                         <th scope="row">Total</th>
-                        <td className="product-price"> {detail?.total}</td>
+                        <td className="product-price"> ${detail?.total}</td>
                       </tr>
                     </tbody>
                   </table>

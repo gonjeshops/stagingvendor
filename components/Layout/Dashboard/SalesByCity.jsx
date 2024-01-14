@@ -2,8 +2,8 @@ import React from 'react';
 
 const SalesByCity = ({ salesData }) => {
   return (
-    <div className="bg-white p-4 rounded-md shadow my-6">
-      <h2 className="text-xl font-bold mb-4">Sales By City</h2>
+    <div className="cards flex-shrink-0">
+      <h2 className="cardh4 mb-4">Sales By City</h2>
       <ul>
         {salesData?.map((item, index) => (
           <li key={index} className="flex justify-between items-center border-b py-2">

@@ -2,8 +2,8 @@ import React from 'react';
 
 const TopSellingProducts = ({ topSellingProducts }) => {
   return (
-    <div className="my-8 bg-white p-8 rounded-md shadow">
-      <h2 className="text-xl font-bold mb-4">Top Selling Products</h2>
+    <div className="cards">
+      <h2 className="cardh4 mb-4">Top Selling Products</h2>
       <table className="min-w-full">
         <thead>
           <tr className="">

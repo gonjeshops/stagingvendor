@@ -250,6 +250,9 @@ Link {
 .text-blue-hover {
   @apply  text-blue-400 hover:text-blue-600 duration-300
 }
+.text-hover {
+  @apply hover:text-blue-600 duration-300
+}
 
 .bg-red{
   @apply bg-red-600
@@ -285,6 +288,17 @@ input{
 
 }
 
+.cards {
+  @apply bg-[background] p-8 rounded-md shadow space-y-4
+}
+
+.cardh4 {
+  @apply text-lg font-bold
+}
+
+.cardh5 {
+  @apply text-base font-bold
+}
 
 /* .bg-gonje-gradient {
   background: rgb(2,0,36);

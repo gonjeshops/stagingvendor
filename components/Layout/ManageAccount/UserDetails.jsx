@@ -12,7 +12,7 @@ const UserDetails = ({user, fetchProfile, }) => {
   const [edit, setEdit] = useState(0)
 
   const initialFormData = {
-    business_name: user?.name || '',
+    business_name: user?.business_name || '',
     // email: user?.email || "",
     business_number: user?.business_number  || "",
     // userAddress: user?.address?.length ? Object.values(user?.address).join(', ') : "789 User St, Villagetown, Country",

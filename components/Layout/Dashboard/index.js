@@ -43,63 +43,71 @@ console.log(userDetail,   dashboardDetail)
       totalReceivedQuoteRequests: Number(dashboardDetail?.totalReceivedQuoteRequests)?.toLocaleString('en-US'),
       totalSales: Number(dashboardDetail?.totalSales)?.toLocaleString('en-US'),
       userTotalRevenue: Number(dashboardDetail?.userTotalRevenue)?.toLocaleString('en-US'),
-      totalOrdersPerMonth: dashboardDetail?.totalOrdersPerMonth
+      totalOrdersPerMonth: dashboardDetail?.totalOrdersPerMonth,
+      productsSoldPerDay: dashboardDetail?.productsSoldPerDay,
+      projectedRevenue: dashboardDetail?.projectedRevenue,
+      topCities: dashboardDetail?.topCities,
+      topProductsForPieChart: dashboardDetail?.topProductsForPieChart,
+      topSalesOfDay: dashboardDetail?.topSalesOfDay,
+      topSellingProducts: dashboardDetail?.topSellingProducts,
+      topSellingProducts: dashboardDetail?.topSellingProducts,
+      totalOrdersPerMonth: dashboardDetail?.totalOrdersPerMonth,
+      transactionsForLast12Months: dashboardDetail?.transactionsForLast12Months,
+      totalProducts: dashboardDetail?.totalProducts,
     };
   }, [dashboardDetail]);
 
   return (
-    <>
+    <div className="h-full w-full space-y-8">
       {isLoading && <Loader />}
-      <div class="approval">
+      <div className="cards">
         <div>
-          <p>You have new 10 products for approval</p>
+          <h4 className="cardh4 pb-8">Pending tasks</h4>
+          <p>You have no pending task</p>
           <div>
             <Image src={ProcessSvg} alt="" />
-            <span>1:00:03</span>
+            {/* <span>{new Date().toLocaleString()}</span> */}
           </div>
         </div>
       </div>
 
-      <div className="row ">
-        <div className="col-xl-2 grid h-full ">
-          <NetSales userData={userData} dashboardDetail={dashboardDetail} />
-        </div>
-        <div className="col-xl-10">
+      <div className="flex gap-8 w-full ">
+        {/* <div className="flex-shrink-0 ">
+          <NetSales userData={userData} totalSales={dashboardData?.totalSales} />
+        </div> */}
+        <div className="w-full">
           <Statistics dashboardData={dashboardData} />
         </div>
       </div>
 
-      <div className="row">
-        <div className="col-xl-12">
-          <div className="profit row d-flex ">
+      <div className="flex gap-8 max-md:grid w-full ">
             <OrderAndProfit dashboardData={dashboardData} />
-            <div className="col-xl-4 col-sm-6">
-              <Earnings topProductsForPieChart={dashboardDetail?.topProductsForPieChart}/>
-            </div>
-            <div className="flex gap-6 items-start flex-wrap">
-              <ProjectedRevenue revenueData={dashboardDetail?.projectedRevenue}/>
+
+            <Earnings topProductsForPieChart={dashboardDetail?.topProductsForPieChart}/>
+</div>
+<div className="flex gap-8 w-full flex-wrap">
+<ProjectedRevenue revenueData={dashboardDetail?.projectedRevenue}/>
               <ProductsoldPerDay productSold={dashboardDetail?.productsSoldPerDay} />
-              
               <SalesByCity salesData={dashboardDetail?.topCities}/>
-             
-            </div>
-            <div className="flex gap-6 items-start flex-wrap">
-            <TopSellingProducts topSellingProducts={dashboardDetail?.topSellingProducts}/>
+</div>
+
+<div className="flex gap-8 w-full ">
+<TopSellingProducts topSellingProducts={dashboardDetail?.topSellingProducts}/>
               <TopSalesofDay topSales={dashboardDetail?.topSalesOfDay} />
-              </div>
+</div>
 
             
-          </div>
-        </div>
 
-        <div className="c">
+
+
+
+<div className="flex gap-8 w-full ">
           <RevenueReport transactionsForLast12Months={dashboardDetail?.transactionsForLast12Months}/>
         </div>
         {/* <div className="col-xl-12">
           <Fake monthlyRevenue={dashboardDetail?.transactionsForLast12Months} monthlyOrders={dashboardDetail?.totalOrdersPerMonth}/>
         </div> */}
       </div>
-    </>
   );
 };
 

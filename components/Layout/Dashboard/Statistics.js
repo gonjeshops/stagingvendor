@@ -1,71 +1,65 @@
 import Image from "next/image";
-import React from "react";
+import Link from 'next/link'
 import { ProductsSvg, RevenueSvg, SalesSvg } from "../../../assets";
 const Statistics = ({ dashboardData }) => {
 
-  const {totalCustomerOrders,averageOrderValue,totalReceivedInvoices,totalReceivedQuoteRequests,totalSales,userTotalRevenue } = dashboardData
-  // totalCustomerOrders: dashboardDetail?.totalCustomerOrders,
-  //     averageOrderValue: dashboardDetail?.averageOrderValue,
-  //     totalReceivedInvoices: dashboardDetail?.totalReceivedInvoices,
-  //     totalReceivedQuoteRequests: dashboardDetail?.totalReceivedQuoteRequests,
-  //     totalSales: dashboardDetail?.totalSales,
-  //     userTotalRevenue: dashboardDetail?.userTotalRevenue,
-  console.log('==', dashboardData)
+  const {totalCustomerOrders,averageOrderValue,totalReceivedInvoices,totalReceivedQuoteRequests,totalSales,userTotalRevenue ,totalProducts} = dashboardData
+  
   return (
-    <div className=" py-8 px-4 bg-background  shadow my-4 ">
+    <div className=" cards ">
       <div className="heading d-flex justify-content-between">
-        <h2 className="font-bold text-lg">Statistics</h2>
+        <h2 className="cardh4">Statistics</h2>
         <span>Updated 1 month ago</span>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 bg-background gap-6 items-center justify-between mt-12">
+      <div className="flex flex-wrap bg-background gap-8 items-center justify-even">
         <div className="flex gap-4 items-center">
           <Image src={SalesSvg} />
-          <div className="">
-            <h3 className="font-bold">{totalSales}</h3>
-            <p>Total sales</p>
+          <div  className="">
+            <h3 className="font-bold text-green-600">${totalSales}</h3>
+            <p>Net sales</p>
           </div>
         </div>
-        {/* <div className="flex gap-4 items-center">
+        <div className="flex gap-4 items-center">
           <Image src={ProductsSvg} />
-          <div className="content">
-            <h3 className="font-bold">{null}</h3>
+          <Link href={`/inventory`} className="content text-hover" >
+            <h3 className="font-bold">{totalProducts}</h3>
             <p>Listed products</p>
-          </div>
-        </div> */}
+          </Link >
+        </div>
         <div className="flex gap-4 items-center">
           <Image src={RevenueSvg} />
           <div className="content">
-          <h3 className="font-bold">{userTotalRevenue}</h3>
+          <h3 className="font-bold">${userTotalRevenue}</h3>
             <p>Total revenue</p>
           </div>
         </div>
         <div className="flex gap-4 items-center">
-          <Image src={RevenueSvg} />
-          <div className="content">
+          <Image src={ProductsSvg} />
+          <Link href={'/orders'} className="content text-hover ">
           <h3 className="font-bold">{totalCustomerOrders}</h3>
             <p>Customer orders</p>
-          </div>
+          </Link>
         </div>
         <div className="flex gap-4 items-center">
-          <Image src={RevenueSvg} />
-          <div className="content">
+          <Image src={ProductsSvg} />
+          <Link href={'/orders'} className="content text-hover">
           <h3 className="font-bold">{averageOrderValue}</h3>
             <p>Average order</p>
-          </div>
+          </Link>
         </div>
         <div className="flex gap-4 items-center">
-          <Image src={RevenueSvg} />
-          <div className="content">
+          <Image src={ProductsSvg} />
+          <Link href={'/invoicing/received_invoice'} className="content text-hover">
           <h3 className="font-bold">{totalReceivedInvoices}</h3>
             <p>Received invoices</p>
-          </div>
+          </Link >
         </div>
         <div className="flex gap-4 items-center">
-          <Image src={RevenueSvg} />
-          <div className="content">
+          <Image src={ProductsSvg} />
+          <Link href={'/quotes/incoming'} className="content text-hover">
           <h3 className="font-bold">{totalReceivedQuoteRequests}</h3>
             <p>Received quotes</p>
-          </div>
+          </Link >
         </div>
       </div>
     </div>

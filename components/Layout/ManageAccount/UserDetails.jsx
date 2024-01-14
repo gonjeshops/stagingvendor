@@ -70,11 +70,6 @@ const h = {
     let isValid = true;
     const newErrors = {};
 
-    // if (!formData.email.trim()) {
-    //   newErrors.email = 'Business Email is required';
-    //   isValid = false;
-    // }
-
     if (!formData.business_number.trim()) {
       newErrors.business_number = 'Business Phone Number is required';
       isValid = false;
@@ -111,10 +106,9 @@ const h = {
         console.log('formRes=', response);
         toast.success('Registration successful');
       } else {
-        console.log(error);
+        console.log(response);
         toast.error('Registration failed');
       }
-      
     } catch (error) {
       console.error('Error submitting the form:', error);
     } finally {

@@ -13,15 +13,18 @@ const ShopDetails = ({user, fetchProfile}) => {
     businessPhoneNumber: "(555) 123-4567",
     name: user?.shop?.name || "",
     description: "A trendy place with a diverse menu",
-    // address: "123 Main Street, Cityville",
     paymentType: "Credit Card",
     latitude: "40.7128",
     longitude: "-74.0060",
 
     constact: "",
-    facebookLink: "",
-    website: ""
-
+    website: "",
+    zip : "6892",
+    city: "Lincoln",
+    state: "Illinois",
+    country : "USA",
+    street_address : "4885  Spring Street",
+    socials: ""
   };
 
   let r= {
@@ -107,7 +110,16 @@ const ShopDetails = ({user, fetchProfile}) => {
       const response= await fetchService({
         url: shopUrl,
         method: 'PUT',
-        body: formData,
+        body: {
+          ...formData,
+          shop: {
+
+          },
+          setting {
+l:''
+          },
+          socials: {},
+        },
       })
       if (response?.status===200) {
         // setUser(response?.data)
@@ -116,7 +128,7 @@ const ShopDetails = ({user, fetchProfile}) => {
         console.log('formRes=', response);
         toast.success('Registration successful');
       } else {
-        console.log(error);
+        console.log(response);
         toast.error('Registration failed');
       }
       

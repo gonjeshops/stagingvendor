@@ -9,28 +9,24 @@ const ShopDetails = ({user, fetchProfile}) => {
   const [edit, setEdit] = useState(0);
 
   const initialFormData = {
-    name: user?.shop?.name || "",
-    contact: user?.shop?.settings?.contact || "",
-    description: user?.shop?.description || "A trendy place with a diverse menu",
-
-    zip: user?.shop?.address?.zip || "6892",
-    city: user?.shop?.address?.zip || "Lincoln",
-    state: user?.shop?.address?.zip || "Illinois",
-    country: user?.shop?.address?.zip || "USA",
-    street_address: user?.shop?.address?.street_address || "4885  Spring Street",
-
-    latitude: user?.shop?.latitude || "40.7128",
-    longitude: user?.shop?.longitude || "-74.0060",
-    paymentType: user?.shop?.paymentType || "Credit Card",
-
-    
-    socials: user?.shop?.settings?.socials || [],
-    website: user?.shop?.settings?.website || "",
+    name: user?.shops?.[0]?.name || "",
+    contact: user?.shops?.[0]?.settings?.contact || "",
+    description: user?.shops?.[0]?.description || "",
+    zip: user?.shops?.[0]?.address?.zip || "",
+    city: user?.shops?.[0]?.address?.zip || "",
+    state: user?.shops?.[0]?.address?.zip || "",
+    country: user?.shops?.[0]?.address?.zip || "",
+    street_address: user?.shops?.[0]?.address?.street_address || "",
+    latitude: user?.shops?.[0]?.latitude || "",
+    longitude: user?.shops?.[0]?.longitude || "",
+    paymentType: user?.shops?.[0]?.payment_type || "",
+    socials: user?.shops?.[0]?.settings?.socials || [],
+    website: user?.shops?.[0]?.settings?.website || "",
   };
 
   let r= {
     "name": "My Shop",
-    "description": "A wonderful shop",
+    "description": "A wonderful shops?.[0]",
     "address": {
       "zip": "6892",
       "city": "Lincoln",
@@ -67,6 +63,7 @@ const ShopDetails = ({user, fetchProfile}) => {
 
   useEffect(() => {
     setFormData(initialFormData)
+    console.log('userrrrrrrr', user, formData, initialFormData)
   }, [user?.id])
 
   const validateForm = () => {
@@ -78,8 +75,8 @@ const ShopDetails = ({user, fetchProfile}) => {
       isValid = false;
     }
 
-    if (!formData.descrition.trim()) {
-      newErrors.descrition = 'Shop descrition is required';
+    if (!formData.description.trim()) {
+      newErrors.description = 'Shop description is required';
       isValid = false;
     }
 
@@ -123,14 +120,36 @@ const ShopDetails = ({user, fetchProfile}) => {
         url: shopUrl,
         method: 'PUT',
         body: {
-          ...formData,
-          shop: {
-
+          "name": formData?.name,
+          "description": formData?.description,
+          "address": {
+            "zip": formData?.zip,
+            "city": formData?.city,            "state": formData?.sate,
+            "country": formData?.country,
+            "street_address": formData?.street_address
           },
-          setting: {
-
+          "settings": {
+            "contact": formData?.contact,
+            "socials": [
+              {
+                "url": "https://www.instagram.com/",
+                "icon": "InstagramIcon"
+              }
+            ],
+            "website": formData?.website,
+            "location": {
+              "lat": formData?.latitude,
+              "lng": formData?.longitude,
+              "city": formData?.city,
+              "state": formData?.state,
+              "country": formData?.country,
+              "formattedAddress": `${formData?.street_address} ${formData?.city} ${formData?.state} ${formData?.country}.`
+            }
           },
-          socials: {},
+          // "slug": "shhhhh-shops?.[0]",
+          "payment_type": formData?.payment_type,
+          "latitude": formData?.latitude,
+          "longitude": formData?.longitude,
         },
       })
       if (response?.status===200) {

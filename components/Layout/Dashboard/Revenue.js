@@ -1,4 +1,5 @@
 import React from "react";
+import { FaTable } from "react-icons/fa";
 import {
   BarChart,
   Bar,
@@ -24,11 +25,14 @@ const data = [
   { month: "nov", expense: 320, earning: 800 },
   { month: "dec", expense: 400, earning: 100 },
 ];
-const RevenueReport = ({transactionsForLast12Months}) => {
+const RevenueReport = ({transactionsForLast12Months, setModalType}) => {
   return (
     <div className="cards">
-      <h4 className="cardh4">Monthly Revenue</h4>
-      {/* <ResponsiveContainer> */}
+      <div className="flex gap-6 justify-between items-center">
+          <h4 className="cardh4">Monthly Revenue</h4>
+          <FaTable className="cursor-pointer text-gray-400 hover:text-gray-700 duration-300" size={16} onClick={()=>setModalType('transactionsForLast12Months')} />
+      </div>
+
      <div className="">
      <BarChart width={800} height={300} data={transactionsForLast12Months} className="profit_bar">
         <XAxis dataKey="month" angle={-15} minTickGap={0} interval={0} />
@@ -39,7 +43,6 @@ const RevenueReport = ({transactionsForLast12Months}) => {
         <Tooltip />
       </BarChart>
      </div>
-      {/* </ResponsiveContainer> */}
     </div>
   );
 };

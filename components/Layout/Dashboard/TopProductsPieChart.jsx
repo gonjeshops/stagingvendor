@@ -1,4 +1,6 @@
 import React from "react";
+import { AiOutlineTable, AiOutlineTablet } from "react-icons/ai";
+import { FaTable, FaTabletAlt } from "react-icons/fa";
 import {
   PieChart,
   Pie,
@@ -30,16 +32,17 @@ const data = [
     color: "red",
   },
 ];
-const Earnings = ({topProductsForPieChart}) => {
+const TopProductsPieChart = ({topProductsForPieChart, setModalType}) => {
   return (
     <div className="cards">
-      <div className="">
-        <h2 className="cardh4">Top Products Comparison</h2>
-        <p className="mt-2">This Month</p>
-        {/* <strong>$4055.55</strong>
-        <p>45.2% more then last month</p> */}
+      <div className="flex justify-between items-center">
+        <div className="">
+          <h2 className="cardh4">Top Products Comparison</h2>
+          <p className="mt-2">This Month</p>
+        </div>
+        <FaTable className="cursor-pointer text-gray-400 hover:text-gray-700 duration-300" size={16} onClick={()=>setModalType('topProductsForPieChart')} />
       </div>
-      {/* <ResponsiveContainer width="100%" height="100%"> */}
+     
       <PieChart width={320} height={200} className="profit_bar">
         <Pie
           dataKey="total_sold"    
@@ -50,7 +53,9 @@ const Earnings = ({topProductsForPieChart}) => {
           cy="50%"
           outerRadius={80}
           fill="red"
-          label
+          name="name"
+          label="total_sold"
+          nameKey={'name'}
         >
           {data.map((el, index) => {
             return <Cell key={`cell_${index}`} fill={el.color} />;
@@ -63,4 +68,4 @@ const Earnings = ({topProductsForPieChart}) => {
   );
 };
 
-export default Earnings;
+export default TopProductsPieChart;

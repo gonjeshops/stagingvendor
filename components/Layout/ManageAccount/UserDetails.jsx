@@ -172,7 +172,7 @@ const h = {
             {/* Business Phone Number */}
             <div className="mb-4">
             <label htmlFor="business_number" className="block text-sm font-medium text-gray-600">
-                Phone Number
+                Business Number
             </label>
             <input
                 type="text"
@@ -189,7 +189,7 @@ const h = {
             {/* User Name */}
             <div className="mb-4">
             <label htmlFor="business_name" className="block text-sm font-medium text-gray-600">
-                Name
+               Business Name
             </label>
             <input
                 type="text"

@@ -118,7 +118,7 @@ const BillingDetails = ({user,}) => {
   return (
     <div className="w-full bg-white px-8 pb-8 rounded-md shadow">
       <div className="top-heading ">
-        <h3>Shipping Address</h3>
+        <h3>Billing Address</h3>
       </div>
       <div className="flex justify-end">
         {edit ? (

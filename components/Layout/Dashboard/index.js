@@ -72,17 +72,34 @@ const DashboardPage = ({
     };
   }, [dashboardDetail]);
 
+  const [type, setType] = useState('b2c')
+
   return (
     <div className="h-full w-full space-y-8">
       {isLoading && <Loader />}
       <div className="cards">
-        <div>
-          <h4 className="cardh4 pb-8 ">Pending tasks</h4>
-          <p className="">You have no pending task</p>
-          <div className="">
-            <Image src={ProcessSvg} alt="" />
+          <div className="md:flex gap-4 items-center justify-between space-y-4">
+            <h3 className="text-2xl font-semibold">
+              {type === 'b2c'
+                ? 'Vendor to customer dashboard (B2C)'
+                : 'Vendor to vendor dashboard (B2B)'}
+            </h3>
+            <div className="flex flex-col items-end">
+              <p className="pb-2">Switch dashboard</p>
+              <div className="flex gap-4 items-center">
+                <button onClick={() => setType('b2c')} className={`${type === 'b2c' ? 'bg-gonje-green' : 'bg-gray-200'} hover:border-0 duration-300 px-4 py-2 rounded`}>
+                  B2C
+                </button>
+                <button onClick={() => setType('b2b')} className={`${type === 'b2b' ? 'bg-gonje-green' : 'bg-gray-200'} hover:border-0 duration-300 px-4 py-2 rounded`}>
+                  B2B
+                </button>
+              </div>
+            
+            </div>
           </div>
-        </div>
+
+          <h5 className="cardh4 ">Pending tasks</h5>
+          <p className="">You have no pending task</p>
       </div>
 
       <div className="flex gap-8 w-full ">

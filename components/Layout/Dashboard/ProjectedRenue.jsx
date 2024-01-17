@@ -1,3 +1,4 @@
+import { currency } from '@/lib/currency';
 import React from 'react';
 
 const ProjectedRevenue = ({ revenueData }) => {
@@ -17,8 +18,8 @@ const ProjectedRevenue = ({ revenueData }) => {
           {revenueData &&
             Object?.entries(revenueData)?.map(([projectId, amount]) => (
               <tr key={projectId}>
-                <td className="border p-2">Project ID {projectId}</td>
-                <td className="border p-2">${amount}</td>
+                <td className="border p-2">{projectId}</td>
+                <td className="border p-2">{'$'+ Number(amount)?.toLocaleString("en-US")}</td>
               </tr>
             ))}
         </tbody>

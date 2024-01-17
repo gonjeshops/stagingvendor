@@ -15,6 +15,7 @@ import { connect } from "react-redux";
 import { useRouter } from "next/router";
 import Loader from "../../../common/Loader";
 import { useGlobalState } from "@/context/GlobalStateContext";
+import Breadcrumb from "@/componentsB2b/BreadCrumb";
 // import { route } from "next/dist/server/router";
 
 const productTypes = [
@@ -253,7 +254,8 @@ const AddInventory = ({
         <div className="top-heading">
           <h3>{!isEdit ? "Create New Inventory" : "Update Inventory"}</h3>
         </div>
-        <div className="row mb-4 inventory_upload">
+        {/* <Breadcrumb/> */}
+        <div className="mt-4 row mb-4 inventory_upload">
           <UploadImages
             title="Gallery"
             productData={productData}

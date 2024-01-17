@@ -77,21 +77,21 @@ const DashboardPage = ({
       {isLoading && <Loader />}
       <div className="cards">
         <div>
-          <h4 className="cardh4 pb-8 text-end">Pending tasks</h4>
-          <p className="text-end">You have no pending task</p>
-          <div className="text-end">
+          <h4 className="cardh4 pb-8 ">Pending tasks</h4>
+          <p className="">You have no pending task</p>
+          <div className="">
             <Image src={ProcessSvg} alt="" />
           </div>
         </div>
       </div>
 
-      <div className="flex gap-8 w-full text-end">
+      <div className="flex gap-8 w-full ">
         <div className="w-full">
           <Statistics dashboardData={dashboardData} />
         </div>
       </div>
 
-      <div className="flex gap-8 max-md:grid w-full text-end">
+      <div className="flex gap-8 max-md:grid w-full ">
         <OrderAndProfit
           dashboardData={dashboardData}
           setModalType={setModalType}
@@ -102,20 +102,20 @@ const DashboardPage = ({
           setModalType={setModalType}
         />
       </div>
-      <div className="flex gap-8 w-full flex-wrap text-end">
+      <div className="flex gap-8 w-full flex-wrap ">
         <ProjectedRevenue revenueData={dashboardDetail?.projectedRevenue} />
         <ProductsoldPerDay productSold={dashboardDetail?.productsSoldPerDay} />
         <SalesByCity salesData={dashboardDetail?.topCities} />
       </div>
 
-      <div className="flex gap-8 w-full text-end">
+      <div className="flex gap-8 w-full ">
         <TopSellingProducts
           topSellingProducts={dashboardDetail?.topSellingProducts}
         />
         <TopSalesofDay topSales={dashboardDetail?.topSalesOfDay} />
       </div>
 
-      <div className="flex gap-8 w-full text-end">
+      <div className="flex gap-8 w-full ">
         <RevenueReport
           transactionsForLast12Months={
             dashboardDetail?.transactionsForLast12Months

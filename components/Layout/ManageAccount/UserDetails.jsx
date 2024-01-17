@@ -1,24 +1,17 @@
 
 
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
 import { fetchService, vendorUrl } from '@/api';
-import { updateUserDetail } from '@/api/userDetail';
 import { toast } from 'react-toastify';
-// import { toast } from "react-toastify";
 
 const UserDetails = ({user, fetchProfile, }) => {
   const [edit, setEdit] = useState(0)
 
   const initialFormData = {
     business_name: user?.business_name || '',
-    // email: user?.email || "",
     business_number: user?.business_number  || "",
-    // userAddress: user?.address?.length ? Object.values(user?.address).join(', ') : "789 User St, Villagetown, Country",
     longitude: user?.longitude || "",
-    last_name: "Emma",
-    email: "ad@ad.com",
     latitude: user?.latitude ||"",
     contact_details: user?.contact_details ||''
   };
@@ -46,18 +39,6 @@ const h = {
     "postcode": "69678971"
   }
 }
-
-  const clearForm = () => {
-    setFormData({
-      business_name: '',
-      email: '',
-      business_number: '',
-      userAddress: '',
-      longitude: '',
-      latitude: '',
-    });
-  };
-
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -100,7 +81,6 @@ const h = {
         body: formData,
       })
       if (response?.status===200) {
-        // setUser(response?.data)
         setErrors({});
         setEdit(0)
         console.log('formRes=', response);
@@ -151,22 +131,6 @@ const h = {
             </div>
             
         <form onSubmit={handleSubmit}>
-
-            {/* <div className="mb-4 w-full">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-600">
-                User Email
-            </label>
-            <input
-                type="text"
-                id="email"
-                name="email"
-                value={formData.email || ''}
-                onChange={handleInputChange}
-                disabled={!edit}
-                className={inputControl}
-            />
-            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
-            </div> */}
 
             <div className="grid sm:grid-cols-2 gap-4">
             {/* Business Phone Number */}

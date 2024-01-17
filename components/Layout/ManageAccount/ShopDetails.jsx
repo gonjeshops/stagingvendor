@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { FaEdit } from 'react-icons/fa';
+import { FaEdit, FaFacebook, FaInstagram, FaTwitter, FaWeebly, FaWeibo } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { fetchService, shopUrl } from '@/api';
 
@@ -20,7 +20,10 @@ const ShopDetails = ({user, fetchProfile}) => {
     latitude: user?.shops?.[0]?.latitude || "",
     longitude: user?.shops?.[0]?.longitude || "",
     paymentType: user?.shops?.[0]?.payment_type || "",
-    socials: user?.shops?.[0]?.settings?.socials || [],
+    facebook: "https//facebook.com/",
+    instagram: "https//instagram.com/",
+    twitter: "https//twitter.com/",
+    // twitter: user?.shops?.[0]?.settings?.twitter || "",
     website: user?.shops?.[0]?.settings?.website || "",
   };
 
@@ -63,7 +66,6 @@ const ShopDetails = ({user, fetchProfile}) => {
 
   useEffect(() => {
     setFormData(initialFormData)
-    console.log('userrrrrrrr', user, formData, initialFormData)
   }, [user?.id])
 
   const validateForm = () => {
@@ -132,9 +134,17 @@ const ShopDetails = ({user, fetchProfile}) => {
             "contact": formData?.contact,
             "socials": [
               {
-                "url": "https://www.instagram.com/",
-                "icon": "InstagramIcon"
-              }
+                "url": formData.facebook,
+                "icon": "facebook"
+              },
+              {
+                "url": formData.instagram,
+                "icon": "instagram"
+              },
+              {
+                "url": formData.twitter,
+                "icon": "twitter"
+              },
             ],
             "website": formData?.website,
             "location": {
@@ -146,14 +156,12 @@ const ShopDetails = ({user, fetchProfile}) => {
               "formattedAddress": `${formData?.street_address} ${formData?.city} ${formData?.state} ${formData?.country}.`
             }
           },
-          // "slug": "shhhhh-shops?.[0]",
           "payment_type": formData?.payment_type,
           "latitude": formData?.latitude,
           "longitude": formData?.longitude,
         },
       })
       if (response?.status===200) {
-        // setUser(response?.data)
         setErrors({});
         setEdit(0)
         console.log('formRes=', response);
@@ -264,7 +272,7 @@ const ShopDetails = ({user, fetchProfile}) => {
         </div>
 
         <div className="grid sm:grid-cols-2 gap-4">
-          <div className="mb-4">
+          <div className="">
             <label htmlFor="street_address" className="block text-sm font-medium text-gray-600">
               Street Address
             </label>
@@ -280,7 +288,7 @@ const ShopDetails = ({user, fetchProfile}) => {
             {errors.street_address && <p className="text-red-500 text-xs mt-1">{errors.street_address}</p>}
           </div>
 
-          <div className="mb-4">
+          <div className="">
             <label htmlFor="zip" className="block text-sm font-medium text-gray-600">
               zip
             </label>
@@ -296,7 +304,7 @@ const ShopDetails = ({user, fetchProfile}) => {
             {errors.zip && <p className="text-red-500 text-xs mt-1">{errors.zip}</p>}
           </div>
 
-          <div className="mb-4">
+          <div className="">
             <label htmlFor="city" className="block text-sm font-medium text-gray-600">
               City
             </label>
@@ -312,7 +320,7 @@ const ShopDetails = ({user, fetchProfile}) => {
             {errors.city && <p className="text-red-500 text-xs mt-1">{errors.city}</p>}
           </div>
 
-          <div className="mb-4">
+          <div className="">
             <label htmlFor="state" className="block text-sm font-medium text-gray-600">
               State
             </label>
@@ -328,7 +336,7 @@ const ShopDetails = ({user, fetchProfile}) => {
             {errors.state && <p className="text-red-500 text-xs mt-1">{errors.state}</p>}
           </div>
 
-          <div className="mb-4">
+          <div className="">
             <label htmlFor="country" className="block text-sm font-medium text-gray-600">
               Country
             </label>
@@ -344,9 +352,7 @@ const ShopDetails = ({user, fetchProfile}) => {
             {errors.country && <p className="text-red-500 text-xs mt-1">{errors.country}</p>}
           </div>
           
-
-          {/* Latitude */}
-          <div className="mb-4">
+          <div className="">
             <label htmlFor="latitude" className="block text-sm font-medium text-gray-600">
               Latitude
             </label>
@@ -361,8 +367,7 @@ const ShopDetails = ({user, fetchProfile}) => {
             />
           </div>
 
-          {/* Longitude */}
-          <div className="mb-4">
+          <div className="">
             <label htmlFor="longitude" className="block text-sm font-medium text-gray-600">
               Longitude
             </label>
@@ -377,7 +382,6 @@ const ShopDetails = ({user, fetchProfile}) => {
             />
           </div>
 
-          {/* Payment Type */}
           <div className="mb-4">
             <label htmlFor="paymentType" className="block text-sm font-medium text-gray-600">
               Payment Type
@@ -392,6 +396,72 @@ const ShopDetails = ({user, fetchProfile}) => {
               className={inputControl}
             />
           </div>
+        </div>
+
+        <div className="">
+          <h5 className="mb-2">Enter url</h5>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div className="flex gap-2 items-center">
+              <label htmlFor="website" className="block font-medium text-gray-600">
+                <FaWeibo size={20}/>
+              </label>
+              <input
+                type="text"
+                id="website"
+                name="website"
+                value={formData.website || ''}
+                onChange={handleInputChange}
+                disabled={!edit}
+                className={inputControl}
+              />
+            </div>
+
+            <div className="flex gap-2 items-center">
+              <label htmlFor="facebook" className="block font-medium text-gray-600">
+                <FaFacebook size={20}/>
+              </label>
+              <input
+                type="text"
+                id="facebook"
+                name="facebook"
+                value={formData.facebook || ''}
+                onChange={handleInputChange}
+                disabled={!edit}
+                className={inputControl}
+              />
+            </div>
+
+            <div className="flex gap-2 items-center">
+              <label htmlFor="instagram" className="block font-medium text-gray-600">
+                <FaInstagram size={20}/>
+              </label>
+              <input
+                type="text"
+                id="instagram"
+                name="instagram"
+                value={formData.instagram || ''}
+                onChange={handleInputChange}
+                disabled={!edit}
+                className={inputControl}
+              />
+            </div>
+
+            <div className="flex gap-2 items-center">
+              <label htmlFor="twitter" className="block font-medium text-gray-600">
+                <FaTwitter size={20}/>
+              </label>
+              <input
+                type="text"
+                id="twitter"
+                name="twitter"
+                value={formData.twitter || ''}
+                onChange={handleInputChange}
+                disabled={!edit}
+                className={inputControl}S
+              />
+            </div>
+          </div>
+
         </div>
 
         <div className="mt-6">

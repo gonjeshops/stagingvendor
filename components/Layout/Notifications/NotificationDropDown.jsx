@@ -32,7 +32,6 @@ const NotificationDropdown = () => {
       setIsLoading(true);
       try {
         const response = await fetchb2cNotificications(page, 50, );
-        console.log('notifica====', response)
         if (response?.status === 200) {
           const data = response?.data?.data;
           if (data.total_pages !== undefined) {
@@ -41,10 +40,8 @@ const NotificationDropdown = () => {
           setNotifications(data?.notifications);
           setIsLoading(false);
         } else {
-          console.log('NOTIFICATION ERROR RESPONSE==== ', response);
         }
       } catch (err) {
-        console.log('NOTIFICATION CATCH ERROR RESPONSE==== ', err);
         setIsLoading(false);
       }
     };

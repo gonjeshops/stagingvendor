@@ -18,6 +18,11 @@ const Breadcrumb = () => {
     setBreadcrumb(breadcrumbItems);
   }, [router.pathname]);
 
+  if (breadcrumb.length <= 1) {
+    // If there's only one path segment, don't show the breadcrumb
+    return null;
+  }
+
   return (
     <div className="flex items-center flex-wrap">
       {breadcrumb.map((item, index) => (
@@ -25,11 +30,10 @@ const Breadcrumb = () => {
           {index !== 0 && <span className="mx-2">{`>`}</span>}
           {item.path ? (
             <Link href={item.path} as={item.path} passHref className={router.pathname === item.path ? 'active-link' : 'hover-link'}>
-                {item.label.startsWith('[') && item.label.endsWith(']') ? 
-                  router.query[item.label.slice(1, -1)] :
-                  item.label
-                }
-            
+              {item.label.startsWith('[') && item.label.endsWith(']') ? 
+                router.query[item.label.slice(1, -1)] :
+                item.label
+              }
             </Link>
           ) : (
             <span>{item.label}</span>

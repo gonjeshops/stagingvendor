@@ -1,32 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { FaEdit } from 'react-icons/fa';
+import { fetchService, vendorUrl } from '@/api';
 
-const BillingDetails = () => {
-  const { push } = useRouter();
+const BillingDetails = ({user,}) => {
+  const billingAddress = user?.address?.find(address => address?.type === 'billing');
+  const parsedAddress = billingAddress ? JSON.parse(billingAddress?.address) : null;
+  console.log('parsedAddress', parsedAddress)
+
   const [formData, setFormData] = useState({
-    apt: '5',
-    city: 'Chandigarh',
-    phone: '+918978907071',
-    state: 'Punjab',
-    address: 'Akoka, Yaba, Lagos Mainland',
-    postcode: '69678971',
+    apt: '',
+    city: '',
+    phone: '',
+    state: '',
+    address: '',
+    postcode: '',
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [edit, setEdit] = useState(0);
 
-  const clearForm = () => {
-    setFormData({
-      apt: '',
-      city: '',
-      phone: '',
-      state: '',
-      address: '',
-      postcode: '',
-    });
-  };
+  useEffect(() => {
+    setFormData(parsedAddress)
+  }, [parsedAddress?.apt])
+  
 
   const validateForm = () => {
     let isValid = true;
@@ -42,7 +40,18 @@ const BillingDetails = () => {
       isValid = false;
     }
 
-    // Additional validation rules can be added as needed
+    if (!formData.apt.trim()) {
+      newErrors.apt = 'apt is required';
+      isValid = false;
+    }
+    if (!formData.state.trim()) {
+      newErrors.state = 'state is required';
+      isValid = false;
+    }
+    if (!formData.postcode.trim()) {
+      newErrors.postcode = 'postcode is required';
+      isValid = false;
+    }
 
     setErrors(newErrors);
     return isValid;
@@ -57,20 +66,32 @@ const BillingDetails = () => {
 
     setLoading(true);
 
+    const newFormData = {
+      business_name: user?.business_name || '',
+      business_number: user?.business_number  || "",
+      longitude: user?.longitude || "",
+      latitude: user?.latitude ||"",
+      contact_details: user?.contact_details || '',
+      billing_address: formData,
+    }
+
     try {
-      //   const { data, error } = await updateItem('shipping_addresses', formData, 'id', 1);
-      //   if (data) {
-      //     clearForm();
-      //     setErrors({});
-      //     push('/order/success');
-      //     toast.success('Shipping address saved successfully');
-      //   } else {
-      //     console.log(error);
-      //     toast.error('Failed to save shipping address');
-      //   }
-      //   console.log({ data, error });
+      const response= await fetchService({
+        url: vendorUrl,
+        method: 'PUT',
+        body: newFormData,
+      })
+      if (response?.status===200) {
+        setErrors({});
+        setEdit(0)
+        console.log('formRes=', response);
+        toast.success('Registration successful');
+      } else {
+        console.log(response);
+        toast.error('Registration failed');
+      }
     } catch (error) {
-      //   console.error('Error submitting the form:', error);
+      console.error('Error submitting the form:', error);
     } finally {
       setLoading(false);
     }
@@ -97,7 +118,7 @@ const BillingDetails = () => {
   return (
     <div className="w-full bg-white px-8 pb-8 rounded-md shadow">
       <div className="top-heading ">
-        <h3>Billing Address</h3>
+        <h3>Shipping Address</h3>
       </div>
       <div className="flex justify-end">
         {edit ? (
@@ -130,11 +151,13 @@ const BillingDetails = () => {
             type="text"
             id="apt"
             name="apt"
-            value={formData.apt || ''}
+            value={formData?.apt || ''}
             onChange={handleInputChange}
             className={inputControl}
             disabled={!edit}
           />
+            {errors.apt && <p className="text-red-500 text-xs mt-1">{errors.apt}</p>}
+
         </div>
 
         {/* Address */}
@@ -146,11 +169,13 @@ const BillingDetails = () => {
             type="text"
             id="address"
             name="address"
-            value={formData.address || ''}
+            value={formData?.address || ''}
             onChange={handleInputChange}
             className={inputControl}
             disabled={!edit}
           />
+            {errors.address && <p className="text-red-500 text-xs mt-1">{errors.address}</p>}
+
         </div>
 
         {/* City */}
@@ -162,7 +187,7 @@ const BillingDetails = () => {
             type="text"
             id="city"
             name="city"
-            value={formData.city || ''}
+            value={formData?.city || ''}
             onChange={handleInputChange}
             className={inputControl}
             disabled={!edit}
@@ -179,11 +204,13 @@ const BillingDetails = () => {
             type="text"
             id="state"
             name="state"
-            value={formData.state || ''}
+            value={formData?.state || ''}
             onChange={handleInputChange}
             className={inputControl}
             disabled={!edit}
           />
+            {errors.state && <p className="text-red-500 text-xs mt-1">{errors.state}</p>}
+
         </div>
 
         <div className="grid sm:grid-cols-2 gap-4">
@@ -196,11 +223,12 @@ const BillingDetails = () => {
               type="text"
               id="postcode"
               name="postcode"
-              value={formData.postcode || ''}
+              value={formData?.postcode || ''}
               onChange={handleInputChange}
               className={inputControl}
               disabled={!edit}
             />
+            {errors.postcode && <p className="text-red-500 text-xs mt-1">{errors.postcode}</p>}
           </div>
           {/* Phone */}
           <div className="mb-4">
@@ -211,7 +239,7 @@ const BillingDetails = () => {
               type="text"
               id="phone"
               name="phone"
-              value={formData.phone || ''}
+              value={formData?.phone || ''}
               onChange={handleInputChange}
               className={inputControl}
               disabled={!edit}

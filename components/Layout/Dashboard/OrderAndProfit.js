@@ -60,21 +60,15 @@ const pdata = [
   },
 ];
 
-const OrderAndProfit = ({ dashboardData, setModalType }) => {
-  const monthlyData = dashboardData?.monthly_order;
-  const data = RawData.map((el, index) => {
-    return {
-      ...el,
-      totalorder: monthlyData ? monthlyData[index]?.totalorder : 0,
-    };
-  });
+const OrderAndProfit = ({ orderData, setModalType, modal }) => {
+  
   return (
       <div className="cards">
           <div className="flex gap-6 justify-between items-center">
             <h4 className="cardh4">Total orders per month</h4>
-            <FaTable className="cursor-pointer text-gray-400 hover:text-gray-700 duration-300" size={16} onClick={()=>setModalType('totalOrdersPerMonth')} />
+            <FaTable className="cursor-pointer text-gray-400 hover:text-gray-700 duration-300" size={16} onClick={()=>setModalType(modal)} />
         </div>
-          <BarChart className="profit_bar" width={450} height={300} data={dashboardData?.totalOrdersPerMonth} >
+          <BarChart className="profit_bar" width={450} height={300} data={orderData} >
             <Bar
               dataKey="total_orders"
               fill="#8884d8"
@@ -88,50 +82,6 @@ const OrderAndProfit = ({ dashboardData, setModalType }) => {
           </BarChart>
       </div>
 
-      // <div className="col-xl-4 col-sm-6">
-      //   <div className="order_graph">
-      //     <h2>Total orders per month</h2>
-      //     {/* <strong>6,24k</strong> */}
-      //     <ResponsiveContainer
-      //       className="profit_bar"
-      //       width="100%"
-      //       // width={240}
-      //       height={260}
-      //     >
-      //       {/* <LineChart data={dashboardData?.totalOrdersPerMonth}>
-      //         <XAxis dataKey="month" interval={"preserveStartEnd"} />
-      //         <YAxis></YAxis>
-
-      //         <Tooltip />
-      //         <Line dataKey="profit" stroke="#8884d8" activeDot={{ r: 8 }} />
-      //       </LineChart> */}
-
-      //       <AreaChart
-      //         data={dashboardData?.totalOrdersPerMonth}
-      //         margin={{ top: 30, right: 40, left: 0, bottom: 0 }}
-      //       >
-      //         <XAxis dataKey="month" />
-      //         <YAxis />
-      //         <CartesianGrid strokeDasharray="3 3" />
-      //         <Tooltip />
-      //         <ReferenceLine x="Page C" stroke="green" label="Min PAGE" />
-      //         <ReferenceLine
-      //           y={4000}
-      //           label="Max"
-      //           stroke="red"
-      //           strokeDasharray="3 3"
-      //         />
-      //         <Area
-      //           type="monotone"
-      //           dataKey="total_orders"
-      //           stroke="#8884d8"
-      //           // stroke="#82ca9d"
-      //           fill="#82ca9d"
-      //         />
-      //       </AreaChart>
-      //     </ResponsiveContainer>
-      //   </div>
-      // </div>
   );
 };
 

@@ -39,7 +39,6 @@ const GlobalStateProvider = ({ children }) => {
       }
     } catch (error) {
       // Handle any errors that may occur during retrieval
-      console.error('Error retrieving user details from local storage:', error);
       return null;
     }
   }

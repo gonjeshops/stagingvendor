@@ -21,7 +21,7 @@ const TopSellingProducts = ({ topSellingProducts }) => {
                 <td className="p-2">
                   <img
                     src={product.image.thumbnail}
-                    alt={product.name}
+                    alt={product.product_id}
                     className="h-24 w-24 rounded-full object-cover"
                   />
                 </td>

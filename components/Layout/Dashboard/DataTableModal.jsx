@@ -5,8 +5,10 @@ const DataTableModal = ({modalType, setModalType, dashboardData}) => {
   return (
     <CenterModal centerModal={modalType} setCentreModal={setModalType}>
         {modalType==='topProductsForPieChart' && <TopProductsPieChartTable data={dashboardData?.topProductsForPieChart}/>}
-        {modalType==='totalOrdersPerMonth' && <OrdersPerMonthModal data={dashboardData?.topProductsForPieChart}/>}
+        {modalType==='totalOrdersPerMonth' && <OrdersPerMonthModal data={dashboardData?.totalOrdersPerMonth}/>}
+        {modalType==='totalMonthlyB2COrders' && <OrdersPerMonthModal data={dashboardData?.totalMonthlyB2COrders}/>}
         {modalType==='transactionsForLast12Months' && <RevenueModal data={dashboardData?.topProductsForPieChart}/>}
+        {modalType==='totalMonthlyB2CRevenue' && <RevenueModal data={dashboardData?.totalMonthlyB2CRevenue}/>}
     </CenterModal>
   )
 }

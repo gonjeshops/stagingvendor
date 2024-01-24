@@ -4,7 +4,6 @@ import { RequestModal } from './ExpensesModals'
 import { currency } from '@/lib/currency'
 
 const ProductsTableRow = ({data, }) => {
-    console.log('PRODUCTS===',data)
 
   return (
     <>

@@ -117,8 +117,6 @@ const ProductsSearchBarB2C = ({setSearch, setShop }) => {
             className='px-3 bg-gonje-green rounded-md text-white '><FaSearch/></button>
         </div>
 
-
-       
           <Select
               value={shopName}
               onChange={handleShopName}

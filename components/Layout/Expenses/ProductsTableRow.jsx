@@ -38,7 +38,7 @@ const ProductsTableRow = ({data, }) => {
               </td>
 
               <td>
-                ${item?.quantity}
+                {item?.quantity}
               </td>
 
               <td className='  uppercase'>

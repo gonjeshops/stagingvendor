@@ -1,4 +1,4 @@
-import { Inventory, Dashboard, Shipping, HRMSvg } from "../../../assets";
+import { Inventory, Dashboard, Shipping, HRMSvg, V2V } from "../../../assets";
 
 export const SideTabs = {
   vendor: {
@@ -17,15 +17,15 @@ export const SideTabs = {
       url: "/inventory",
       image: Inventory,
     },
-    sales: {
-      name: "Sales",
-      url: "/sales",
-      image: Shipping,
-    },
+    // sales: {
+    //   name: "Sales",
+    //   url: "/sales",
+    //   image: Shipping,
+    // },
     finance: {
       // name: "Finance",
       name: "Vendo To Vendor",
-      image: HRMSvg,
+      image: V2V,
       isCollapsable: true,
       innerTabs: [
         {

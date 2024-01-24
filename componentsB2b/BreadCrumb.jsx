@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { FaChartBar } from 'react-icons/fa';
+import { IoMdApps } from 'react-icons/io';
 
 const Breadcrumb = () => {
   const router = useRouter();
@@ -18,28 +20,39 @@ const Breadcrumb = () => {
     setBreadcrumb(breadcrumbItems);
   }, [router.pathname]);
 
-  if (breadcrumb.length <= 1) {
-    // If there's only one path segment, don't show the breadcrumb
-    return null;
+  if (breadcrumb.length <= 1 && router.pathname !==`/dashboard` ) {
+    return (
+      <div className='flex gap-2 items-center'>
+        <Link href={'/dashboard'} as={'/dashboard'} passHref> <IoMdApps size={20} /> </Link > 
+        <span className=''>{`>`}</span> 
+        <Link href={breadcrumb?.[0]?.path} as={breadcrumb?.[0]?.path} passHref  className='capitalize'>{breadcrumb?.[0]?.label}</Link> 
+      </div>
+    )
+  } else if (breadcrumb.length <= 1 && router.pathname === `/dashboard` ) {
+    return null
   }
 
   return (
     <div className="flex items-center flex-wrap">
+
+      {router.pathname===`/dashboard` ? '':  <><Link href={'/dashboard'} as={'/dashboard'} passHref > <IoMdApps size={20}/>  </Link>  <span className='mx-2'>{`>`}</span> </>} 
+
       {breadcrumb.map((item, index) => (
         <div key={item.id} className="" style={{ textTransform: 'capitalize' }}>
           {index !== 0 && <span className="mx-2">{`>`}</span>}
           {item.path ? (
-            <Link href={item.path} as={item.path} passHref className={router.pathname === item.path ? 'active-link' : 'hover-link'}>
-              {item.label.startsWith('[') && item.label.endsWith(']') ? 
-                router.query[item.label.slice(1, -1)] :
-                item.label
-              }
-            </Link>
-          ) : (
+              <Link href={item.path} as={item.path} passHref className={router.pathname === item.path ? 'active-link' : 'hover-link'}>
+                {item.label.startsWith('[') && item.label.endsWith(']') ? 
+                  router.query[item.label.slice(1, -1)] :
+                  item.label
+                }
+              </Link>
+            ) : (
             <span>{item.label}</span>
           )}
         </div>
       ))}
+
       <style jsx>{`
         .hover-link:hover {
           color: #3182ce; /* Change to your desired hover color */

@@ -14,6 +14,8 @@ import Loader from "../../../common/Loader";
 import { Map_Marker_Svg } from "../../../../assets";
 import GoogleMapComponent from "./googlemap";
 import PackingSlip from "../../PackingSlip";
+import { stringToJson } from "@/lib/stringToJson";
+import { currency } from "@/lib/currency";
 
 const OrderDetailPage = ({
   getOrderDetail,
@@ -68,17 +70,17 @@ console.log('ORDERDATA==', orderData)
       products: data?.products || [],
       timer: data?.timer || "",
       buyer_details: data?.buyer_details || {},
-      tax: data?.sales_tax || 0,
-      delivery_fee: data?.delivery_fee || 0,
+      tax: currency(data?.sales_tax || 0),
+      delivery_fee: currency(data?.delivery_fee || 0),
       delivery_company_name: data?.delivery_company_name || '',
       
-      discount: data?.discount || 0,
+      discount: currency(data?.discount || 0),
       payment_type: data?.payment_gateway || '',
-      paid_amount: data?.paid_total || '',
-      total: (data?.total || 0) + (data?.sales_tax || 0) + (data?.delivery_fee || 0) - ( data?.discount || 0) || 0,
-      subtotal: data?.total || "0",
-      billing_address: data?.billing_address || "",
-      shipping_address: data?.shipping_address || "",
+      paid_amount: currency(data?.paid_total || 0),
+      total: currency((data?.total || 0) + (data?.sales_tax || 0) + (data?.delivery_fee || 0) - ( data?.discount || 0) || 0),
+      subtotal: currency(data?.total),
+      billing_address: stringToJson(data?.billing_address) || "",
+      shipping_address: stringToJson(data?.shipping_address) || "",
       // delivery_company_id: 0,
       // delivery_company_name: null,
       // delivery_date: null,
@@ -179,8 +181,8 @@ console.log('ORDERDATA==', orderData)
                         {item.name} <strong>x</strong>
                         {item.pivot.order_quantity}
                       </td>
-                      <td>{item.pivot.unit_price}</td>
-                      <td className="product-price">{item.pivot.subtotal}</td>
+                      <td>{currency(item.pivot.unit_price)}</td>
+                      <td className="product-price">{currency(item.pivot.subtotal)}</td>
                     </tr>
                   );
                 })}
@@ -194,7 +196,7 @@ console.log('ORDERDATA==', orderData)
                       <tr>
                         <th scope="col">Paid amount</th>
                         <th className="product-price" scope="col">
-                          ${detail?.paid_amount}
+                          {detail?.paid_amount}
                         </th>
                       </tr>
                     </thead>
@@ -220,7 +222,7 @@ console.log('ORDERDATA==', orderData)
                       <tr>
                         <th scope="col">Sub total</th>
                         <th className="product-price" scope="col">
-                          ${detail?.subtotal}
+                          {detail?.subtotal}
                         </th>
                       </tr>
                     </thead>
@@ -242,7 +244,7 @@ console.log('ORDERDATA==', orderData)
                       </tr>
                       <tr>
                         <th scope="row">Total</th>
-                        <td className="product-price"> ${detail?.total}</td>
+                        <td className="product-price"> {detail?.total}</td>
                       </tr>
                     </tbody>
                   </table>

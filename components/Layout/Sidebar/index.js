@@ -69,12 +69,23 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                   >
                     <div className="d-flex">
                       <div className="icon text-center">
-                        <Image
-                          src={Tab.image}
-                          alt="xsxcc"
-                          height={20}
-                          width={20}
-                        />
+                        {
+                        Tab.name==='Vendo To Vendor' ?
+                          <Image
+                            src={Tab.image}
+                            alt="v2v"
+                            height={200}
+                            width={200}
+                            className="scale-20"
+                          />
+                        :
+                          <Image
+                            src={Tab.image}
+                            alt="xsxcc"
+                            height={20}
+                            width={20}
+                          /> 
+                        }
                       </div>
                       <span className="ms-2">{Tab.name}</span>
                     </div>

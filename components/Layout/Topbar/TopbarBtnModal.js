@@ -32,7 +32,6 @@ const TopbarBtnModal = ({userData,alertUpdate, logoutVendor}) => {
     } else {
       setShow(type)
     }
-    console.log('lllllllllllllllllll')
   };
 
   const handleCloseDropdown = () => {
@@ -44,16 +43,14 @@ const TopbarBtnModal = ({userData,alertUpdate, logoutVendor}) => {
   return (
     <div className='relative flex gap-6 items-center'>
 
-      <div className=' relative z-50'>
+      {/* <div className=' relative z-50'>
         <FaCartArrowDown className=' text-2xl cursor-pointer' 
           onClick={()=>handleToggleDropdown('cart')}/>
-       
-        {/* <div className='absolute w-5 h-5 flex justify-center items-centem text-[10px] bg-gonje-green rounded-full text-white -top-2 -right-3'></div> */}
         {show==='cart' && 
         <div ref={dropdownRef} className='absolute -right-44 z-50 mt-4 shadow-xl border border-gray-500 w-96 h-96 bg-background rounded-md p-4 overflow-auto text-sm '>
           <CartNotificationDropdown setShow={setShow}/>
         </div>}
-      </div>
+      </div> */}
 
       <div className=' relative '>
         <span className="relative flex h-10 w-10  items-center justify-center">

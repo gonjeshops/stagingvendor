@@ -26,7 +26,7 @@ const ProfileDropdown = ({
       <ul
         className={`w-full space-y-4`}
       >
-        <li onClick={()=>setShow('')}>
+        {/* <li onClick={()=>setShow('')}>
         <a className="dropdown-item">
           <Image
             className="me-2"
@@ -38,8 +38,8 @@ const ProfileDropdown = ({
           />
           Upcoming box
         </a>
-      </li> 
-      <li onClick={()=>setShow('')}>
+      </li>  */}
+      {/* <li onClick={()=>setShow('')}>
         <a className="dropdown-item">
           <Image
             className="me-2"
@@ -50,7 +50,7 @@ const ProfileDropdown = ({
           />{" "}
           My order
         </a>
-      </li> 
+      </li>  */}
       {/* <li>
         <a className="dropdown-item">
           <Image
@@ -88,7 +88,7 @@ const ProfileDropdown = ({
           Notifications
         </a>
       </li> */}
-      <li onClick={()=>setShow('')}>
+      {/* <li onClick={()=>setShow('')}>
         <a className="dropdown-item">
           <Image
             className="me-2"
@@ -99,7 +99,7 @@ const ProfileDropdown = ({
           />
           Wallet
         </a>
-      </li>
+      </li> */}
       <li onClick={()=>setShow('')}>
           <a
             className="dropdown-item"

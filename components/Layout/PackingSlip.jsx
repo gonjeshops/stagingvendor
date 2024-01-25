@@ -15,17 +15,15 @@ const PackingSlip = ({ orderDetails}) => {
                 Packing slip
             </Button>
         
-            <div className={` ${showPackingslip ? 'scale-100': 'scale-0'}  transform transition-transform duration-500 fixed inset-0 bg-background flex justify-center items-center overflow-auto px-4 z-50 `}>
+            <div className={` ${showPackingslip ? 'scale-100': 'scale-0'}  transform transition-transform duration-500 fixed inset-0 bg-background py-20 only: overflow-auto px-4 z-50 `}>
                 
-                <div className="relative">
-                    <FaRegTimesCircle size={20} onClick={()=>setShowPackingslip(0)} className="absolute right-0 -top-8"/>
-                    <Button  onClick={() => generatePDF(packingslipRef, {filename: `gonje-packingslip-00${orderDetails?.id}.pdf`})} className="absolute left-0 -top-12">Download slip</Button>
+                <div className="relative sm:w-[600px] m-auto">
+                    <div className="flex justify-between items-center gap-14 mb-2">
+                        <Button  onClick={() => generatePDF(packingslipRef, {filename: `gonje-packingslip-00${orderDetails?.id}.pdf`})} className="">Download slip</Button>
+                        <FaRegTimesCircle size={20} onClick={()=>setShowPackingslip(0)} className=""/>
+                    </div>
 
                     <Slip packingslipRef={packingslipRef} orderDetails={orderDetails}/>
-
-                    {/* <div  className="scale-0">
-                        <Slip packingslipRef={packingslipRef} orderDetails={orderDetails}/>
-                    </div> */}
                 </div>
 
                 
@@ -64,16 +62,16 @@ const Slip = ({packingslipRef, orderDetails })=> {
                     </div>
 
     return (
-    <div ref={packingslipRef} className="text-  rounded-bg bg-white shadow-md p-8 w-96 sm:w-[600px]  border ">
+    <div ref={packingslipRef} className="rounded-bg bg-white shadow-md p-8 w- border ">
         <div className="overflow-auto">
 
             <div className="flex mb-4 justify-between gap-8">
                 <div className="text">
                     <div>Gonje</div>
-                    <div className="w-80 text-wrap ">
+                    {/* <div className="w-80 text-wrap ">
                         {orderDetails?.delivery_company_name} 
                         
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="">

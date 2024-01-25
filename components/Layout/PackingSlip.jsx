@@ -25,8 +25,6 @@ const PackingSlip = ({ orderDetails}) => {
 
                     <Slip packingslipRef={packingslipRef} orderDetails={orderDetails}/>
                 </div>
-
-                
             </div>
         </>
 

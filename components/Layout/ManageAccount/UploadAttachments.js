@@ -4,6 +4,7 @@ import { BtnSpinner } from "@/componentsB2b/Loader/Spinner/BtnSpinner";
 import { useState } from "react";
 import { FaRegTimesCircle, FaTimes } from "react-icons/fa";
 import { FiUploadCloud } from "react-icons/fi";
+import { toast } from "react-toastify";
 
 export const UploadAttachments = ({setModal, setRefectchUser, modal, user, uploadType}) => {
     const [selectedFiles, setSelectedFiles] = useState([]);
@@ -43,11 +44,6 @@ export const UploadAttachments = ({setModal, setRefectchUser, modal, user, uploa
         }
     };
 
-                //     id=shop_id // id of the shop to be updated
-                // // for logo
-                // type=logo
-                // // for cover image
-                // type=cover_image for cover image
     const handleUpload = async () => {
         setUploading(true);
         setUploadError(null);
@@ -64,17 +60,13 @@ export const UploadAttachments = ({setModal, setRefectchUser, modal, user, uploa
         }
 
         formData.append('id', user?.shops?.[0]?.id || user?.id);
-        uploadType === 'logo' && formData.append('type', 'logo');
-        uploadType === 'cover_image' && formData.append('type', 'cover_image');
+        uploadType === 'logo' && formData.append('type', 'shop');
+        uploadType === 'cover_image' && formData.append('type', 'cover');
 
         try {
         const response = await uploadImagesFetch(formData);
-        console.log( 'formData', formData)
         if (response.status === 1 && !response?.data?.errors) {
-            console.log('upload res', response,  'prod====', productData)
-// 'upload res', response,
-            // update user 
-            const response= await fetchService({
+            const res = await fetchService({
                 url: vendorUrl,
                 method: 'PUT',
                 body: {...user?.shops?.[0],
@@ -82,8 +74,8 @@ export const UploadAttachments = ({setModal, setRefectchUser, modal, user, uploa
                     cover_image:  uploadType === 'cover_image' ? response?.data : user?.shops?.[0]?.cover_image,
                 },
               })
-              if (response?.status===200) {
-                console.log('formRes=', response);
+              if (res?.status===200) {
+                console.log('formRes=', response, 'fetchServices res=', res);
                 toast.success('Upload successful');
                 setSelectedFiles([])
                 setRefectchUser(true)
@@ -92,12 +84,12 @@ export const UploadAttachments = ({setModal, setRefectchUser, modal, user, uploa
                 console.log(response);
                 toast.error('Registration failed');
               }
-            
         } else {
             setUploadError('API error');
         }
         } catch (error) {
             setUploadError('An error occurred during the upload. Please try again.');
+            console.log('Catch---', error)
         } finally {
             setUploading(false);
         }

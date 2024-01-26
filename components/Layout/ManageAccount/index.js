@@ -55,7 +55,8 @@ export default function ManageAccount() {
         <div className="shop details space-y-14 relative">
           <div className="relative w-full sm:max-w-6xl mx-auto">
                 <div className="w-full h-60  overflow-hidden rounded-lg relative bg-gray-300 flex justify-center items-center ">
-                    {user && user.shops && user.shops[0] && user.shops[0].cover_image ?  <Image src={user?.shops[0]?.cover_image?.original} alt="cover_img" width={400} height={200} className="w-full h-full object-cover"/>
+                    {user && user.shops && user.shops[0] && user.shops[0].cover_image ?  
+                    <Image src={user?.shops[0]?.cover_image?.original ? user?.shops[0]?.cover_image?.original : user?.shops[0]?.cover_image?.[0]?.original}  alt="cover_img" width={400} height={200} className="w-full h-full object-cover"/>
                     : 
                       <FaStoreAlt size={60} className="text-gray-400"/>
                     }
@@ -68,7 +69,7 @@ export default function ManageAccount() {
                 <div className="absolute top-28 left-10 h-40 w-40 ">
                     <div className="w-full h-full flex justify-center items-center rounded-full overflow-hidden bg-gray-400">
                       {user && user.shops && user.shops[0] && user.shops[0].logo ?  
-                      <Image src={user?.shops[0]?.logo?.original} alt="logo_img" width={150} height={150} className="w-full h-full object-cover"/> 
+                      <Image src={user?.shops[0]?.logo?.original ? user?.shops[0]?.logo?.original : user?.shops[0]?.logo?.[0]?.original} alt="logo_img" width={150} height={150} className="w-full h-full object-cover"/> 
                       : 
                       <FaCamera size={36} className="text-gray-600"/>
                     }

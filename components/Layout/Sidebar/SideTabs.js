@@ -17,11 +17,11 @@ export const SideTabs = {
       url: "/inventory",
       image: Inventory,
     },
-    sales: {
-      name: "Sales",
-      url: "/sales",
-      image: Shipping,
-    },
+    // sales: {
+    //   name: "Sales",
+    //   url: "/sales",
+    //   image: Shipping,
+    // },
     finance: {
       // name: "Finance",
       name: "Vendo To Vendor",

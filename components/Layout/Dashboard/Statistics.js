@@ -13,7 +13,6 @@ const Statistics = ({ dashboardData, type }) => {
         <span>Updated 1 month ago</span>
       </div>
       
-      
       <div className="flex flex-wrap bg-background gap-8 items-center justify-even">
       { !type ? 
         <>

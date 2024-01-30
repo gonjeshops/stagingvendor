@@ -1,11 +1,8 @@
-import Image from "next/image";
 import React, { useEffect, useState, useMemo } from "react";
 import { connect } from "react-redux";
-import { ProcessSvg } from "../../../assets";
 import { getUserDashboard } from "../../../redux/actions/userDetail";
 import Loader from "../../common/Loader";
 import TopProductsPieChart from "./TopProductsPieChart";
-import NetSales from "./NetSales";
 import OrderAndProfit from "./OrderAndProfit";
 import RevenueReport from "./Revenue";
 import Statistics from "./Statistics";

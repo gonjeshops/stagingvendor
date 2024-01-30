@@ -24,7 +24,7 @@ export const SideTabs = {
     // },
     finance: {
       // name: "Finance",
-      name: "Vendo To Vendor",
+      name: "Vendor To Vendor",
       image: V2V,
       isCollapsable: true,
       innerTabs: [

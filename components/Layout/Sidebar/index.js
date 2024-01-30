@@ -167,7 +167,7 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
       </ul>
 
       <hr className="mt-2" />
-      <div className="relative pb-14">
+      {/* <div className="relative pb-14">
       <Link
           href={"/vendorb2b"}
           passHref
@@ -176,7 +176,7 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
         >
           Switch to VendorB2B
         </Link>
-      </div>
+      </div> */}
       
     </div>
   );

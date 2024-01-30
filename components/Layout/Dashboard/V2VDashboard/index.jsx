@@ -1,12 +1,20 @@
 import {useMemo} from 'react'
 import RevenueReport from '../Revenue';
 import OrderAndProfit from '../OrderAndProfit';
+import Statistics from '../Statistics';
 
 const V2VDashboard = ({dashboardData, setModalType}) => {
+    
   return (
     <div>
         
         <div className="flex gap-8 w-full flex-wrap">
+
+            <div className="flex gap-8 w-full ">
+                <div className="w-full">
+                  <Statistics dashboardData={dashboardData} type='v2v' />
+                </div>
+              </div>
             
             <div className="cards">
                 <h2 className="cardh4 mb-">Top Selling Products</h2>

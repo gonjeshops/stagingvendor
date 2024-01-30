@@ -10,7 +10,9 @@ pipeline {
     }
 
     tools {
-        nodejs "nodejs" // name in "" should be similar to the name used for installer in the global tool configuration
+
+        nodejs "nodejs" // name in "" should be similar to the name used for installer in the global tool configuration.
+
     }  
 
     stages {
@@ -26,18 +28,19 @@ pipeline {
             }
         }
 
-        stage('Build App') {
-            steps {
-                script {
-                    // Change directory to your Node.js application's directory
-                    dir('./') {
-                        // Install dependencies and build the application
-                        sh 'npm install'  
-                        // Add any additional build steps if necessary
-                    }
-                }
-            }
-        }
+
+        // stage('Build App') {
+        //     steps {
+        //         script {
+        //             // Change directory to your Node.js application's directory
+        //             dir('./') {
+        //                 // Install dependencies and build the application
+        //                 sh 'yarn'  
+        //                 // Add any additional build steps if necessary
+        //             }
+        //         }
+        //     }
+        // }
 
         stage('Build Image') {
             steps {

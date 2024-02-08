@@ -1,4 +1,4 @@
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+
 
 // npm install --save react-places-autocomplete
 
@@ -8,7 +8,7 @@ import PlacesAutocomplete, {
   getLatLng,
 } from 'react-places-autocomplete';
  
-class LocationSearchInput extends React.Component {
+export class LocationSearchInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = { address: '' };

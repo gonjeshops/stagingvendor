@@ -198,6 +198,22 @@ Link {
   @apply cursor-pointer bg-[var(--light200)] hover:bg-[var(--light300)] duration-300
 }
 
+.bg-orange{
+  @apply bg-[#f7d594]
+}
+
+.input1 {
+  @apply bg-orange p-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-300;
+}
+
+.bg-green {
+  @apply bg-[#70ab4b]
+}
+
+.btn2 {
+  @apply bg-[#70ab4b] hover:bg-green-600 duration-300 rounded-md text-white uppercase text-sm px-8 py-3;
+}
+
 
 .text-dark100 {
   color: var(--dark100);
@@ -219,8 +235,6 @@ Link {
   @apply border-[var(--light300)];
 }
 
-
-
 .bg-blue{
   @apply bg-blue-600
 }
@@ -235,6 +249,9 @@ Link {
 
 .text-blue-hover {
   @apply  text-blue-400 hover:text-blue-600 duration-300
+}
+.text-hover {
+  @apply hover:text-blue-600 duration-300
 }
 
 .bg-red{
@@ -271,6 +288,17 @@ input{
 
 }
 
+.cards {
+  @apply bg-[background] p-8 rounded-md shadow space-y-4
+}
+
+.cardh4 {
+  @apply text-lg font-bold
+}
+
+.cardh5 {
+  @apply text-base font-bold
+}
 
 /* .bg-gonje-gradient {
   background: rgb(2,0,36);
@@ -557,7 +585,7 @@ hr.side-menu-divider {
   z-index: 0;
 }
 .top-heading {
-  box-shadow: 0px 2px 60px #00000014;
+  /* box-shadow: 0px 2px 60px #00000014; */
   padding: 40px;
   position: relative;
 }

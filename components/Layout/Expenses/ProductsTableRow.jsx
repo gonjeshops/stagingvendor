@@ -4,7 +4,6 @@ import { RequestModal } from './ExpensesModals'
 import { currency } from '@/lib/currency'
 
 const ProductsTableRow = ({data, }) => {
-    console.log('PRODUCTS===',data)
 
   return (
     <>
@@ -38,7 +37,7 @@ const ProductsTableRow = ({data, }) => {
               </td>
 
               <td>
-                ${item?.quantity}
+                {item?.quantity}
               </td>
 
               <td className='  uppercase'>

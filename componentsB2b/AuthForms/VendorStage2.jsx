@@ -3,6 +3,9 @@ import Link from 'next/link';
 import { FaUpload, FaImage } from 'react-icons/fa';
 import Select from 'react-select';
 
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+// import { LocationSearchInput } from '@/components/ui/GoogleAutoComplete';
+
 const VendorStage2 = ({ formData, setFormData, setisForm2Valid, path }) => {
   const options = [
     { label: "Vendor Seller", value: "store_owner" },
@@ -246,11 +249,40 @@ const VendorStage2 = ({ formData, setFormData, setisForm2Valid, path }) => {
             id="address"
             value={formData.address}
             placeholder="My address"
-            className="w-full h-16 px-3 py-2 border rounded-md border-gray-400 focus:border-green-400"
+            className="w-full bg-transparent h-16 px-3 py-2 border rounded-md border-gray-400 focus:border-green-400"
             onChange={handleChange}
           />
           {/* {errors.address && <p className="text-sm text-red-600">{errors.address}</p>} */}
         </div>
+
+        {/* <LocationSearchInput/> */}
+
+        <div className="form-group">
+            <label htmlFor="address" required className="block text-sm">
+              Business Address   {errors.address &&<span className="text-red-500">*</span>}
+            </label>
+            <GooglePlacesAutocomplete  
+            selectProps={{
+              value: formData?.address,
+              name: "address",
+              onChange: handleChange,
+              styles: {
+                input: (provided) => ({
+                  ...provided,
+                  color: '',
+                }),
+                option: (provided) => ({
+                  ...provided,
+                  color: '',
+                }),
+                singleValue: (provided) => ({
+                  ...provided,
+                  color: 'blue',
+                }),
+              },
+            }}
+            />
+         </div>
 
         <div className="">
           <label htmlFor="zipcode" required className="block text-sm">
@@ -262,7 +294,7 @@ const VendorStage2 = ({ formData, setFormData, setisForm2Valid, path }) => {
             id="zipcode"
             placeholder="0000000"
             value={formData.zipcode}
-            className="w-full px-3 py-2 border rounded-md border-gray-400 focus:border-green-400"
+            className="w-full px-3 py-2 bg-transparent border rounded-md border-gray-400 focus:border-green-400"
             onChange={handleChange}
           />
           {/* {errors.zipcode && <p className="text-sm text-red-600">{errors.zipcode}</p>} */}

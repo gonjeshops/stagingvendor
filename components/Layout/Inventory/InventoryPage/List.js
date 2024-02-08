@@ -22,7 +22,7 @@ const List = ({
             <tr>
               <th scope="col">Image</th>
               <th scope="col">Product Name</th>
-              <th scope="col">Group</th>
+              {/* <th scope="col">Group</th> */}
               <th scope="col">Product Type</th>
               <th scope="col">Price</th>
               <th scope="col">Sale Price</th>

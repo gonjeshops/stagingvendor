@@ -9,13 +9,14 @@ export const Status = {
   reject: 11,
 };
 const List = ({ listData, onPageChange, onStatusChange, setRefresh }) => {
+
   const route = useRouter();
   return (
     <div className="order-table">
       <div className="table-responsive">
         <table className="table">
           <thead>
-            <tr>
+            <tr className="border-none">
               <th scope="col">Order Id</th>
               <th scope="col">Price</th>
               <th scope="col">Store Name</th>
@@ -23,6 +24,8 @@ const List = ({ listData, onPageChange, onStatusChange, setRefresh }) => {
               <th scope="col">Customer Name</th>
               <th scope="col">Date</th>
               <th scope="col">Timer</th>
+              <th scope="col">Delivery company</th>
+              
               <th scope="col">Status</th>
               <th scope="col">Action</th>
             </tr>
@@ -30,7 +33,7 @@ const List = ({ listData, onPageChange, onStatusChange, setRefresh }) => {
           <tbody>
             {(listData?.data || []).map((item) => {
               return (
-                <tr key={item.id}>
+                <tr key={item.id} className="border-gray-300">
                   <th scope="row">{item.id}</th>
                   <td>{item.amount}</td>
                   <td>{item.shop.name}</td>
@@ -60,10 +63,11 @@ const List = ({ listData, onPageChange, onStatusChange, setRefresh }) => {
                       item.timer
                     )}
                   </td>
+                  <td>{item?.delivery_company_name}</td>
                   <td style={{ color: item.status.color }}>
                     {item.status.name}
                   </td>
-                  <td className="actions">
+                  <td className="actions border-none">
                     <AssignDeliveryCompanyBtn item={item} setRefresh={setRefresh}/>
                     <button
                       type="button"

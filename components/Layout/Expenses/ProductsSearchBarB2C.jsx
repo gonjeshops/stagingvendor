@@ -104,7 +104,7 @@ const ProductsSearchBarB2C = ({setSearch, setShop }) => {
     <>
     {/* <button className="w-80 btn" onClick={()=>triggers()}>Trigger</button> */}
 
-    <form onSubmit={handleSubmit} className='py-2 w-full flex  justify-between gap-4 flex-wrap' >
+    <form onSubmit={handleSubmit} className='z-50 py-2 w-full flex  justify-between gap-4 flex-wrap' >
 
         <div className="relative   flex gap-1 ">
             <Input type="text" name="supplierSearch" id="supplierSearch" 
@@ -117,8 +117,6 @@ const ProductsSearchBarB2C = ({setSearch, setShop }) => {
             className='px-3 bg-gonje-green rounded-md text-white '><FaSearch/></button>
         </div>
 
-
-       
           <Select
               value={shopName}
               onChange={handleShopName}

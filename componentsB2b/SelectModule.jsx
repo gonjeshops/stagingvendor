@@ -23,11 +23,11 @@ const SelectModule = () => {
               <p className="text-sm px-6"> Business To Customer Module</p>
           </Link>
           <Link
-            href={"/vendorb2b"}
+            href={"#"}
             className="w-full md:w-80 rounded-xl bg-green-600 text-white h-80 flex flex-col gap-2 items-center justify-center font-semibold text-4xl hover:bg-green-800 duration-300"
           >
             <h5>B2B</h5>
-            <p className="text-sm px-6"> Business To Business Module</p>
+            <p className="text-sm px-6"> Coming soon</p>
           </Link>
         </div>
       </div>

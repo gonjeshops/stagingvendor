@@ -92,7 +92,7 @@ const Breadcrumb = () => {
   }
 
   return (
-    <div className="flex items-center flex-wrap">
+    <div className="flex mb-4 items-center flex-wrap">
       {router.pathname !== '/dashboard' && (
         <>
           <Link href="/dashboard" >

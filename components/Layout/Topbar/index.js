@@ -42,7 +42,7 @@ const TopBar = ({
   };
 
   return (
-      <div className="px-4 flex gap-4 h-24 bg-white items-center justify-between ">
+      <div className="px-8 flex gap-4 h-24 bg-white items-center justify-between w-full left-0 ">
         {isOpenProfile && (
           <div className="profile_dropdown_overlay" onClick={toggleProfile} />
         )}

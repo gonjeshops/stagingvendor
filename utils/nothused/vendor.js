@@ -1,5 +1,5 @@
-import SignUp from "../components/SignUp";
-import { SignUpLogo } from "../assets";
+import SignUp from "../../components/SignUp";
+import { SignUpLogo } from "../../assets";
 import Image from "next/image";
 
 export default function Home() {

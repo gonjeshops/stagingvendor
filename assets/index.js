@@ -27,4 +27,5 @@ export { default as RevenueSvg } from "./revenue.svg";
 export { default as ProcessSvg } from "./process.svg";
 export { default as Map_Marker_Svg } from "./marker_map_icon.svg";
 export { default as LoaderGif } from "./fruitloader.gif";
+export { default as GonjeLogo } from "./gonje-logo-green.webp";
 export { default as V2V } from "./vendor-vendor.png";

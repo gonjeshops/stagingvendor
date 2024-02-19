@@ -26,8 +26,9 @@ const ProductDetailsPage = ({  userId, shopId, productId,  error}) => {
         const response = await viewSupplierShopProductDetails(userId, productId, shopId);
 
         if (response?.status === 200) {
-          console.log("API response:", response);
-          setProductData(response?.data);
+        const response = await viewSupplierShopProductDetails(userId, productId, shopId);
+        console.log("viewSupplierShopProductDetails API  response:", response);
+          setProductData(response?.data?.product);
         } else {
           setApiError("Something went wrong. Try again or consult a developer.");
         }
@@ -89,7 +90,7 @@ const ProductDetailsPage = ({  userId, shopId, productId,  error}) => {
       return (
         <Workspace>
           <div className="absolute inset-0 flex items-center justify-center">
-            Error: There's an error feedback from the server. Try again or consult a developer.
+           {error || 'Error from the server.  Refresh page.'}
           </div>
         </Workspace>
       );
@@ -133,8 +134,8 @@ export async function getServerSideProps({ query }) {
 
     return { props: { userId: parseInt(userId), shopId: parseInt(shopId), productId: parseInt(productId) } };
   } catch (error) {
-    console.error("getServerSideProps error:", error);
-    return { props: { userId: null, shopId: null,  productId: null, error: error } };
+    console.error("getServerSideProps error:", error.message); // Log the error message instead of the entire error object
+    return { props: { userId: null, shopId: null,  productId: null, error: error.message } };
   }
 }
 

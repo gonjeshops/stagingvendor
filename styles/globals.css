@@ -1,10 +1,83 @@
-
-/* Google font */
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,800&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+ 
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+ 
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+ 
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+ 
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+ 
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+ 
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+ 
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+ 
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+ 
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+ 
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+ 
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+ 
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+
+/* Google font */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,800&display=swap");
 
 :root {
   --bg-lightness: 100%; /* Default background lightness */
@@ -48,6 +121,25 @@ body {
   /* font-family: "Poppins", sans-serif; */
   background-color: #f7f7f7 !important;
 }
+
+
+
+/* Target WebKit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 4px; /* Set the width of the scrollbar */
+}
+
+/* Handle portion of the scrollbar */
+::-webkit-scrollbar-thumb {
+  background-color: #adaeaf; /* Set the color of the thumb */
+  border-radius: 4px; /* Optional: Add rounded corners to the thumb */
+}
+
+/* Track portion of the scrollbar */
+::-webkit-scrollbar-track {
+  background-color: transparent; /* Set the color of the track */
+}
+
 
 a {
   color: inherit;
@@ -94,16 +186,32 @@ Link {
   background-color: var(--light300);
 }
 .bg-hover300 {
-  @apply  hover:bg-[var(--light300)] duration-300
+  @apply  cursor-pointer hover:bg-[var(--light300)] duration-300
 }
 .bg-hover200 {
-  @apply hover:bg-[var(--light200)] duration-300
+  @apply cursor-pointer hover:bg-[var(--light200)] duration-300
 }
 .bg-hover100 {
-  @apply hover:bg-[var(--light100)] duration-300
+  @apply cursor-pointer hover:bg-[var(--light100)] duration-300
 }
 .hover-grey {
-  @apply bg-[var(--light200)] hover:bg-[var(--light300)] duration-300
+  @apply cursor-pointer bg-[var(--light200)] hover:bg-[var(--light300)] duration-300
+}
+
+.bg-orange{
+  @apply bg-[#f7d594]
+}
+
+.input1 {
+  @apply bg-orange p-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-300;
+}
+
+.bg-green {
+  @apply bg-[#70ab4b]
+}
+
+.btn2 {
+  @apply bg-[#70ab4b] hover:bg-green-600 duration-300 rounded-md text-white uppercase text-sm px-8 py-3;
 }
 
 
@@ -127,14 +235,12 @@ Link {
   @apply border-[var(--light300)];
 }
 
-
-
 .bg-blue{
   @apply bg-blue-600
 }
 
 .text-blue{
-  @apply text-blue-600
+  @apply text-blue-400
 }
 
 .hover-blue{
@@ -142,7 +248,10 @@ Link {
 }
 
 .text-blue-hover {
-  @apply  hover:text-blue-600 duration-300
+  @apply  text-blue-400 hover:text-blue-600 duration-300
+}
+.text-hover {
+  @apply hover:text-blue-600 duration-300
 }
 
 .bg-red{
@@ -156,12 +265,41 @@ Link {
 .hover-red{
   @apply bg-red-600 hover:bg-red-700 duration-300 text-white
 }
-
+.text-gray{
+  @apply text-gray-500
+}
 
 
 .hover-green{
   @apply bg-green-600 hover:bg-green-800 duration-300 text-white
 }
+
+
+.disable{
+  @apply bg-light300 text-gray-500 cursor-not-allowed
+}
+
+thead th {
+  @apply text-black
+}
+
+input{
+  @apply bg-transparent
+
+}
+
+.cards {
+  @apply bg-[background] p-8 rounded-md shadow space-y-4
+}
+
+.cardh4 {
+  @apply text-lg font-bold
+}
+
+.cardh5 {
+  @apply text-base font-bold
+}
+
 /* .bg-gonje-gradient {
   background: rgb(2,0,36);
   background: linear-gradient(163deg, rgba(2,0,36,1) 0%, rgba(9,121,86,1) 0%, rgba(7,123,83,1) 0%, rgba(4,154,163,1) 51%, rgba(0,47,107,1) 100%);
@@ -447,7 +585,7 @@ hr.side-menu-divider {
   z-index: 0;
 }
 .top-heading {
-  box-shadow: 0px 2px 60px #00000014;
+  /* box-shadow: 0px 2px 60px #00000014; */
   padding: 40px;
   position: relative;
 }

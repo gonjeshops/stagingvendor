@@ -22,7 +22,7 @@ const List = ({
             <tr>
               <th scope="col">Image</th>
               <th scope="col">Product Name</th>
-              <th scope="col">Group</th>
+              {/* <th scope="col">Group</th> */}
               <th scope="col">Product Type</th>
               <th scope="col">Price</th>
               <th scope="col">Sale Price</th>
@@ -47,7 +47,7 @@ const List = ({
                     ) : null}
                   </th>
                   <td>{item.name}</td>
-                  <td>{item.type.name}</td>
+                  {/* <td>{item.type.name}</td> */}
                   <td>{item.product_type}</td>
                   <td>{item.price}</td>
                   <td>{item.sale_price}</td>

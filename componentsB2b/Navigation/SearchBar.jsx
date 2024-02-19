@@ -3,7 +3,7 @@ import { FiSearch } from "react-icons/fi"
 
 const SearchBar = ({onFocus}) => {
   return (
-    <div className="max-w-[500px] m-auto bg-light100 shadow-sm rounded-full py-2 px-3 flex items-center space-x-3 ">
+    <div className="max-w-[500px] border m-auto bg-light100 shadow-sm rounded-full py-2 px-4 flex items-center space-x-1 ">
     <div>
       <FiSearch width={20}/>
     </div>

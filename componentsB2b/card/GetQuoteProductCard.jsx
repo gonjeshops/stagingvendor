@@ -29,7 +29,7 @@ const GetQuoteProductCard = ({ item, toggleCartItemQuanitity, onRemove}) => {
 
   return (
     <div className="py-4 border-b w-full flex gap-4 items-center">
-      <div className="w-28 h-28 shrink-0 border rounded-lg overflow-hidden">
+      <div className="w-16 h-16 shrink-0 border rounded-lg overflow-hidden">
         <ImgCard src={item?.product?.image?.thumbnail} alt={'product'} />
       </div>
 
@@ -66,7 +66,7 @@ const GetQuoteProductCard = ({ item, toggleCartItemQuanitity, onRemove}) => {
           </div>
 
           <div className="price">
-            <h5 className="text font-medium mb-2">Price/1</h5>
+            <h5 className="text font-medium mb-2">Price</h5>
             <h3 className="text-xl sm:text-2xl font-semibold">${item?.price}</h3>
           </div>
 

@@ -1,32 +1,35 @@
-import React, { useRef, useState } from 'react'
+import  { useRef, useState } from 'react'
 import DashboardHeading from '../Workspace/DashboardHeading'
 import { FaPrint, FaSave } from 'react-icons/fa'
-import Link from 'next/link'
 import { truncateText } from '@/lib/truncateText'
 import { useGlobalState } from '@/context/GlobalStateContext'
 import { useRouter } from 'next/router'
 import generatePDF from 'react-to-pdf';
-import { InvoiceDownload } from '../DownloadPrint/InvoiceDownload'
+import Image from 'next/image'
+import { AddressDetails } from '../Order/OrderDetails'
 
 const InvoiceDetails = ({invoiceId, data, }) => {
     const downloadInvoiceRef = useRef()
     const router = useRouter()
     const { setCheckoutData} = useGlobalState();
-    console.log('INVOCIE DATA == ', data)
     const [invoice, setInvoice] = useState(data?.quote)
+
+
+  const address = data?.quote?.shipping_details;
+  const billing = data?.quote?.billing_details;
 
   return (
     <div className='pt-12 space-y-8 '>
 
         <div className="">
             <DashboardHeading>           
-                Invocie <span>#{invoiceId}</span>
+                Invocie <span>INV{invoiceId}</span>
             </DashboardHeading>
             <div className="flex justify-between font-semibold gap-3">
                 <div className="flex items-center gap-4">
                 {data?.quote?.status === 'PAID' ? null : <button onClick={()=>{
                     setCheckoutData(data?.quote)
-                    router.push('/vendorb2b/checkout')
+                    router.push(`/vendorb2b/checkout?invoiceId=${invoiceId}`)
                 }}
                 className='hover-blue rounded px-6 py-2'>Checkout
                 </button >}
@@ -43,29 +46,44 @@ const InvoiceDetails = ({invoiceId, data, }) => {
                         <div onClick={() => generatePDF(downloadInvoiceRef, {filename: `${data?.quote?.quote_name}.pdf`})} className="">Download invoice</div>
                         
                     </button>
-                    {/* <InvoiceDownload invoiceData={data?.quote}>Download Pdf</InvoiceDownload> */}
-                    {/* <div className="bg-light300  hover:bg-zinc-400 duration-500 border-zinc-400 border flex px-4 py-2 rounded-sm items-center gap-2">
-                        <FaPrint/>
-                        <div className="">Print</div>
-                    </div> */}
+              
                 </div>
             </div>
         </div> 
 
-        <div ref={downloadInvoiceRef} className="max-w-4xl mx-auto">
-            <div className="rounded-sm bg-light300 h-60 w-full px-4 flex items-center justify-between flex-wrap">
+        <div ref={downloadInvoiceRef} className="max-w-4xl p-4 mx-auto">
+            <div className="flex justify-center pb-6">
+                <Image src={'/logo.png'} alt='logo' width={100} height={60} />
+            </div>
+            <div className="w-full pb-4 h-20 flex justify-between gap-6 items-center">
+                <h3 className='text-2xl font-semibold '>INVOICE</h3>
+                <div className="space-y-2">
+                    <p className='font-medium'>Invoice No: <span>{invoice?.id}</span></p>
+                    <p className='font-medium'>Invoice Date: <span>{new Date(data?.quote?.updated_at)?.toDateString()}</span></p>
+                </div>
+            </div>
+            <div className="rounded-sm bg-light300 h-60 w-full p-4 flex items- justify-between flex-wrap">
 
-                <div className="space-y-12 shrink-0">
+                <div className="gap-12 flex flex-col justify-between shrink-0">
                     <div className="space-y-2">
-                        <p className='font-medium'>Invoice No: <span>{invoice?.id}</span></p>
-                        <p className='font-medium'>Invoice Date: <span>{new Date(data?.quote?.updated_at)?.toDateString()}</span></p>
+                        <p className='font-medium'>Sold By: {data?.quote?.shop_name}</p>
+                        <p className='font-medium'>Shop Id: {data?.quote?.shop_id}</p>
                     </div>
+
                     <div className="space-y-2">
-                        <p className='font-medium'>Sold By:</p>
-                        <p className='font-'>{data?.quote?.shop_name}</p>
-                        <p className='font-'>------- ----- -----:</p>
-                        <p className='font-medium'>Sold Id: {data?.quote?.shop_id}</p>
+                        <p className='font-medium'>Buyer: {data?.quote?.user_name}</p>
+                        {/* <p className='font-medium'>Buyer shop: </p> */}
+                        <p className='font-medium'>Quote Name: {data?.quote?.quote_name}</p>
                     </div>
+                </div>
+
+                <div className="space-y-2 shrink-0">
+                    <h4 className="text-lg font-medium">Billing Details</h4>
+                    <AddressDetails address={billing}/>
+                </div>
+                <div className="space-y-2 shrink-0">
+                    <h4 className="text-lg font-medium">Shipping Details</h4>
+                    <AddressDetails address={address}/>
                 </div>
 
 
@@ -73,7 +91,7 @@ const InvoiceDetails = ({invoiceId, data, }) => {
             </div> 
 
             <div className=" w-full">
-                <div className="bg-light300 h-16 w-full rounded px-4 py-3 text-[10px] border-light300 sm:text-sm md:text-md border-y font-medium capitalize grid grid-cols-8 gap- items-center">
+                <div className="bg-light100 h-16 w-full rounded px-4 py-3 text-[10px] border-light300 sm:text-sm md:text-md border-y font-medium capitalize grid grid-cols-8 gap- items-center">
                     <div className="flex col-span-4 items-center gap-2">
                         <p className="space-x-1 shrink-0 ">S/No.</p>
                         <p className="space-x-2 ">Products </p>
@@ -86,10 +104,7 @@ const InvoiceDetails = ({invoiceId, data, }) => {
 
                 {data?.quote?.cart_items?.map((item, i) => (
                 <div key={item?.id} 
-                // onClick={()=> {
-                //     setEachProduct(item)
-                //     setIsOpen(true)
-                // }}
+
                 className="py-6 px-4 border-b border-light300 grid grid-cols-8 gap-3 items-center text-[10px] sm:text-sm md:text-md md:overflow-hidden">
                 <div className="flex flex-col col-span-4 gap-3 sm:flex-row items-">
                     <p className='shrink-0 w-6'>{i+1}</p>

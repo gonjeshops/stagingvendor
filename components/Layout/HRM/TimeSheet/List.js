@@ -58,13 +58,13 @@ const List = ({
                         aria-describedby="emailHelp"
                         min="0"
                         value={item.total_hours}
-                        disabled={
-                          moment(item.date).isAfter(today, "day") ||
-                          moment(item.date).isBefore(
-                            employeeCreationDate,
-                            "day"
-                          )
-                        }
+                        // disabled={
+                        //   moment(item.date).isAfter(today, "day") ||
+                        //   moment(item.date).isBefore(
+                        //     employeeCreationDate,
+                        //     "day"
+                        //   )
+                        // }
                         onChange={(e) => {
                           handleChange(e, index);
                         }}

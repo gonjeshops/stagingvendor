@@ -6,29 +6,27 @@ import { SideTabs } from "./SideTabs";
 import { useRouter } from "next/router";
 
 const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
-
-
-  
-
   const route = useRouter();
   const activePath = route.asPath;
   const [toggleHrm, setHRMToggle] = useState(false);
+  const [dropdownName, setDropdownName] = useState("");
   const [sideTabs, setSideTabs] = useState(SideTabs.staff);
   const [isVendor, setVendor] = useState(false);
 
+  const [activeNav, setActiveNav] = useState(activePath);
+
   useEffect(() => {
     const isLogin = localStorage.getItem("loginAs");
-    if (isLogin == "store_owner") {
+    if (isLogin === "store_owner") {
       setSideTabs(SideTabs.vendor);
       setVendor(true);
     }
-  }, []);
-
-  // console.log("isVendor", isVendor);
+    setActiveNav(activePath);
+  }, [activePath]);
 
   return (
     <div
-      className={`aside vendor-dashboard flex-column vh-lg-100 flex-shrink-0 text-white ${
+      className={`aside overflow-hidden vendor-dashboard flex-column vh-lg-100 flex-shrink-0 text-white ${
         isShowSideBar ? "aside-show" : ""
       }`}
       style={{ width: "235px" }}
@@ -64,13 +62,30 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                     aria-expanded={toggleHrm}
                     onClick={() => {
                       setHRMToggle(!toggleHrm);
+                      setDropdownName(Tab.name);
                     }}
-                    className={`d-flex togg justify-content-between nav-link text-whitee `}
+                    className={`d-flex togg justify-content-between nav-link text-whitee`}
                     aria-current="page"
                   >
                     <div className="d-flex">
                       <div className="icon text-center">
-                        <Image src={Tab.image} alt="xsxcc" height={20} width={20} />
+                        {
+                        Tab.name==='Vendo To Vendor' ?
+                          <Image
+                            src={Tab.image}
+                            alt="v2v"
+                            height={200}
+                            width={200}
+                            className="scale-20"
+                          />
+                        :
+                          <Image
+                            src={Tab.image}
+                            alt="xsxcc"
+                            height={20}
+                            width={20}
+                          /> 
+                        }
                       </div>
                       <span className="ms-2">{Tab.name}</span>
                     </div>
@@ -86,8 +101,10 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
 
                   <div
                     id="collapseExample1"
-                    className={`panel-collapse collapse ${
-                      toggleHrm ? "show" : ""
+                    className={`pl-5  ${
+                      toggleHrm && dropdownName === Tab.name
+                        ? "visible	"
+                        : "hidden"
                     }`}
                   >
                     <div className="panel-body">
@@ -95,30 +112,33 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                         {(Tab?.innerTabs || []).map((innerTab) => {
                           return innerTab.url !== "/timesheet" && isVendor ? (
                             <li key={`key_${innerTab.name}`}>
-                              <Link href={innerTab.url}>
-                                <a
+                              <Link
+                                href={innerTab.url}
+                                passHref
                                   className={`nav-link  ${
-                                    route.asPath.includes(innerTab.url)
+                                    activeNav === innerTab.url
                                       ? "active"
-                                      : "text-whitee"
+                                      : "text-black"
                                   }`}
                                 >
                                   {innerTab.name}
-                                </a>
+                       
                               </Link>
                             </li>
                           ) : route.asPath.includes(innerTab.url) ||
                             !isVendor ? (
                             <li key={`key_${innerTab.name}`}>
-                              <a
+                              <Link
+                                href={innerTab.url}
+                                passHref
                                 className={`nav-link  ${
-                                  route.asPath.includes(innerTab.url)
+                                  activeNav === innerTab.url
                                     ? "active"
                                     : "text-whitee"
                                 }`}
-                              >
-                                {innerTab.name}
-                              </a>
+                                >
+                                  {innerTab.name}
+                              </Link>
                             </li>
                           ) : null;
                         })}
@@ -127,10 +147,9 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                   </div>
                 </>
               ) : (
-                <Link href={Tab.url}>
-                  <a
+                <Link href={Tab.url} passHref
                     className={`d-flex nav-link ${
-                      route.asPath.includes(Tab.url) ? "active" : "text-whitee"
+                      activeNav === Tab.url ? "active" : "text-whitee"
                     }`}
                     aria-current="page"
                   >
@@ -138,18 +157,26 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                       <Image src={Tab.image} alt="" height={20} width={20} />
                     </div>
                     <span className="ms-2">{Tab.name}</span>
-                  </a>
+                 
                 </Link>
               )}
             </li>
-
-            
           );
         })}
-    <Link href={'/vendorb2b'} className="nav-link rounded-l-full" style={{color: 'black', background: 'white'}}>
-        Switch to VendorB2B
-      </Link>
+        
       </ul>
+
+      <hr className="mt-2" />
+      {/* <div className="relative pb-14">
+      <Link
+          href={"/vendorb2b"}
+          passHref
+          className="nav-link rounded-l-full"
+          style={{ color: "black", background: "white" }}
+        >
+          Switch to VendorB2B
+        </Link>
+      </div> */}
       
     </div>
   );

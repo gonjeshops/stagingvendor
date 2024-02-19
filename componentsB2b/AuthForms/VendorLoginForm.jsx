@@ -2,18 +2,16 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { login } from '../Api/Api'; 
-
 // import FacebookLoginComp from '../FacebookLoginComp';
 // import GoogleLoginComp from "../GoogleLoginComp";
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { determineRouteBasedOnPermissions } from './selectRoute';
-
-
-
+import { toast } from 'react-toastify';
+import { BtnSpinner } from '../Loader/Spinner/BtnSpinner';
+import { Input } from '@/components/ui/input';
 
 const VendorLoginForm = () => {
   const router = useRouter();
-
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -55,38 +53,48 @@ const VendorLoginForm = () => {
 		setLoading(false);
 		return;
 	}
-
-    try {
-      console.log('formData==', formData)
-
-      const json = await login(formData); 
-      if (json?.status === 1) {
-		// Successful login
-        setLoading(false);
-        // set success message
-        setSuccessMessage(json?.message)
+  try {
+    const json = await login(formData);
+  
+    if (json?.status === 1) {
+      if (json?.permissions.includes("store_owner") || json?.permissions.includes("vendor_b2b")) {
+        setSuccessMessage(json?.message);
         localStorage.setItem("user_detail", JSON.stringify(json));
-        router.push('/signin/vendor-select') 
-      //  router.push(determineRouteBasedOnPermissions(json?.permissions))
-
+  
+        if (json?.permissions.includes("store_owner")) {
+          if (!!json?.shop_id && !!json?.shop_status) {
+            // router.push("/dashboard");
+            localStorage.setItem("loginAs", "store_owner");
+          } else {
+            toast.error("You have no assigned shop for now");
+          }
+        } else if (json?.permissions.includes("staff")) {
+          router.push({
+            pathname: "/employee_timesheet",
+            query: { id: json?.user_id || "" },
+          });
+          localStorage.setItem("loginAs", "staff");
+        }
+        router.push('/signin/vendor-select');
+        localStorage.setItem("shop_id", json?.shop_id);
       } else {
-
-        setError(json?.message);
-
-        setLoading(false);
-		console.log('login error= ', json?.message)
+        setError("You don't have permission to login");
       }
-    } catch (error) {
-      setError('Something went wrong');
-	  console.log('catch error', error)
-      setLoading(false);
+    } else {
+      setError(json?.message);
+      console.log('login error=', json?.message);
     }
+  } catch (error) {
+    setError('Something went wrong');
+    console.log('catch error', error);
+  } finally {
+    setLoading(false);
+  }
+  
   };
 
   return (
     <div className="w-full rounded-md space-y-4 gonje-auth-form">
-      
-
       <div className="flex items-center w-full">
         <hr className="w-full dark:text-gray-400" />
         <p className="px-3 dark:text-gray-400 w-full text-center">or use email</p>
@@ -97,18 +105,18 @@ const VendorLoginForm = () => {
 	  {successMessage && <p className="text-green-600">{successMessage}</p>}
 
       <form className="space-y-4" onSubmit={handleSubmit}>
-        <div className="space-y-2">
+        <div className="space-y-2 bg-white">
           <label htmlFor="email" className="block text-sm">
             Email address
           </label>
-          <input
+          <Input
             type="text"
             name="email"
             id="email"
             placeholder="name@example.com"
             value={formData.email}
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md border-gray-400 focus:dark:border-green-400"
+            className=" input w-full  px-3 py-4 border rounded-md border-gray-400 focus:dark:border-green-400"
           />
         </div>
 
@@ -122,14 +130,14 @@ const VendorLoginForm = () => {
             </Link>
           </div>
           <div className="relative">
-            <input
+            <Input
               type={showPassword ? 'text' : 'password'}
               name="password"
               id="password"
               placeholder="*****"
               value={formData.password}
               onChange={handleChange}
-              className="w-full px-3 py-2 border rounded-md dark:border-gray-400 focus:dark:border-green-400"
+              className="w-full  px-3 py-4 border rounded-md dark:border-gray-400 focus:dark:border-green-400"
             />
             <button
               type="button"
@@ -143,12 +151,12 @@ const VendorLoginForm = () => {
 
         <button
           type="submit"
-          className={`w-full text-white px-8 py-2 font-semibold rounded-md bg-green-600 ${
+          className={`w-full text-white px-8 py-3 font-semibold rounded-md bg-green-600 ${
             loading ? 'opacity-50 pointer-events-none' : ''
           }`}
         >
           {/* {loading ? <span className="animate-spin mr-2">&#9696;</span> : null} */}
-          {loading ? 'Loading...' : 'Sign in'}
+          {loading ? <BtnSpinner/> : 'Sign in'}
         </button>
       </form>
       <p className="text-sm text-center text-gray-400">

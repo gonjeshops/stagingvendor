@@ -13,6 +13,9 @@ import moment from "moment";
 import Loader from "../../../common/Loader";
 import { Map_Marker_Svg } from "../../../../assets";
 import GoogleMapComponent from "./googlemap";
+import PackingSlip from "../../PackingSlip";
+import { stringToJson } from "@/lib/stringToJson";
+import { currency } from "@/lib/currency";
 
 const OrderDetailPage = ({
   getOrderDetail,
@@ -53,22 +56,36 @@ const OrderDetailPage = ({
       });
     });
   };
-
+console.log('ORDERDATA==', orderData)
   const detail = useMemo(() => {
     const { data } = orderData || {};
     return {
       id: data?.id || "",
-      status: data?.status || {},
+      status: data?.status || '',
+      shop: data?.shop || {},
+      order_status: data?.order_status || '',
+      barcode_number: data?.barcode_number || '',
+      tracking_number: data?.tracking_number || '',
+      consignment_number: data?.consignment_number || '',
       products: data?.products || [],
       timer: data?.timer || "",
-      customer: data?.customer || {},
-      tax: data?.sales_tax || "0",
-      delivery_fee: data?.delivery_fee || "0",
-      discount: data?.discount || "0",
-      total: data?.paid_total || "0",
-      subtotal: data?.amount || "0",
-      billing_address: data?.billing_address,
-      shipping_address: data?.shipping_address,
+      buyer_details: data?.buyer_details || {},
+      tax: currency(data?.sales_tax || 0),
+      delivery_fee: currency(data?.delivery_fee || 0),
+      delivery_company_name: data?.delivery_company_name || '',
+      
+      discount: currency(data?.discount || 0),
+      payment_type: data?.payment_gateway || '',
+      paid_amount: currency(data?.paid_total || 0),
+      total: currency((data?.total || 0) + (data?.sales_tax || 0) + (data?.delivery_fee || 0) - ( data?.discount || 0) || 0),
+      subtotal: currency(data?.total),
+      billing_address: stringToJson(data?.billing_address) || "",
+      shipping_address: stringToJson(data?.shipping_address) || "",
+      // delivery_company_id: 0,
+      // delivery_company_name: null,
+      // delivery_date: null,
+      // delivery_fee: 0,
+      // delivery_time: "0",
       origin: {
         latitude: parseFloat(data?.shop?.latitude) || "",
         longitude: parseFloat(data?.shop?.longitude) || "",
@@ -78,7 +95,7 @@ const OrderDetailPage = ({
         longitude: parseFloat(data?.longitude) || "",
       },
     };
-  }, [orderData]);
+  }, [orderData?.data]);
 
   const statusOptions = useMemo(() => {
     return (
@@ -98,7 +115,7 @@ const OrderDetailPage = ({
 
       <div className="order-id-r  order-table">
         <div className="col-lg-9 col-md-12 mx-auto">
-          <div className="order-view d-flex row">
+          <div className="order-view d-flex row space-y-4">
             <div className="col-lg-5">
               <p className="mb-0">
                 Order Id. <span>{detail.id}</span>
@@ -128,9 +145,10 @@ const OrderDetailPage = ({
                 )}
               </strong>
             </div>
-            <div className="col-lg-7">
+            <div className="col-lg-7 flex gap-4 sm:flex-row flex-col">
+              <PackingSlip orderDetails={detail}/>
               <Select
-                className="basic-multi-select"
+                className="basic-multi-select w-full"
                 classNamePrefix="select"
                 options={statusOptions}
                 placeholder="Update Status"
@@ -163,15 +181,40 @@ const OrderDetailPage = ({
                         {item.name} <strong>x</strong>
                         {item.pivot.order_quantity}
                       </td>
-                      <td>{item.pivot.unit_price}</td>
-                      <td className="product-price">{item.pivot.subtotal}</td>
+                      <td>{currency(item.pivot.unit_price)}</td>
+                      <td className="product-price">{currency(item.pivot.subtotal)}</td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
-            <div className="order-subtotal row">
-              <div className="col-lg-7" />
+            <div className="order-subtotal row max-lg:flex-col-reverse ">
+              <div className="col-lg-5">
+                <div className="cover">
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Paid amount</th>
+                        <th className="product-price" scope="col">
+                          {detail?.paid_amount}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Payment Gateway</th>
+                        <td className="product-price">{detail?.payment_type}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="cover border-y mt-12 py-3 max-lg:mb-12">
+                  <p className="px-2 pb-2 font-bold">Delivery Company</p> 
+                  <p className="px-2 ">{detail?.delivery_company_name || 'No delivery company assigned'}</p> 
+                </div>
+              </div>
+              <div  className="col-lg-2" />
               <div className="col-lg-5">
                 <div className="cover">
                   <table className="table">

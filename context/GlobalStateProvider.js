@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import GlobalStateContext from './GlobalStateContext';
 import { useCart } from '@/lib/useCart';
 import { useCartB2B } from '@/lib/useCartB2B';
+import { useCartB2C } from '@/lib/useCartB2C';
 
 const GlobalStateProvider = ({ children }) => {
   const router = useRouter();
@@ -11,11 +12,12 @@ const GlobalStateProvider = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState('');
   const [openNavSubmenu, setOpenNavSubmenu] = useState('');
-  const [cartItem, setCartItem] = useState([]);
   const [module, setModule] = useState({ moduleType: 'vendor', navLink: [] });
   const [user, setUser] = useState('')
   const [checkoutData, setCheckoutData] = useState('')
   const [supplierDetails, setSupplierDetails] = useState('')
+  const [editQuote, setEditQuote] = useState(null)
+  
 
   // Function to retrieve "user-details" from local storage
   useEffect(() => {
@@ -30,7 +32,6 @@ const GlobalStateProvider = ({ children }) => {
       // Check if the parsing was successful
       if (userDetails && typeof userDetails === 'object') {
         setUser(userDetails);
-        console.log('User details retrieved:', userDetails);
 
       } else {
         // If the stored data is not valid JSON or an object, return null
@@ -38,17 +39,15 @@ const GlobalStateProvider = ({ children }) => {
       }
     } catch (error) {
       // Handle any errors that may occur during retrieval
-      console.error('Error retrieving user details from local storage:', error);
       return null;
     }
   }
   getUserDetailsFromLocalStorage()
-
-  
-  }, [])
+  }, [router?.pathname])
 
   // Create quote or cart functionality
-  const useB2Bcart = useCartB2B(user)
+  const useB2Bcart = useCartB2B(user, editQuote, setEditQuote)
+  const useB2Ccart = useCartB2C(user,)
 
   // Use useEffect for initial setup when the component mounts
   useEffect(() => {
@@ -84,13 +83,12 @@ const GlobalStateProvider = ({ children }) => {
   const [active, setActive] = useState(1)
 
    
-
   const globalState = {
     user,
     logout,
     module,setModule,
     fetchUser,
-    useB2Bcart,
+    useB2Bcart,useB2Ccart,
     showSidebar,
     setShowSidebar,
     openModal,
@@ -102,7 +100,7 @@ const GlobalStateProvider = ({ children }) => {
     useCart, // This line might not be necessary. Make sure it's intended.
     checkoutData, setCheckoutData,
     supplierDetails, setSupplierDetails,
-    active, setActive,
+    active, setActive,editQuote, setEditQuote,
   };
 
   return (

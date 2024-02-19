@@ -1,4 +1,4 @@
-import {MdKeyboardArrowRight, MdKeyboardArrowLeft} from 'react-icons/md'
+import { MdKeyboardArrowRight, MdKeyboardArrowLeft, MdFastForward, MdFastRewind, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from 'react-icons/md';
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const pagesToShow = 5; // Number of page toggle buttons to display
@@ -14,10 +14,19 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 
     return pageNumbers;
   };
-  console.log('Totalpages', totalPages)
 
   return (
-    <div className="flex items-center justify-center space-x-4 mt-8">
+    <div className="flex items-center justify-center space-x-4 py-8">
+      <button
+        className={`h-8 w-8 flex justify-center items-center rounded-full ${
+          currentPage === 1 ? 'bg-light300 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700 text-white'
+        }`}
+        onClick={() => onPageChange(1)}
+        disabled={currentPage === 1}
+      >
+        <MdKeyboardDoubleArrowLeft size={20} />
+      </button>
+
       <button
         className={`h-8 w-8 flex justify-center items-center rounded-full ${
           currentPage === 1 ? 'bg-light300 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700 text-white'
@@ -25,7 +34,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
       >
-        <MdKeyboardArrowLeft size={20}/>
+        <MdKeyboardArrowLeft size={20} />
       </button>
 
       {getPageNumbers().map((pageNum) => (
@@ -47,7 +56,17 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
       >
-        <MdKeyboardArrowRight size={20}/>
+        <MdKeyboardArrowRight size={20} />
+      </button>
+
+      <button
+        className={`h-8 w-8 flex justify-center items-center rounded-full ${
+          currentPage === totalPages ? 'bg-light300 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700 text-white'
+        }`}
+        onClick={() => onPageChange(totalPages)}
+        disabled={currentPage === totalPages}
+      >
+        <MdKeyboardDoubleArrowRight size={20} />
       </button>
     </div>
   );

@@ -1,3 +1,4 @@
+import authHeader from '@/componentsB2b/Api/auth-header';
 import {add_Card, fetchService, vender_SignUp} from './index'
 
 export const registerVendor = (values)=>{
@@ -23,7 +24,7 @@ export const addCardDetails = (values)=>{
     },
     headers: {
       "Content-Type": "application/json",
-      "Authorization" : `Bearer ${localStorage.getItem("token") || ""}`,
+      "Authorization" : authHeader(),
     },
   });
 }

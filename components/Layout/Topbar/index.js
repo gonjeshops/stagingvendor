@@ -2,12 +2,13 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useMemo, useState } from "react";
 import { connect } from "react-redux";
-import { logout_vendor } from "../../../api/logout";
 import { SignUpLogo } from "../../../assets";
 import { logout } from "../../../redux/actions/auth";
 import { getUserDetail } from "../../../redux/actions/userDetail";
-import Notification from "./Notification";
-import UseProfile from "./UseProfile";
+import TopbarBtnModal from "./TopbarBtnModal";
+import Alert from "@/components/ui/Alert";
+import { alert, fetchService } from "@/api";
+
 const TopBar = ({
   toggleSidebar,
   userDetail,
@@ -16,9 +17,17 @@ const TopBar = ({
 }) => {
   const route = useRouter();
   const [isOpenProfile, setOpenProfile] = useState(false);
+  const [alertUpdate, setAlertUpdate] = useState('');
 
   useEffect(() => {
     fetchUserDetail();
+    const alertStatus = async () => {
+      const fetchData = await fetchService({method: 'GET', url: alert,})
+      if (fetchData?.data) {
+        setAlertUpdate(fetchData?.data)
+      }
+      console.log('===alertUpdate', fetchData?.data, alertUpdate)
+    }
   }, []);
 
   const userData = useMemo(() => {
@@ -33,15 +42,15 @@ const TopBar = ({
   };
 
   return (
-    <>
-      <div className="top-head home d-block vendor-top-head">
+      <div className="px-4 flex gap-4 h-24 bg-white items-center justify-between ">
         {isOpenProfile && (
           <div className="profile_dropdown_overlay" onClick={toggleProfile} />
         )}
-        <div className="menu">
-          <div className="sm-logo">
-            <Image src={SignUpLogo} alt="" />
-          </div>
+
+        <div className="menu sm:hidden">
+          {/* <div className="sm-logo">
+            <Image src={SignUpLogo} alt="a" />
+          </div> */}
           <button id="menu-toggle" onClick={toggleSidebar}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -53,30 +62,16 @@ const TopBar = ({
             </svg>
           </button>
         </div>
-        <div className="wrapper d-flex justify-content-end">
-          <div className="d-flex align-items-center">
-            <Notification />
-            {/* <div className="choose-lang">
-               <select
-                className="form-select"
-                aria-label="Default select example"
-              >
-                <option selected>EN</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </div>  */}
-            <UseProfile
-              userData={userData}
-              isOpenProfile={isOpenProfile}
-              logoutVendor={logoutVendor}
-              toggleProfile={toggleProfile}
-            />
+
+        <div className="wrapper flex w-full flex-1 justify-end sm:justify-between gap-8 items-center">
+          <div className="hidden sm:block">
+            {alertUpdate?.status ? <Alert children={'You have pending task.'}/> : ''}
+          </div>
+          <div className="d-flex align-items-center ">
+            <TopbarBtnModal alertUpdate={alertUpdate} userData={userData} logoutVendor={logoutVendor}/>
           </div>
         </div>
       </div>
-    </>
   );
 };
 

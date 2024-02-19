@@ -1,6 +1,22 @@
 import { userDashboard, userDetail } from "../../api/userDetail";
 import { types } from "../types/userDetail";
 
+const fetchUser = () => {
+  let url = "https://backendapi.gonje.com/";
+
+  return axios({
+    method: "get",
+    headers: authHeader(),
+    url: url + `me`,
+  })
+    .then((response) =>{ 
+      console.log('USER DETAILS====', response)
+      return response})
+    .catch((error) => {
+      console.log("Error in fetchUser api", error);
+    });
+} 
+
 export const getUserDetail = (values) => {
   return async (dispatch) => {
     dispatch({

@@ -11,9 +11,9 @@ import { useRouter } from "next/router";
 
 
 
-export default function PayPal({}) {
+export default function PayPal({checkoutData}) {
     const router = useRouter()
-    const {checkoutData} = useGlobalState()
+    const {user} = useGlobalState()
     const [paidFor, setPaidFor] = useState(false)
     const [error, setError] = useState(false)
     const [currency, setCurrency] = useState('AUD')
@@ -36,6 +36,7 @@ export default function PayPal({}) {
 
         // if response is success
         setPaidFor(true);
+        router.push('/invoicing/received_invoice')
         toast.success('Thank you for your purchase!')
 
         // Refresh the user account or subscription status.
@@ -93,7 +94,7 @@ export default function PayPal({}) {
                     onCancel={()=>{
                         // redirect user to checkout page
                         toast.warning('Purchase was canceled')
-                        router.push('/vendorb2b/checkout')
+                        router.push('/checkout')
                     }}
                     onError={err => {
                         setError(err)

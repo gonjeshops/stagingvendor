@@ -2,7 +2,6 @@ import {useState} from 'react'
 import DashboardHeading from '../Workspace/DashboardHeading'
 import { FaAngleDown, FaFileExport } from 'react-icons/fa';
 import InventoryTable from './InventoryTable';
-import AddProductForm from '../forms/AddProductForm';
 
 const Inventory = ({inventories}) => {
     const {category , tableHeader, inventoryData, } = inventories;
@@ -11,7 +10,6 @@ const Inventory = ({inventories}) => {
 
   return (
     < >
-        <AddProductForm closeModal={()=>setShow('')} isModalOpen={show}  />
 
         <DashboardHeading>
         Inventories

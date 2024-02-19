@@ -81,7 +81,7 @@ const NotificationDropdown = ({ initialLimit }) => {
       <ul className='space-y-3'>
         {notifications?.map(({id, created_at, message, order_id, shop_id, status, title, updated_at, user_id}, index) => (
         //   <li className='pb-3' key={index}>{notification?.message}</li>
-        <NotificationCard notifications={notifications} setNotifications={setNotifications} id={id} created_at={created_at} message={message} order_id={order_id} shop_id={shop_id} status={status} title={title} updated_at={updated_at} user_id={user_id}/>
+        <NotificationCard key={index} notifications={notifications} setNotifications={setNotifications} id={id} created_at={created_at} message={message} order_id={order_id} shop_id={shop_id} status={status} title={title} updated_at={updated_at} user_id={user_id}/>
           
         ))}
       </ul>

@@ -33,7 +33,7 @@ const OrdersPage = ({
     setLoading(true);
     getOrderList({
       ...filters,
-      shop_id: localStorage.getItem("shop_id"),
+      shop_id: JSON.parse(localStorage.getItem("user_detail"))?.shop_id,
     }).then(() => {
       setLoading(false);
     });
@@ -97,7 +97,7 @@ const OrdersPage = ({
       updateOrderStatus(statusDataToUpdate).then((action) => {
         console.log("action.payload.data=", action.payload.data);
 
-        if (action.payload.data.status === 1) {
+        if (action.payload.data.status === 2) {
           if (action.payload.data.data.status.id == Status.accept) {
             toast.success("Order Accepted");
           } else if (action.payload.data.data.status.id == Status.reject) {
@@ -105,6 +105,7 @@ const OrdersPage = ({
           }
         } else {
           toast.error(action.payload.data.message);
+         console.log('xxx', action.payload.data.message);
         }
         setLoading(false);
         getOrderList({

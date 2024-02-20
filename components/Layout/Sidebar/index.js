@@ -6,7 +6,7 @@ import { SideTabs } from "./SideTabs";
 import { useRouter } from "next/router";
 import { FaAngleDown, FaAngleUp, FaTimes } from "react-icons/fa";
 
-const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
+const Sidebar = ({ isShowSideBar, setShowSideBar }) => {
   const route = useRouter();
   const activePath = route.asPath;
   const [toggleHrm, setHRMToggle] = useState(false);
@@ -27,13 +27,13 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
 
   return (
     <div
-      className={`h-screen rounded-r-[32px] flex flex-col gap-4 overflow-hidden overflow-y-auto py-8 bg-gonje  text-white fixed w-80 top-0 left-0  z-50 transform transition-all duration-500
-      ${isShowSideBar ? '' : 'max-md:-translate-x-full'}
+      className={`h-screen rounded-r-[32px] flex flex-col gap-4 overflow-hidden overflow-y-auto py-8 bg-gonje w-80 text-white fixed top-0 left-0  z-50 transform transition-all duration-500
+      ${isShowSideBar ? '' : 'max-lg:-translate-x-full'}
       `}
-     
     >
+      <div className="pl-8 flex">
       <Link href={'/dashboard'}
-        className="border-b pb-4 pl-8 w-full border-white"
+        className=""
       >
         <Image
           className="img-fluid logo"
@@ -43,8 +43,13 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
           width={140}
         />
       </Link >
+      </div>
+      
+      <hr className="bt-4 text-white"/>
 
-      <FaTimes size={20} onClick={toggleSidebar} className="absolute text-gray-700 hover:text-gray-950 duration-300 cursor-pointer top-8 right-8"/>
+      
+
+      <FaTimes size={20} onClick={()=>setShowSideBar(false)} className="absolute text-gray-700 hover:text-gray-950 duration-300 cursor-pointer top-8 right-8  lg:hidden"/>
 
       <ul className="pl-8 text-lg grid gap-">
         {Object.keys(sideTabs).map((item) => {
@@ -56,14 +61,11 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
               {Tab.isCollapsable ? (
                 <>
                   <div
-                    data-bs-toggle="collapse"
-                    aria-expanded={toggleHrm}
                     onClick={() => {
                       setHRMToggle(!toggleHrm);
                       setDropdownName(Tab.name);
                     }}
                     className={`flex cursor-pointer  gap-6 items-center pl-6  py-3 hover:bg-white text-gray-700 duration-300 rounded-l-full w-full`}
-                    aria-current="page"
                   >
                     <div className="flex items-center gap-2">
                       
@@ -101,23 +103,22 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                         : "hidden"
                     }`}
                   >
-                    <div className="panel-body">
-                      <ul className="nav navbar-nav">
+                    <div className="">
+                      <ul className="">
                         {(Tab?.innerTabs || []).map((innerTab) => {
                           return innerTab.url !== "/timesheet" && isVendor ? (
                             <li key={`key_${innerTab.name}`}
-                            onClick={toggleSidebar}>
+                            onClick={()=>setShowSideBar(false)}>
                               <Link
                                 href={innerTab.url}
                                 passHref
                                   className={`nav-link  ${
                                     activeNav === innerTab.url
-                                      ? "active"
+                                      ? "font-semibold"
                                       : "text-gray-700"
                                   }`}
                                 >
                                   {innerTab.name}
-                       
                               </Link>
                             </li>
                           ) : route.asPath.includes(innerTab.url) ||
@@ -126,10 +127,10 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                               <Link
                                 href={innerTab.url}
                                 passHref
-                                className={`nav-link  ${
+                                className={`  ${
                                   activeNav === innerTab.url
-                                    ? "active"
-                                    : "text-whitee"
+                                    ? "font-bold"
+                                    : "text-gray-700"
                                 }`}
                                 >
                                   {innerTab.name}
@@ -143,10 +144,10 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                 </>
               ) : (
                 <Link href={Tab.url} 
-                onClick={toggleSidebar}    
+                onClick={()=>setShowSideBar(false)}    
                 passHref
                     className={`flex gap-2 items-center pl-6  py-3 hover:bg-white text-gray-700 duration-300 rounded-l-full w-full ${
-                      activeNav === Tab.url ? "bg-white" : "text-whitee"
+                      activeNav === Tab.url ? "bg-white" : ""
                     }`}
                     aria-current="page"
                   >

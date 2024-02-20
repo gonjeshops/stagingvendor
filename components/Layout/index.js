@@ -16,15 +16,16 @@ const Layout = ({ children }) => {
   return (
     <>
     <HeadB2c/>
-    <div className="">
-      
-        <Sidebar isShowSideBar={isShowSideBar} toggleSidebar={toggleSidebar} />
-     
-      {/* {  isShowSideBar && <div className="main_overlay" onClick={toggleSidebar}/>} */}
-      <div className="fixed w-full top-0 z-40">
-        <TopBar toggleSidebar={toggleSidebar} />
-      </div>
-        <div className="h-screen md:pl-[22rem]  max-md:px-4 md:pr-8 mt-28 pb-14 overflow-auto relative ">
+    <div className="relative">
+          {/* fixed top-0 left-0 w-80 z-50*/}
+          <Sidebar isShowSideBar={isShowSideBar} setShowSideBar={setShowSideBar} />
+          {  isShowSideBar ? 
+            <div className="absolute inset-0 z-40 bg-black bg-opacity-50" onClick={toggleSidebar}/> : null
+          }
+        <div className="fixed w-full top-0 z-30 h-24">
+          <TopBar toggleSidebar={toggleSidebar} />
+        </div>
+        <div className="min-h-screen lg:ml-80 px-6 2xl:px-16 pt-32 pb-14 relative ">
           <Breadcrumb/>
           {children}
         </div>

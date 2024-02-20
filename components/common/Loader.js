@@ -1,11 +1,9 @@
-import React from "react";
+import { PageLoading } from "@/componentsB2b/Loader/Spinner/PageLoading";
 
 const Loader = () => {
   return (
-    <div className="overlay_loader">
-      <div className="spinner-border text-success" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </div>
+    <div className="fixed bg-black bg-opacity-10 inset-0 flex justify-center items-center">
+        <PageLoading/>
     </div>
   );
 };

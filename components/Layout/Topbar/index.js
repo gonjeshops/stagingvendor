@@ -1,8 +1,9 @@
+     
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useMemo, useState } from "react";
 import { connect } from "react-redux";
-import { SignUpLogo } from "../../../assets";
+import { GonjeLogo, SignUpLogo } from "../../../assets";
 import { logout } from "../../../redux/actions/auth";
 import { getUserDetail } from "../../../redux/actions/userDetail";
 import TopbarBtnModal from "./TopbarBtnModal";
@@ -42,16 +43,10 @@ const TopBar = ({
   };
 
   return (
-      <div className="px-8 flex gap-4 h-24 bg-white items-center justify-between w-full left-0 ">
-        {isOpenProfile && (
-          <div className="profile_dropdown_overlay" onClick={toggleProfile} />
-        )}
+      <div className="px-6 2xl:px-16 flex gap-20 h-full bg-white items-center justify-between w-full">
 
-        <div className="menu sm:hidden">
-          {/* <div className="sm-logo">
-            <Image src={SignUpLogo} alt="a" />
-          </div> */}
-          <button id="menu-toggle" onClick={toggleSidebar}>
+        <div className="flex gap-2 items-center lg:hidden flex-shrink-0">
+          <button id="menu-toggle" onClick={toggleSidebar} className="pt-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -61,15 +56,14 @@ const TopBar = ({
               <path d="M24 6h-24v-4h24v4zm0 4h-24v4h24v-4zm0 8h-24v4h24v-4z" />
             </svg>
           </button>
+          <Image onClick={`/dashboard`} src={GonjeLogo} alt="gonje-logo" width={100} height={85}/>
         </div>
 
-        <div className="wrapper flex w-full flex-1 justify-end sm:justify-between gap-8 items-center">
+        <div className=" flex w-full justify-end sm:justify-between gap-8 items-center">
           <div className="hidden sm:block">
-            {alertUpdate?.status ? <Alert children={'You have pending task.'}/> : ''}
+            {alertUpdate?.status ? <Alert children={'You have pending task.'}/> : null}
           </div>
-          <div className="d-flex align-items-center ">
-            <TopbarBtnModal alertUpdate={alertUpdate} userData={userData} logoutVendor={logoutVendor}/>
-          </div>
+          <TopbarBtnModal alertUpdate={alertUpdate} userData={userData} logoutVendor={logoutVendor}/>
         </div>
       </div>
   );

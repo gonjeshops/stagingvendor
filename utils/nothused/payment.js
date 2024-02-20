@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import { SignUpLogo } from "../assets";
-import PaymentModule from "../components/PaymentModule";
+import { SignUpLogo } from "../../assets";
+import PaymentModule from "../../components/PaymentModule";
 
 const PaymentMethos = () => {
   return (

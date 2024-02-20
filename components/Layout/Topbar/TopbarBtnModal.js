@@ -65,7 +65,7 @@ const TopbarBtnModal = ({userData,alertUpdate, logoutVendor}) => {
           <div className='absolute w-5 h-5 flex justify-center items-centem text-[10px]  bg-red-500 rounded-full text-white -top-0 -right-0'></div>  </>  : ''}
 
         {show==='notification' && 
-        <div ref={dropdownRef} className='absolute -right-44 z-50 mt-4 shadow-xl border border-gray-500 w-96 rounded-md p-4 overflow-auto text-sm bg-white'>
+        <div ref={dropdownRef} className='absolute -right-10 z-50 shadow-xl border border-gray-500 w-96 rounded-md p-4 overflow-auto text-sm bg-white'>
           <NotificationDropdown setShow={setShow}/>
         </div>}
       </div>

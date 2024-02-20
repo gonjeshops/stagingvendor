@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
-import { SignUpLogo } from "../assets";
-import LoginForm from "../components/Login";
+import { SignUpLogo } from "../../assets";
+import LoginForm from "../../components/Login";
 
 const Login = () => {
   return (

@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Logo, UpgradePro, Inventory, DropdownSvg } from "../../../assets";
+import { GonjeLogo,  } from "../../../assets";
 import { SideTabs } from "./SideTabs";
 import { useRouter } from "next/router";
+import { FaAngleDown, FaAngleUp, FaTimes } from "react-icons/fa";
 
-const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
+const Sidebar = ({ isShowSideBar, setShowSideBar }) => {
   const route = useRouter();
   const activePath = route.asPath;
   const [toggleHrm, setHRMToggle] = useState(false);
@@ -26,57 +27,55 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
 
   return (
     <div
-      className={`aside overflow-hidden vendor-dashboard flex-column vh-lg-100 flex-shrink-0 text-white ${
-        isShowSideBar ? "aside-show" : ""
-      }`}
-      style={{ width: "235px" }}
+      className={`h-screen rounded-r-[32px] flex flex-col gap-4 overflow-hidden overflow-y-auto py-8 bg-gonje w-80 text-white fixed top-0 left-0  z-50 transform transition-all duration-500
+      ${isShowSideBar ? '' : 'max-lg:-translate-x-full'}
+      `}
     >
-      <a
-        onClick={() => route.back()}
-        className="d-flex align-items-center mx-auto mb-3 mb-md-0  text-white text-decoration-none"
+      <div className="pl-8 flex">
+      <Link href={'/dashboard'}
+        className=""
       >
         <Image
-          className="p-3 img-fluid logo"
-          src={Logo.src}
+          className="img-fluid logo"
+          src={GonjeLogo}
           alt="logo"
           height={85}
           width={140}
         />
-      </a>
+      </Link >
+      </div>
+      
+      <hr className="bt-4 text-white"/>
 
-      <hr className="mt-2" />
+      
 
-      <ul className="nav nav-pills flex-column mb-auto">
-        <a onClick={toggleSidebar} className="closebtn">
-          &times;
-        </a>
+      <FaTimes size={20} onClick={()=>setShowSideBar(false)} className="absolute text-gray-700 hover:text-gray-950 duration-300 cursor-pointer top-8 right-8  lg:hidden"/>
 
+      <ul className="pl-8 text-lg grid gap-">
         {Object.keys(sideTabs).map((item) => {
           const Tab = sideTabs[item];
           return (
-            <li className="nav-item" key={`key_${Tab.name}`}>
+            <li className="" 
+              
+              key={`key_${Tab.name}`}>
               {Tab.isCollapsable ? (
                 <>
-                  <a
-                    data-bs-toggle="collapse"
-                    aria-expanded={toggleHrm}
+                  <div
                     onClick={() => {
                       setHRMToggle(!toggleHrm);
                       setDropdownName(Tab.name);
                     }}
-                    className={`d-flex togg justify-content-between nav-link text-whitee`}
-                    aria-current="page"
+                    className={`flex cursor-pointer  gap-6 items-center pl-6  py-3 hover:bg-white text-gray-700 duration-300 rounded-l-full w-full`}
                   >
-                    <div className="d-flex">
-                      <div className="icon text-center">
+                    <div className="flex items-center gap-2">
+                      
                         {
                         Tab.name==='Vendo To Vendor' ?
                           <Image
                             src={Tab.image}
                             alt="v2v"
-                            height={200}
-                            width={200}
-                            className="scale-20"
+                            height={20}
+                            width={20}
                           />
                         :
                           <Image
@@ -86,18 +85,15 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                             width={20}
                           /> 
                         }
-                      </div>
-                      <span className="ms-2">{Tab.name}</span>
+                      
+                      <span className="">{Tab.name}</span>
                     </div>
 
-                    <Image
-                      className="down"
-                      src={DropdownSvg}
-                      alt=""
-                      height={10}
-                      width={10}
-                    />
-                  </a>
+                    {   toggleHrm && dropdownName === Tab.name ? <FaAngleUp size={20} className="cursor-pointer" />
+                    :
+                    <FaAngleDown size={20} className="cursor-pointer" />
+                    }
+                  </div>
 
                   <div
                     id="collapseExample1"
@@ -107,22 +103,22 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                         : "hidden"
                     }`}
                   >
-                    <div className="panel-body">
-                      <ul className="nav navbar-nav">
+                    <div className="">
+                      <ul className="">
                         {(Tab?.innerTabs || []).map((innerTab) => {
                           return innerTab.url !== "/timesheet" && isVendor ? (
-                            <li key={`key_${innerTab.name}`}>
+                            <li key={`key_${innerTab.name}`}
+                            onClick={()=>setShowSideBar(false)}>
                               <Link
                                 href={innerTab.url}
                                 passHref
                                   className={`nav-link  ${
                                     activeNav === innerTab.url
-                                      ? "active"
-                                      : "text-black"
+                                      ? "font-semibold"
+                                      : "text-gray-700"
                                   }`}
                                 >
                                   {innerTab.name}
-                       
                               </Link>
                             </li>
                           ) : route.asPath.includes(innerTab.url) ||
@@ -131,10 +127,10 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                               <Link
                                 href={innerTab.url}
                                 passHref
-                                className={`nav-link  ${
+                                className={`  ${
                                   activeNav === innerTab.url
-                                    ? "active"
-                                    : "text-whitee"
+                                    ? "font-bold"
+                                    : "text-gray-700"
                                 }`}
                                 >
                                   {innerTab.name}
@@ -147,9 +143,11 @@ const Sidebar = ({ isShowSideBar, toggleSidebar }) => {
                   </div>
                 </>
               ) : (
-                <Link href={Tab.url} passHref
-                    className={`d-flex nav-link ${
-                      activeNav === Tab.url ? "active" : "text-whitee"
+                <Link href={Tab.url} 
+                onClick={()=>setShowSideBar(false)}    
+                passHref
+                    className={`flex gap-2 items-center pl-6  py-3 hover:bg-white text-gray-700 duration-300 rounded-l-full w-full ${
+                      activeNav === Tab.url ? "bg-white" : ""
                     }`}
                     aria-current="page"
                   >

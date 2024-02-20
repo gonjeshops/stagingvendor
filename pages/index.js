@@ -54,22 +54,3 @@ export function getServerSideProps () {
 
 // export default RootPage;
 
-
-
-// export const ChristmasCard = () => {
-//   return (
-//     <div className="
-//    ">
-//      <iframe
-//       src="https://assets.pinterest.com/ext/embed.html?id=629518854191572720"
-//       height="295"
-//       width="345"
-//       frameBorder="0"
-//       scrolling="no"
-//       title="Pinterest Embed"
-//     ></iframe>
-//   </div>
-//   );
-// };
-
-

@@ -29,3 +29,4 @@ export { default as Map_Marker_Svg } from "./marker_map_icon.svg";
 export { default as LoaderGif } from "./fruitloader.gif";
 export { default as GonjeLogo } from "./gonje-logo-green.webp";
 export { default as V2V } from "./vendor-vendor.png";
+export { default as Mascot } from "./mascot_gonje.png";

@@ -46,7 +46,8 @@ console.log('STIPE SESSION===========', req.body)
         user_email: user?.user_email || 'noemail@email.com',
         transaction_type:"vendor b2c checkout",
         transaction_description:"What description do you want?",
-        transaction_title:"vendor b2c checkout"
+        transaction_title:"vendor b2c checkout",
+        shoping_rate_id: "shr_1OtlvhL9dKqto3PhMqzDW8A0"
       },  
       customer_email: user?.user_email || 'noemail@email.com'
     };

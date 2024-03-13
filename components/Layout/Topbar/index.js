@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import { GonjeLogo, SignUpLogo } from "../../../assets";
 import { logout } from "../../../redux/actions/auth";
 import { getUserDetail } from "../../../redux/actions/userDetail";
-import TopbarBtnModal from "../../../../gonjecustomer/components/Layout/DashboardLayout/TopbarBtnModal";
 import Alert from "@/components/ui/Alert";
 import { alert, fetchService } from "@/api";
 

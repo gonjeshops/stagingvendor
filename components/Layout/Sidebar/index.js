@@ -27,7 +27,7 @@ const Sidebar = ({ isShowSideBar, setShowSideBar }) => {
 
   return (
     <div
-      className={`h-screen rounded-r-[32px] flex flex-col gap-4 overflow-hidden overflow-y-auto py-8 bg-gonje w-80 text-white fixed top-0 left-0  z-50 transform transition-all duration-500
+      className={`h-screen rounded-r-[32px] flex flex-col gap-4  overflow-y-auto py-8 bg-gonje w-80 text-white fixed top-0 left-0  z-50 transform transition-all duration-500
       ${isShowSideBar ? '' : 'max-lg:-translate-x-full'}
       `}
     >

@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { GonjeLogo, SignUpLogo } from "../../../assets";
 import { logout } from "../../../redux/actions/auth";
 import { getUserDetail } from "../../../redux/actions/userDetail";
-import TopbarBtnModal from "./TopbarBtnModal";
+import TopbarBtnModal from "../../../../gonjecustomer/components/Layout/DashboardLayout/TopbarBtnModal";
 import Alert from "@/components/ui/Alert";
 import { alert, fetchService } from "@/api";
 
@@ -45,7 +45,7 @@ const TopBar = ({
   return (
       <div className="px-6 2xl:px-16 flex gap-20 h-full bg-white items-center justify-between w-full">
 
-        <div className="flex gap-2 items-center lg:hidden flex-shrink-0">
+        <div className="flex gap-3 items-center lg:hidden flex-shrink-0">
           <button id="menu-toggle" onClick={toggleSidebar} className="pt-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"

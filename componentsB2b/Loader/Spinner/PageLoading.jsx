@@ -15,8 +15,8 @@ export function PageLoading ({height, width, color}) {
                 visible={true}
                 ariaLabel='oval-loading'
                 secondaryColor="#4fa94d"
-                strokeWidth={2}
-                strokeWidthSecondary={2}
+                strokeWidth={3}
+                strokeWidthSecondary={3}
             /> 
         </div>
         </div>

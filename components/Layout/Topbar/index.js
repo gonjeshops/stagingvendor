@@ -62,7 +62,7 @@ const TopBar = ({
           <div className="hidden sm:block">
             {alertUpdate?.status ? <Alert children={'You have pending task.'}/> : null}
           </div>
-          <TopbarBtnModal alertUpdate={alertUpdate} userData={userData} logoutVendor={logoutVendor}/>
+          {/* <TopbarBtnModal alertUpdate={alertUpdate} userData={userData} logoutVendor={logoutVendor}/> */}
         </div>
       </div>
   );

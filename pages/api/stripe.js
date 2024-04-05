@@ -7,7 +7,22 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
-console.log('STIPE SESSION===========', req.body)
+
+    const serviceCharge = 0.01; // 1% commission rate
+    const CommissionFee = 0.001; // 0.1% item fee rate
+
+    // // Calculate the Service Charge Fee
+    // const TotalServiceCharge = total * serviceCharge;
+
+    // // Calculate the Commission Fees
+    // const TotalCommissionFees = items?.reduce((acc, item) => {
+    //   const itemFee = item.productPrice * item.productQuantity * CommissionFee;
+    //   return acc + itemFee;
+    // }, 0);
+
+    // // Calculate the total amount to charge
+    // const TotalAmountToCharge = total + TotalServiceCharge + TotalCommissionFees;
+
   try {
     const {items, checkoutData, user} = req.body;
 
@@ -39,6 +54,16 @@ console.log('STIPE SESSION===========', req.body)
       success_url: `${req.headers.origin}/invoicing/sent_invoice?status=success`,
       cancel_url: `${req.headers.origin}/invoicing/sent_invoice?status=cancelled`,  
       metadata: {
+        // user_id: user_id,
+        //   shop_id: shop_id,
+        // coupon_id: "",
+        //   total: TotalAmountToCharge,
+        //   "service_fee": TotalServiceCharge,
+        //   "commision_fees": TotalCommissionFees,
+        //   payment_gateway: "stripe",
+        //   token: token,
+        //   latitude: "",
+        //   longitude: "",
         user_token: user.token,
         quote_id: checkoutData?.quote_id || 0,
         quote_number: checkoutData?.quote_number || 0,
@@ -47,7 +72,18 @@ console.log('STIPE SESSION===========', req.body)
         transaction_type:"vendor b2c checkout",
         transaction_description:"What description do you want?",
         transaction_title:"vendor b2c checkout",
-        shoping_rate_id: "shr_1OtlvhL9dKqto3PhMqzDW8A0"
+        shoping_rate_id: "shr_1OtlvhL9dKqto3PhMqzDW8A0",
+        cart_items: JSON.stringify(
+          items?.map((item) => {
+            return {
+              currency: "aud",
+              name: item?.name,
+              amount: item?.price,
+              product_id: item?.id,
+              quantity: item?.quantity,
+            };
+          })
+        ),
       },  
       customer_email: user?.user_email || 'noemail@email.com'
     };
